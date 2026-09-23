@@ -9,7 +9,7 @@ top=$(mktemp -d /tmp/rpmbuild.XXXXXX)
 preserve_evidence() {
   local code=$?
   mkdir -p /output/test-results
-  (cd "$top" && find BUILD -type f \( -name '*.sum' -o -name '*.trs' -o -name '*.log' \) \
+  (cd "$top" && find BUILD -type f \( -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) \
     -exec cp --parents -t /output/test-results -- {} +) || true
   # OpenSSL's Perl tests keep failure details and generated fixtures here.
   (cd "$top" && find BUILD -type d -path '*/test/test-runs' -exec cp -r --parents -t /output/test-results -- {} +) || true

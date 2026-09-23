@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-upstream-builder:el8-20260923-v3
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install \
+      gtest-devel gmock-devel xz-devel bzip2-devel \
+    && dnf clean all
+USER builder

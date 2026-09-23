@@ -91,6 +91,49 @@
       "sha256": "319cbf319e9fc92065a5407ce47eb868d73566f3d4840a56832734e4579df947",
       "upstream_signature_verified": true,
       "expected_signer": "2DBF5BAA46FB4DED338A335BD65016F35352AA40"
+    },
+    {
+      "name": "xz-5.8.4.tar.xz",
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.8.4/xz-5.8.4.tar.xz",
+      "sha256": "4ce24038fd4221e0d13bc1a2de7a4db56e90b92b3bf75321f6c14be73f65de4b",
+      "verification": "Matched SHA256 published in official GitHub release assets",
+      "upstream_signature_verified": false,
+      "release_url": "https://github.com/tukaani-project/xz/releases/tag/v5.8.4",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "expat-2.8.5.tar.xz",
+      "url": "https://github.com/libexpat/libexpat/releases/download/R_2_8_5/expat-2.8.5.tar.xz",
+      "sha256": "1e727b8933ec51a77a9a9d9afcf8e688bce45d907c13e36ab7393fe36e703182",
+      "verification": "Matched SHA256 published in official GitHub release assets",
+      "upstream_signature_verified": false,
+      "release_url": "https://github.com/libexpat/libexpat/releases/tag/R_2_8_5",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "zstd-1.5.7.tar.gz",
+      "url": "https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz",
+      "sha256": "eb33e51f49a15e023950cd7825ca74a4a2b43db8354825ac24fc1b7ee09e6fa3",
+      "verification": "Matched SHA256 published in official GitHub release assets",
+      "upstream_signature_verified": false,
+      "release_url": "https://github.com/facebook/zstd/releases/tag/v1.5.7",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "c-ares-1.34.8.tar.gz",
+      "url": "https://github.com/c-ares/c-ares/releases/download/v1.34.8/c-ares-1.34.8.tar.gz",
+      "sha256": "c222b6d681096f9444d2c4863d2c1174019e27cacca0a4a5c114d36dd7d7bf78",
+      "verification": "Matched SHA256 published in official GitHub release assets",
+      "upstream_signature_verified": false,
+      "release_url": "https://github.com/c-ares/c-ares/releases/tag/v1.34.8",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "googletest-1.18.0.tar.gz",
+      "url": "https://github.com/google/googletest/releases/download/v1.18.0/googletest-1.18.0.tar.gz",
+      "sha256": "6e3191c1455468b3fc35a417fb565c1c5071aee1b7e7f85e30cf48a98d37d8b5",
+      "upstream_signature_verified": false,
+      "verification": "HTTPS upstream release source pinned by SHA256; test-only dependency"
     }
   ]
 }

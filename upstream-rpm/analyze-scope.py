@@ -19,6 +19,10 @@ VERIFIED = {
     'binutils': ('2.47', 'https://ftp.gnu.org/gnu/binutils/'),
     'zlib': ('1.3.2', 'https://zlib.net/'),
     'pcre2': ('10.48', 'https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.48'),
+    'expat': ('2.8.5', 'https://github.com/libexpat/libexpat/releases/tag/R_2_8_5'),
+    'xz': ('5.8.4', 'https://github.com/tukaani-project/xz/releases/tag/v5.8.4'),
+    'zstd': ('1.5.7', 'https://github.com/facebook/zstd/releases/tag/v1.5.7'),
+    'c-ares': ('1.34.8', 'https://github.com/c-ares/c-ares/releases/tag/v1.34.8'),
 }
 BOOT = {'kernel', 'grub2', 'shim', 'systemd', 'lvm2', 'device-mapper-multipath',
         'device-mapper-persistent-data', 'mdadm', 'iscsi-initiator-utils'}
@@ -107,7 +111,8 @@ def main():
             'upstream_urls_from_reference': urls,
             'latest_stable': latest[0] if latest else None,
             'latest_evidence': latest[1] if latest else None,
-            'latest_checked_on': '2026-09-23' if latest else None,
+            'latest_checked_on': ('2026-09-24' if source in {'expat','xz','zstd','c-ares'}
+                                  else '2026-09-23') if latest else None,
             'latest_status': 'verified-upstream' if latest else 'not-yet-verified',
             'category': kind,
             'required_validation': gate,
@@ -143,7 +148,7 @@ def main():
     (args.output/'scope.json').write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     lines = ['# 전체 취약 RPM의 upstream 재빌드 범위', '',
              f'- CSV 패키지 이름: **{len(records)}개** (누락 없이 포함)',
-             f'- 소스 프로젝트 묶음: **{len(projects)}개** (미확정 항목 포함)',
+             f'- 배포판 Source RPM 묶음: **{len(projects)}개** (실제 upstream 프로젝트 수와 다를 수 있음)',
              '- 최신 안정판 확인은 공식 upstream 근거가 있는 항목에만 표기합니다.',
              ('- Source RPM 대응을 실제 대상 서버의 RPM 헤더로 확인했습니다.'
               if report['source_mapping_confirmed_from_host'] else

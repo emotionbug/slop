@@ -38,7 +38,7 @@ pahole --version
 jobs=${BUILD_JOBS:-8}
 [[ $jobs =~ ^[1-9][0-9]*$ ]] || exit 2
 trap 'printf "%s\n" "$?" > /output/build-exit-code.txt' EXIT
-make -j"$jobs" rpm-pkg RPMOPTS='--define "_smp_mflags -j8"'
+make -j"$jobs" rpm-pkg RPMOPTS="--define \"_smp_mflags -j$jobs\""
 find rpmbuild -type f -name '*.rpm' -exec cp -t /output -- {} +
 cp .config System.map /output/
 find . -name '*.ko' -printf '%P\n' | sort > /output/built-modules.txt

@@ -1,0 +1,4 @@
+FROM localhost/linux-oss-library-validation:el8-20260923
+RUN dnf -y --disableplugin=subscription-manager --setopt=install_weak_deps=False \
+      install expat-devel xz-devel zstd libzstd-devel cmake-filesystem \
+    && dnf clean all

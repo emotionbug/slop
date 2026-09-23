@@ -2,7 +2,8 @@
 
 대상은 제공된 취약점 CSV의 **323개 패키지 이름 전체**입니다. rsync, GCC, 커널,
 glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에서 제외하지 않습니다.
-실제 서버에서 수집한 RPM 헤더로 **323종 → 140개 소스 패키지 묶음**을 확인했습니다.
+실제 서버에서 수집한 RPM 헤더로 **323종 → 140개 배포판 Source RPM 묶음**을 확인했습니다.
+한 Source RPM에 여러 upstream 소스가 포함될 수 있어 실제 빌드 프로젝트 수와는 다릅니다.
 서버별 수집 자료와 상세 분석 결과는 로컬의 무시된 폴더에만 보관합니다.
 
 ## 현재 완료 범위
@@ -25,12 +26,22 @@ glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에
 - OpenSSL 4.0.2의 별도 경로 평가용 RPM 생성. upstream 4,386개 테스트와
   UBI 설치·서명 생성/검증·TLS 1.3 로컬 통신 통과. 시스템 OpenSSL을 교체하지 않습니다.
 - pahole/dwarves 1.32 빌드 도구 RPM 생성. 최신 커널의 BTF 빌드에 사용합니다.
+- Expat 2.8.5와 XZ 5.8.4의 교체 RPM 5종 생성. Expat parser 테스트와
+  XZ 22개 테스트 통과. 앞의 7종과 함께 UBI에서 설치·DNF·Python XML/XZ·
+  Java/rsync/PCRE2 연동 테스트를 통과했습니다.
+- Expat/XZ의 기존 UBI 공개 심볼 74개/198개가 유지되는 것을 확인했습니다.
+  자료구조 크기·함수 의미·실제 서버 프로그램 전체의 ABI 검증은 아닙니다.
+- Expat 개발용 RPM에 필요한 `cmake-filesystem`은 공식 UBI RPM을 확보하고
+  Red Hat 서명을 검증했습니다. 12종 교체 RPM과 보조 RPM을 합친 이름 기반
+  의존성 검사에서 누락은 0개이며, 파일/rich dependency 등 1,180건은 미검증입니다.
 
-binutils 2.47은 어셈블러 테스트 2,098개가 통과했으나 linker/LTO 테스트 12개가
-실패하여 RPM 배포 대상으로 승격하지 않았습니다. 중간 빌드용 GCC Toolset 14로
-재검증 중이며, GCC 16.2는 별도로 3단계 bootstrap 빌드를 진행합니다.
+binutils 2.47은 GCC Toolset 14로 재검증하여 앞선 LTO 실패 12개가 해결됐습니다.
+그러나 CTF `Slice` 테스트 1개가 실패해 배포를 보류합니다. assembler 2,098개,
+linker 3,263개, binutils 349개, libsframe 168개, libctf 39개가 통과했습니다.
+GCC 16.2는 별도로 3단계 bootstrap 빌드를 진행합니다.
 glibc 2.44의 별도 경로 평가 빌드와 수집된 커널 설정을 반영한 Linux 7.2.7
 RPM 빌드도 진행합니다. 이들은 현재 시스템 교체 검증이 완료된 패키지가 아닙니다.
+Zstandard와 c-ares도 빌드·테스트 중이며 아직 공개 후보 묶음에 포함하지 않았습니다.
 
 OpenSSL의 첫 테스트 실행은 생성한 인증서가 아직 유효하지 않다는 오류로 실패했고,
 동일 소스의 두 번째 전체 실행이 통과했습니다. 로그에서 음수 경과 시간도 관찰되어
@@ -97,5 +108,12 @@ CSV의 과거 버전과 실제 설치 버전, 직접 의존성, 커널 드라이
 
 대상 서버의 별도 복제 VM은 없습니다. 개발기 컨테이너 테스트는 실제 서버의
 VMware 부팅·SSH·외부 보안 에이전트·Java/Tomcat 연동을 증명하지 않습니다.
+`Dockerfile.kernel-boot-test`와 `validate-kernel-boot.sh`는 QEMU의 UEFI,
+PVSCSI 디스크/XFS, VMXNET3, device mapper를 시험하도록 준비했습니다.
+준비된 스크립트를 실제 부팅 성공으로 기록하지 않습니다. 커널 빌드 후 실행 결과가 필요합니다.
+
+`gcc-plugin-annobin`처럼 배포판에서 추가 소스를 묶은 패키지는 GCC 소스만으로
+만들 수 없습니다. `perf`/`python3-perf`/`bpftool`도 커널 RPM 생성만으로 교체되지
+않으므로 별도 산출물과 테스트가 필요합니다.
 
 출력 파일, CSV, 서버 수집 정보는 공개 Git 저장소에 추가하지 마세요.

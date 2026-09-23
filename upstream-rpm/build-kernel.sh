@@ -22,7 +22,10 @@ cp .config /output/config-before
 # Red Hat's certificate is unavailable in upstream sources. Keep module signing
 # enabled with the build's own generated key; no Red Hat signature is claimed.
 scripts/config --set-str SYSTEM_TRUSTED_KEYS '' --set-str SYSTEM_REVOCATION_KEYS '' \
-  --set-str LOCALVERSION '-linuxoss' --disable LOCALVERSION_AUTO
+  --set-str EFI_SBAT_FILE '' --set-str LOCALVERSION '-linuxoss' --disable LOCALVERSION_AUTO
+# The exported RHEL config references its distributor-owned kernel.sbat file.
+# Upstream explicitly leaves SBAT policy to the signing distributor. This
+# unsigned evaluation build must not copy or impersonate Red Hat SBAT identity.
 mkdir -p "$workspace/bin"
 ln -s /usr/bin/python3.11 "$workspace/bin/python3"
 export PATH="$workspace/bin:$PATH"
@@ -38,6 +41,7 @@ pahole --version
 jobs=${BUILD_JOBS:-8}
 [[ $jobs =~ ^[1-9][0-9]*$ ]] || exit 2
 trap 'printf "%s\n" "$?" > /output/build-exit-code.txt' EXIT
+make -j"$jobs" bzImage KBUILD_BUILD_VERSION=1
 make -j"$jobs" rpm-pkg RPMOPTS="--define \"_smp_mflags -j$jobs\""
 find rpmbuild -type f -name '*.rpm' -exec cp -t /output -- {} +
 cp .config System.map /output/

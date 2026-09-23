@@ -23,6 +23,9 @@ VERIFIED = {
     'xz': ('5.8.4', 'https://github.com/tukaani-project/xz/releases/tag/v5.8.4'),
     'zstd': ('1.5.7', 'https://github.com/facebook/zstd/releases/tag/v1.5.7'),
     'c-ares': ('1.34.8', 'https://github.com/c-ares/c-ares/releases/tag/v1.34.8'),
+    'libpng': ('1.6.58', 'https://www.libpng.org/pub/png/libpng.html'),
+    'libjpeg-turbo': ('3.2.0', 'https://github.com/libjpeg-turbo/libjpeg-turbo/releases/tag/3.2.0'),
+    'lcms2': ('2.19.1', 'https://github.com/mm2/Little-CMS/releases/tag/lcms2.19.1'),
 }
 BOOT = {'kernel', 'grub2', 'shim', 'systemd', 'lvm2', 'device-mapper-multipath',
         'device-mapper-persistent-data', 'mdadm', 'iscsi-initiator-utils'}

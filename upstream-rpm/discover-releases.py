@@ -5,6 +5,8 @@ import datetime
 import json
 import pathlib
 import re
+import shutil
+import subprocess
 import urllib.error
 import urllib.request
 
@@ -74,9 +76,16 @@ def collect(item):
     result = {'source_project':project, 'url':url, 'kind':kind,
               'status':'candidate-needs-review', 'version_or_tag':None}
     try:
-        req = urllib.request.Request(url, headers={'User-Agent':'linux-oss-upstream-review'})
-        with urllib.request.urlopen(req, timeout=25) as response:
-            body = response.read().decode('utf-8')
+        if kind == 'github-project-latest-release' and shutil.which('gh'):
+            # Public metadata only. The CLI handles existing credentials;
+            # tokens are never read, printed, or written to the report.
+            result_api = subprocess.run(['gh','api',url.removeprefix('https://api.github.com/')],
+                check=True, capture_output=True, text=True, timeout=30)
+            body = result_api.stdout
+        else:
+            req = urllib.request.Request(url, headers={'User-Agent':'linux-oss-upstream-review'})
+            with urllib.request.urlopen(req, timeout=25) as response:
+                body = response.read().decode('utf-8')
         if kind == 'github-project-latest-release':
             release = json.loads(body)
             if release.get('draft') or release.get('prerelease'):
@@ -84,12 +93,13 @@ def collect(item):
             result.update(version_or_tag=release['tag_name'],
                           evidence_url=release['html_url'],
                           published_at=release.get('published_at'))
-        elif kind == 'gnome-latest-marker':
-            versions=set(re.findall(r'LATEST-IS-(\d+(?:\.\d+)+)',body))
+        elif kind == 'gnome-release-cache':
+            cache=json.loads(body)
+            versions={v for v in cache[1][archive] if re.fullmatch(r'\d+(?:\.\d+)+',v)}
             if not versions:
-                raise ValueError('No LATEST-IS marker')
+                raise ValueError('No numeric releases in GNOME cache')
             result.update(version_or_tag=max(versions,key=lambda v:tuple(map(int,v.split('.')))),
-                          evidence_url=url,note='Project LATEST marker; stable branch and API migration need review')
+                          evidence_url=url,note='Highest numeric source archive; may be a development branch. Stable/API branch review required.')
         else:
             versions = set(re.findall(re.escape(archive)+r'-(\d+(?:\.\d+)+(?:p\d+)?)\.tar\.(?:gz|xz|bz2)',body))
             if not versions:
@@ -97,7 +107,8 @@ def collect(item):
             version = max(versions, key=lambda v:tuple(map(int,re.findall(r'\d+',v))))
             result.update(version_or_tag=version, evidence_url=url,
                           note='Highest numeric archive; maintenance branch/stable policy must be reviewed')
-    except (OSError, ValueError, KeyError) as exc:
+        result['checked_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    except (OSError, ValueError, KeyError, subprocess.SubprocessError) as exc:
         result.update(status='lookup-failed', error=str(exc))
     return result
 
@@ -110,7 +121,7 @@ def main():
     jobs += [('grub2' if p=='grub' else p, 'gnu-official-release-directory',
               f'https://ftp.gnu.org/gnu/{p}/',p) for p in GNU if ('grub2' if p=='grub' else p) in targets]
     jobs += [(p,'official-release-directory',url,name) for p,(url,name) in DIRECTORIES.items() if p in targets and p not in GITHUB]
-    jobs += [(p,'gnome-latest-marker',f'https://download.gnome.org/sources/{name}/',name) for p,name in GNOME.items() if p in targets]
+    jobs += [(p,'gnome-release-cache',f'https://download.gnome.org/sources/{name}/cache.json',name) for p,name in GNOME.items() if p in targets]
     prior_path=ROOT/'output/release-candidates.json'
     prior={r['source_project']:r for r in json.loads(prior_path.read_text(encoding='utf-8'))['results']} if prior_path.exists() else {}
     ready=[prior[j[0]] for j in jobs if j[0] in prior and prior[j[0]]['status']=='candidate-needs-review']

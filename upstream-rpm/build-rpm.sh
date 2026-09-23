@@ -5,7 +5,14 @@ export LC_ALL=C.UTF-8
 [[ $# == 1 && $1 == *.spec ]] || { echo 'Usage: build-rpm.sh /path/package.spec' >&2; exit 2; }
 [[ $(id -u) -ne 0 ]] || { echo 'Build as an unprivileged user.' >&2; exit 2; }
 spec=$(realpath -- "$1")
-top=$(mktemp -d /tmp/rpmbuild.XXXXXX)
+reuse_args=()
+if [[ -n ${REUSE_RPMBUILD_TOPDIR:-} ]]; then
+  top=$(realpath -- "$REUSE_RPMBUILD_TOPDIR")
+  [[ $top =~ ^/tmp/rpmbuild\.[[:alnum:]]+$ && -d $top/BUILD && $(stat -c %u "$top") == "$(id -u)" ]] || exit 2
+  reuse_args=(--define 'reuse_prepared 1')
+else
+  top=$(mktemp -d /tmp/rpmbuild.XXXXXX)
+fi
 preserve_evidence() {
   local code=$?
   mkdir -p /output/test-results
@@ -20,8 +27,8 @@ trap preserve_evidence EXIT
 mkdir -p "$top"/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 cp -- "$spec" "$top/SPECS/"
 rpmspec -P "$spec" > "$top/expanded.spec"
-python3.11 - /recipe/sources.lock.json /sources "$top/SOURCES" "$top/expanded.spec" <<'PY'
-import hashlib,json,pathlib,re,shutil,sys
+python3.11 - /recipe/sources.lock.json /sources "$top/SOURCES" "$top/expanded.spec" "${REUSE_RPMBUILD_TOPDIR:-}" <<'PY'
+import hashlib,json,pathlib,re,shutil,sys,tarfile
 locked={r['name']:r for r in json.load(open(sys.argv[1]))['sources']}
 expanded=pathlib.Path(sys.argv[4]).read_text()
 needed=re.findall(r'^Source\d*:\s*(\S+)',expanded,re.M|re.I)
@@ -33,10 +40,29 @@ for url in needed:
     if hashlib.sha256(p.read_bytes()).hexdigest()!=locked[name]['sha256']:
         raise SystemExit('Source hash mismatch: '+name)
     shutil.copyfile(p,pathlib.Path(sys.argv[3])/name)
+if sys.argv[5]:
+    # A cached source tree must still match every regular file in Source0.
+    # Configure, make and the complete check phase will run again below.
+    archive=pathlib.Path(sys.argv[2])/needed[0].rsplit('/',1)[-1]
+    build=(pathlib.Path(sys.argv[5])/'BUILD').resolve()
+    checked=0
+    with tarfile.open(archive) as source:
+        for member in source:
+            if not member.isfile(): continue
+            original=pathlib.PurePosixPath(member.name)
+            if original.is_absolute() or '..' in original.parts:
+                raise SystemExit('Unsafe source archive path')
+            cached=(build/member.name).resolve()
+            if build not in cached.parents or not cached.is_file():
+                raise SystemExit('Cached source is missing: '+member.name)
+            if hashlib.sha256(source.extractfile(member).read()).digest()!=hashlib.sha256(cached.read_bytes()).digest():
+                raise SystemExit('Cached source was modified: '+member.name)
+            checked+=1
+    print('VERIFIED_CACHED_SOURCE_FILES',checked)
 PY
 jobs=${BUILD_JOBS:-4}
 [[ $jobs =~ ^[1-9][0-9]*$ ]] || { echo 'Invalid BUILD_JOBS' >&2; exit 2; }
-rpmbuild -ba --define "_topdir $top" --define "_smp_mflags -j$jobs" "$top/SPECS/$(basename -- "$spec")"
+rpmbuild -ba "${reuse_args[@]}" --define "_topdir $top" --define "_smp_mflags -j$jobs" "$top/SPECS/$(basename -- "$spec")"
 find "$top/RPMS" "$top/SRPMS" -type f -name '*.rpm' -exec cp -t /output -- {} +
 rpm -qa --qf '%{NAME}\t%{EPOCHNUM}:%{VERSION}-%{RELEASE}\t%{ARCH}\n' | sort > /output/builder-rpms.tsv
 for package in /output/*.rpm; do

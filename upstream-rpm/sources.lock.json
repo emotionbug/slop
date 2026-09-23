@@ -134,6 +134,30 @@
       "sha256": "6e3191c1455468b3fc35a417fb565c1c5071aee1b7e7f85e30cf48a98d37d8b5",
       "upstream_signature_verified": false,
       "verification": "HTTPS upstream release source pinned by SHA256; test-only dependency"
+    },
+    {
+      "name": "libpng-1.6.58.tar.xz",
+      "url": "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.58/libpng-1.6.58.tar.xz",
+      "sha256": "28eb403f51f0f7405249132cecfe82ea5c0ef97f1b32c5a65828814ae0d34775",
+      "upstream_signature_verified": false,
+      "verification": "Official libpng homepage SHA256",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libjpeg-turbo-3.2.0.tar.gz",
+      "url": "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.2.0/libjpeg-turbo-3.2.0.tar.gz",
+      "sha256": "6f30092cef9fb839779646608f4ee14ae3cbac989c47fa05e841b0841f09878e",
+      "upstream_signature_verified": false,
+      "verification": "Official GitHub release asset SHA256",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "lcms2-2.19.1.tar.gz",
+      "url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.19.1/lcms2-2.19.1.tar.gz",
+      "sha256": "bfc54f7bab59fbc921012014a8032e4cba4abd46db47d46b76416a8c0b2815c8",
+      "upstream_signature_verified": false,
+      "verification": "Official GitHub release asset SHA256",
+      "checked_on": "2026-09-24"
     }
   ]
 }

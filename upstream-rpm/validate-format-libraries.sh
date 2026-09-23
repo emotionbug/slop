@@ -30,7 +30,8 @@ python3 /recipe/check-elf-exports.py snapshot /tmp/elf-before.json "${libraries[
 dnf -y --disableplugin=subscription-manager --disablerepo='*' \
   --setopt=localpkg_gpgcheck=False install "${rpms[@]}"
 dnf --disableplugin=subscription-manager --disablerepo='*' check
-python3 /recipe/check-elf-exports.py compare /tmp/elf-before.json
+abi_status=0
+python3 /recipe/check-elf-exports.py compare /tmp/elf-before.json || abi_status=$?
 python3 - <<'PY'
 import lzma, pyexpat, xml.etree.ElementTree as ET
 data = bytes(range(256)) * 4096
@@ -50,6 +51,7 @@ print('PYTHON_LZMA_AND_EXPAT_OK', pyexpat.EXPAT_VERSION)
 PY
 xz -c /tmp/input.bin | xz -dc | cmp /tmp/input.bin -
 if [[ $profile == xml-xz ]]; then
+  [[ $abi_status == 0 ]]
   echo 'UBI_XML_XZ_UPGRADE_AND_RUNTIME_OK'
   exit 0
 fi
@@ -87,4 +89,8 @@ C
 gcc -O2 /tmp/library-check.c -lzstd -lcares -o /tmp/library-check
 /tmp/library-check
 ldd /tmp/library-check
+if [[ $abi_status != 0 ]]; then
+  echo 'FUNCTIONAL_CHECKS_PASSED_BUT_ABI_EXPORTS_FAILED; candidate remains held'
+  exit "$abi_status"
+fi
 echo 'UBI_FORMAT_LIBRARY_UPGRADE_AND_RUNTIME_OK'

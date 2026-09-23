@@ -23,9 +23,11 @@ Headers and link metadata for Zstandard.
 %setup -q
 %build
 export CFLAGS="%{optflags}"
+export ZSTD_LIB_DEPRECATED=1
 make %{?_smp_mflags} PREFIX=/usr LIBDIR=/usr/lib64
 %check
 export CFLAGS="%{optflags}"
+export ZSTD_LIB_DEPRECATED=1
 # The standard native test suite includes randomized stream/corpus tests.
 mkdir -p test-python
 ln -s /usr/bin/python3.11 test-python/python3
@@ -33,6 +35,7 @@ export PATH="$PWD/test-python:$PATH"
 make -C tests %{?_smp_mflags} test
 %install
 export CFLAGS="%{optflags}"
+export ZSTD_LIB_DEPRECATED=1
 make DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64 install
 rm -f %{buildroot}%{_libdir}/libzstd.a
 %post -n libzstd -p /sbin/ldconfig
@@ -47,6 +50,7 @@ rm -f %{buildroot}%{_libdir}/libzstd.a
 %{_libdir}/libzstd.so.1*
 %files -n libzstd-devel
 %{_includedir}/zstd*.h
+%{_includedir}/zdict.h
 %{_libdir}/libzstd.so
 %{_libdir}/pkgconfig/libzstd.pc
 %changelog

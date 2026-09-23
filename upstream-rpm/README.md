@@ -34,6 +34,18 @@ glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에
 - Expat 개발용 RPM에 필요한 `cmake-filesystem`은 공식 UBI RPM을 확보하고
   Red Hat 서명을 검증했습니다. 12종 교체 RPM과 보조 RPM을 합친 이름 기반
   의존성 검사에서 누락은 0개이며, 파일/rich dependency 등 1,180건은 미검증입니다.
+- libpng 1.6.58은 36개 upstream 테스트를 통과했고 RHEL의 Epoch 2를 유지합니다.
+  Little CMS 2.19.1도 upstream 테스트를 통과했습니다. 기존 UBI 라이브러리로
+  연결한 동일 실행파일이 교체 전후 PNG/색상 변환 테스트를 통과했고,
+  기존 PNG 493개/LCMS 360개 공개 심볼이 유지됩니다.
+- c-ares 1.34.8은 오프라인 테스트 1,140개와 fuzz suite 2개를 통과했습니다.
+  외부 DNS 테스트는 62개 중 60개 통과, 2개 ANY 질의 실패입니다. 독립 질의에서도
+  DNS 서버의 RCODE 4 응답을 재현했습니다. 전부 통과한 것으로 기록하지 않습니다.
+  UBI 설치·DNS 파서 검증과 별도 Rocky EL8 참조 라이브러리의 60개 심볼 비교는
+  통과했습니다. 후자는 정확한 RHEL 바이너리와의 비교는 아닙니다.
+- 위 **15종 교체 RPM + 공식 UBI 보조 RPM 1종**을 함께 검증했습니다.
+  UBI 기능 검사와 이름 기반 의존성 검사 통과, downgrade 0개입니다.
+  파일/rich dependency 등 1,182건과 실제 서버 적용은 아직 미검증입니다.
 
 binutils 2.47은 GCC Toolset 14로 재검증하여 앞선 LTO 실패 12개가 해결됐습니다.
 그러나 CTF `Slice` 테스트 1개가 실패해 배포를 보류합니다. assembler 2,098개,
@@ -41,7 +53,10 @@ linker 3,263개, binutils 349개, libsframe 168개, libctf 39개가 통과했습
 GCC 16.2는 별도로 3단계 bootstrap 빌드를 진행합니다.
 glibc 2.44의 별도 경로 평가 빌드와 수집된 커널 설정을 반영한 Linux 7.2.7
 RPM 빌드도 진행합니다. 이들은 현재 시스템 교체 검증이 완료된 패키지가 아닙니다.
-Zstandard와 c-ares도 빌드·테스트 중이며 아직 공개 후보 묶음에 포함하지 않았습니다.
+Zstandard 1.5.7과 libjpeg-turbo 3.2.0은 빌드·upstream 테스트 및 기본 기능 검사를
+통과했으나 각각 `ZSTD_getSequences`, `jpeg_std_message_table` 심볼이 제거되어
+배포 묶음에서는 보류합니다. Zstandard의 구형 ZBUFF API 21개는 활성화해 보존했습니다.
+두 심볼은 upstream 실험용/내부 API이지만 기존 사용 프로그램이 없다고 단정할 수 없습니다.
 
 OpenSSL의 첫 테스트 실행은 생성한 인증서가 아직 유효하지 않다는 오류로 실패했고,
 동일 소스의 두 번째 전체 실행이 통과했습니다. 로그에서 음수 경과 시간도 관찰되어
@@ -74,11 +89,19 @@ docker run --rm --network=none --security-opt=no-new-privileges `
   -v "${recipePath}:/recipe:ro" `
   -v "${recipePath}/sources:/sources:ro" `
   -v "${recipePath}/output/rsync:/output" `
-  linux-oss-upstream-builder:el8 bash /recipe/build-rpm.sh /recipe/specs/rsync.spec
+  linux-oss-upstream-builder:el8 bash /recipe/run-build.sh build-rpm.sh /recipe/specs/rsync.spec
 ```
 
 SPEC마다 별도 빌드와 검증이 필요합니다. `build-rpm.sh`는 지정한 SPEC만 빌드하고,
 의존성이나 테스트가 실패하면 중단합니다.
+장시간 빌드는 컨테이너 이름을 지정하고 `--rm`을 생략하면 실패 증거와 빌드 캐시를
+보존할 수 있습니다. `run-build.sh`는 실행 스크립트를 컨테이너에 복사한 뒤 실행해
+작업 중 recipe 편집이 진행 중인 셸 입력을 바꾸지 않도록 합니다.
+
+`check-removed-symbol-users.py`는 실제 서버의 ELF import/COPY relocation을
+읽기 전용으로 검사합니다. 기본 `/usr` 실행파일·라이브러리와 `/opt` 외에 애플리케이션
+경로가 있다면 인수로 전체 검사 경로를 지정합니다. 결과가 비어도 dlsym/플러그인이나
+현재 로드된 삭제 파일까지 검증한 것은 아닙니다. 결과 파일은 공개 저장소에 올리지 않습니다.
 
 ## rsync 검증용 RPM의 현재 범위
 

@@ -1,0 +1,4 @@
+FROM localhost/linux-oss-format-validation:el8-20260924
+RUN dnf -y --disableplugin=subscription-manager --setopt=install_weak_deps=False \
+      install libpng-devel libjpeg-turbo-devel lcms2 \
+    && dnf clean all

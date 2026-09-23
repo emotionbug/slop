@@ -9,12 +9,12 @@ root=$work/rpmroot
 guest=$work/guest
 mkdir -p "$root" "$guest"/{bin,dev,proc,sys,tmp,mnt,lib/modules}
 (cd "$root" && rpm2cpio "$1" | cpio -idm --quiet --no-absolute-filenames)
-mapfile -t kernels < <(find "$root/boot" -maxdepth 1 -type f -name 'vmlinuz-*')
+mapfile -t kernels < <(find "$root/lib/modules" -mindepth 2 -maxdepth 2 -type f -name vmlinuz)
 [[ ${#kernels[@]} == 1 ]] || { echo 'Expected one kernel image' >&2; exit 1; }
 kernel=${kernels[0]}
-release=${kernel##*/vmlinuz-}
+release=$(basename "$(dirname "$kernel")")
 [[ $release == 7.2.7*linuxoss* ]] || exit 1
-depmod -b "$root" -F "$root/boot/System.map-$release" "$release"
+depmod -b "$root" -F "$root/lib/modules/$release/System.map" "$release"
 for driver in vmw_pvscsi vmxnet3 sd_mod xfs dm_mod; do
   modprobe --show-depends -d "$root" -S "$release" "$driver"
 done > "$work/module-dependencies.txt"
@@ -37,7 +37,7 @@ for name in modules.builtin modules.builtin.modinfo modules.order; do
     cp "$root/lib/modules/$release/$name" "$guest/lib/modules/$release/"
   fi
 done
-depmod -b "$guest" -F "$root/boot/System.map-$release" "$release"
+depmod -b "$guest" -F "$root/lib/modules/$release/System.map" "$release"
 cp /usr/bin/busybox "$guest/bin/"
 for applet in sh mount umount mkdir sleep cat cmp ip modprobe poweroff sync uname; do
   ln -s busybox "$guest/bin/$applet"

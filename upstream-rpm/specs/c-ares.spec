@@ -35,7 +35,16 @@ cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib64 \
   -DCARES_BUILD_TESTS=ON -DCARES_BUILD_CONTAINER_TESTS=OFF
 cmake --build build -- %{?_smp_mflags}
 %check
-ctest --test-dir build --output-on-failure
+# The build has no external network. Keep all parser, mock DNS, event-system
+# and fuzz-corpus checks; explicitly separate tests that query public DNS.
+build/bin/arestest --gtest_list_tests > /output/c-ares-test-list.txt
+GTEST_FILTER='-DefaultChannelTest.Live*:DefaultChannelTest.TimeoutValue' \
+  ctest --test-dir build --output-on-failure
+mkdir -p /output/c-ares-network-test
+cp build/bin/arestest /output/c-ares-network-test/
+cp -L build/lib64/libcares.so.2 /output/c-ares-network-test/libcares.so.2
+printf '%s\n' 'DefaultChannelTest.Live*:DefaultChannelTest.TimeoutValue' \
+  > /output/c-ares-network-test/filter.txt
 %install
 DESTDIR=%{buildroot} cmake --install build
 %post -p /sbin/ldconfig

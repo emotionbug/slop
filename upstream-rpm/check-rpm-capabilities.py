@@ -102,15 +102,18 @@ def main():
                             'installed': before,
                             'evr_comparison': rpm.labelCompare((p['epoch'],p['version'],p['release']),
                               (before['epoch'],before['version'],before['release'])) if before else None})
+    downgrades = [p for p in comparisons if p['evr_comparison'] is not None and p['evr_comparison'] < 0]
     report = {'check': 'static-capability-headers-only', 'candidates':comparisons,
+              'downgrade_candidates':downgrades,
               'missing_named_requirements':missing, 'unverified_requirements':unresolved,
               'dnf_transaction_tested':False, 'file_conflicts_tested':False, 'modularity_tested':False,
               'service_scripts_tested':False, 'runtime_tested':False,
               'limit':'No file owner inventory, RPM payload conflicts, rich deps, scriptlet ordering, module filtering or dlopen analysis. Not deployment clearance.'}
     args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'candidate_count':len(built), 'missing_named_requirements':len(missing),
+                      'downgrade_candidates':len(downgrades),
                       'unverified_file_rich_or_unversioned_requirements':len(unresolved)}))
-    if missing:
+    if missing or downgrades:
         raise SystemExit(1)
 
 

@@ -10,20 +10,23 @@ import shutil
 import tarfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
-VERSION = '20260924'
+VERSION = '20260924-2'
 TARGETS = {
     'rsync': ('3.5.1', ['rsync']),
     'zlib': ('1.3.2', ['zlib', 'zlib-devel']),
     'pcre2': ('10.48', ['pcre2', 'pcre2-devel', 'pcre2-utf16', 'pcre2-utf32']),
     'expat': ('2.8.5', ['expat', 'expat-devel']),
     'xz': ('5.8.4', ['xz', 'xz-libs', 'xz-devel']),
+    'c-ares': ('1.34.8', ['c-ares']),
+    'libpng': ('1.6.58', ['libpng']),
+    'lcms2': ('2.19.1', ['lcms2']),
 }
 
 
 def main():
     validation = json.loads((ROOT/'output/validation.json').read_text())
-    if (validation.get('_combined_xml_xz', {}).get('runtime_result') != 'passed' or
-            validation.get('_combined_xml_xz', {}).get('host_capability_result') != 'passed'):
+    if (validation.get('_combined_fifteen', {}).get('runtime_result') != 'passed' or
+            validation.get('_combined_fifteen', {}).get('host_capability_result') != 'passed'):
         raise SystemExit('Combined container validation has not passed')
     archive = ROOT/'output'/('el8-rpm-candidates-'+VERSION+'.tar.gz')
     if archive.exists():
@@ -36,12 +39,22 @@ def main():
     lock = json.loads((ROOT/'sources.lock.json').read_text())
     included_sources = {'rsync-3.5.1.tar.gz', 'xxHash-0.8.4.tar.gz',
                         'zlib-1.3.2.tar.xz', 'pcre2-10.48.tar.bz2',
-                        'expat-2.8.5.tar.xz', 'xz-5.8.4.tar.xz'}
+                        'expat-2.8.5.tar.xz', 'xz-5.8.4.tar.xz',
+                        'c-ares-1.34.8.tar.gz', 'googletest-1.18.0.tar.gz',
+                        'libpng-1.6.58.tar.xz', 'lcms2-2.19.1.tar.gz'}
     manifest['upstream_sources'] = [s for s in lock['sources'] if s['name'] in included_sources]
     manifest['validation_scope'] = ['upstream-tests', 'UBI8-DNF-upgrade',
         'Java8-Python-compression', 'PCRE2-JIT', 'rsync-old-peer-over-local-pipe',
         'Python-Expat-XML-and-XZ-roundtrip', 'Expat-XZ-exported-symbol-presence',
+        'PNG-LCMS-old-binary-roundtrips-and-exported-symbol-presence',
+        'c-ares-1140-offline-tests-and-two-fuzz-suites', 'c-ares-UBI-DNS-parser',
+        'c-ares-EL8-reference-60-exports-not-exact-RHEL-baseline',
         'target-RPM-named-capabilities-only']
+    manifest['validation_exceptions'] = [
+        'c-ares public DNS tests: 60 passed, 2 ANY-query tests failed because resolver returned RCODE 4 NotImplemented; independent query reproduced.',
+        'Zstandard and libjpeg-turbo remain excluded because removed exports need target-consumer review.',
+        'File/rich dependencies, full target transaction and applications have not been validated.'
+    ]
     for project, (version, names) in TARGETS.items():
         artifacts = [(name+'-'+version+'-1.linuxoss.el8.x86_64.rpm', 'rpms') for name in names]
         artifacts.append((project+'-'+version+'-1.linuxoss.el8.src.rpm', 'srpms'))
@@ -67,8 +80,9 @@ def main():
     (dest/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
     (dest/'SHA256SUMS').write_text(''.join(r['sha256']+'  '+r['path']+'\n' for r in manifest['files']),encoding='ascii')
     (dest/'README.txt').write_text(
-        'EL8 candidates: rsync 3.5.1, zlib 1.3.2, PCRE2 10.48, Expat 2.8.5, XZ 5.8.4.\n'
-        'Twelve replacement RPMs, five source RPMs, one official UBI directory-layout dependency.\n'
+        'EL8 candidates: rsync, zlib, PCRE2, Expat, XZ, c-ares, libpng, Little CMS.\n'
+        'Fifteen replacement RPMs, eight source RPMs, one official UBI directory-layout dependency.\n'
+        'See manifest.json for exact versions, test scope and external-DNS exceptions.\n'
         'Not a complete 323-package upgrade; not tested on the target server.\n'
         'Custom RPMs are unsigned local builds. Only cmake-filesystem is a signed Red Hat UBI RPM.\n'
         'UBI container tests do not prove target boot or application compatibility.\n'

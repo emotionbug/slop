@@ -45,7 +45,22 @@ build/gcc/xg++ -Bbuild/gcc \
 build/check-cxx
 
 %install
-make -C build DESTDIR=%{buildroot} install
+# GCC's top-level install target exports the original host compiler. Some
+# generated checksum files are rebuilt during installation; stage-3 objects
+# then require the bootstrap libstdc++, not EL8's GCC 8 runtime. Use the same
+# stage-2 compiler/header/library combination used to build stage 3.
+stage_root="$PWD/build"
+stage_cc="$stage_root/prev-gcc/xgcc -B$stage_root/prev-gcc/"
+stage_cxx="$stage_root/prev-gcc/xg++ -B$stage_root/prev-gcc/ -nostdinc++"
+stage_cxx="$stage_cxx -B$stage_root/prev-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs"
+stage_cxx="$stage_cxx -B$stage_root/prev-x86_64-pc-linux-gnu/libstdc++-v3/libsupc++/.libs"
+stage_cxx="$stage_cxx -I$stage_root/prev-x86_64-pc-linux-gnu/libstdc++-v3/include/x86_64-pc-linux-gnu"
+stage_cxx="$stage_cxx -I$stage_root/prev-x86_64-pc-linux-gnu/libstdc++-v3/include -I$PWD/libstdc++-v3/libsupc++"
+stage_cxx="$stage_cxx -L$stage_root/prev-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs"
+stage_cxx="$stage_cxx -L$stage_root/prev-x86_64-pc-linux-gnu/libstdc++-v3/libsupc++/.libs"
+make -C build DESTDIR=%{buildroot} install \
+  CC="$stage_cc" CXX="$stage_cxx" CC_FOR_BUILD="$stage_cc" CXX_FOR_BUILD="$stage_cxx" \
+  LDFLAGS='-static-libstdc++ -static-libgcc'
 find %{buildroot} -name '*.la' -delete
 
 %files

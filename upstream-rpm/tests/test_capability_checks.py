@@ -35,6 +35,18 @@ class DependencySemantics(unittest.TestCase):
     def test_unversioned_provide_requires_solver_review(self):
         self.assertIsNone(checker.satisfies(dep('2.0', '>='), dep('', '')))
 
+    def test_arch_specific_to_noarch_replaces_old_provides(self):
+        self.assertTrue(checker.replaces({'name':'common','arch':'x86_64'},
+                                        {'name':'common','arch':'noarch'}))
+
+    def test_noarch_to_arch_specific_replaces_old_provides(self):
+        self.assertTrue(checker.replaces({'name':'common','arch':'noarch'},
+                                        {'name':'common','arch':'x86_64'}))
+
+    def test_native_upgrade_retains_other_multilib_architecture(self):
+        self.assertFalse(checker.replaces({'name':'lib','arch':'i686'},
+                                         {'name':'lib','arch':'x86_64'}))
+
 
 if __name__ == '__main__':
     unittest.main()

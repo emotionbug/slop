@@ -1,14 +1,14 @@
 # 2026-09-24 EL8 평가용 RPM 묶음
 
-전체 323종 중 **46종과 의존 RPM 2종**의 로컬 설치·실행 검사를 마쳤습니다.
+전체 323종 중 **51종과 의존 RPM 2종**의 로컬 설치·실행 검사를 마쳤습니다.
 **이 중 11종은 제거된 심볼을 쓰는 서버 프로그램이 있는지 추가 확인해야 합니다.**
 실제 서버 적용, 전체 ABI 호환성, 전체 CVE 해결을 완료한 묶음은 아닙니다.
 
-[다운로드: upstream-rpm-candidates-20260924-5](https://github.com/emotionbug/slop/releases/tag/upstream-rpm-candidates-20260924-5)
+[다운로드: upstream-rpm-candidates-20260924-6](https://github.com/emotionbug/slop/releases/tag/upstream-rpm-candidates-20260924-6)
 
-- `el8-rpm-candidates-20260924-5.tar.gz`: 93.2 MiB
-- SHA-256: `acfa0061ee1fdf633cb64570911cabd7253f122ab3641bd388cddfc92e0a976e`
-- 바이너리 RPM 48개, 대응 SRPM 34개, 체크섬 및 읽기 전용 사전 검사 도구 포함.
+- `el8-rpm-candidates-20260924-6.tar.gz`: 105.5 MiB
+- SHA-256: `9fc4ec9b0c649de6cb252bb70012a0d4b61e4c9ddb384357b00817322222d36b`
+- 바이너리 RPM 53개, 대응 SRPM 38개, 체크섬 및 읽기 전용 사전 검사 도구 포함.
 - 자체 RPM은 미서명입니다. `cmake-filesystem`만 Red Hat 서명을 확인한 공식 UBI RPM입니다.
 - 서버 인벤토리·취약점 CSV·사용자 파일·키·실행 로그는 포함하지 않습니다.
 
@@ -35,6 +35,9 @@
 | libjpeg-turbo | 3.2.0 | libjpeg-turbo |
 | HarfBuzz / FreeType | 14.5.0 / 2.14.3 | harfbuzz, freetype |
 | GNU time / Libgcrypt | 1.10 / 1.12.4 | time, libgcrypt |
+| GNU coreutils | 9.12 | coreutils, coreutils-common (noarch) |
+| libsolv / protobuf-c | 0.7.40 / 1.5.2 | libsolv, protobuf-c |
+| JBIG2 decoder | 0.20 | jbig2dec-libs |
 
 의존 RPM은 자체 `libgpg-error 1.61`과 공식 UBI `cmake-filesystem 3.26.5`입니다.
 libgpg-error는 최신 Libgcrypt에 필요하며 원래 323종에는 없는 추가 항목입니다.
@@ -45,13 +48,13 @@ libgpg-error는 최신 Libgcrypt에 필요하며 원래 323종에는 없는 추�
 DNF 예정 작업을 한 폴더에 수집합니다. 프록시가 필요하면 서버의 `https_proxy`를 먼저 설정합니다.
 
 ```bash
-wget -O el8-rpm-candidates-20260924-5.tar.gz \
-  https://github.com/emotionbug/slop/releases/download/upstream-rpm-candidates-20260924-5/el8-rpm-candidates-20260924-5.tar.gz
-wget -O el8-rpm-candidates-20260924-5.tar.gz.sha256 \
-  https://github.com/emotionbug/slop/releases/download/upstream-rpm-candidates-20260924-5/el8-rpm-candidates-20260924-5.tar.gz.sha256
-sha256sum -c el8-rpm-candidates-20260924-5.tar.gz.sha256 &&
+wget -O el8-rpm-candidates-20260924-6.tar.gz \
+  https://github.com/emotionbug/slop/releases/download/upstream-rpm-candidates-20260924-6/el8-rpm-candidates-20260924-6.tar.gz
+wget -O el8-rpm-candidates-20260924-6.tar.gz.sha256 \
+  https://github.com/emotionbug/slop/releases/download/upstream-rpm-candidates-20260924-6/el8-rpm-candidates-20260924-6.tar.gz.sha256
+sha256sum -c el8-rpm-candidates-20260924-6.tar.gz.sha256 &&
 bundle_dir=$(mktemp -d "${PWD}/el8-rpm-candidates.XXXXXX") &&
-tar -xzf el8-rpm-candidates-20260924-5.tar.gz -C "$bundle_dir" &&
+tar -xzf el8-rpm-candidates-20260924-6.tar.gz -C "$bundle_dir" &&
 sudo bash "$bundle_dir/el8-rpm-candidates/preflight-candidates.sh"
 ```
 
@@ -81,10 +84,13 @@ sudo bash "$bundle_dir/el8-rpm-candidates/preflight-candidates.sh"
 
 ## 완료한 로컬 검사
 
-- 최종 48 RPM을 UBI 8에서 함께 설치하고 `dnf check` 통과. 자체 RPM 47개의
+- 이전 48 RPM을 UBI 8에서 함께 설치하고 `dnf check` 통과. 자체 RPM 47개의
   정확한 이름과 ELF 75개의 빌드 전용 경로 RPATH 부재 확인.
+- 그 환경에 새 5개 RPM을 함께 설치하고 최종 53 RPM의 `dnf check` 통과.
+  기존 실행 파일·설정 경로 보존 및 libsolv/protobuf-c의 기존 export 유지 확인.
 - 실제 서버 RPM 헤더 기준 이름 기반 의존성 누락·downgrade 0개.
-  파일/rich dependency 등 1,181건은 이 정적 검사만으로 판정하지 않았습니다.
+  파일/rich dependency 등 1,183건은 이 정적 검사만으로 판정하지 않았습니다.
+  noarch 전환 시 구형 RPM의 제공 기능이 잘못 남지 않도록 정적 검사기를 보완했습니다.
 - 교체 전 연결한 C 실행파일의 PNG/JPEG/색 변환, Zstd, Oniguruma POSIX 동작 확인.
 - Java 8 폰트·JPEG·gzip, Python 압축·XML, jq 정규식, file Python API, ASN.1 입력,
   AES/SHA256 벡터, GNU time 종료 코드, nano PTY 저장, tmux, tcpdump 등 실행 검사 통과.
@@ -95,14 +101,24 @@ sudo bash "$bundle_dir/el8-rpm-candidates/preflight-candidates.sh"
   libpcap 6,569, tcpdump 11, HarfBuzz 82 및 Libgcrypt 대용량 해시 2개는 건너뛰었습니다.
 - FreeType/nano/tmux/libXpm의 `make check`를 실질적인 전체 테스트로 계산하지 않았습니다.
   기능은 통합 실행 검사에서 확인했습니다. 읽기 전용 심볼 검사 도구는 9개 테스트 통과.
+- 추가 upstream 검사: coreutils 1,094 PASS / 270 SKIP, libsolv 29, protobuf-c 11,
+  JBIG2 4 통과. coreutils 파일 목록·EL8 설정 보존 수정 후 원본 전체 검사는 반복하지 않았고,
+  추가한 `arch` 및 최종 RPM의 복사·해시·정렬·date·timeout·stdbuf·chroot 경로를 확인했습니다.
+- 새 그룹은 DNF/hawkey, protobuf-c API, coreutils, JBIG2 컨텍스트의 실행 검사 4개 통과.
+  이전 15개 실행 검사는 반복하지 않았습니다. JBIG2를 사용하는 실제 Ghostscript 검증은 미실시입니다.
 
 libssh 설정 파일은 `%config(noreplace)`로 보존하며 EL8 crypto-policy/OpenSSH include를 유지합니다.
 커스텀 Libgcrypt는 Red Hat FIPS 검증 모듈이 아닙니다.
+coreutils는 EL8의 색상 설정 5개를 `%config(noreplace)`로 보존하며 `/usr/sbin/chroot`와
+`/usr/bin/arch`를 유지합니다. libsolv는 EL8의 AppData·Conda 관련 export도 활성화했습니다.
 
 ## 아직 포함하지 않은 주요 항목
 
 - libidn/libevent/TIFF/Theora: 최신 소스 빌드 완료, SONAME 변경 및 소비 패키지 연계 검토 필요.
 - OpenJPEG: 공식 전체 테스트 데이터로 1,585개 통과, `issue226` 관련 2개 실패. 후보에서 제외.
+- pkgconf 3.0.7: 빌드 및 테스트 PASS 423건, 라이브러리 SONAME 3→8 전환으로 보류.
+- mtr 2:0.96: RPM 제작 완료. 원본 테스트 도우미의 오래된 sequence 값을 현재 소스에
+  맞춘 뒤 명령·매개변수 검사 9개 통과, 패킷 크기 1개 실패(요청 512, 관측 532). 보류.
 - GCC: 별도 bootstrap 검사 489,896 PASS / 72 FAIL / 2 XPASS. 시스템 GCC 교체본 미완료.
 - 커널: 일반 QEMU UEFI 부팅 검사 완료. 실제 VMware·에이전트·Java 검증 미실시.
 - glibc/OpenSSL: 별도 경로 평가본이며 시스템 교체나 시스템 취약점 조치로 계산하지 않음.

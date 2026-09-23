@@ -15,6 +15,12 @@
 | libtasn1 4.21.0 | CVE-2025-13151 | [GNU 릴리스 공지](https://lists.gnu.org/archive/html/info-gnu/2026-01/msg00003.html)의 수정 버전. 소스 OpenPGP 서명 확인, upstream 검사 40개 및 DER 길이 입력 검사 통과 |
 | libssh 0.12.2 | CVE-2026-59843 | [upstream 보안 릴리스](https://www.libssh.org/2026/07/28/libssh-0-12-2-security-release/)의 수정 버전. upstream 검사 44개와 호스트 키를 대조한 로컬 공개키 인증·명령 실행 통과. 실제 서버 SSH 정책 검증은 아님 |
 | jq 1.8.2 | CVE-2026-32316, 33947, 33948 등을 포함한 릴리스 보안 수정 | [공식 릴리스 노트](https://github.com/jqlang/jq/releases/tag/jq-1.8.2)에 수정 항목 명시. upstream 검사 9개 통과. 외부 Oniguruma 6.9.10-2에 연결하여 JSON·정규식 실행 확인. CSV의 모든 jq 항목과 개별 대조 완료를 의미하지 않음 |
+| libsolv 0.7.40 | CVE-2026-9149, CVE-2026-9150, CVE-2026-48863 수정 이력 포함 | [upstream 변경 이력](https://github.com/openSUSE/libsolv/blob/0.7.40/package/libsolv.changes)의 0.7.37/0.7.38 보안 수정이 포함된 버전. upstream 검사 29개와 설치 후 DNF/hawkey 조회 통과. EL8의 AppData·Conda 기능을 포함하여 기존 export 유지 |
+
+coreutils 9.12, protobuf-c 1.5.2, jbig2dec 0.20도 소스 빌드·로컬 검증을 마쳤습니다.
+이 세 프로젝트는 버전 증가만으로 CSV의 모든 CVE를 해결 처리하지 않습니다.
+protobuf-c의 [공식 릴리스 이력](https://github.com/protobuf-c/protobuf-c/releases)은
+1.5.1의 unknown-fields 포인터 초기화 수정 등을 설명하며 1.5.2에 포함돼 있습니다.
 
 Libgcrypt 1.12.4는 [공식 안정판 안내](https://gnupg.org/software/libgcrypt/)와
 [공식 SHA-256 목록](https://gnupg.org/download/integrity_check.html)을 대조했습니다.

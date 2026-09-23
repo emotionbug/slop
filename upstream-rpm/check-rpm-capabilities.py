@@ -6,6 +6,7 @@ Only read-only inventory headers and candidate RPMs are inspected.
 """
 import argparse
 import collections
+import functools
 import csv
 import glob
 import json
@@ -48,6 +49,14 @@ def rows(path):
         return list(csv.DictReader(handle, delimiter='\t'))
 
 
+def replaces(installed, built):
+    # DNF replaces a same-name noarch package during a compatible architecture
+    # transition. Do not retain its old provides or requirements as evidence.
+    return installed['name'] == built['name'] and (
+        installed['arch'] == built['arch'] or
+        installed['arch'] == 'noarch' or built['arch'] == 'noarch')
+
+
 def candidate(ts, path):
     with open(path, 'rb') as handle:
         header = ts.hdrFromFdno(handle.fileno())
@@ -73,10 +82,14 @@ def main():
         raise SystemExit('No RPMs matched')
     ts = rpm.TransactionSet()
     built = [candidate(ts, p) for p in paths]
-    replaced = {(p['name'], p['arch']) for p in built}
     old = rows(args.inventory/'packages.tsv')
-    providers = [r for r in rows(args.inventory/'provides.tsv') if (r['name'],r['arch']) not in replaced]
-    requirements = [r for r in rows(args.inventory/'requires.tsv') if (r['name'],r['arch']) not in replaced]
+    by_name = collections.defaultdict(list)
+    for package in built:
+        by_name[package['name']].append(package)
+    providers = [r for r in rows(args.inventory/'provides.tsv')
+                 if not any(replaces(r,p) for p in by_name[r['name']])]
+    requirements = [r for r in rows(args.inventory/'requires.tsv')
+                    if not any(replaces(r,p) for p in by_name[r['name']])]
     for p in built:
         providers.extend(p['provides'])
         requirements.extend(p['requires'])
@@ -94,12 +107,15 @@ def main():
         matched = [satisfies(r,p) for p in by_cap[cap]]
         if not any(v is True for v in matched):
             (unresolved if any(v is None for v in matched) else missing).append(r)
-    old_by_key = {(p['name'],p['arch']):p for p in old}
     comparisons = []
     for p in built:
-        before = old_by_key.get((p['name'],p['arch']))
+        replaced = [o for o in old if replaces(o,p)]
+        def compare_old(a,b):
+            return rpm.labelCompare((a['epoch'],a['version'],a['release']),
+                                    (b['epoch'],b['version'],b['release']))
+        before = max(replaced,key=functools.cmp_to_key(compare_old)) if replaced else None
         comparisons.append({'name':p['name'], 'arch':p['arch'], 'candidate':p['epoch']+':'+p['version']+'-'+p['release'],
-                            'installed': before,
+                            'installed': before, 'replaces_installed': replaced,
                             'evr_comparison': rpm.labelCompare((p['epoch'],p['version'],p['release']),
                               (before['epoch'],before['version'],before['release'])) if before else None})
     downgrades = [p for p in comparisons if p['evr_comparison'] is not None and p['evr_comparison'] < 0]

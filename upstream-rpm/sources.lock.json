@@ -933,6 +933,89 @@
       "sha256": "7f51c012936de9495bf66abc837862fdfc4ed62fd11f6576b97b89626da3c8cb",
       "upstream_signature_verified": false,
       "verification": "Local ELF aliases for EL8 POSIX API. Old/new public regex structure layout reviewed; old-header binary tested separately. No upstream security claim for this patch."
+    },
+    {
+      "name": "libsolv-0.7.40.tar.gz",
+      "url": "https://github.com/openSUSE/libsolv/archive/refs/tags/0.7.40.tar.gz",
+      "sha256": "30f529ad39d23bdc284b81ea3ed29679162011fc5fb9392635db0b4d1c8e3511",
+      "size": 781842,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, locally pinned SHA256; detached signature not yet verified"
+    },
+    {
+      "name": "protobuf-c-1.5.2.tar.gz",
+      "url": "https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.2/protobuf-c-1.5.2.tar.gz",
+      "sha256": "e2c86271873a79c92b58fef7ebf8de1aa0df4738347a8bd5d4e65a80a16d0d24",
+      "size": 532447,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, locally pinned SHA256; detached signature not yet verified"
+    },
+    {
+      "name": "pkgconf-3.0.7.tar.xz",
+      "url": "https://distfiles.ariadne.space/pkgconf/pkgconf-3.0.7.tar.xz",
+      "sha256": "c926ff491cbd9a331a589160811bd97ab1749b4d5198a519338f2cdfabe6940a",
+      "size": 427648,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, locally pinned SHA256; detached signature not yet verified"
+    },
+    {
+      "name": "jbig2dec-0.20.tar.gz",
+      "url": "https://github.com/ArtifexSoftware/jbig2dec/archive/refs/tags/0.20.tar.gz",
+      "sha256": "a9705369a6633aba532693450ec802c562397e1b824662de809ede92f67aff21",
+      "size": 149782,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, locally pinned SHA256; detached signature not yet verified"
+    },
+    {
+      "name": "mtr-0.96.tar.gz",
+      "url": "https://www.bitwizard.nl/mtr/files/mtr-0.96.tar.gz",
+      "sha256": "ffd19a9f8d5f616c1ea2f0da9fbf9d1239bcecdf5a68912e831966d20929037a",
+      "size": 301374,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, locally pinned SHA256; detached signature not yet verified"
+    },
+    {
+      "name": "coreutils-9.12.tar.xz",
+      "url": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.12.tar.xz",
+      "sha256": "a480198559733e9b3da999e90543ac6f888a2caa544d8d664c5a1f17e528e210",
+      "size": 6704996,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, locally pinned SHA256; detached signature not yet verified"
+    },
+    {
+      "name": "el8-DIR_COLORS",
+      "url": "https://raw.githubusercontent.com/emotionbug/slop/main/upstream-rpm/vendor/el8-coreutils/DIR_COLORS",
+      "sha256": "072e38a284d7872cc0efc30a546245b724aca2469de9ce870e11d4bc684fdc74",
+      "upstream_signature_verified": false,
+      "verification": "Unmodified defaults from Red Hat UBI coreutils-common 8.30-21.el8_10; no target server files"
+    },
+    {
+      "name": "el8-DIR_COLORS.256color",
+      "url": "https://raw.githubusercontent.com/emotionbug/slop/main/upstream-rpm/vendor/el8-coreutils/DIR_COLORS.256color",
+      "sha256": "8c9c27b9174495d8ab52fc23bf7e0a3dcb03717c9f482db8397a332ea1f7f0b1",
+      "upstream_signature_verified": false,
+      "verification": "Unmodified defaults from Red Hat UBI coreutils-common 8.30-21.el8_10; no target server files"
+    },
+    {
+      "name": "el8-DIR_COLORS.lightbgcolor",
+      "url": "https://raw.githubusercontent.com/emotionbug/slop/main/upstream-rpm/vendor/el8-coreutils/DIR_COLORS.lightbgcolor",
+      "sha256": "a916630bf30483eea24eae54a6596eb9640f54285065d0dbf56fe0d240153426",
+      "upstream_signature_verified": false,
+      "verification": "Unmodified defaults from Red Hat UBI coreutils-common 8.30-21.el8_10; no target server files"
+    },
+    {
+      "name": "el8-colorls.sh",
+      "url": "https://raw.githubusercontent.com/emotionbug/slop/main/upstream-rpm/vendor/el8-coreutils/colorls.sh",
+      "sha256": "e11541f9844babdccebb2c5e14dc29eeb17ada3603b0a9632ce67fbe0db1ffa9",
+      "upstream_signature_verified": false,
+      "verification": "Unmodified defaults from Red Hat UBI coreutils-common 8.30-21.el8_10; no target server files"
+    },
+    {
+      "name": "el8-colorls.csh",
+      "url": "https://raw.githubusercontent.com/emotionbug/slop/main/upstream-rpm/vendor/el8-coreutils/colorls.csh",
+      "sha256": "4160b0617d2bd5f04c492b8563f9571e6142db895ce2d8095952c30fd0f840ec",
+      "upstream_signature_verified": false,
+      "verification": "Unmodified defaults from Red Hat UBI coreutils-common 8.30-21.el8_10; no target server files"
     }
   ]
 }

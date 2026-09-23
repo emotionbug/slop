@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-expanded-installed:20260924
+RUN dnf -y --disableplugin=subscription-manager --setopt=install_weak_deps=False \
+      swap coreutils-single coreutils \
+    && dnf -y --disableplugin=subscription-manager --setopt=install_weak_deps=False \
+      install protobuf-c pkgconf pkgconf-pkg-config pkgconf-m4 libpkgconf libsolv jansson \
+    && dnf clean all

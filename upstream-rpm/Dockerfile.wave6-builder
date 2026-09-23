@@ -1,0 +1,9 @@
+FROM localhost/linux-oss-batch-library-builder:el8-20260924-v2
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False \
+      install protobuf-devel protobuf-compiler rpm-devel ruby rubygem-test-unit \
+      jansson-devel libcap-devel libacl-devel libattr-devel libselinux-devel gmp-devel \
+      expat-devel \
+    && dnf clean all \
+    && ln -s /usr/bin/python3 /usr/local/bin/python
+USER builder

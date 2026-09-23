@@ -1,0 +1,26 @@
+[ubi8-patch-baseos]
+name=Red Hat UBI 8 - BaseOS
+baseurl=https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/$basearch/baseos/os/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+sslverify=1
+skip_if_unavailable=0
+
+[ubi8-patch-appstream]
+name=Red Hat UBI 8 - AppStream
+baseurl=https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/$basearch/appstream/os/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+sslverify=1
+skip_if_unavailable=0
+
+[ubi8-patch-codeready]
+name=Red Hat UBI 8 - CodeReady Builder
+baseurl=https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/$basearch/codeready-builder/os/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+sslverify=1
+skip_if_unavailable=0

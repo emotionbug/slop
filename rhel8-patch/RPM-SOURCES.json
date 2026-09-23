@@ -1,0 +1,25 @@
+{
+  "retrieved": "2026-09-23",
+  "kernel_version": "4.18.0-553.166.1.el8_10",
+  "kernel_package_page": "https://access.redhat.com/downloads/content/rhel---8/x86_64/7416/kernel-core/4.18.0-553.166.1.el8_10/x86_64/fd431d51/package",
+  "perl_package_page": "https://access.redhat.com/downloads/content/rhel---8/x86_64/7441/perl-DBI/1.641-10.module+el8.10.0+24875+bc962974/x86_64/fd431d51/package",
+  "perl_advisory": "https://access.redhat.com/errata/RHSA-2026:69112",
+  "binary_sha256": {
+    "kernel-4.18.0-553.166.1.el8_10.x86_64.rpm": "dcd63e628ff536fec54adba8efbf6b9b9d3cf4ea71913064efcb17822c1d93ab",
+    "kernel-core-4.18.0-553.166.1.el8_10.x86_64.rpm": "2394df8e74c7c4ab32babe72aae7ff13061c64ba750afd3803c721fff4e7b13d",
+    "kernel-modules-4.18.0-553.166.1.el8_10.x86_64.rpm": "4084a911f18e1e874436ac852d645ba674b4ab29f5538b26e3ab9b3e7cfc0ad5",
+    "kernel-devel-4.18.0-553.166.1.el8_10.x86_64.rpm": "a03f4e86e728316d7f5594a719ee77e5151a556f829ce565dc94e295364269b9",
+    "kernel-modules-extra-4.18.0-553.166.1.el8_10.x86_64.rpm": "d48176cdfc9e22b50dd8f8628d77bd6235b9bb002abe448df9d62cfc432a1dc4",
+    "kernel-headers-4.18.0-553.166.1.el8_10.x86_64.rpm": "c725f6d0de5fe4a5154cb59e630bd3c42a63294e13a44b0aef925bbaba2e108e",
+    "kernel-tools-4.18.0-553.166.1.el8_10.x86_64.rpm": "89248ae095bcc2b594da92d1bc7ba142e21423792834cb2375ee7835d4d4e45d",
+    "kernel-tools-libs-4.18.0-553.166.1.el8_10.x86_64.rpm": "574bc7ad7e9931c4d20ff31d40f97345bdac4b25b23a8509f4532464a085334f",
+    "bpftool-4.18.0-553.166.1.el8_10.x86_64.rpm": "5d43dd30760a2c540b35f233d6c333e5e04e96da7c2c11e362dd2ede38104a45",
+    "perf-4.18.0-553.166.1.el8_10.x86_64.rpm": "55d1207d6daf5290d8a8c084c8bf7a3361baa3c277b6cab774410e7482fa8b1c",
+    "python3-perf-4.18.0-553.166.1.el8_10.x86_64.rpm": "6075e41c7a169fb5c9062fd5f380c6842d1fc2335effb7f4d6eca8d452970faf",
+    "perl-DBI-1.641-10.module+el8.10.0+24875+bc962974.x86_64.rpm": "bcfbb7bb7645874b63c6f023a0fcf07fa7695a3b0e5f0a2904b5b510a6d86c19"
+  },
+  "source_sha256": {
+    "kernel-4.18.0-553.166.1.el8_10.src.rpm": "0d7951f65503a571a95c1bd960594dee98777b43b82b81debcd77f07398fe254",
+    "perl-DBI-1.641-10.module+el8.10.0+24875+bc962974.src.rpm": "7be07752c1f4d3400f16e080d115d9107eddb2bed8fcf240e01ce55d16d984b1"
+  }
+}

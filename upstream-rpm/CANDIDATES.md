@@ -1,6 +1,6 @@
 # 2026-09-24 EL8 평가용 RPM 묶음
 
-전체 323종 최신화 작업 중 로컬 검증을 통과한 15종과 공식 보조 RPM 1개입니다.
+전체 323종 최신화 작업 중 로컬 검증을 통과한 19종과 공식 보조 RPM 1개입니다.
 실제 서버에 설치한 결과나 전체 취약점 해결 완료 보고서가 아닙니다.
 
 | 소스 프로젝트 | 버전 | 포함된 교체 패키지 |
@@ -13,10 +13,14 @@
 | c-ares | 1.34.8 | c-ares |
 | libpng | 2:1.6.58 | libpng (RHEL Epoch 2 유지) |
 | Little CMS | 2.19.1 | lcms2 |
+| GNU sed | 4.10 | sed |
+| GNU diffutils | 3.12-2 | diffutils (CVE-2026-53910 수정 2개 반영) |
+| GNU patch | 2.8 | patch |
+| GNU gawk | 5.4.1 | gawk |
 
 공식 UBI의 `cmake-filesystem-3.26.5-2.el8`은 개발용 CMake 파일의 디렉터리
 의존성을 충족하기 위해 포함했고 Red Hat 서명을 검증했습니다.
-각 8개 프로젝트의 SRPM도 포함합니다. 자체 빌드 RPM에는 Red Hat 서명이 없으며,
+각 12개 프로젝트의 SRPM도 포함합니다. 자체 빌드 RPM에는 Red Hat 서명이 없으며,
 RPM 자체도 아직 미서명입니다. SHA256SUMS는 전송 중 파일 변경을 확인합니다.
 서버 인벤토리, 취약점 CSV, 개인 파일, 키는 포함하지 않습니다.
 
@@ -34,7 +38,11 @@ RPM 자체도 아직 미서명입니다. SHA256SUMS는 전송 중 파일 변경�
   외부 DNS 검사는 60개 통과/2개 실패이며 DNS 서버의 ANY 질의 거부를 독립적으로
   재현했습니다. c-ares 심볼 60개 비교의 기준은 Rocky EL8 참조 RPM입니다.
 - 실제 서버 RPM 헤더와 대조하여 충족되지 않는 이름 기반 의존성은 발견되지 않음.
-- Epoch를 포함한 버전 비교에서 downgrade 0개. 파일/rich dependency 등 1,182건은 미검증.
+- Epoch를 포함한 버전 비교에서 downgrade 0개. 파일/rich dependency 등 1,177건은 미검증.
+- sed의 치환·ACL·모드·심볼릭 링크 동작 확인. in-place 수정 시 `user.*` xattr는
+  기존 UBI sed와 새 sed 모두 제거합니다. xattr 보존을 지원한다고 기록하지 않습니다.
+- diff/cmp/diff3 병합과 과도한 행 번호 입력 3개 거부, patch dry-run·적용·역적용 확인.
+- gawk의 MPFR 큰 정수·배열 정렬·filefuncs 확장 확인.
 - 파일 의존성·rich dependency·모듈·설치 스크립트·실행 중 프로그램·실제 SSH
   상대 서버·Tomcat/보안 에이전트 동작을 검증한 것은 아님.
 
@@ -44,8 +52,8 @@ RPM 자체도 아직 미서명입니다. SHA256SUMS는 전송 중 파일 변경�
 
 ```bash
 bundle_dir=$(mktemp -d "${PWD}/el8-rpm-candidates.XXXXXX") &&
-sha256sum -c el8-rpm-candidates-20260924-2.tar.gz.sha256 &&
-tar -xzf el8-rpm-candidates-20260924-2.tar.gz -C "$bundle_dir" &&
+sha256sum -c el8-rpm-candidates-20260924-3.tar.gz.sha256 &&
+tar -xzf el8-rpm-candidates-20260924-3.tar.gz -C "$bundle_dir" &&
 cd "$bundle_dir/el8-rpm-candidates" &&
 sha256sum -c SHA256SUMS &&
 sudo dnf --disableplugin=subscription-manager --disablerepo='*' \
@@ -53,9 +61,9 @@ sudo dnf --disableplugin=subscription-manager --disablerepo='*' \
   --assumeno install ./rpms/*.rpm
 ```
 
-[15종 압축본](https://github.com/emotionbug/slop/releases/tag/upstream-rpm-candidates-20260924-2)은
-약 20.0 MiB이며 SHA-256은
-`00a16a3731f31240cc32139e370da92b5640ce09033d43ed1c529e8554763d39`입니다.
+[19종 압축본](https://github.com/emotionbug/slop/releases/tag/upstream-rpm-candidates-20260924-3)은
+약 30.4 MiB이며 SHA-256은
+`f028d60ba1cca9a85b92e6073897cbe3d254310e4b0999c1eab34a5d79510a6f`입니다.
 
 Zstandard와 libjpeg-turbo는 빌드·기능 검사를 통과했지만 구형 API 사용 여부를
 확인해야 해 이 묶음에서 보류합니다. 커널·glibc·시스템 OpenSSL 교체본도 포함하지 않습니다.

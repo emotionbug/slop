@@ -42,7 +42,9 @@ jobs=${BUILD_JOBS:-8}
 [[ $jobs =~ ^[1-9][0-9]*$ ]] || exit 2
 trap 'printf "%s\n" "$?" > /output/build-exit-code.txt' EXIT
 make -j"$jobs" bzImage KBUILD_BUILD_VERSION=1
-make -j"$jobs" rpm-pkg RPMOPTS="--define \"_smp_mflags -j$jobs\""
+# Drop module DWARF debug sections before signing/packaging. Keep BTF and all
+# configured drivers; full unstripped build files remain in the build container.
+make -j"$jobs" rpm-pkg RPMOPTS="--define \"_smp_mflags -j$jobs\" --define \"install_mod_strip 1\""
 find rpmbuild -type f -name '*.rpm' -exec cp -t /output -- {} +
 cp .config System.map /output/
 find . -name '*.ko' -printf '%P\n' | sort > /output/built-modules.txt

@@ -1,4 +1,6 @@
 %global debug_package %{nil}
+%global __strip /opt/rh/gcc-toolset-14/root/usr/bin/strip
+%global __objdump /opt/rh/gcc-toolset-14/root/usr/bin/objdump
 %global prefix /opt/linux-oss/glibc-2.44
 Name:           linuxoss-glibc-evaluation
 Version:        2.44
@@ -29,13 +31,45 @@ export PATH=/opt/rh/gcc-toolset-14/root/usr/bin:$PATH
 mkdir -p build
 cd build
 ../configure --prefix=%{prefix} --libdir=%{prefix}/lib \
-  --localedir=/usr/share/locale \
+  --sysconfdir=/etc --localedir=/usr/share/locale \
   --enable-kernel=4.18.0 --with-headers=/opt/linux-oss/kernel-uapi-7.2.7/include \
   --enable-stack-protector=strong --disable-werror PYTHON=/usr/bin/python3.11
 make %{?_smp_mflags}
 
 %check
 export PATH=/opt/rh/gcc-toolset-14/root/usr/bin:$PATH
+# The private-prefix test subprocess loader also needs GCC's unwind runtime.
+# Keep it in the test build directory; it is not installed into the RPM.
+# See glibc bug 32869 (tst-setvbuf2 / pthread_cancel).
+install -m 0644 "$(gcc -print-file-name=libgcc_s.so.1)" build/libgcc_s.so.1
+export TIMEOUTFACTOR=4
+%if 0%{?reuse_prepared}
+# Retain the old failure evidence, then rerun failed tests with the repaired
+# runtime search path/time allowance. No tests or assertions are excluded.
+prior=$(mktemp -d /output/prior-failed-tests.XXXXXX)
+if test -f build/tests.sum; then cp build/tests.sum "$prior/"; fi
+python3.11 - "$prior" <<'PY'
+import pathlib,shutil,sys
+root=pathlib.Path('build'); destination=pathlib.Path(sys.argv[1])
+for result in root.rglob('*.test-result'):
+    if not any(line.startswith('FAIL:') for line in result.read_text(errors='replace').splitlines()):
+        continue
+    for original in (result, result.with_suffix('.out')):
+        if not original.is_file():continue
+        target=destination/original.relative_to(root)
+        target.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(original,target);original.unlink()
+PY
+# Regenerate disposable test roots after configure path changes.
+rm -rf build/testroot.root build/testroot.pristine
+%endif
+# The upstream test root copies the shell's dependencies, but not nscd's
+# SELinux dependencies. Supply those two unchanged EL8 libraries only in the
+# disposable root; the tested libc and pthread implementation remain 2.44.
+make -C build "$PWD/build/testroot.pristine/install.stamp"
+for library in libselinux.so.1 libpcre2-8.so.0 libgcc_s.so.1; do
+  install -m 0755 "/usr/lib64/$library" "build/testroot.pristine%{prefix}/lib/$library"
+done
 make -C build %{?_smp_mflags} check
 
 %install
@@ -46,6 +80,13 @@ make -C build install_root=%{buildroot} install
 if test -d %{buildroot}/usr/share/locale; then
   mkdir -p %{buildroot}%{prefix}/share
   mv %{buildroot}/usr/share/locale %{buildroot}%{prefix}/share/locale
+fi
+# Runtime reads the host's standard /etc configuration, but evaluation RPM
+# payload must not overwrite any of those files.
+if test -d %{buildroot}/etc; then
+  mkdir -p %{buildroot}%{prefix}/share/evaluation-config
+  cp -a %{buildroot}/etc/. %{buildroot}%{prefix}/share/evaluation-config/
+  rm -rf %{buildroot}/etc
 fi
 
 %files

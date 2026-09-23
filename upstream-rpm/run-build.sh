@@ -2,9 +2,9 @@
 # Snapshot the entry script so edits to the bind-mounted recipe cannot change
 # the shell input halfway through a long compiler/kernel build.
 set -euo pipefail
-[[ $# -ge 2 ]] || { echo 'Usage: run-build.sh build-rpm.sh|build-kernel.sh ARGUMENT' >&2; exit 2; }
+[[ $# -ge 2 ]] || { echo 'Usage: run-build.sh ENTRY ARGUMENT' >&2; exit 2; }
 case "$1" in
-  build-rpm.sh|build-kernel.sh) entry=$1 ;;
+  build-rpm.sh|build-kernel.sh|validate-gcc-bootstrap.sh) entry=$1 ;;
   *) echo 'Unsupported build entry point' >&2; exit 2 ;;
 esac
 shift

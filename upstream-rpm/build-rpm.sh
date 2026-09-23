@@ -16,8 +16,17 @@ fi
 preserve_evidence() {
   local code=$?
   mkdir -p /output/test-results
-  (cd "$top" && find BUILD -type f \( -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) \
-    -exec cp --parents -t /output/test-results -- {} +) || true
+  # Thousands of glibc result files are prohibitively slow across a Windows
+  # bind mount. Preserve all raw evidence in one archive, plus readable sums.
+  if [[ $(basename -- "$spec") == glibc-evaluation.spec ]]; then
+    (cd "$top" && find BUILD -type f \( -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) -print0 \
+      | tar --null -T - -czf "$top/test-results.tar.gz" \
+      && cp "$top/test-results.tar.gz" /output/test-results.tar.gz \
+      && find BUILD -type f -name '*.sum' -exec cp --parents -t /output/test-results -- {} +) || true
+  else
+    (cd "$top" && find BUILD -type f \( -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) \
+      -exec cp --parents -t /output/test-results -- {} +) || true
+  fi
   # OpenSSL's Perl tests keep failure details and generated fixtures here.
   (cd "$top" && find BUILD -type d -path '*/test/test-runs' -exec cp -r --parents -t /output/test-results -- {} +) || true
   printf '%s\n' "$code" > /output/build-exit-code.txt
@@ -31,7 +40,7 @@ python3.11 - /recipe/sources.lock.json /sources "$top/SOURCES" "$top/expanded.sp
 import hashlib,json,pathlib,re,shutil,sys,tarfile
 locked={r['name']:r for r in json.load(open(sys.argv[1]))['sources']}
 expanded=pathlib.Path(sys.argv[4]).read_text()
-needed=re.findall(r'^Source\d*:\s*(\S+)',expanded,re.M|re.I)
+needed=re.findall(r'^(?:Source|Patch)\d*:\s*(\S+)',expanded,re.M|re.I)
 if not needed: raise SystemExit('No sources declared by SPEC')
 for url in needed:
     name=url.rsplit('/',1)[-1]

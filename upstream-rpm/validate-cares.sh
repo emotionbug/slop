@@ -3,8 +3,7 @@ set -euo pipefail
 [[ -e /run/.containerenv || -e /.dockerenv ]] || exit 2
 dnf -y --disableplugin=subscription-manager --disablerepo='*' \
   --setopt=localpkg_gpgcheck=False install \
-  /rpms/c-ares/c-ares-1.34.8-1.linuxoss.el8.x86_64.rpm \
-  /rpms/c-ares/c-ares-devel-1.34.8-1.linuxoss.el8.x86_64.rpm
+  /rpms/c-ares/c-ares-1.34.8-1.linuxoss.el8.x86_64.rpm
 dnf --disableplugin=subscription-manager --disablerepo='*' check
 cat > /tmp/cares-check.c <<'C'
 #include <ares.h>
@@ -29,5 +28,7 @@ int main(void){
   puts("UBI_CARES_INSTALL_DNS_PARSER_OK");return 0;
 }
 C
-gcc -O2 /tmp/cares-check.c -lcares -o /tmp/cares-check
+headers=$(mktemp -d /tmp/cares-header-fixture.XXXXXX)
+(cd "$headers" && rpm2cpio /rpms/c-ares/c-ares-devel-1.34.8-1.linuxoss.el8.x86_64.rpm | cpio -idm --quiet --no-absolute-filenames)
+gcc -O2 -I"$headers/usr/include" /tmp/cares-check.c -Wl,-l:libcares.so.2 -o /tmp/cares-check
 /tmp/cares-check

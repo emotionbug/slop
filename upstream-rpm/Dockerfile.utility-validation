@@ -1,0 +1,4 @@
+FROM localhost/linux-oss-image-validation:el8-20260924
+RUN dnf -y --disableplugin=subscription-manager --setopt=install_weak_deps=False \
+      install sed diffutils patch gawk cpio tar acl attr m4 \
+    && dnf clean all

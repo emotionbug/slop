@@ -4,5 +4,7 @@ COPY kernel-uapi.rpm /tmp/kernel-uapi.rpm
 RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/kernel-uapi.rpm \
     && test -f /usr/include/selinux/label.h \
     && ln -s /usr/include/selinux /opt/linux-oss/kernel-uapi-7.2.7/include/selinux \
+    && mkdir -p /opt/linux-oss/glibc-2.44/lib \
+    && chown builder:builder /opt/linux-oss/glibc-2.44/lib \
     && rm /tmp/kernel-uapi.rpm
 USER builder

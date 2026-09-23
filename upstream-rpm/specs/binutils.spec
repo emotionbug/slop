@@ -18,6 +18,14 @@ being deployed to an existing RHEL system.
 %setup -q
 
 %build
+# EL8's RPM debugedit supports DWARF 4, while GCC 16 defaults to DWARF 5.
+# Preserve separate debug information and build IDs instead of disabling it.
+export CFLAGS='-O2 -g -gdwarf-4 -fstack-protector-strong -fcf-protection -D_FORTIFY_SOURCE=2'
+export CXXFLAGS="$CFLAGS"
+# Old libiberty preprocessor-only header probes treat fortify's no-optimization
+# warning as a missing header. Keep fortify with the optimized compiler flags.
+export CPPFLAGS=''
+export LDFLAGS='-Wl,--build-id -Wl,-z,relro,-z,now'
 mkdir build
 cd build
 ../configure --prefix=/usr --libdir=/usr/lib64 --enable-shared \

@@ -1,0 +1,9 @@
+FROM localhost/linux-oss-toolset-builder:el8-20260923
+USER root
+COPY bootstrap-gcc.rpm /tmp/bootstrap-gcc.rpm
+RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/bootstrap-gcc.rpm \
+    && rm /tmp/bootstrap-gcc.rpm
+ENV PATH=/opt/linux-oss/bootstrap/gcc-16.2.0/bin:/opt/rh/gcc-toolset-14/root/usr/bin:$PATH
+ENV LD_LIBRARY_PATH=/opt/linux-oss/bootstrap/gcc-16.2.0/lib64
+USER builder
+RUN gcc --version && g++ --version

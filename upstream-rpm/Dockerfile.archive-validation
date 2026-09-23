@@ -1,0 +1,3 @@
+FROM localhost/linux-oss-image-validation:el8-20260924
+# UBI has the runtime but no libarchive-devel, including CodeReady Builder.
+# The test links the public API to the old SONAME before upgrading it.

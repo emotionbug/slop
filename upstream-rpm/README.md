@@ -43,16 +43,24 @@ glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에
   DNS 서버의 RCODE 4 응답을 재현했습니다. 전부 통과한 것으로 기록하지 않습니다.
   UBI 설치·DNS 파서 검증과 별도 Rocky EL8 참조 라이브러리의 60개 심볼 비교는
   통과했습니다. 후자는 정확한 RHEL 바이너리와의 비교는 아닙니다.
-- 위 **15종 교체 RPM + 공식 UBI 보조 RPM 1종**을 함께 검증했습니다.
+- sed 4.10, diffutils 3.12(보안 패치 2개 포함), patch 2.8, gawk 5.4.1의
+  빌드·원본 테스트·UBI 기능 검사도 통과했습니다. 상세 범위는 CANDIDATES.md에 기록합니다.
+- 위 **19종 교체 RPM + 공식 UBI 보조 RPM 1종**을 함께 검증했습니다.
   UBI 기능 검사와 이름 기반 의존성 검사 통과, downgrade 0개입니다.
-  파일/rich dependency 등 1,182건과 실제 서버 적용은 아직 미검증입니다.
+  파일/rich dependency 등 1,177건과 실제 서버 적용은 아직 미검증입니다.
 
 binutils 2.47은 GCC Toolset 14로 재검증하여 앞선 LTO 실패 12개가 해결됐습니다.
 그러나 CTF `Slice` 테스트 1개가 실패해 배포를 보류합니다. assembler 2,098개,
 linker 3,263개, binutils 349개, libsframe 168개, libctf 39개가 통과했습니다.
-GCC 16.2는 별도로 3단계 bootstrap 빌드를 진행합니다.
-glibc 2.44의 별도 경로 평가 빌드와 수집된 커널 설정을 반영한 Linux 7.2.7
-RPM 빌드도 진행합니다. 이들은 현재 시스템 교체 검증이 완료된 패키지가 아닙니다.
+GCC 16.2는 3단계 bootstrap 빌드를 마쳤고 전체 회귀 테스트를 진행 중입니다.
+GCC 16을 사용한 binutils 전체 재검증에서도 CTF Slice 1개가 실패했습니다.
+glibc 2.44는 별도 경로 평가 빌드와 테스트를 진행합니다. 이 패키지를 설치해도
+시스템 glibc의 취약점이 해결되는 것은 아닙니다.
+Linux 7.2.7 RPM은 빌드를 마쳤고 일반 QEMU UEFI 환경에서 PVSCSI·XFS·VMXNET3·
+device-mapper 테스트를 통과했습니다. 모듈의 디버그 정보를 제거한 약 82.4 MiB
+커널 RPM으로 다시 부팅을 확인했습니다. 실제 서버의 부팅·SSH·Java·에이전트 및
+RHEL 커널 부패키지 전체 호환 검증은 남아 있어 공개 설치 후보 묶음에는 넣지 않습니다.
+일반 QEMU 테스트는 서버 복제 VM 검증을 대체하지 않습니다.
 Zstandard 1.5.7과 libjpeg-turbo 3.2.0은 빌드·upstream 테스트 및 기본 기능 검사를
 통과했으나 각각 `ZSTD_getSequences`, `jpeg_std_message_table` 심볼이 제거되어
 배포 묶음에서는 보류합니다. Zstandard의 구형 ZBUFF API 21개는 활성화해 보존했습니다.

@@ -10,7 +10,7 @@ import shutil
 import tarfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
-VERSION = '20260924-2'
+VERSION = '20260924-3'
 TARGETS = {
     'rsync': ('3.5.1', ['rsync']),
     'zlib': ('1.3.2', ['zlib', 'zlib-devel']),
@@ -20,13 +20,17 @@ TARGETS = {
     'c-ares': ('1.34.8', ['c-ares']),
     'libpng': ('1.6.58', ['libpng']),
     'lcms2': ('2.19.1', ['lcms2']),
+    'sed': ('4.10', ['sed']),
+    'diffutils': ('3.12', ['diffutils']),
+    'patch': ('2.8', ['patch']),
+    'gawk': ('5.4.1', ['gawk']),
 }
 
 
 def main():
     validation = json.loads((ROOT/'output/validation.json').read_text())
-    if (validation.get('_combined_fifteen', {}).get('runtime_result') != 'passed' or
-            validation.get('_combined_fifteen', {}).get('host_capability_result') != 'passed'):
+    if (validation.get('_combined_nineteen', {}).get('runtime_result') != 'passed' or
+            validation.get('_combined_nineteen', {}).get('host_capability_result') != 'passed'):
         raise SystemExit('Combined container validation has not passed')
     archive = ROOT/'output'/('el8-rpm-candidates-'+VERSION+'.tar.gz')
     if archive.exists():
@@ -41,7 +45,10 @@ def main():
                         'zlib-1.3.2.tar.xz', 'pcre2-10.48.tar.bz2',
                         'expat-2.8.5.tar.xz', 'xz-5.8.4.tar.xz',
                         'c-ares-1.34.8.tar.gz', 'googletest-1.18.0.tar.gz',
-                        'libpng-1.6.58.tar.xz', 'lcms2-2.19.1.tar.gz'}
+                        'libpng-1.6.58.tar.xz', 'lcms2-2.19.1.tar.gz',
+                        'sed-4.10.tar.xz', 'diffutils-3.12.tar.xz',
+                        'diffutils-CVE-2026-53910-1.patch', 'diffutils-CVE-2026-53910-2.patch',
+                        'patch-2.8.tar.xz', 'gawk-5.4.1.tar.xz'}
     manifest['upstream_sources'] = [s for s in lock['sources'] if s['name'] in included_sources]
     manifest['validation_scope'] = ['upstream-tests', 'UBI8-DNF-upgrade',
         'Java8-Python-compression', 'PCRE2-JIT', 'rsync-old-peer-over-local-pipe',
@@ -49,17 +56,21 @@ def main():
         'PNG-LCMS-old-binary-roundtrips-and-exported-symbol-presence',
         'c-ares-1140-offline-tests-and-two-fuzz-suites', 'c-ares-UBI-DNS-parser',
         'c-ares-EL8-reference-60-exports-not-exact-RHEL-baseline',
-        'target-RPM-named-capabilities-only']
+        'target-RPM-named-capabilities-only', 'sed-ACL-mode-symlink-and-baseline-xattr-behavior',
+        'diffutils-merge-and-CVE-2026-53910-bounded-rejection',
+        'patch-dry-run-apply-reverse', 'gawk-MPFR-array-and-filefuncs']
     manifest['validation_exceptions'] = [
         'c-ares public DNS tests: 60 passed, 2 ANY-query tests failed because resolver returned RCODE 4 NotImplemented; independent query reproduced.',
         'Zstandard and libjpeg-turbo remain excluded because removed exports need target-consumer review.',
         'File/rich dependencies, full target transaction and applications have not been validated.'
     ]
     for project, (version, names) in TARGETS.items():
-        artifacts = [(name+'-'+version+'-1.linuxoss.el8.x86_64.rpm', 'rpms') for name in names]
-        artifacts.append((project+'-'+version+'-1.linuxoss.el8.src.rpm', 'srpms'))
+        release = '2' if project == 'diffutils' else '1'
+        directory = 'diffutils-patched' if project == 'diffutils' else project
+        artifacts = [(name+'-'+version+'-'+release+'.linuxoss.el8.x86_64.rpm', 'rpms') for name in names]
+        artifacts.append((project+'-'+version+'-'+release+'.linuxoss.el8.src.rpm', 'srpms'))
         for filename, folder in artifacts:
-            source = ROOT/'output'/project/filename
+            source = ROOT/'output'/directory/filename
             expected = validation[project]['artifacts'].get(filename)
             if not expected or hashlib.sha256(source.read_bytes()).hexdigest() != expected:
                 raise SystemExit('Artifact is not the hash recorded by validation: '+filename)
@@ -80,8 +91,8 @@ def main():
     (dest/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
     (dest/'SHA256SUMS').write_text(''.join(r['sha256']+'  '+r['path']+'\n' for r in manifest['files']),encoding='ascii')
     (dest/'README.txt').write_text(
-        'EL8 candidates: rsync, zlib, PCRE2, Expat, XZ, c-ares, libpng, Little CMS.\n'
-        'Fifteen replacement RPMs, eight source RPMs, one official UBI directory-layout dependency.\n'
+        'EL8 candidates: rsync, zlib, PCRE2, Expat, XZ, c-ares, libpng, Little CMS, sed, diffutils, patch, gawk.\n'
+        'Nineteen replacement RPMs, twelve source RPMs, one official UBI directory-layout dependency.\n'
         'See manifest.json for exact versions, test scope and external-DNS exceptions.\n'
         'Not a complete 323-package upgrade; not tested on the target server.\n'
         'Custom RPMs are unsigned local builds. Only cmake-filesystem is a signed Red Hat UBI RPM.\n'

@@ -10,7 +10,6 @@ declare -a rpms=(
   /rpms/pcre2/pcre2-utf16-10.48-1.linuxoss.el8.x86_64.rpm
   /rpms/pcre2/pcre2-utf32-10.48-1.linuxoss.el8.x86_64.rpm
   /rpms/pcre2/pcre2-devel-10.48-1.linuxoss.el8.x86_64.rpm
-  /rpms/pcre2/pcre2-tools-10.48-1.linuxoss.el8.x86_64.rpm
 )
 cp /usr/bin/rsync /tmp/rsync-before
 dnf -y --disableplugin=subscription-manager --disablerepo='*' \
@@ -63,7 +62,11 @@ int main(void) {
 C
 gcc -O2 check-pcre.c -lpcre2-8 -o check-pcre
 ./check-pcre
-printf 'server=123\ninvalid\n' | pcre2grep '^server=[0-9]+$'
+# Exercise the optional tool without installing an extra RPM that is absent
+# from the target bundle; this keeps the tested RPM dependency set exact.
+toolroot=$(mktemp -d /tmp/pcre2-tool-fixture.XXXXXX)
+(cd "$toolroot" && rpm2cpio /rpms/pcre2/pcre2-tools-10.48-1.linuxoss.el8.x86_64.rpm | cpio -idm --quiet --no-absolute-filenames)
+printf 'server=123\ninvalid\n' | "$toolroot/usr/bin/pcre2grep" '^server=[0-9]+$'
 ldd ./check-pcre
 work=$(mktemp -d /tmp/rsync-combined.XXXXXX)
 mkdir -p "$work/source/sub" "$work/local" "$work/pull" "$work/push"

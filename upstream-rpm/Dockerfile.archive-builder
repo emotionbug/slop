@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-image-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install libxml2-devel lzo-devel \
+    && dnf clean all
+USER builder

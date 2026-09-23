@@ -1,0 +1,29 @@
+{
+  "checked_on": "2026-09-23",
+  "sources": [
+    {
+      "name": "rsync-3.5.1.tar.gz",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.5.1.tar.gz",
+      "sha256": "c55f9c9dc10fb8bec397b399a0fdded53cc9a2d8e30891bb0d63724d25c37bef",
+      "upstream_signature_verified": true,
+      "expected_signer": "9FEF112DCE19A0DC7E882CB81BB24997A8535F6F"
+    },
+    {
+      "name": "rsync-3.5.1.tar.gz.asc",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.5.1.tar.gz.asc",
+      "sha256": "b7f83fce3cf1395b224db6a1ad25cf0d094d9164b6874c1654287a6a3465d291"
+    },
+    {
+      "name": "rsync-release-key.asc",
+      "url": "https://keys.openpgp.org/vks/v1/by-email/andrew%40tridgell.net",
+      "sha256": "4129e90b0b62e915a453f071641f363e8b07d888c763be00f83128fd63447a6f"
+    },
+    {
+      "name": "xxHash-0.8.4.tar.gz",
+      "url": "https://codeload.github.com/Cyan4973/xxHash/tar.gz/refs/tags/v0.8.4",
+      "sha256": "5738270935e7c3d38a79b3adf7c9692566ce7895a25f67de43ad52ab504acd32",
+      "upstream_signature_verified": false,
+      "verification": "SHA256 pin of HTTPS download from official upstream release tag"
+    }
+  ]
+}

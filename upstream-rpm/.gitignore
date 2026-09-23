@@ -1,0 +1,6 @@
+sources/
+work/
+output/
+logs/
+inventory/
+__pycache__/

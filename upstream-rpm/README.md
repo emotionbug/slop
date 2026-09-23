@@ -2,7 +2,7 @@
 
 대상은 제공된 취약점 CSV의 **323개 패키지 이름 전체**입니다. rsync, GCC, 커널,
 glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에서 제외하지 않습니다.
-실제 서버에서 수집한 RPM 헤더로 **323종 → 140개 배포판 Source RPM 묶음**을 확인했습니다.
+실제 서버에서 추출한 RPM 메타데이터로 **323종 → 140개 배포판 Source RPM 묶음**을 확인했습니다.
 한 Source RPM에 여러 upstream 소스가 포함될 수 있어 실제 빌드 프로젝트 수와는 다릅니다.
 서버별 수집 자료와 상세 분석 결과는 로컬의 무시된 폴더에만 보관합니다.
 
@@ -45,14 +45,19 @@ glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에
   통과했습니다. 후자는 정확한 RHEL 바이너리와의 비교는 아닙니다.
 - sed 4.10, diffutils 3.12(보안 패치 2개 포함), patch 2.8, gawk 5.4.1의
   빌드·원본 테스트·UBI 기능 검사도 통과했습니다. 상세 범위는 CANDIDATES.md에 기록합니다.
-- 위 **19종 교체 RPM + 공식 UBI 보조 RPM 1종**을 함께 검증했습니다.
+- Bison 3.8.2-3, cpio 2.15-2, bzip2 1.0.8, tar 1.35-2에 추가 보안 패치를 반영했습니다.
+  원본 테스트와 수정 전후 회귀 검사, UBI 기능 검사의 범위는 SECURITY-EVIDENCE.md와
+  CANDIDATES.md에 기록합니다. 최신 정식 버전에도 추가 패치가 필요했던 사례입니다.
+- 위 **24종 교체 RPM + 공식 UBI 보조 RPM 1종**을 함께 검증했습니다.
   UBI 기능 검사와 이름 기반 의존성 검사 통과, downgrade 0개입니다.
-  파일/rich dependency 등 1,177건과 실제 서버 적용은 아직 미검증입니다.
+  파일/rich dependency 등 1,172건과 실제 서버 적용은 아직 미검증입니다.
+  최종 UBI 환경의 자체 RPM 이름이 정확히 24종인 것도 확인했습니다.
 
 binutils 2.47은 GCC Toolset 14로 재검증하여 앞선 LTO 실패 12개가 해결됐습니다.
 그러나 CTF `Slice` 테스트 1개가 실패해 배포를 보류합니다. assembler 2,098개,
 linker 3,263개, binutils 349개, libsframe 168개, libctf 39개가 통과했습니다.
 GCC 16.2는 3단계 bootstrap 빌드를 마쳤고 전체 회귀 테스트를 진행 중입니다.
+진행 중인 검사에 일부 실패가 있어 전체 통과로 기록하지 않습니다.
 GCC 16을 사용한 binutils 전체 재검증에서도 CTF Slice 1개가 실패했습니다.
 glibc 2.44는 별도 경로 평가 빌드와 테스트를 진행합니다. 이 패키지를 설치해도
 시스템 glibc의 취약점이 해결되는 것은 아닙니다.
@@ -141,7 +146,7 @@ CSV의 과거 버전과 실제 설치 버전, 직접 의존성, 커널 드라이
 VMware 부팅·SSH·외부 보안 에이전트·Java/Tomcat 연동을 증명하지 않습니다.
 `Dockerfile.kernel-boot-test`와 `validate-kernel-boot.sh`는 QEMU의 UEFI,
 PVSCSI 디스크/XFS, VMXNET3, device mapper를 시험하도록 준비했습니다.
-준비된 스크립트를 실제 부팅 성공으로 기록하지 않습니다. 커널 빌드 후 실행 결과가 필요합니다.
+해당 일반 QEMU 부팅 검사는 통과했지만 실제 서버의 복제 환경을 검증한 것은 아닙니다.
 
 `gcc-plugin-annobin`처럼 배포판에서 추가 소스를 묶은 패키지는 GCC 소스만으로
 만들 수 없습니다. `perf`/`python3-perf`/`bpftool`도 커널 RPM 생성만으로 교체되지

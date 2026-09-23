@@ -103,6 +103,11 @@ PARSER
       printf 'archive content\n' > "$package-input/file"
       ln "$package-input/file" "$package-input/hard"
       ln -s file "$package-input/link"
+      if [[ $package == tar ]]; then
+        chmod 0640 tar-input/file
+        setfacl -m u:12345:r tar-input/file
+        setfattr -n user.linuxoss -v preserved tar-input/file
+      fi
       if [[ $package == cpio ]]; then
         (cd cpio-input && printf '%s\n' file hard link | cpio -o -H newc) > archive.cpio
         (cd cpio-out && cpio -idm --no-absolute-filenames < ../archive.cpio)
@@ -113,6 +118,12 @@ PARSER
       cmp "$package-input/file" "$package-out/file"
       [[ $(readlink "$package-out/link") == file ]]
       [[ $(stat -c %i "$package-out/file") == $(stat -c %i "$package-out/hard") ]]
+      if [[ $package == tar ]]; then
+        [[ $(stat -c %a tar-out/file) == 640 ]]
+        [[ $(getfattr --only-values -n user.linuxoss tar-out/file) == preserved ]]
+        getfacl -cp tar-out/file | grep -q '^user:12345:r--$'
+        echo UBI_TAR_ACL_XATTR_MODE_OK
+      fi
       echo "UBI_${package^^}_ARCHIVE_LINK_ROUNDTRIP_OK"
       ;;
   esac

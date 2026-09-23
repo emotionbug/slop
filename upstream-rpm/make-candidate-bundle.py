@@ -10,7 +10,7 @@ import shutil
 import tarfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
-VERSION = '20260924-3'
+VERSION = '20260924-4'
 TARGETS = {
     'rsync': ('3.5.1', ['rsync']),
     'zlib': ('1.3.2', ['zlib', 'zlib-devel']),
@@ -24,13 +24,24 @@ TARGETS = {
     'diffutils': ('3.12', ['diffutils']),
     'patch': ('2.8', ['patch']),
     'gawk': ('5.4.1', ['gawk']),
+    'bison': ('3.8.2', ['bison']),
+    'cpio': ('2.15', ['cpio']),
+    'bzip2': ('1.0.8', ['bzip2', 'bzip2-libs']),
+    'tar': ('1.35', ['tar']),
+}
+OVERRIDES = {
+    'diffutils': ('2', 'diffutils-patched'),
+    'bison': ('3', 'bison-patched-v4'),
+    'cpio': ('2', 'cpio-v2'),
+    'bzip2': ('1', 'bzip2-v6'),
+    'tar': ('2', 'tar-v7'),
 }
 
 
 def main():
     validation = json.loads((ROOT/'output/validation.json').read_text())
-    if (validation.get('_combined_nineteen', {}).get('runtime_result') != 'passed' or
-            validation.get('_combined_nineteen', {}).get('host_capability_result') != 'passed'):
+    if (validation.get('_combined_twenty_four', {}).get('runtime_result') != 'passed' or
+            validation.get('_combined_twenty_four', {}).get('host_capability_result') != 'passed'):
         raise SystemExit('Combined container validation has not passed')
     archive = ROOT/'output'/('el8-rpm-candidates-'+VERSION+'.tar.gz')
     if archive.exists():
@@ -49,6 +60,11 @@ def main():
                         'sed-4.10.tar.xz', 'diffutils-3.12.tar.xz',
                         'diffutils-CVE-2026-53910-1.patch', 'diffutils-CVE-2026-53910-2.patch',
                         'patch-2.8.tar.xz', 'gawk-5.4.1.tar.xz'}
+    # Include exactly the source and patch inputs declared by the new SPECs.
+    import re
+    for project in ('bison', 'cpio', 'bzip2', 'tar'):
+        spec = (ROOT/'specs'/(project+'.spec')).read_text()
+        included_sources.update(re.findall(r'^(?:Source|Patch)\d*:\s*(\S+)', spec, re.M))
     manifest['upstream_sources'] = [s for s in lock['sources'] if s['name'] in included_sources]
     manifest['validation_scope'] = ['upstream-tests', 'UBI8-DNF-upgrade',
         'Java8-Python-compression', 'PCRE2-JIT', 'rsync-old-peer-over-local-pipe',
@@ -58,15 +74,22 @@ def main():
         'c-ares-EL8-reference-60-exports-not-exact-RHEL-baseline',
         'target-RPM-named-capabilities-only', 'sed-ACL-mode-symlink-and-baseline-xattr-behavior',
         'diffutils-merge-and-CVE-2026-53910-bounded-rejection',
-        'patch-dry-run-apply-reverse', 'gawk-MPFR-array-and-filefuncs']
+        'patch-dry-run-apply-reverse', 'gawk-MPFR-array-and-filefuncs',
+        'bison-generated-parser-and-three-controlled-security-inputs',
+        'cpio-content-hardlink-symlink-and-three-controlled-security-inputs',
+        'tar-content-hardlink-symlink-ACL-xattr-mode',
+        'bzip2-38-old-exports-old-linked-C-and-Python-CLI-roundtrips',
+        'bzip2recover-existing-output-symlink-refusal',
+        'bzip2recover-source-ASAN-original-vs-patched-bounds-regression']
     manifest['validation_exceptions'] = [
         'c-ares public DNS tests: 60 passed, 2 ANY-query tests failed because resolver returned RCODE 4 NotImplemented; independent query reproduced.',
         'Zstandard and libjpeg-turbo remain excluded because removed exports need target-consumer review.',
         'File/rich dependencies, full target transaction and applications have not been validated.'
+        ,'Bison is a fresh UBI install; bzip2-libs is an upgrade but its CLI is a fresh install.'
+        ,'Tar CVE-2026-18477 and CVE-2026-18508 are not asserted remediated; CVE/package identity conflicts remain under review.'
     ]
     for project, (version, names) in TARGETS.items():
-        release = '2' if project == 'diffutils' else '1'
-        directory = 'diffutils-patched' if project == 'diffutils' else project
+        release, directory = OVERRIDES.get(project, ('1', project))
         artifacts = [(name+'-'+version+'-'+release+'.linuxoss.el8.x86_64.rpm', 'rpms') for name in names]
         artifacts.append((project+'-'+version+'-'+release+'.linuxoss.el8.src.rpm', 'srpms'))
         for filename, folder in artifacts:
@@ -91,8 +114,8 @@ def main():
     (dest/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
     (dest/'SHA256SUMS').write_text(''.join(r['sha256']+'  '+r['path']+'\n' for r in manifest['files']),encoding='ascii')
     (dest/'README.txt').write_text(
-        'EL8 candidates: rsync, zlib, PCRE2, Expat, XZ, c-ares, libpng, Little CMS, sed, diffutils, patch, gawk.\n'
-        'Nineteen replacement RPMs, twelve source RPMs, one official UBI directory-layout dependency.\n'
+        'EL8 candidates: rsync, zlib, PCRE2, Expat, XZ, c-ares, libpng, Little CMS, sed, diffutils, patch, gawk, Bison, cpio, bzip2, tar.\n'
+        'Twenty-four replacement RPMs, sixteen source RPMs, one official UBI directory-layout dependency.\n'
         'See manifest.json for exact versions, test scope and external-DNS exceptions.\n'
         'Not a complete 323-package upgrade; not tested on the target server.\n'
         'Custom RPMs are unsigned local builds. Only cmake-filesystem is a signed Red Hat UBI RPM.\n'

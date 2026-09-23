@@ -388,6 +388,303 @@
       "upstream_commit": "08c3fc2e9337094aff01a511170fd35fdb8f1ee3",
       "verification": "Official GNU Savannah HTTPS commit patch; fixes private ACL function name collision",
       "upstream_signature_verified": false
+    },
+    {
+      "name": "tar-security-tar-1.35-revert-fix-savannah-bug-633567.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/tar-1.35-revert-fix-savannah-bug-633567.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "97542da7a2f8804bae2c43f36c2aec96315ffc241f497e1c6cb9945aaa0f3aad",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2026-5704.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2026-5704.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "a82c5c51168b9d4165792a7c14502626b1afd51e5f62be6df3c08f28b114bb7d",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-1.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-1.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "fff3ad30cbcff51358c304c628d21ec91cf87fdf9a7eab25a5aa5ddc2ded627d",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-2.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-2.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "0ad129bb161a77f425000ea6647d7390586ccfc63705c424ad67e222f2272be7",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-3.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-3.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "af9c7a883b0b5a99db963a65e25d65226e65e750fdf014617cf314cffc62bcd7",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-4.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-4.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "f923ff649475892e8d57892620295f3b8983369fde300d48549da7c3eba940b9",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-5.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-5.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "cd9392a8cc7767d84bb023c3da9050cbca46a3808f4e0312a23826551504b349",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-6.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-6.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "abd31f8780562d5d709697903b93624a97722c6dd20deca7af88674031daa6c6",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-7.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-7.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "11843f45db26862ff454bab872a348c22273fe015dda03c877b0add69782802f",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-8.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-8.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "632b34ebd6e12a1d823f085931d97c440f337477434b719af4580f7921b83d36",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-9.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-9.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "46b60d79931b059c3d223e5e0a4cdd34cc4dd3a39ed4f0778194ef41e553270d",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-10.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-10.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "2c931abebee1d441f0b384b88cdfe3c10d9b9b29a0b5f35dc71defcb1369d83a",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-gnulib-1.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-gnulib-1.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "7448802ab7ee5de4d028af1d00c4a2da5af7a52fbaeb88cd604c71d9f80ad218",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-gnulib-2.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-gnulib-2.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "4a256cb0fd17d3cca2efc894ceca57a5714d300c4ff77238fb596d494bd0d074",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-gnulib-3.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-gnulib-3.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "80c0c2d0aae5d08cff2eaf2aed26f07cedf4c9286d8ec458dbda7a45ab736605",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-gnulib-4.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-gnulib-4.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "2ce3088eebf0d44dfa9f731e5ac985e72f618c449ece4f3a630f109a8cd386fd",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-gnulib-5.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-gnulib-5.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "58f70c722faece7e143ee2c8763e79f719372ed2f523f9eb923adba239246ed0",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2025-45582-gnulib-6.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2025-45582-gnulib-6.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "d98fc9a3aeb7d1ed3f8651fc504a64e72be223722ee5237ec3ee0af8a9efab5b",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2026-5704-2.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2026-5704-2.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "5276f489f2f6f068875d4a9c27924d2f18399955e89b8004e11f7c80a1b4e4f1",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2026-5704-3.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2026-5704-3.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "685c2e4424194f890f11d5c4a5201fb3c24bc36ebbf7c8cf346d88fda1f46f82",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2026-5704-4.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2026-5704-4.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "91d3189935ab4f4733ae10a386643803f0c1dffedafe88a6e0e3c9786b8c6217",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "tar-security-CVE-2026-5704-5.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/CVE-2026-5704-5.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "bb1a7dea938e7ee110f45a09590697e2dc86f8824076a04ba17ee025590c2063",
+      "upstream_signature_verified": false,
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified"
+    },
+    {
+      "name": "autoconf-2.73.tar.xz",
+      "url": "https://ftp.gnu.org/gnu/autoconf/autoconf-2.73.tar.xz",
+      "sha256": "9fd672b1c8425fac2fa67fa0477b990987268b90ff36d5f016dae57be0d6b52e",
+      "upstream_signature_verified": true,
+      "verification": "Detached GNU signature verified against GNU release keyring",
+      "expected_signer": "82F854F3CE73174B8B63174091FCC32B6769AA64",
+      "verification_log": "logs/autotools-signatures.json"
+    },
+    {
+      "name": "autoconf-2.73.tar.xz.sig",
+      "url": "https://ftp.gnu.org/gnu/autoconf/autoconf-2.73.tar.xz.sig",
+      "sha256": "65dc8e41784c40ed3547ac1c888c9b4865a449689bdf56396d25bf36f35eea54",
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS download; GNU signature check pending"
+    },
+    {
+      "name": "automake-1.19.tar.xz",
+      "url": "https://ftp.gnu.org/gnu/automake/automake-1.19.tar.xz",
+      "sha256": "e3e2c2e3abf37898138db5b6c1d1dc35c9160c5978be7947d2c741705251d445",
+      "upstream_signature_verified": true,
+      "verification": "Detached GNU signature verified against GNU release keyring",
+      "expected_signer": "D5D527E7E338A682CBADB1C1217FCF7314636C07",
+      "verification_log": "logs/autotools-signatures.json"
+    },
+    {
+      "name": "automake-1.19.tar.xz.sig",
+      "url": "https://ftp.gnu.org/gnu/automake/automake-1.19.tar.xz.sig",
+      "sha256": "2a0f55ae481093dc29f7410d243919b8d5675877f0147004e945cf84036d9577",
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS download; GNU signature check pending"
+    },
+    {
+      "name": "bison-CVE-2026-56390-upstream.patch",
+      "url": "https://git.savannah.gnu.org/cgit/bison.git/patch/?id=8d101c19d4d9aaedf83a448c925513742d4efcf0",
+      "sha256": "3887b8058201e4e9b4d6f7f19c1eafc7d278c4039b0d82f2e356758786bbeada",
+      "upstream_commit": "8d101c19d4d9aaedf83a448c925513742d4efcf0",
+      "verification": "Official GNU Savannah HTTPS patch; SPEC applies only parse-gram.y hunks and regenerates parser for the 3.8.2 release",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "bzip2-1.0.8.tar.gz",
+      "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+      "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+      "size": 810029,
+      "upstream_signature_verified": true,
+      "expected_signer": "12768A96795990107A0D2FDFFC57E3CCACD99A78",
+      "verification": "Detached signature verified with official project public key",
+      "verification_log": "logs/bzip2-signature.log"
+    },
+    {
+      "name": "bzip2-1.0.8.tar.gz.sig",
+      "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz.sig",
+      "sha256": "c667e2db9a3cd17bde492584263cb7c30d8050538678ece3078ae58230e6e5e1",
+      "size": 310
+    },
+    {
+      "name": "bzip2-key.gpg",
+      "url": "https://sourceware.org/pub/bzip2/gpgkey-5C1D1AA44BE649DE760A.gpg",
+      "sha256": "3a189df1faa883973d80f1fc6d7450affddbf35989427692a6bf90e48b7466ad",
+      "size": 5236
+    },
+    {
+      "name": "bzip2-CVE-2026-42250.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/bzip2/1.0.8-6ubuntu0.1/bzip2_1.0.8-6ubuntu0.1.debian.tar.bz2",
+      "archive_member": "debian/patches/CVE-2026-42250.patch",
+      "archive_sha256": "8d19f16fb4ab1d9b8214729a5a91c4cef8d08579449e80cc1d3a3d9cc78e24d8",
+      "sha256": "24218549da5d512dcbbfc72b42d16e625f7af2df4fa4b0d9ad7f05f8dc0805be",
+      "upstream_commit": "35d122a3df8b0cc4082a4d89fdc6ee99f375fe67",
+      "verification": "Official Ubuntu HTTPS source archive SHA256 matched DSC; DSC signature not independently verified",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "tar-exclude17.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/exclude17.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "3e2d97936ee8267d99a134f48ac4deb811cf5cb747c48e31cbcef6b35c1dcffa",
+      "verification": "Missing upstream tests restored from official Ubuntu source archive",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "tar-exclude18.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/tar/1.35+dfsg-4ubuntu0.4/tar_1.35+dfsg-4ubuntu0.4.debian.tar.xz",
+      "archive_member": "debian/patches/exclude18.patch",
+      "archive_sha256": "25d8e50e31629e85baef5da32b3030e5ad0c9148ab3ee6b1428212a10e307e4d",
+      "sha256": "b6b4c2ccfab6edbad9078d840a8623ec38c7ad35e750d26f444744254c79f008",
+      "verification": "Missing upstream tests restored from official Ubuntu source archive",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "bzip2recover-race-open-output.patch",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/bzip2/1.0.8-6ubuntu0.1/bzip2_1.0.8-6ubuntu0.1.debian.tar.bz2",
+      "archive_member": "debian/patches/bzip2recover-race-open-output.diff",
+      "archive_sha256": "8d19f16fb4ab1d9b8214729a5a91c4cef8d08579449e80cc1d3a3d9cc78e24d8",
+      "sha256": "207568745101b95163d9f7c2d5467f9b93c9da9cbe3324b4c1f015e2436b4346",
+      "verification": "Official Ubuntu source security hardening patch; archive SHA256 checked against DSC",
+      "upstream_signature_verified": false
     }
   ]
 }

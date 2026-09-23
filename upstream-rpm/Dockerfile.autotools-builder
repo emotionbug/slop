@@ -1,0 +1,19 @@
+FROM localhost/linux-oss-utility-builder:el8-20260924
+USER root
+COPY autoconf-2.73.tar.xz automake-1.19.tar.xz /tmp/tool-sources/
+COPY bison-3.8.2-3.linuxoss.el8.x86_64.rpm /tmp/tool-sources/
+RUN echo '9fd672b1c8425fac2fa67fa0477b990987268b90ff36d5f016dae57be0d6b52e  /tmp/tool-sources/autoconf-2.73.tar.xz' | sha256sum -c - \
+ && echo 'e3e2c2e3abf37898138db5b6c1d1dc35c9160c5978be7947d2c741705251d445  /tmp/tool-sources/automake-1.19.tar.xz' | sha256sum -c - \
+ && echo '21cc6b0a78578cbd0183e33003f50e9f71ba3f23d17c9084d72e61d8614da31b  /tmp/tool-sources/bison-3.8.2-3.linuxoss.el8.x86_64.rpm' | sha256sum -c - \
+ && dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/tool-sources/bison-3.8.2-3.linuxoss.el8.x86_64.rpm \
+ && install -d -o builder -g builder /opt/linux-oss/build-tools
+USER builder
+ENV PATH=/opt/linux-oss/build-tools/bin:$PATH
+RUN cd /tmp \
+ && tar -xf /tmp/tool-sources/autoconf-2.73.tar.xz \
+ && cd autoconf-2.73 && ./configure --prefix=/opt/linux-oss/build-tools \
+ && make -j3 && make install \
+ && cd /tmp && tar -xf /tmp/tool-sources/automake-1.19.tar.xz \
+ && cd automake-1.19 && ./configure --prefix=/opt/linux-oss/build-tools \
+ && make -j3 && make install
+# Build tooling only, not target-server packages or target remediation.

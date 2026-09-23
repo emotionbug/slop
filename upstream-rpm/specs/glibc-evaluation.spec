@@ -70,6 +70,12 @@ make -C build "$PWD/build/testroot.pristine/install.stamp"
 for library in libselinux.so.1 libpcre2-8.so.0 libgcc_s.so.1; do
   install -m 0755 "/usr/lib64/$library" "build/testroot.pristine%{prefix}/lib/$library"
 done
+# Some upstream container tests call /sbin/ldconfig and PATH getent even
+# with a private --prefix. Provide the newly built tools at those paths only
+# inside the disposable test root. Otherwise they fail with ENOENT.
+mkdir -p build/testroot.pristine/sbin build/testroot.pristine/usr/bin
+install -m 0755 build/elf/ldconfig build/testroot.pristine/sbin/ldconfig
+install -m 0755 build/nss/getent build/testroot.pristine/usr/bin/getent
 make -C build %{?_smp_mflags} check
 
 %install

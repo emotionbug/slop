@@ -80,9 +80,13 @@ gcc -O2 -I/tmp /tmp/image-check.c -lpng16 -ljpeg -l:liblcms2.so.2 -lm -o /tmp/im
 /tmp/image-check
 rpms=(
   /rpms/libpng/libpng-1.6.58-1.linuxoss.el8.x86_64.rpm
-  /rpms/libpng/libpng-devel-1.6.58-1.linuxoss.el8.x86_64.rpm
   /rpms/lcms2/lcms2-2.19.1-1.linuxoss.el8.x86_64.rpm
 )
+# This header RPM was installed only to compile the old-library consumer.
+# Remove it from this disposable fixture, so the exact release candidate
+# set can be tested without adding a non-target libpng-devel replacement.
+dnf -y --disableplugin=subscription-manager --disablerepo='*' \
+  --setopt=clean_requirements_on_remove=False remove libpng-devel
 if [[ $profile == all ]]; then
   rpms+=(/rpms/libjpeg-turbo/libjpeg-turbo-3.2.0-1.linuxoss.el8.x86_64.rpm
     /rpms/libjpeg-turbo/libjpeg-turbo-devel-3.2.0-1.linuxoss.el8.x86_64.rpm)

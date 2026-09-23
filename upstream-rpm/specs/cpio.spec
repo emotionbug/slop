@@ -17,7 +17,17 @@ require separate review; changing the release number is not remediation proof.
 %setup -q
 patch --fuzz=0 -p1 < %{PATCH0}
 patch --fuzz=0 -p1 < %{PATCH1}
-patch --fuzz=0 -p1 < %{PATCH2}
+# Ubuntu's patch includes one context line from its unrelated device-link
+# fix. Restore that context to the original GNU release; keep every security
+# change unchanged and still require a zero-fuzz application.
+python3.11 - %{PATCH2} > quote-release-context.patch <<'PY'
+import pathlib,sys
+patch=pathlib.Path(sys.argv[1]).read_text()
+before='              else if ((archive_format == arf_ustar) && (file_hdr.c_nlink > 1))'
+assert patch.count(before)==1
+print(patch.replace(before,' \t      else if (archive_format == arf_ustar)'),end='')
+PY
+patch --fuzz=0 -p1 < quote-release-context.patch
 %build
 export CFLAGS='-O2 -g -gdwarf-4 -fstack-protector-strong -fcf-protection -D_FORTIFY_SOURCE=2'
 export LDFLAGS='-Wl,--build-id -Wl,-z,relro,-z,now'

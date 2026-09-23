@@ -685,6 +685,254 @@
       "sha256": "207568745101b95163d9f7c2d5467f9b93c9da9cbe3324b4c1f015e2436b4346",
       "verification": "Official Ubuntu source security hardening patch; archive SHA256 checked against DSC",
       "upstream_signature_verified": false
+    },
+    {
+      "name": "libtasn1-4.21.0.tar.gz",
+      "url": "https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.21.0.tar.gz",
+      "sha256": "1d8a444a223cc5464240777346e125de51d8e6abf0b8bac742ac84609167dc87",
+      "size": 1816537,
+      "upstream_signature_verified": true,
+      "expected_signer": "B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE",
+      "verification": "GNU release SHA256 and GPG signing fingerprint matched",
+      "evidence_url": "https://lists.gnu.org/archive/html/info-gnu/2026-01/msg00003.html",
+      "verification_log": "logs/libtasn1-source-signature.log"
+    },
+    {
+      "name": "libtasn1-4.21.0.tar.gz.sig",
+      "url": "https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.21.0.tar.gz.sig",
+      "sha256": "a81037649b953c9ecb2e8f8fa24cb5c79456fd9af31499d6b753fa6569656807",
+      "size": 1223
+    },
+    {
+      "name": "popt-1.19.tar.gz",
+      "url": "https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x/popt-1.19.tar.gz",
+      "sha256": "c25a4838fc8e4c1c8aacb8bd620edb3084a3d63bf8987fdad3ca2758c63240f9",
+      "size": 596676,
+      "upstream_signature_verified": false,
+      "verification": "Upstream published SHA256 matched"
+    },
+    {
+      "name": "jq-1.8.2.tar.gz",
+      "url": "https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-1.8.2.tar.gz",
+      "sha256": "71b8d6e8f5fe81f6c6d0d110e3892251f6ce76ed095abd315e26e6e1193af3af",
+      "size": 1959950,
+      "upstream_signature_verified": false,
+      "verification": "Upstream published SHA256 matched"
+    },
+    {
+      "name": "onig-6.9.10.tar.gz",
+      "url": "https://github.com/kkos/oniguruma/releases/download/v6.9.10/onig-6.9.10.tar.gz",
+      "sha256": "2a5cfc5ae259e4e97f86b68dfffc152cdaffe94e2060b770cb827238d769fc05",
+      "size": 979159,
+      "upstream_signature_verified": false,
+      "verification": "Official release SHA256 file matched"
+    },
+    {
+      "name": "onig-6.9.10.tar.gz.sha256",
+      "url": "https://github.com/kkos/oniguruma/releases/download/v6.9.10/onig-6.9.10.tar.gz.sha256",
+      "sha256": "6403c32a503729552d69d9c2154e023d0ff8a4f25cdda23dc8287be8dd744866",
+      "size": 85,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "tmux-3.7c.tar.gz",
+      "url": "https://github.com/tmux/tmux/releases/download/3.7c/tmux-3.7c.tar.gz",
+      "sha256": "7c60cae9a0e25288e2e24750aafc9e8800fc7fd4555e447e1b29ee4201cfb3bf",
+      "size": 789431,
+      "upstream_signature_verified": false,
+      "verification": "Upstream published SHA256 matched"
+    },
+    {
+      "name": "nano-9.2.tar.xz",
+      "url": "https://www.nano-editor.org/dist/latest/nano-9.2.tar.xz",
+      "sha256": "05ecb99247b782e8a5b3a25ed4101dd034b0236902f7449bc9795b717642f7e9",
+      "size": 1760684,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "nano-9.2.tar.xz.asc",
+      "url": "https://www.nano-editor.org/dist/latest/nano-9.2.tar.xz.asc",
+      "sha256": "8941e73067b64770a1cace1ccb6f161e2a3a3c0e872db65f16349444b3fabc38",
+      "size": 833,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "libidn-1.44.tar.gz",
+      "url": "https://ftp.gnu.org/gnu/libidn/libidn-1.44.tar.gz",
+      "sha256": "499608bab3a65650a0ea52888c13a8deebe3f71408e319acd9ec52e02eb13959",
+      "size": 2600944,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "libidn-1.44.tar.gz.sig",
+      "url": "https://ftp.gnu.org/gnu/libidn/libidn-1.44.tar.gz.sig",
+      "sha256": "12229b5b010d74ec96b29f988ea1fc39baa0484f853356b105ed3e4794cdd286",
+      "size": 1223,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "libXpm-3.5.19.tar.xz",
+      "url": "https://xorg.freedesktop.org/archive/individual/lib/libXpm-3.5.19.tar.xz",
+      "sha256": "ad3576d689221a39dc728f0e0dc02ca7bb6a0d724c9a77fd1bfa1e9af83be900",
+      "size": 468388,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "libXpm-3.5.19.tar.xz.sig",
+      "url": "https://xorg.freedesktop.org/archive/individual/lib/libXpm-3.5.19.tar.xz.sig",
+      "sha256": "e33484cfcb06069c0e1fdf5224286ec0972bf402c0699b9bbb4fc00937a7ef02",
+      "size": 95,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "libpcap-1.11.0.tar.xz",
+      "url": "https://www.tcpdump.org/release/libpcap-1.11.0.tar.xz",
+      "sha256": "9237f5bae9dcf3a91823d9963ec43b7c0e2e3374ef2ad57d92c8cd39530f4723",
+      "size": 736612,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "libpcap-1.11.0.tar.xz.sig",
+      "url": "https://www.tcpdump.org/release/libpcap-1.11.0.tar.xz.sig",
+      "sha256": "daa90b6b3424c562e12fa72375f4ccefdc21d74e70a51c230ad39b848fd72199",
+      "size": 442,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "tcpdump-4.99.7.tar.xz",
+      "url": "https://www.tcpdump.org/release/tcpdump-4.99.7.tar.xz",
+      "sha256": "39675dfa06fb0e99be8da5d4a1784acbaab58ae0870231d956ff7870cb99eec1",
+      "size": 1428440,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "tcpdump-4.99.7.tar.xz.sig",
+      "url": "https://www.tcpdump.org/release/tcpdump-4.99.7.tar.xz.sig",
+      "sha256": "ed5e161b26b612abc4fa3a09cf0ac33c55a6a1e7e561f0b2a090e6168464d799",
+      "size": 442,
+      "upstream_signature_verified": false,
+      "verification": "Official release HTTPS download; SHA256 pinned; detached signature not yet verified"
+    },
+    {
+      "name": "file-5.48.tar.gz",
+      "url": "https://astron.com/pub/file/file-5.48.tar.gz",
+      "sha256": "ed14656883b23a364b4057c05595d93252da9bc473d30106519519d0da141283",
+      "size": 2693209,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS release source pinned; detached signature not verified"
+    },
+    {
+      "name": "libevent-2.1.13-stable.tar.gz",
+      "url": "https://github.com/libevent/libevent/releases/download/release-2.1.13-stable/libevent-2.1.13-stable.tar.gz",
+      "sha256": "f7e9383b8c0baa81b687e5b5eecc01beefaf1b19b64151d95ed61647fe7a315c",
+      "size": 1126525,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS release source pinned; detached signature not verified"
+    },
+    {
+      "name": "tiff-4.7.2.tar.xz",
+      "url": "https://download.osgeo.org/libtiff/tiff-4.7.2.tar.xz",
+      "sha256": "4996f0c4f93094719b1ca5c6279b20e588773ba8a247533e486416fb662ddb88",
+      "size": 2409652,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS release source pinned; detached signature not verified"
+    },
+    {
+      "name": "libtheora-1.2.0.tar.gz",
+      "url": "https://downloads.xiph.org/releases/theora/libtheora-1.2.0.tar.gz",
+      "sha256": "279327339903b544c28a92aeada7d0dcfd0397b59c2f368cc698ac56f515906e",
+      "size": 2535283,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS release source pinned; detached signature not verified"
+    },
+    {
+      "name": "freetype-2.14.3.tar.xz",
+      "url": "https://download.savannah.gnu.org/releases/freetype/freetype-2.14.3.tar.xz",
+      "sha256": "36bc4f1cc413335368ee656c42afca65c5a3987e8768cc28cf11ba775e785a5f",
+      "size": 2670220,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS release source pinned; detached signature not verified"
+    },
+    {
+      "name": "libssh-0.12.2.tar.xz",
+      "url": "https://www.libssh.org/files/0.12/libssh-0.12.2.tar.xz",
+      "sha256": "49560f677d96e3706a904ac2de1116e25f3680937d51e5c92198fcba4a1c1e9f",
+      "size": 759680,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS release source pinned; detached signature not verified"
+    },
+    {
+      "name": "libogg-1.3.6.tar.xz",
+      "url": "https://downloads.xiph.org/releases/ogg/libogg-1.3.6.tar.xz",
+      "sha256": "5c8253428e181840cd20d41f3ca16557a9cc04bad4a3d04cce84808677fa1061",
+      "size": 439952,
+      "upstream_signature_verified": false,
+      "verification": "SHA256 matches official release digest; no detached signature verification"
+    },
+    {
+      "name": "harfbuzz-14.5.0.tar.xz",
+      "url": "https://github.com/harfbuzz/harfbuzz/releases/download/14.5.0/harfbuzz-14.5.0.tar.xz",
+      "sha256": "b7132e148358a45185c9feafd049dbaf243649d3c44414b3534d9c95d18592b9",
+      "size": 20262956,
+      "upstream_signature_verified": false,
+      "verification": "SHA256 matches official release digest; no detached signature verification"
+    },
+    {
+      "name": "time-1.10.tar.gz",
+      "url": "https://ftp.gnu.org/gnu/time/time-1.10.tar.gz",
+      "sha256": "e8c29fb4ab599d8478e41e8618f50db8aede9c90af27d0d2ef28ae50d5de09c3",
+      "size": 851192,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS source pinned; no independent signature verification"
+    },
+    {
+      "name": "openjpeg-2.5.4.tar.gz",
+      "url": "https://github.com/uclouvain/openjpeg/archive/refs/tags/v2.5.4.tar.gz",
+      "sha256": "a695fbe19c0165f295a8531b1e4e855cd94d0875d2f88ec4b61080677e27188a",
+      "size": 2157028,
+      "upstream_signature_verified": false,
+      "verification": "Official HTTPS source pinned; no independent signature verification"
+    },
+    {
+      "name": "libgpg-error-1.61.tar.bz2",
+      "url": "https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-1.61.tar.bz2",
+      "sha256": "7a85413f2bc354f4f8aa832b718af122e48965e9e0eb9012ee659c13c6385c93",
+      "size": 1124751,
+      "upstream_signature_verified": false,
+      "verification": "SHA256 matches GnuPG official integrity page; detached signature not yet verified"
+    },
+    {
+      "name": "libgcrypt-1.12.4.tar.bz2",
+      "url": "https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.12.4.tar.bz2",
+      "sha256": "d77f68f48879510e79a2f65977ccc68981781ea0923e5bdffac2a193ea3d660e",
+      "size": 4473329,
+      "upstream_signature_verified": false,
+      "verification": "SHA256 matches GnuPG official integrity page; detached signature not yet verified"
+    },
+    {
+      "name": "openjpeg-data-39524bd3a601d90ed8e0177559400d23945f96a9.tar.gz",
+      "url": "https://codeload.github.com/uclouvain/openjpeg-data/tar.gz/39524bd3a601d90ed8e0177559400d23945f96a9",
+      "sha256": "ef5dee748c9ad630165b3374983de5292827347c7e1c2ab1ba04a074cc9f9ae2",
+      "size": 498662590,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream test corpus pinned by git commit and downloaded SHA256; test data excluded from SRPM with NoSource"
+    },
+    {
+      "name": "oniguruma-el8-posix-symbols.patch",
+      "url": "https://raw.githubusercontent.com/emotionbug/slop/main/upstream-rpm/patches/oniguruma-el8-posix-symbols.patch",
+      "sha256": "7f51c012936de9495bf66abc837862fdfc4ed62fd11f6576b97b89626da3c8cb",
+      "upstream_signature_verified": false,
+      "verification": "Local ELF aliases for EL8 POSIX API. Old/new public regex structure layout reviewed; old-header binary tested separately. No upstream security claim for this patch."
     }
   ]
 }

@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-batch-builder:el8-20260924
+USER root
+COPY libpcap-1.11.0-1.linuxoss.el8.x86_64.rpm libpcap-devel-1.11.0-1.linuxoss.el8.x86_64.rpm /tmp/pcap-input/
+RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/pcap-input/*.rpm
+USER builder

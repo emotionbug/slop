@@ -1,0 +1,9 @@
+FROM localhost/linux-oss-batch-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False \
+      install libogg-devel libvorbis-devel libjpeg-turbo-devel libpng-devel \
+      libwebp-devel jbigkit-devel xz-devel brotli-devel harfbuzz-devel \
+      libcmocka-devel krb5-devel libgcrypt-devel libgpg-error-devel \
+      python3-devel python3-setuptools openssh-clients openssh-server bzip2-devel \
+    && dnf clean all
+USER builder

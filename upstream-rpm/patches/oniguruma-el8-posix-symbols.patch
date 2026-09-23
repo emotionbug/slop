@@ -1,0 +1,34 @@
+--- a/src/regposix.c
++++ b/src/regposix.c
+@@ -386,3 +386,20 @@
+ }
+ 
+ #endif /* USE_BINARY_COMPATIBLE_POSIX_API */
++
++/* EL8 ABI compatibility: same function types and regex structure layout.
++ * Retain legacy dynamic symbol names alongside the upstream namespaced API. */
++#undef regcomp
++#undef regexec
++#undef regfree
++#undef reg_set_encoding
++#undef reg_name_to_group_numbers
++#undef reg_foreach_name
++#undef reg_number_of_names
++extern __typeof__(onig_posix_regcomp) regcomp __attribute__((alias("onig_posix_regcomp")));
++extern __typeof__(onig_posix_regexec) regexec __attribute__((alias("onig_posix_regexec")));
++extern __typeof__(onig_posix_regfree) regfree __attribute__((alias("onig_posix_regfree")));
++extern __typeof__(onig_posix_reg_set_encoding) reg_set_encoding __attribute__((alias("onig_posix_reg_set_encoding")));
++extern __typeof__(onig_posix_reg_name_to_group_numbers) reg_name_to_group_numbers __attribute__((alias("onig_posix_reg_name_to_group_numbers")));
++extern __typeof__(onig_posix_reg_foreach_name) reg_foreach_name __attribute__((alias("onig_posix_reg_foreach_name")));
++extern __typeof__(onig_posix_reg_number_of_names) reg_number_of_names __attribute__((alias("onig_posix_reg_number_of_names")));
+--- a/src/regposerr.c
++++ b/src/regposerr.c
+@@ -143,3 +143,8 @@
+ }
+ 
+ #endif
++
++/* EL8 ABI compatibility: same function types and regex structure layout.
++ * Retain legacy dynamic symbol names alongside the upstream namespaced API. */
++#undef regerror
++extern __typeof__(onig_posix_regerror) regerror __attribute__((alias("onig_posix_regerror")));

@@ -1,0 +1,8 @@
+FROM localhost/linux-oss-autotools-patched-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False \
+      install libX11-devel libXt-devel libXext-devel libevent-devel \
+      oniguruma-devel libpcap-devel dbus-devel libnl3-devel libusb1-devel \
+      help2man perl-HTTP-Daemon libpsl-devel gnutls-devel \
+    && dnf clean all
+USER builder

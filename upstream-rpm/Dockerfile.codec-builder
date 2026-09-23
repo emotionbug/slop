@@ -1,0 +1,4 @@
+FROM localhost/linux-oss-batch-library-builder:el8-20260924-v2
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install libtiff-devel lcms2-devel && dnf clean all
+USER builder

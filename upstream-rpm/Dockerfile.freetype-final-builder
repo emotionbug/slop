@@ -1,0 +1,12 @@
+# Extract the newly built HarfBuzz into a private build prefix. This does not
+# force-install an RPM whose final FreeType dependency is not built yet.
+FROM localhost/linux-oss-font-bootstrap-builder:el8-20260924
+USER root
+COPY harfbuzz-14.5.0-1.linuxoss.el8.x86_64.rpm harfbuzz-devel-14.5.0-1.linuxoss.el8.x86_64.rpm /tmp/harfbuzz-build-input/
+RUN mkdir -p /opt/linuxoss-harfbuzz-build \
+    && cd /opt/linuxoss-harfbuzz-build \
+    && for rpm in /tmp/harfbuzz-build-input/*.rpm; do rpm2cpio "$rpm" | cpio -idm --quiet --no-absolute-filenames; done \
+    && sed -i 's|^prefix=/usr$|prefix=/opt/linuxoss-harfbuzz-build/usr|' usr/lib64/pkgconfig/harfbuzz*.pc
+ENV PKG_CONFIG_PATH=/opt/linuxoss-harfbuzz-build/usr/lib64/pkgconfig:/opt/linuxoss-freetype-bootstrap/lib64/pkgconfig
+ENV LD_LIBRARY_PATH=/opt/linuxoss-harfbuzz-build/usr/lib64:/opt/linuxoss-freetype-bootstrap/lib64
+USER builder

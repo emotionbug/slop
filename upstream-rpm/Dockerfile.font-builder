@@ -1,0 +1,9 @@
+FROM localhost/linux-oss-batch-library-builder:el8-20260924-v2
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install \
+    freetype-devel glib2-devel cairo-devel graphite2-devel libicu-devel ninja-build python3.11-pip \
+    && python3.11 -m venv /opt/linuxoss-meson \
+    && /opt/linuxoss-meson/bin/pip install --no-cache-dir meson==1.9.0 \
+    && dnf clean all
+USER builder
+ENV PATH=/opt/linuxoss-meson/bin:$PATH

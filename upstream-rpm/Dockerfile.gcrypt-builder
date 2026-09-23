@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-batch-library-builder:el8-20260924-v2
+USER root
+COPY libgpg-error-1.61-1.linuxoss.el8.x86_64.rpm libgpg-error-devel-1.61-1.linuxoss.el8.x86_64.rpm /tmp/gpg-error-input/
+RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/gpg-error-input/*.rpm
+USER builder

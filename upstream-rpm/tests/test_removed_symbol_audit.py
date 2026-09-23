@@ -122,6 +122,22 @@ class RemovedSymbolAuditTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertEqual(result['elf_files_scanned'], 0)
 
+    def test_added_symbol_file_finds_real_undefined_import(self):
+        source = self.root / 'puts.c'
+        source.write_text('#include <stdio.h>\nint main(void){return puts("fixture")<0;}\n')
+        binary = self.root / 'puts-test'
+        subprocess.check_call(['gcc', str(source), '-o', str(binary)])
+        symbols = self.root / 'symbols.json'
+        symbols.write_text(json.dumps({'libraries':[{'scan_symbols':['puts']}]}))
+        args = ['audit','--only-roots','--symbols-file',str(symbols),str(binary)]
+        output = io.StringIO()
+        with mock.patch.object(sys,'argv',args), contextlib.redirect_stdout(output):
+            code = AUDIT.main()
+        result = json.loads(output.getvalue())
+        self.assertEqual(code,1)
+        self.assertEqual(result['direct_import_matches'][0]['symbols'],['puts'])
+        self.assertEqual(result['audit_version'],3)
+
 
 if __name__ == '__main__':
     unittest.main()

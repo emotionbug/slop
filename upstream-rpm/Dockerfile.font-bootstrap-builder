@@ -1,0 +1,13 @@
+# Build-only FreeType breaks the HarfBuzz/FreeType build dependency cycle.
+# It is never included in a server RPM bundle.
+FROM localhost/linux-oss-font-builder:el8-20260924-v2
+USER root
+COPY freetype-2.14.3.tar.xz /tmp/font-bootstrap-source/
+RUN echo '36bc4f1cc413335368ee656c42afca65c5a3987e8768cc28cf11ba775e785a5f  /tmp/font-bootstrap-source/freetype-2.14.3.tar.xz' | sha256sum -c - \
+    && cd /tmp/font-bootstrap-source && tar -xf freetype-2.14.3.tar.xz \
+    && cd freetype-2.14.3 \
+    && ./configure --prefix=/opt/linuxoss-freetype-bootstrap --libdir=/opt/linuxoss-freetype-bootstrap/lib64 --with-harfbuzz=no --disable-static \
+    && make -j2 && make install
+ENV PKG_CONFIG_PATH=/opt/linuxoss-freetype-bootstrap/lib64/pkgconfig
+ENV LD_LIBRARY_PATH=/opt/linuxoss-freetype-bootstrap/lib64
+USER builder

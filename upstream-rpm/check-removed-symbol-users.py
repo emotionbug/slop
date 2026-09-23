@@ -9,6 +9,7 @@ import argparse
 import json
 import os
 import pathlib
+import re
 import shutil
 import stat
 import subprocess
@@ -21,9 +22,22 @@ DEFAULT_ROOTS = ['/usr/bin', '/usr/sbin', '/usr/lib', '/usr/lib64', '/usr/libexe
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('roots', nargs='*', help='Application paths to scan IN ADDITION to the defaults')
+    parser.add_argument('--symbols-file', type=pathlib.Path,
+                        help='Add scan_symbols from a reviewed export-removal JSON file')
     parser.add_argument('--only-roots', action='store_true',
                         help='Scan only the supplied paths (for targeted checks; omits default coverage)')
     args = parser.parse_args()
+    symbols = set(SYMBOLS)
+    if args.symbols_file:
+        try:
+            data = json.loads(args.symbols_file.read_text(encoding='utf-8'))
+            for library in data['libraries']:
+                for symbol in library['scan_symbols']:
+                    if not isinstance(symbol,str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',symbol):
+                        raise ValueError('Invalid symbol name')
+                    symbols.add(symbol)
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            parser.error('Invalid symbols file: '+str(error))
     if args.only_roots and not args.roots:
         parser.error('--only-roots requires at least one path')
     if not shutil.which('readelf'):
@@ -106,7 +120,7 @@ def main():
                     parts = line.split()
                     if len(parts)>=8 and parts[0].rstrip(':').isdigit():
                         name = parts[7].split('@')[0]
-                        if name in SYMBOLS:
+                        if name in symbols:
                             (found if parts[6]=='UND' else defined_targets).add(name)
                 if defined_targets:
                     # Executables using exported data can have a defined symbol
@@ -121,14 +135,14 @@ def main():
                             parts = line.split()
                             if len(parts)>=5 and parts[2].endswith('_COPY'):
                                 name = parts[4].split('@')[0]
-                                if name in SYMBOLS:
+                                if name in symbols:
                                     found.add(name)
                 if found:
                     matches.append({'path':str(p),'symbols':sorted(found)})
             except (OSError, subprocess.TimeoutExpired) as error:
                 record_error(filename, error)
-    print(json.dumps({'audit_version':2,'read_only':True,'roots':roots,'elf_files_scanned':scanned,
-        'symbols_checked':sorted(SYMBOLS),'direct_import_matches':matches,'errors':errors,
+    print(json.dumps({'audit_version':3,'read_only':True,'roots':roots,'elf_files_scanned':scanned,
+        'symbols_checked':sorted(symbols),'direct_import_matches':matches,'errors':errors,
         'directory_symlinks_outside_roots':sorted(directory_links.values(), key=lambda item:item['path']),
         'coverage_complete_for_declared_roots':not errors and not directory_links,
         'limit':'ELF imports and COPY relocations only. Does not clear dlsym/plugins/containers/unmounted paths or target compatibility.'},

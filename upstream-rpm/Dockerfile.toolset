@@ -1,0 +1,10 @@
+FROM localhost/linux-oss-upstream-builder:el8-20260923-v3
+USER root
+# Intermediate compiler used only inside the build environment. The separately
+# built GCC 16 package remains the requested final compiler target.
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False \
+      install gcc-toolset-14-gcc gcc-toolset-14-gcc-c++ gcc-toolset-14-binutils \
+    && dnf clean all
+USER builder
+ENV PATH=/opt/rh/gcc-toolset-14/root/usr/bin:$PATH
+CMD ["bash"]

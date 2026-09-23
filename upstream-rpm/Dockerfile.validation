@@ -1,0 +1,7 @@
+FROM registry.access.redhat.com/ubi8/ubi@sha256:193e722c0c5df1f7e68e2c93cb73fcd6b8529221829f89ab5f6f3deab62fbfaa
+RUN dnf -y --disableplugin=subscription-manager --setopt=install_weak_deps=False \
+      install gcc gcc-c++ zlib-devel pcre2-devel pcre2-utf16 pcre2-utf32 \
+      python3 java-1.8.0-openjdk-devel gzip tar diffutils perl-interpreter rsync \
+    && dnf clean all
+WORKDIR /work
+CMD ["bash"]

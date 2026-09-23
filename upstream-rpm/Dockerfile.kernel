@@ -1,0 +1,9 @@
+FROM localhost/linux-oss-upstream-builder:el8-20260923-v3
+USER root
+COPY dwarves.rpm /tmp/dwarves.rpm
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False \
+      install rsync openssl \
+    && dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/dwarves.rpm \
+    && rm /tmp/dwarves.rpm && dnf clean all
+USER builder
+CMD ["bash"]

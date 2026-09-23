@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep every CSV target; source mapping is provisional until host inventory arrives."""
+"""Keep every CSV target and prefer exact host RPM headers over reference data."""
 import argparse
 import collections
 import csv
@@ -17,6 +17,8 @@ VERIFIED = {
     'glibc': ('2.44', 'https://ftp.gnu.org/gnu/glibc/'),
     'openssl': ('4.0.2', 'https://www.openssl-library.org/source/'),
     'binutils': ('2.47', 'https://ftp.gnu.org/gnu/binutils/'),
+    'zlib': ('1.3.2', 'https://zlib.net/'),
+    'pcre2': ('10.48', 'https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.48'),
 }
 BOOT = {'kernel', 'grub2', 'shim', 'systemd', 'lvm2', 'device-mapper-multipath',
         'device-mapper-persistent-data', 'mdadm', 'iscsi-initiator-utils'}
@@ -86,9 +88,18 @@ def main():
         urls = sorted({r[6] for r in reference[name] if r[6].startswith(('http://','https://'))})
         kind, gate = category(source)
         latest = VERIFIED.get(source)
+        csv_versions = sorted({r['설치버전'] for r in findings})
+        host_versions = sorted({('' if r['epoch'] == '0' else r['epoch']+':')+
+                                r['version']+'-'+r['release'] for r in host[name]})
         records.append({
             'package': name,
-            'installed_versions': sorted({r['설치버전'] for r in findings}),
+            'installed_versions': host_versions if args.inventory else csv_versions,
+            'csv_versions': csv_versions,
+            'present_in_host_inventory': bool(host[name]) if args.inventory else None,
+            'csv_versions_absent_from_inventory': sorted(set(csv_versions)-set(host_versions)) if args.inventory else [],
+            'host_source_rpms': sorted({r['source_rpm'] for r in host[name]}),
+            'host_architectures': sorted({r['arch'] for r in host[name]}),
+            'host_modules': sorted({r['module'] for r in host[name] if r['module'] != '(none)'}),
             'source_project': source,
             'source_candidates': sorted(candidates),
             'mapping_evidence': mapping,
@@ -116,7 +127,9 @@ def main():
         'target_package_count': len(records),
         'source_project_count_including_unresolved': len(projects),
         'source_mapping_confirmed_from_host': all(r['mapping_evidence']=='host-rpm-header' for r in records),
-        'warning': 'Reference metadata is Rocky EL8, not proof of the target RHEL source RPM or ABI. Latest versions are not inferred from EL8 repository versions. No unverified latest/build/install status is promoted to success.',
+        'inventory_sha256': hashlib.sha256((args.inventory/'packages.tsv').read_bytes()).hexdigest() if args.inventory else None,
+        'inventory_package_records': sum(len(v) for v in host.values()) if args.inventory else None,
+        'warning': 'Host headers are authoritative where present; Rocky EL8 fallback mappings are provisional. Header/capability checks are not proof of runtime ABI compatibility. Latest versions are not inferred from EL8 repository versions. No unverified build/install status is promoted to success.',
         'packages': records,
     }
     args.output.mkdir(parents=True, exist_ok=True)
@@ -132,7 +145,10 @@ def main():
              f'- CSV 패키지 이름: **{len(records)}개** (누락 없이 포함)',
              f'- 소스 프로젝트 묶음: **{len(projects)}개** (미확정 항목 포함)',
              '- 최신 안정판 확인은 공식 upstream 근거가 있는 항목에만 표기합니다.',
-             '- Rocky EL8의 Source RPM 대응은 참고용입니다. 대상 RHEL RPM 헤더로 확정해야 합니다.',
+             ('- Source RPM 대응을 실제 대상 서버의 RPM 헤더로 확인했습니다.'
+              if report['source_mapping_confirmed_from_host'] else
+              '- 일부 Source RPM 대응은 Rocky EL8 참고값입니다. 실제 RHEL RPM 헤더 확인이 남아 있습니다.'),
+             '- CSV의 과거 버전과 수집 시점의 설치 버전을 구분해 scope.json에 기록합니다.',
              '- 실제 대상 서버의 설치·부팅은 아직 검증하지 않았습니다.',
              '- 로컬 빌드·컨테이너 검증은 validation.json에 개별 기록합니다.', '',
              '| 소스 프로젝트 | 바이너리 패키지 수 | 최신 안정판 확인 | 검증 범위 |',

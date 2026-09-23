@@ -14,7 +14,8 @@ RUN dnf -y --enablerepo=powertools \
       texinfo gettext autoconf automake libtool ncurses-devel \
     && dnf clean all
 
-RUN dnf -y --setopt=install_weak_deps=False install libidn2-devel acl attr \
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install libidn2-devel acl attr \
+      dejagnu expect perl-Text-Template perl-Test-Simple cmake elfutils-devel bc kmod \
     && dnf clean all
 
 RUN useradd --uid 1000 --create-home builder \

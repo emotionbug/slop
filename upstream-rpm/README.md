@@ -58,9 +58,21 @@ binutils 2.47은 GCC Toolset 14로 재검증하여 앞선 LTO 실패 12개가 �
 linker 3,263개, binutils 349개, libsframe 168개, libctf 39개가 통과했습니다.
 GCC 16.2는 3단계 bootstrap 빌드를 마쳤고 전체 회귀 테스트를 진행 중입니다.
 진행 중인 검사에 일부 실패가 있어 전체 통과로 기록하지 않습니다.
+별도 비교에서 C++ 실패 33건과 C 링크 경고 실패 1건은 기본 PIE/스택 보호 옵션의
+영향으로 재현됐고, 비교용 옵션으로 실행한 동일 검사 408개는 통과했습니다.
+컴파일러의 기본 보호 옵션을 제거하거나 전체 검사의 실패를 삭제한 것은 아닙니다.
 GCC 16을 사용한 binutils 전체 재검증에서도 CTF Slice 1개가 실패했습니다.
-glibc 2.44는 별도 경로 평가 빌드와 테스트를 진행합니다. 이 패키지를 설치해도
-시스템 glibc의 취약점이 해결되는 것은 아닙니다.
+glibc 2.44는 별도 경로 평가 RPM/SRPM을 만들었습니다. 원본 검사 7,177개 통과,
+121개 환경 미지원, 16개 예상 실패이며 예상 밖 실패는 0개입니다. UBI에서 새 libc를
+명시적으로 사용한 Python의 스레드/NSS/SQLite/압축/OpenSSL 및 Java 8의
+스레드/RSA/압축 검사를 통과했습니다. 실제 프로세스의 메모리 매핑으로 새 libc 사용을
+확인했습니다. 이 패키지를 설치해도 시스템 glibc의 취약점이 해결되는 것은 아닙니다.
+
+Java 8을 명시적 로더로 실행하면 `/proc/self/exe`가 java가 아닌 로더를 가리켜
+JRE 경로 탐색이 실패했습니다. [OpenJDK launcher 소스](https://github.com/openjdk/jdk8u/blob/master/jdk/src/solaris/bin/java_md_solinux.c)의
+탐색 방식에 맞춰 일회용 컨테이너의 JRE bin 폴더에 평가 로더만 복사한 뒤 재검증했습니다.
+기존 Java 바이너리를 고치거나 실제 서버의 설치 경로를 바꾼 검사가 아닙니다.
+
 Linux 7.2.7 RPM은 빌드를 마쳤고 일반 QEMU UEFI 환경에서 PVSCSI·XFS·VMXNET3·
 device-mapper 테스트를 통과했습니다. 모듈의 디버그 정보를 제거한 약 82.4 MiB
 커널 RPM으로 다시 부팅을 확인했습니다. 실제 서버의 부팅·SSH·Java·에이전트 및

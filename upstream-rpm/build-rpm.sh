@@ -10,6 +10,10 @@ if [[ -n ${REUSE_RPMBUILD_TOPDIR:-} ]]; then
   top=$(realpath -- "$REUSE_RPMBUILD_TOPDIR")
   [[ $top =~ ^/tmp/rpmbuild\.[[:alnum:]]+$ && -d $top/BUILD && $(stat -c %u "$top") == "$(id -u)" ]] || exit 2
   reuse_args=(--define 'reuse_prepared 1')
+  if [[ ${REUSE_CONFIGURED_BUILD:-0} == 1 ]]; then
+    [[ $(basename -- "$spec") == glibc-evaluation.spec ]] || exit 2
+    reuse_args+=(--define 'reuse_configured 1')
+  fi
 else
   top=$(mktemp -d /tmp/rpmbuild.XXXXXX)
 fi

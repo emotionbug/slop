@@ -30,10 +30,17 @@ test -d %{_builddir}/glibc-%{version}/build
 export PATH=/opt/rh/gcc-toolset-14/root/usr/bin:$PATH
 mkdir -p build
 cd build
+%if 0%{?reuse_configured}
+# Packaging-only retries may reuse configuration after build-rpm.sh verifies
+# every original source file. Refuse a cache configured with different paths.
+expected='--prefix=%{prefix} --libdir=%{prefix}/lib --sysconfdir=/etc --localedir=/usr/share/locale --enable-kernel=4.18.0 --with-headers=/opt/linux-oss/kernel-uapi-7.2.7/include --enable-stack-protector=strong --disable-werror PYTHON=/usr/bin/python3.11'
+test "$(/bin/sh ./config.status --config)" = "$expected"
+%else
 ../configure --prefix=%{prefix} --libdir=%{prefix}/lib \
   --sysconfdir=/etc --localedir=/usr/share/locale \
   --enable-kernel=4.18.0 --with-headers=/opt/linux-oss/kernel-uapi-7.2.7/include \
   --enable-stack-protector=strong --disable-werror PYTHON=/usr/bin/python3.11
+%endif
 make %{?_smp_mflags}
 
 %check
@@ -61,7 +68,9 @@ for result in root.rglob('*.test-result'):
         shutil.copy2(original,target);original.unlink()
 PY
 # Regenerate disposable test roots after configure path changes.
+%if !0%{?reuse_configured}
 rm -rf build/testroot.root build/testroot.pristine
+%endif
 %endif
 # The upstream test root copies the shell's dependencies, but not nscd's
 # SELinux dependencies. Supply those two unchanged EL8 libraries only in the
@@ -96,7 +105,7 @@ if test -d %{buildroot}/etc; then
 fi
 
 %files
-%license COPYING COPYING.LIB LICENSES
+%license COPYING.LIB COPYING.LESSERv2 COPYINGv2 COPYINGv3 LICENSES
 %{prefix}/
 
 %changelog

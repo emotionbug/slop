@@ -61,5 +61,11 @@ public class GlibcRuntime {
 JAVA
 javac GlibcRuntime.java
 java_binary=$(readlink -f /usr/bin/java)
-"$loader" --library-path "$paths" "$java_binary" -cp "$work" GlibcRuntime
+# Java 8's launcher derives its JRE location from /proc/self/exe. With an
+# explicitly invoked loader that path points at the loader, not java.
+# Copy only the evaluation loader beside the unchanged java executable in
+# this disposable container, so launcher-relative JRE discovery still works.
+java_loader="$(dirname "$java_binary")/linuxoss-glibc-evaluation-loader"
+install -m 0755 "$loader" "$java_loader"
+"$java_loader" --library-path "$paths" "$java_binary" -cp "$work" GlibcRuntime
 echo GLIBC244_PRIVATE_LOADER_FUNCTIONAL_OK_NOT_SYSTEM_REPLACEMENT

@@ -10,43 +10,86 @@ import json
 import os
 import pathlib
 import shutil
+import stat
 import subprocess
 import sys
 
 SYMBOLS = {'ZSTD_getSequences', 'jpeg_std_message_table'}
-DEFAULT_ROOTS = ['/usr/bin', '/usr/sbin', '/usr/lib64', '/usr/libexec', '/opt', '/usr/local']
+DEFAULT_ROOTS = ['/usr/bin', '/usr/sbin', '/usr/lib', '/usr/lib64', '/usr/libexec', '/opt', '/usr/local']
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('roots', nargs='*', help='Additional/explicit application directories to scan')
+    parser.add_argument('roots', nargs='*', help='Application paths to scan IN ADDITION to the defaults')
+    parser.add_argument('--only-roots', action='store_true',
+                        help='Scan only the supplied paths (for targeted checks; omits default coverage)')
     args = parser.parse_args()
+    if args.only_roots and not args.roots:
+        parser.error('--only-roots requires at least one path')
     if not shutil.which('readelf'):
         raise SystemExit('readelf is required (binutils package)')
-    roots = args.roots or DEFAULT_ROOTS
+    roots = list(dict.fromkeys(([] if args.only_roots else DEFAULT_ROOTS) + args.roots))
     seen, matches, errors = set(), [], []
+    directory_links = {}
+    directory_roots = [os.path.realpath(p) for p in roots if os.path.isdir(p)]
     scanned = 0
 
+    def record_error(path, error):
+        item = {'path':str(path), 'error':str(error)[:300]}
+        if isinstance(error, FileNotFoundError):
+            item['kind'] = 'missing_path'
+            try:
+                if pathlib.Path(path).is_symlink():
+                    item.update(kind='broken_symlink', link_target=os.readlink(str(path)),
+                                resolved_target=os.path.realpath(str(path)))
+            except OSError:
+                pass
+        elif isinstance(error, PermissionError):
+            item['kind'] = 'permission_denied'
+        else:
+            item['kind'] = 'inspection_failed'
+        errors.append(item)
+
     def walk_error(error):
-        errors.append({'path':error.filename, 'error':str(error)})
+        record_error(error.filename, error)
+
+    def walk_files(root):
+        for base, directories, names in os.walk(os.path.realpath(str(root)),
+                                                followlinks=False, onerror=walk_error):
+            for name in directories:
+                path = os.path.join(base, name)
+                if os.path.islink(path):
+                    target = os.path.realpath(path)
+                    # Directory links are not followed; tell the operator about
+                    # targets not already reachable through a declared root.
+                    covered = any(os.path.commonpath([target, entry]) == entry
+                                  for entry in directory_roots)
+                    if not covered:
+                        directory_links[path] = {'path':path, 'resolved_target':target}
+            for name in names:
+                yield os.path.join(base, name)
 
     for entry in roots:
         root = pathlib.Path(entry)
-        if not root.exists():
-            errors.append({'path':str(root), 'error':'Path is absent'})
+        try:
+            root_stat = root.stat()
+        except OSError as error:
+            record_error(root, error)
             continue
-        if root.is_file():
+        if stat.S_ISREG(root_stat.st_mode):
             files = [str(root)]
+        elif stat.S_ISDIR(root_stat.st_mode):
+            files = walk_files(root)
         else:
-            files = (os.path.join(base,name) for base,_,names in
-                     os.walk(str(root.resolve()), followlinks=False, onerror=walk_error) for name in names)
+            record_error(root, ValueError('Root is not a regular file or directory'))
+            continue
         for filename in files:
             try:
                 p = pathlib.Path(filename)
-                stat = p.stat()
-                if not p.is_file() or (stat.st_dev,stat.st_ino) in seen:
+                file_stat = p.stat()
+                if not stat.S_ISREG(file_stat.st_mode) or (file_stat.st_dev,file_stat.st_ino) in seen:
                     continue
-                seen.add((stat.st_dev,stat.st_ino))
+                seen.add((file_stat.st_dev,file_stat.st_ino))
                 with p.open('rb') as stream:
                     if stream.read(4) != b'\x7fELF':
                         continue
@@ -54,7 +97,7 @@ def main():
                     stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,
                     errors='replace',timeout=30,env=dict(os.environ,LC_ALL='C'))
                 if result.returncode:
-                    errors.append({'path':str(p),'error':result.stderr.strip()[:300]})
+                    record_error(p, ValueError(result.stderr.strip() or 'readelf failed'))
                     continue
                 scanned += 1
                 found = set()
@@ -72,7 +115,7 @@ def main():
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,
                         errors='replace',timeout=30,env=dict(os.environ,LC_ALL='C'))
                     if rel.returncode:
-                        errors.append({'path':str(p),'error':rel.stderr.strip()[:300]})
+                        record_error(p, ValueError(rel.stderr.strip() or 'readelf relocations failed'))
                     else:
                         for line in rel.stdout.splitlines():
                             parts = line.split()
@@ -83,12 +126,14 @@ def main():
                 if found:
                     matches.append({'path':str(p),'symbols':sorted(found)})
             except (OSError, subprocess.TimeoutExpired) as error:
-                errors.append({'path':filename,'error':str(error)[:300]})
-    print(json.dumps({'read_only':True,'roots':roots,'elf_files_scanned':scanned,
+                record_error(filename, error)
+    print(json.dumps({'audit_version':2,'read_only':True,'roots':roots,'elf_files_scanned':scanned,
         'symbols_checked':sorted(SYMBOLS),'direct_import_matches':matches,'errors':errors,
+        'directory_symlinks_outside_roots':sorted(directory_links.values(), key=lambda item:item['path']),
+        'coverage_complete_for_declared_roots':not errors and not directory_links,
         'limit':'ELF imports and COPY relocations only. Does not clear dlsym/plugins/containers/unmounted paths or target compatibility.'},
         ensure_ascii=False,indent=2))
-    return 2 if errors else (1 if matches else 0)
+    return 2 if errors or directory_links else (1 if matches else 0)
 
 
 if __name__ == '__main__':

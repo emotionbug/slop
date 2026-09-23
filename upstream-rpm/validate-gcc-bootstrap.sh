@@ -16,16 +16,17 @@ set -e
 (cd "$build" && find . -type f \( -name '*.sum' -o -name '*.log' \) \
   -exec cp --parents -t /output -- {} +)
 printf '%s\n' "$status" > /output/make-check-exit-code.txt
-python3.11 - /output <<'PY'
+python3.11 - /output "$build" <<'PY'
 import collections,json,pathlib,sys
-root=pathlib.Path(sys.argv[1]); suites=[]
-for p in sorted(root.rglob('*.sum')):
+root=pathlib.Path(sys.argv[1]); build=pathlib.Path(sys.argv[2]); suites=[]
+# Count this build's suites, not separate diagnostic reruns placed in /output.
+for p in sorted(build.rglob('*.sum')):
     counts=collections.Counter()
     for line in p.read_text(errors='replace').splitlines():
         tag=line.split(':',1)[0]
         if tag in ('PASS','FAIL','XPASS','XFAIL','UNSUPPORTED','ERROR','UNRESOLVED'):
             counts[tag]+=1
-    if counts:suites.append({'file':str(p.relative_to(root)),'counts':dict(counts)})
+    if counts:suites.append({'file':str(p.relative_to(build)),'counts':dict(counts)})
 result={'scope':'Private bootstrap compiler only; not native replacement RPMs',
         'make_exit':int((root/'make-check-exit-code.txt').read_text()),'suites':suites}
 (root/'summary.json').write_text(json.dumps(result,indent=2)+'\n')

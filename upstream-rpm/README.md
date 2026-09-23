@@ -56,8 +56,9 @@ glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에
 binutils 2.47은 GCC Toolset 14로 재검증하여 앞선 LTO 실패 12개가 해결됐습니다.
 그러나 CTF `Slice` 테스트 1개가 실패해 배포를 보류합니다. assembler 2,098개,
 linker 3,263개, binutils 349개, libsframe 168개, libctf 39개가 통과했습니다.
-GCC 16.2는 3단계 bootstrap 빌드를 마쳤고 전체 회귀 테스트를 진행 중입니다.
-진행 중인 검사에 일부 실패가 있어 전체 통과로 기록하지 않습니다.
+GCC 16.2는 3단계 bootstrap 빌드와 전체 회귀 테스트를 마쳤습니다.
+본 검사에서 489,896개 통과, 예상 밖 실패 72개와 예상 밖 통과 2개가 있어
+전체 통과로 기록하지 않습니다. 별도 진단 실행의 건수는 본 검사 합계에서 제외합니다.
 별도 비교에서 C++ 실패 33건과 C 링크 경고 실패 1건은 기본 PIE/스택 보호 옵션의
 영향으로 재현됐고, 비교용 옵션으로 실행한 동일 검사 408개는 통과했습니다.
 컴파일러의 기본 보호 옵션을 제거하거나 전체 검사의 실패를 삭제한 것은 아닙니다.
@@ -124,9 +125,26 @@ SPEC마다 별도 빌드와 검증이 필요합니다. `build-rpm.sh`는 지정�
 작업 중 recipe 편집이 진행 중인 셸 입력을 바꾸지 않도록 합니다.
 
 `check-removed-symbol-users.py`는 실제 서버의 ELF import/COPY relocation을
-읽기 전용으로 검사합니다. 기본 `/usr` 실행파일·라이브러리와 `/opt` 외에 애플리케이션
-경로가 있다면 인수로 전체 검사 경로를 지정합니다. 결과가 비어도 dlsym/플러그인이나
-현재 로드된 삭제 파일까지 검증한 것은 아닙니다. 결과 파일은 공개 저장소에 올리지 않습니다.
+읽기 전용으로 검사합니다. 기본 경로는 `/usr/bin`, `/usr/sbin`, `/usr/lib`,
+`/usr/lib64`, `/usr/libexec`, `/opt`, `/usr/local`입니다. Java의 `/usr/lib/jvm`도
+포함합니다. 다른 애플리케이션 경로는 인수로 **추가**합니다.
+`--only-roots`를 명시한 경우에만 기본 경로를 제외합니다.
+
+```bash
+sudo /usr/libexec/platform-python check-removed-symbol-users.py
+# 별도 설치 경로가 있는 경우의 예. 실제 존재하는 경로만 추가하세요.
+sudo /usr/libexec/platform-python check-removed-symbol-users.py /data/apps
+```
+
+`errors[].kind`는 끊어진 링크(`broken_symlink`), 없는 경로(`missing_path`),
+권한 오류 등을 구분합니다. 경로를 삭제하거나 링크를 수정하지 않습니다.
+디렉터리 링크는 자동으로 따라가지 않으며, 기본/추가 검사 경로 밖의 대상은
+`directory_symlinks_outside_roots`에 표시합니다. 필요한 대상의 실제 경로를 인수로
+추가해 재검사할 수 있습니다. 오류/누락 경로가 있으면 종료 코드 2, 직접 참조만
+발견되면 1, 둘 다 없으면 0입니다. `coverage_complete_for_declared_roots`는
+지정한 파일 경로의 검사 범위에만 해당합니다. 직접 참조가 없어도 dlsym/플러그인,
+현재 로드된 삭제 파일, 실제 서비스의 교체 호환성을 확인한 것은 아닙니다.
+결과 파일은 공개 저장소에 올리지 않습니다.
 
 ## rsync 검증용 RPM의 현재 범위
 

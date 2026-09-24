@@ -3,14 +3,14 @@
 배포 RPM/SRPM → 설치 파일 대조 → upstream CVE 평가 → **한 번의 Trivy 검사와 CSV**로 연결합니다.
 Trivy 0.74.0의 WASM 모듈을 사용하며 공식 RHEL 결과는 보존합니다.
 
-[실행 번들](https://github.com/emotionbug/slop/releases/tag/trivy-native-rpm-20260924-2)
+[실행 번들](https://github.com/emotionbug/slop/releases/tag/trivy-native-rpm-20260924-3)
 
 ## 연결 범위
 
-- 자체 RPM **52개, 소스 프로젝트 38개**의 RPM/SRPM/헤더/비설정 일반 파일 SHA-256을 대조합니다.
+- 확장 평가 묶음의 자체 RPM 전체의 RPM/SRPM/헤더/비설정 일반 파일 SHA-256을 대조합니다.
 - Source RPM별로 출처가 있는 NVD CPE 식별자를 선택합니다. GNU tar와 npm/Rust tar를 합치지 않습니다.
 - NVD 응답 해시, 조회 시각, 페이지 수, 실패를 보존합니다. 선택한 영향 버전 범위 후보는 실제 Trivy `Vulnerabilities`의 `under_investigation`으로 들어갑니다.
-- 기존 검증의 **22개 CVE 수정 근거**를 정확히 일치하는 RPM과 파일에만 적용합니다. tar의 미해결 2건은 유지합니다.
+- 기존 검증의 **기존 22개와 MCPP 1개의 CVE 수정 근거**를 정확히 일치하는 RPM과 파일에만 적용합니다. tar의 미해결 2건은 유지합니다.
 - rsync에 포함된 xxHash 0.8.4도 표시합니다. 검증한 CPE 매핑이 없어 `unmapped`입니다.
 - 제외한 과거 CVE는 JSON 평가의 `range_excluded_cves`에 남습니다.
 - 해석 불가능한 버전 접미사, 환경 조건, 배포판 별칭은 검토 대상으로 유지합니다.
@@ -52,12 +52,13 @@ Windows 개발기의 Go 1.26, Python, Podman으로 실행합니다.
 
 ```powershell
 ./build-integration.ps1 `
-  -RpmBundle D:/sources/linux-oss/upstream-rpm/output/candidate-bundle-20260924-6 `
+  -RpmBundle C:/rpm-builds/full-builds-20260924-7 `
   -OutputDirectory D:/sources/linux-oss/upstream-rpm/output/native-new `
   -RefreshFeed
 ```
 
-`-RefreshFeed`는 NVD를 6.1초 이상의 요청 간격으로 새로 조회하며 몇 분 걸립니다.
+`-RefreshFeed`는 NVD를 6.1초 이상의 요청 간격으로 새로 조회합니다. 대규모 커널 피드를 포함해 시간이 걸릴 수 있습니다. 중단된 조회는 `-ReuseFeedCache`로 재개하며 기존 조회 시각은 유지합니다.
+WSL 내부 Podman을 사용할 때는 `-WslDistribution Ubuntu`를 지정할 수 있습니다.
 카탈로그와 피드는 WASM 내부에 포함되며 실행 시 해시가 일치해야 합니다.
 새 CVE는 **RPM 재빌드 없이 모듈 번들만 갱신**하면 됩니다. 배포물은 미서명이며 신뢰한 릴리스의 체크섬으로 확인합니다.
 
@@ -87,6 +88,9 @@ python3 package-bundle.py --output-dir /work/native-new
 - [NVD API](https://nvd.nist.gov/developers/vulnerabilities)
 - 제품 매핑과 개별 수정 근거의 출처는 두 JSON 파일에 기록합니다.
 - 기존 Trivy DB와 추가 NVD 피드는 갱신 시각이 다르므로 둘 다 갱신해야 합니다.
-- 323종 전체 제작 완료나 운영 서버 모든 CVE 해결을 뜻하지 않습니다.
+- [전체 제작 현황](../ALL-BUILDS.md)과 [개별 산출물](../BUILD-CATALOG.json)을 함께 확인하세요. 설치되지 않은 RPM을 검사한 것으로 계산하지 않습니다.
+- 커널은 NVD의 운영체제 제품(`part=o`)으로 매핑하며, UAPI 헤더를 실행 커널로 계산하지 않습니다.
+- 설치된 RPM의 정확한 헤더에 해당하는 파일만 해시를 계산합니다.
+- 323종 전체 교체 완료나 운영 서버 모든 CVE 해결을 뜻하지 않습니다.
 
 This product uses data from the NVD API but is not endorsed or certified by the NVD.

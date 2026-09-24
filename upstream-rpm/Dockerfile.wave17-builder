@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave16-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install clang-devel llvm-devel libldb-devel libtalloc-devel libtdb-devel libtevent-devel libnfsidmap-devel libjose-devel samba-devel samba-winbind-clients python3-pyasn1 python3.11-setuptools && dnf clean all
+COPY *.rpm /tmp/proxy-deps/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/proxy-deps/*.rpm
+USER builder

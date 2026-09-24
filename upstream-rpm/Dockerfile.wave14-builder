@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave13-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install libyaml-devel lcms2-devel newt-devel dbus-devel python3-devel python3-dbus python3-gobject-base python3-setuptools python3-pytest python3-pexpect python3-pyyaml libsemanage-devel CUnit-devel flex-devel libconfig-devel libtirpc-devel && mkdir -p /run/lock/iscsi && chown builder:builder /run/lock/iscsi && dnf clean all
+COPY *.rpm /tmp/npth-compat/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False reinstall /tmp/npth-compat/*.rpm
+USER builder

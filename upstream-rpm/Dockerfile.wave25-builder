@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave24-builder:el8-20260924
+USER root
+RUN dnf -y install epel-release && dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install openbox && dnf clean all
+RUN CC=/usr/bin/gcc cargo install cargo-c --version 0.10.10 --locked --root /opt/cargo-c -j2
+ENV PATH=/opt/cargo-c/bin:$PATH
+USER builder

@@ -213,6 +213,16 @@
         "advisory": "https://nvd.nist.gov/vuln/detail/CVE-2026-18508",
         "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md"
       }
+    ],
+    "cad0d1564c2a5160e588902d34eedb82999e5d63d41f9ee6621483304ba80895": [
+      {
+        "cve": "CVE-2019-14274",
+        "status": "fixed",
+        "scope": "Named CVE only; parallel MCPP artifact; distribution mcpp/libmcpp remains separate.",
+        "advisory": "https://security-tracker.debian.org/tracker/CVE-2019-14274",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/MCPP-EVIDENCE.md",
+        "verification": "Pinned Debian 2.7.2-5.3 patch series plus local zero-length bounds fix. Both official bug 13 reproducers have zero Valgrind invalid-memory errors; macro expansion smoke passed."
+      }
     ]
   }
 }

@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-wave20-builder:el8-20260924
+USER root
+COPY *.rpm /tmp/library-deps/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/library-deps/*.rpm && /usr/bin/gio-querymodules /usr/lib64/gio/modules
+USER builder

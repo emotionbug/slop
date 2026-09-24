@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave22-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install chrpath perl-Parse-Yapp libsmbclient-devel && dnf clean all
+COPY *.rpm /tmp/wave24-deps/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/wave24-deps/*.rpm
+USER builder

@@ -1,0 +1,7 @@
+FROM localhost/linux-oss-wave21-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install intltool file-devel cifs-utils-devel polkit-devel && dnf clean all
+COPY *.rpm /tmp/openssl35/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/openssl35/*.rpm
+RUN /opt/linuxoss-meson/bin/python3.11 -m pip install --no-cache-dir meson==1.11.0
+USER builder

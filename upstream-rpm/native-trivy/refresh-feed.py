@@ -60,7 +60,7 @@ def main():
     p.add_argument("--cache-dir", type=Path, required=True)
     p.add_argument("--reuse-cache", action="store_true", help="Resume a dated snapshot; cached retrieval dates stay unchanged")
     args = p.parse_args()
-    raw = args.mapping.read_bytes()
+    raw = args.mapping.read_bytes().replace(b"\r\n", b"\n")
     mapping = json.loads(raw.decode("utf-8"))
     args.cache_dir.mkdir(parents=True, exist_ok=True)
     feed = {"schema_version": 1, "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),

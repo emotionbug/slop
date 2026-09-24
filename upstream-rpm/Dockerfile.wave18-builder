@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-wave17-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install snappy-devel bind-utils xmlto python3.12 python3.12-devel python3.12-pip gobject-introspection-devel cairo-devel && dnf clean all
+RUN python3.12 -m pip install --no-cache-dir 'PyGObject==3.50.0' 'dbus-python==1.4.0' 'python-dbusmock==0.34.3'
+USER builder

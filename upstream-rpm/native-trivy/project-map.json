@@ -14,7 +14,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/bison.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "bzip2": {
       "aliases": [
@@ -28,7 +28,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/bzip2.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "c-ares": {
       "aliases": [
@@ -54,7 +54,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/c_ares.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "coreutils": {
       "aliases": [
@@ -68,7 +68,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/coreutils.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "cpio": {
       "aliases": [
@@ -82,7 +82,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cpio.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "diffutils": {
       "aliases": [
@@ -94,7 +94,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "expat": {
       "aliases": [
@@ -108,7 +108,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libexpat.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "file": {
       "aliases": [
@@ -140,7 +140,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/file.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "freetype": {
       "aliases": [
@@ -152,7 +152,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "gawk": {
       "aliases": [
@@ -166,7 +166,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gawk.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "harfbuzz": {
       "aliases": [
@@ -180,7 +180,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/harfbuzz.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "jbig2dec": {
       "aliases": [
@@ -192,7 +192,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "jq": {
       "aliases": [
@@ -212,7 +212,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/jq.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "lcms2": {
       "aliases": [
@@ -230,7 +230,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libXpm": {
       "aliases": [
@@ -248,7 +248,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libgcrypt": {
       "aliases": [
@@ -262,7 +262,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libgcrypt.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libgpg-error": {
       "aliases": [
@@ -274,7 +274,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libjpeg-turbo": {
       "aliases": [
@@ -294,7 +294,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libjpeg_turbo.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libpcap": {
       "aliases": [
@@ -308,7 +308,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libpcap.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libpng": {
       "aliases": [
@@ -334,7 +334,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/png.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libsolv": {
       "aliases": [
@@ -348,7 +348,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libsolv.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libssh": {
       "aliases": [
@@ -362,7 +362,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libssh.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "libtasn1": {
       "aliases": [
@@ -382,7 +382,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libtasn1.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "nano": {
       "aliases": [
@@ -396,7 +396,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/nano.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "oniguruma": {
       "aliases": [
@@ -408,7 +408,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "patch": {
       "aliases": [
@@ -422,7 +422,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/patch.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "pcre2": {
       "aliases": [
@@ -436,7 +436,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pcre2.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "popt": {
       "aliases": [
@@ -448,7 +448,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "protobuf-c": {
       "aliases": [
@@ -462,7 +462,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/protobuf_c.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "rsync": {
       "aliases": [
@@ -494,7 +494,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/rsync.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "sed": {
       "aliases": [
@@ -506,7 +506,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "tar": {
       "aliases": [
@@ -520,7 +520,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/tar.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "tcpdump": {
       "aliases": [
@@ -534,7 +534,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/tcpdump.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "time": {
       "aliases": [
@@ -546,7 +546,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "tmux": {
       "aliases": [
@@ -564,7 +564,7 @@
         }
       ],
       "mapping_references": [],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "xz": {
       "aliases": [
@@ -578,7 +578,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/xz.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "zlib": {
       "aliases": [
@@ -598,7 +598,7 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/zlib.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "zstd": {
       "aliases": [
@@ -612,15 +612,989 @@
       "mapping_references": [
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/zstandard.py"
       ],
-      "mapping_status": "selected-identifiers-pending-feed-query"
+      "mapping_status": "selected-identifiers"
     },
     "xxhash": {
       "aliases": [],
       "mapping_references": [
         "https://github.com/Cyan4973/xxHash"
       ],
-      "mapping_status": "unmapped",
+      "mapping_status": "selected-identifiers",
       "reason": "Bundled component retained; no authoritative NVD CPE mapping verified"
+    },
+    "wget": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "wget",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/wget.py"
+        },
+        {
+          "vendor": "wget",
+          "product": "wget",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/wget.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/wget.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "curl": {
+      "aliases": [
+        {
+          "vendor": "haxx",
+          "product": "curl",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/curl.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/curl.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "libxml2": {
+      "aliases": [
+        {
+          "vendor": "xmlsoft",
+          "product": "libxml2",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/xml2.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/xml2.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "libxslt": {
+      "aliases": [
+        {
+          "vendor": "xmlsoft",
+          "product": "libxslt",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libxslt.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libxslt.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "sqlite": {
+      "aliases": [
+        {
+          "vendor": "sqlite",
+          "product": "sqlite",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sqlite.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sqlite.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "openldap": {
+      "aliases": [
+        {
+          "vendor": "openldap",
+          "product": "openldap",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openldap.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openldap.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "cups": {
+      "aliases": [
+        {
+          "vendor": "apple",
+          "product": "cups",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cups.py"
+        },
+        {
+          "vendor": "cups",
+          "product": "cups",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cups.py"
+        },
+        {
+          "vendor": "easy_software_products",
+          "product": "cups",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cups.py"
+        },
+        {
+          "vendor": "openprinting",
+          "product": "cups",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cups.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cups.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "cairo": {
+      "aliases": [
+        {
+          "vendor": "cairographics",
+          "product": "cairo",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cairo.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cairo.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "gnutls": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "gnutls",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gnutls.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gnutls.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "avahi": {
+      "aliases": [
+        {
+          "vendor": "avahi",
+          "product": "avahi",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/avahi.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/avahi.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "gdb": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "gdb",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gdb.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gdb.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "kbd": {
+      "aliases": [
+        {
+          "vendor": "kbd-project",
+          "product": "kbd",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/kbd.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/kbd.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "cifs-utils": {
+      "aliases": [
+        {
+          "vendor": "samba",
+          "product": "cifs-utils",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cifs_utils.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cifs_utils.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "ncurses": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "ncurses",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/ncurses.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/ncurses.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "nmap": {
+      "aliases": [
+        {
+          "vendor": "nmap",
+          "product": "nmap",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/nmap.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/nmap.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "sysstat": {
+      "aliases": [
+        {
+          "vendor": "redhat",
+          "product": "sysstat",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sysstat.py"
+        },
+        {
+          "vendor": "sysstat",
+          "product": "sysstat",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sysstat.py"
+        },
+        {
+          "vendor": "sysstat_project",
+          "product": "sysstat",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sysstat.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sysstat.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "nettle": {
+      "aliases": [
+        {
+          "vendor": "nettle_project",
+          "product": "nettle",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/nettle.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/nettle.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "pixman": {
+      "aliases": [
+        {
+          "vendor": "pixman",
+          "product": "pixman",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pixman.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pixman.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "openssl": {
+      "aliases": [
+        {
+          "vendor": "openssl",
+          "product": "openssl",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openssl.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openssl.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "dbus": {
+      "aliases": [
+        {
+          "vendor": "d-bus",
+          "product": "d-bus",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/dbus.py"
+        },
+        {
+          "vendor": "d-bus_project",
+          "product": "d-bus",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/dbus.py"
+        },
+        {
+          "vendor": "freedesktop",
+          "product": "dbus",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/dbus.py"
+        },
+        {
+          "vendor": "freedesktop",
+          "product": "libdbus",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/dbus.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/dbus.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "iputils": {
+      "aliases": [
+        {
+          "vendor": "iputils",
+          "product": "iputils",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/iputils.py"
+        },
+        {
+          "vendor": "iputils_project",
+          "product": "iputils",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/iputils.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/iputils.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "cronie": {
+      "aliases": [
+        {
+          "vendor": "fedorahosted",
+          "product": "cronie",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cronie.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cronie.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "elfutils": {
+      "aliases": [
+        {
+          "vendor": "elfutils_project",
+          "product": "elfutils",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/elfutils.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/elfutils.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "glib2": {
+      "aliases": [
+        {
+          "vendor": "gnome",
+          "product": "glib",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/glib.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/glib.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "vim": {
+      "aliases": [
+        {
+          "vendor": "vim",
+          "product": "vim",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/vim.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/vim.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "open-vm-tools": {
+      "aliases": [
+        {
+          "vendor": "vmware",
+          "product": "open-vm-tools",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/open_vm_tools.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/open_vm_tools.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "gd": {
+      "aliases": [
+        {
+          "vendor": "libgd",
+          "product": "libgd",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libgd.py"
+        },
+        {
+          "vendor": "libgd",
+          "product": "gd_graphics_library",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libgd.py"
+        },
+        {
+          "vendor": "gd_graphics_library_project",
+          "product": "gd_graphics_library",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libgd.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libgd.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "icu": {
+      "aliases": [
+        {
+          "vendor": "icu-project",
+          "product": "international_components_for_unicode",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/icu.py"
+        },
+        {
+          "vendor": "unicode",
+          "product": "international_components_for_unicode",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/icu.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/icu.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "perl": {
+      "aliases": [
+        {
+          "vendor": "larry_wall",
+          "product": "perl",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/perl.py"
+        },
+        {
+          "vendor": "perl",
+          "product": "perl",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/perl.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/perl.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "python": {
+      "aliases": [
+        {
+          "vendor": "python_software_foundation",
+          "product": "python",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/python.py"
+        },
+        {
+          "vendor": "python",
+          "product": "python",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/python.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/python.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "openssh": {
+      "aliases": [
+        {
+          "vendor": "openbsd",
+          "product": "openssh",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openssh.py"
+        },
+        {
+          "vendor": "openssh",
+          "product": "openssh",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openssh.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openssh.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "util-linux": {
+      "aliases": [
+        {
+          "vendor": "andries_brouwer",
+          "product": "util-linux",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/util_linux.py"
+        },
+        {
+          "vendor": "kernel",
+          "product": "util-linux",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/util_linux.py"
+        },
+        {
+          "vendor": "linux",
+          "product": "util-linux",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/util_linux.py"
+        },
+        {
+          "vendor": "util-linux_project",
+          "product": "util-linux",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/util_linux.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/util_linux.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "jasper": {
+      "aliases": [
+        {
+          "vendor": "jasper_project",
+          "product": "jasper",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/jasper.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/jasper.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "emacs": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "emacs",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/emacs.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/emacs.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "net-snmp": {
+      "aliases": [
+        {
+          "vendor": "net-snmp",
+          "product": "net-snmp",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/net_snmp.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/net_snmp.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "gdk-pixbuf2": {
+      "aliases": [
+        {
+          "vendor": "gnome",
+          "product": "gdk-pixbuf",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gdk_pixbuf.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gdk_pixbuf.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "libksba": {
+      "aliases": [
+        {
+          "vendor": "gnupg",
+          "product": "libksba",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libksba.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libksba.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "gnupg": {
+      "aliases": [
+        {
+          "vendor": "gnupg",
+          "product": "gnupg",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gnupg.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gnupg.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "rsyslog": {
+      "aliases": [
+        {
+          "vendor": "rsyslog",
+          "product": "rsyslog",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/rsyslog.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/rsyslog.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "krb5": {
+      "aliases": [
+        {
+          "vendor": "mit",
+          "product": "kerberos_5",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/kerberos.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/kerberos.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "libsoup": {
+      "aliases": [
+        {
+          "vendor": "gnome",
+          "product": "libsoup",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libsoup.py"
+        },
+        {
+          "vendor": "joe_shaw",
+          "product": "libsoup",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libsoup.py"
+        },
+        {
+          "vendor": "libsoup",
+          "product": "libsoup",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libsoup.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libsoup.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "ghostscript": {
+      "aliases": [
+        {
+          "vendor": "artifex",
+          "product": "ghostscript",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/ghostscript.py"
+        },
+        {
+          "vendor": "ghostscript",
+          "product": "ghostscript",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/ghostscript.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/ghostscript.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "iscsi-initiator-utils": {
+      "aliases": [
+        {
+          "vendor": "open-iscsi_project",
+          "product": "open-iscsi",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/open_iscsi.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/open_iscsi.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "samba": {
+      "aliases": [
+        {
+          "vendor": "samba",
+          "product": "samba",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/samba.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/samba.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "sssd": {
+      "aliases": [
+        {
+          "vendor": "fedoraproject",
+          "product": "sssd",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sssd.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/sssd.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "fribidi": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "fribidi",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/fribidi.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/fribidi.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "pango": {
+      "aliases": [
+        {
+          "vendor": "gnome",
+          "product": "pango",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pango.py"
+        },
+        {
+          "vendor": "pango",
+          "product": "pango",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pango.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pango.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "librsvg2": {
+      "aliases": [
+        {
+          "vendor": "gnome",
+          "product": "librsvg",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/librsvg.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/librsvg.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "rpm": {
+      "aliases": [
+        {
+          "vendor": "rpm",
+          "product": "rpm",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/rpm.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/rpm.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "lua": {
+      "aliases": [
+        {
+          "vendor": "lua",
+          "product": "lua",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/lua.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/lua.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "pcre": {
+      "aliases": [
+        {
+          "vendor": "pcre",
+          "product": "pcre",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pcre.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pcre.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "tesseract": {
+      "aliases": [
+        {
+          "vendor": "tesseract_project",
+          "product": "tesseract",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/tesseract.py"
+        },
+        {
+          "vendor": "tesseract_ocr_project",
+          "product": "tesseract_ocr",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/tesseract.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/tesseract.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "nss": {
+      "aliases": [
+        {
+          "vendor": "mozilla",
+          "product": "nss",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libnss.py"
+        },
+        {
+          "vendor": "mozilla",
+          "product": "network_security_services",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libnss.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libnss.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "grub2": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "grub",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/grub2.py"
+        },
+        {
+          "vendor": "gnu",
+          "product": "grub2",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/grub2.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/grub2.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "procps-ng": {
+      "aliases": [
+        {
+          "vendor": "procps_project",
+          "product": "procps",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/procps_ng.py"
+        },
+        {
+          "vendor": "procps-ng_project",
+          "product": "procps-ng",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/procps_ng.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/procps_ng.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "gcc": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "gcc",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gcc.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gcc.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "glibc": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "glibc",
+          "part": "a",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/glibc.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/glibc.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "kernel": {
+      "aliases": [
+        {
+          "vendor": "linux",
+          "product": "linux_kernel",
+          "part": "o",
+          "reference": "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/linux_kernel.py"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/linux_kernel.py"
+      ],
+      "mapping_status": "selected-identifiers"
     }
   }
 }

@@ -1,0 +1,13 @@
+Backport of CPython bpo-36470, upstream commit 75220674c07abfc90c2cd7862d04cfa2e2354450
+index 422a95cebe8534e..3de2ec04ad37082 100644
+--- a/dataclasses.py
++++ b/dataclasses.py
+@@ -1300,7 +1300,7 @@ class C:
+             continue
+ 
+         if f.name not in changes:
+-            if f._field_type is _FIELD_INITVAR:
++            if f._field_type is _FIELD_INITVAR and f.default is MISSING:
+                 raise ValueError(f"InitVar {f.name!r} "
+                                  'must be specified with replace()')
+             changes[f.name] = getattr(obj, f.name)

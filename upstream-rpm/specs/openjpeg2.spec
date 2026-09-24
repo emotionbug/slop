@@ -46,6 +46,6 @@ ctest --test-dir build --output-on-failure --parallel 2
 %{_includedir}/openjpeg-2.5/
 %{_libdir}/libopenjp2.so
 %{_libdir}/pkgconfig/libopenjp2.pc
-%{_libdir}/openjpeg-2.5/
+%{_libdir}/cmake/openjpeg-2.5/
 %files tools
 %{_bindir}/opj_*

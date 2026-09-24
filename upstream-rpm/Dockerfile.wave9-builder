@@ -1,0 +1,9 @@
+FROM localhost/linux-oss-wave8-font-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install \
+    rpcgen sqlite-devel xmlsec1-devel xmlsec1-openssl-devel fuse3-devel libdrm-devel libuv-devel \
+    userspace-rcu-devel libcap-ng-devel libseccomp-devel libaio-devel \
+    libestr-devel lm_sensors-devel \
+    python3.11-devel libnsl2-devel libxcrypt-devel gdbm-devel libuuid-devel \
+ && dnf clean all
+USER builder

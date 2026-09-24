@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave11-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install shared-mime-info libaio-devel device-mapper-devel json-c-devel libmount-devel libxslt-devel lua-devel libffi-devel libX11-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXtst-devel fontconfig-devel atk-devel pango-devel libepoxy-devel xorg-x11-server-Xvfb xorg-x11-xauth && dnf clean all
+COPY *.rpm /tmp/crypto-deps/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/crypto-deps/*.rpm
+USER builder

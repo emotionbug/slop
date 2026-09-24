@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-wave32-builder:el8-20260924
+USER root
+COPY python3-dataclasses-0.8-2.linuxoss.el8.noarch.rpm /tmp/dataclasses.rpm
+RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False upgrade /tmp/dataclasses.rpm
+USER builder

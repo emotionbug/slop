@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "notice": "Component/project overrides apply only to these exact source RPM digests. Unlisted source RPMs use their source package name and retain incomplete coverage.",
+  "artifacts": {
+    "016be31fda06c1f23e5f9236371b3dda37b27b22bae4fddfbba316f5c8453759": {
+      "project": "rsync",
+      "components": [
+        {
+          "project": "xxhash",
+          "version": "0.8.4"
+        }
+      ],
+      "evidence": "Exact published rsync source RPM recipe bundles pinned xxHash 0.8.4."
+    },
+    "6a2fed411be9ef34c5ce2bc94680baf3276f5be42d57da773e86d6b88bcd329d": {
+      "project": "gnupg",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "3066ebe231d312b80397fea503ace249830161d859e37244701e4eb2c36d9c73": {
+      "project": "libsoup",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "c397da207cd1a21b405823383d810c33624fa938077ab208e7de701473a4c269": {
+      "project": "gcc",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "3fa57f7cb83a87d19e602b0fdf4a333dfc59fa12137026092cfd93cf8c54e8cc": {
+      "project": "libbsd",
+      "components": [
+        {
+          "project": "libmd",
+          "version": "1.2.0"
+        }
+      ],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "047dd0ca3b5f1d7064f8561efc600a98c6f311d0dd0fb5a197fe1985665ca2f3": {
+      "project": "glibc",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "21ac90463b671ec748d6e55619716de152ac4086f2824b6597bfc4fe41d7c733": {
+      "project": "grub2",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "9f69dd0cf438ff5c5d75441f44c6f5f60042747b7d2292b759ee878085f4eb20": {
+      "project": "openjdk",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "aee79d3716c626e7423341a5539c0afda6fc476c027d12916955bde562c9c07a": {
+      "project": "kernel-uapi-headers",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "6979c674c8af6fc2079b9d3bbf934357372781d9dd2a394cf28d3fd53f1f2ec6": {
+      "project": "libassuan",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "070dccc536ef4eb531116f70a34d0a06ee18313a9f4b97e95aab22510f0de351": {
+      "project": "libksba",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "ba118fe0d31b80e68607fff09a0fc4a69f80d4b0220f883d1de7544ca192ba5c": {
+      "project": "libselinux",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "6d5d830a0981304fa8f0a496a3089fe9541af04cdb86ceedc63f33ecf415c330": {
+      "project": "libsemanage",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "687bc6d93ee8087d75a37e24810ad57bbd8157d49e26ed8054accbcd4ccb512c": {
+      "project": "libsepol",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "9d8bca0b6fd068cb3c820eaf9755a464f3662576bc19152f1bd8be44883c18ac": {
+      "project": "mcpp",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "c7c352b0cc4ea19d3ba536e967e337decb96f9ead0904a02de7d0ef99fa28e9b": {
+      "project": "nettle",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "c29fa4dd695aa1f4261a8867a204a6a85709de1904b6a96b863c094ee9994c18": {
+      "project": "npth",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "9f647373be4ea3b0911b4a6231f2a45e5ee6e9995dab251b651706a5532d1899": {
+      "project": "openssl",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "68cdc44eb050581533bcbbd80bd31d12e24d171b5f5882fbfc73fd34b9413a72": {
+      "project": "openssl",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "0d16af0e2b0aef86c16d1a754766ef546183db3636c96716875b9f0d06cd8a72": {
+      "project": "perl",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "a2975fd8c00d6f009985271b382a7070c93f0f5cfc75b0e86d22c7749167bb91": {
+      "project": "pip",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "e9200d979b0b3e27294dafe945d3f3f5743084c1175b249de88ea4858c98d2ac": {
+      "project": "python",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "e13e47c6c3a8a5c3cc7c6c316ed20e1b625fd331f0f9402cb16c3783ce740eb9": {
+      "project": "rpm-sequoia",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "f834cfbd47bbcfcae26863fd9e3bf0e1edc86068334b4bacdd8b602153906e8f": {
+      "project": "samba",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps."
+    },
+    "e545c45506ae8129e9e56c31e12c5d334903788bedcf76bde558cde18657dbb3": {
+      "project": "secilc",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "c490c4bfa85b8ba14c7105c3adf7c642226f17108147fb9d68f3254d29668434": {
+      "project": "python",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps. Metadata-only Release 2 rebuild retains identical payload; original source archive unchanged."
+    },
+    "6fd9994142e33afbfbff635b467a4bf199f7a569f14366a7988872c5ea9bd90c": {
+      "project": "perl",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "7f9436c01301a83e65f645ba3c6e726293ae9548a14e0b698adfa83d73a255e3": {
+      "project": "glibc",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "c7fe428b4ef9647a3edb0a46bb20757ed46dff75cc729ed92cdad2ea912914fa": {
+      "project": "gcc",
+      "components": [],
+      "evidence": "Project identity and versions from the complete recipe in this exact source RPM. Parallel runtimes do not replace installed distribution packages; unmapped projects remain coverage gaps. Metadata-only Release 2 rebuild retains identical payload; original source archive unchanged."
+    },
+    "3d7dbcde72a9741dd7f954a82a4770c9dde5b1ed0bfe8853bb4bead9670ac12e": {
+      "project": "samba",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "669fcf3358d7803816f70e6973abd081a5e168c06b5e5d933890c1d8fadd56a7": {
+      "project": "kernel",
+      "components": [
+        {
+          "project": "kernel",
+          "version": "7.2.7"
+        }
+      ],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps.",
+      "include_nonstandard_vendor": true
+    },
+    "1ca6cdbe001214dc79454cd0ae64735c74ecb699911218c74a1c2e3fb0d0e717": {
+      "project": "gcc",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "abacf5746a04fb3854b0d58df77a4989d6843b61c825e1e36445b954ebd324ab": {
+      "project": "libbsd",
+      "components": [
+        {
+          "project": "libmd",
+          "version": "1.2.0"
+        }
+      ],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "cc096b442738b7a0a9688beaebb4c73dc2d540e4da8f73c2c04c19e28e0ee4d9": {
+      "project": "fwupd",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "5eada449e99a1c8f40e0707f2f7fc41d046a786d9a70b3cdbd42266117a778b7": {
+      "project": "libassuan",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "035424b48c0aa7bc0c83695e14dd76c183cf5beec5768f6ca09816a67bfdb118": {
+      "project": "libksba",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "37ff616851df90abe97b9f70fd52a2ad189fe07329bc124478376ead842f6db4": {
+      "project": "mcpp",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "59fbc5f4a9b24aca649c1c19d1af3d423a7fb7789dbe5c5b70e47d1d3518bef7": {
+      "project": "npth",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "3ad96af3b71797fafc40f687d16e645408cfd83f2e7b8e4494ca8f565901e055": {
+      "project": "openssl",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "b74a65ae75cdaaa24acd3bcc87efde0e0268cc7a17e89b78651ad7d4bd76a0dd": {
+      "project": "python",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "96611c034427815d05b7ea3beadca01971ba0eadc6a9164a7da8a157759a0ec2": {
+      "project": "rpm-sequoia",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "eb3015c1f8107fc8915f4b9c221a19bb5e93e90e06391a8affbbe0bfe9e4ac13": {
+      "project": "rpm",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "e91b6aa0bdcd06e3601bb8b45098a889720c0c34af0847809bac8a4f616a4d32": {
+      "project": "subscription-manager",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "d1b5bf6bbd0c9b30a31b4ce23f85fde0fa59139b9f1b0d8acbcc5d3102c7d005": {
+      "project": "sssd",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "fe817c53cabdab8ea8bf610ca6402feddc12fe6993363272c4d10195ead18c5e": {
+      "project": "sssd",
+      "components": [],
+      "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    }
+  }
+}

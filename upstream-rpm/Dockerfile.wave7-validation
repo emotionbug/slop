@@ -1,0 +1,11 @@
+FROM localhost/linux-oss-trivy-integration:20260924
+USER root
+RUN dnf -y --disableplugin=subscription-manager --setopt=install_weak_deps=False \
+    --repofrompath=rocky-base,https://dl.rockylinux.org/pub/rocky/8/BaseOS/x86_64/os/ \
+    --repofrompath=rocky-app,https://dl.rockylinux.org/pub/rocky/8/AppStream/x86_64/os/ \
+    --setopt=rocky-base.gpgkey=https://dl.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-8 \
+    --setopt=rocky-app.gpgkey=https://dl.rockylinux.org/pub/rocky/RPM-GPG-KEY-Rocky-8 \
+    install wget flex gd cups-libs efivar-libs net-tools ncurses ncurses-base ncurses-libs \
+    avahi-libs p11-kit p11-kit-trust pixman cairo cairo-gobject sqlite sqlite-libs curl libcurl \
+    sysstat cifs-utils rpcbind python3-rpm \
+ && dnf clean all

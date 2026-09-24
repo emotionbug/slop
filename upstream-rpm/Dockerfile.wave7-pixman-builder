@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-wave7-linked-builder:el8-20260924
+USER root
+COPY pixman-0.46.4-1.linuxoss.el8.x86_64.rpm pixman-devel-0.46.4-1.linuxoss.el8.x86_64.rpm /tmp/
+RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/pixman*.rpm
+USER builder

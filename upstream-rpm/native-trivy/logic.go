@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/sha256"
 	_ "embed"
 	"encoding/hex"
@@ -87,8 +88,14 @@ func catalogueHash() string {
 }
 func digest(b []byte) string { h := sha256.Sum256(b); return hex.EncodeToString(h[:]) }
 
+// Git may convert LF to CRLF on Windows. Mapping identity ignores only that conversion.
+func mappingDigest(b []byte) string { return digest(bytes.ReplaceAll(b, []byte("\r\n"), []byte("\n"))) }
+
 func evaluate(s Snapshot, c Catalog) ([]Row, error) {
-	if s.Schema != 1 || c.Schema != 1 || s.CatalogHash != catalogueHash() || s.FeedHash != digest(feedBytes) {
+	// The full feed includes kernel advisories. Hash it once per evaluation,
+	// rather than re-reading tens of megabytes for every installed package.
+	feedHash := digest(feedBytes)
+	if s.Schema != 1 || c.Schema != 1 || s.CatalogHash != catalogueHash() || s.FeedHash != feedHash {
 		return nil, fmt.Errorf("snapshot/catalog mismatch; collect new evidence with the matching catalogue")
 	}
 	now, err := time.Parse(time.RFC3339Nano, s.CreatedAt)
@@ -99,12 +106,12 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 	if err = json.Unmarshal(feedBytes, &feed); err != nil {
 		return nil, err
 	}
-	if feed.Schema != 1 || feed.MappingHash != digest(mappingBytes) {
+	if feed.Schema != 1 || feed.MappingHash != mappingDigest(mappingBytes) {
 		return nil, fmt.Errorf("feed/mapping mismatch")
 	}
 	rows := []Row{}
 	for _, pkg := range s.Packages {
-		row := Row{RPM: pkg, Status: "coverage-gap", Coverage: "incomplete", FeedHash: digest(feedBytes),
+		row := Row{RPM: pkg, Status: "coverage-gap", Coverage: "incomplete", FeedHash: feedHash,
 			Reason: "Selected product identifiers only; no complete upstream advisory coverage"}
 		var match *Artifact
 		for i := range c.Artifacts {

@@ -1,9 +1,11 @@
 %global debug_package %{nil}
+%global __provides_exclude_from ^/opt/linux-oss/.*
+%global __requires_exclude (^(libatomic[.]so[.]1|libcc1[.]so[.]0|libcc1plugin[.]so[.]0|libcp1plugin[.]so[.]0|libgcc_s[.]so[.]1|libitm[.]so[.]1|liblto_plugin[.]so|libssp[.]so[.]0|libstdc[+][+][.]so[.]6)[(])
 %global __brp_strip_lto %{nil}
 %global prefix /opt/linux-oss/bootstrap/gcc-16.2.0
 Name:           linuxoss-bootstrap-gcc
 Version:        16.2.0
-Release:        1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary:        Private C/C++ compiler for building the replacement RPM set
 License:        GPLv3+ with exceptions and LGPLv3+
 URL:            https://gcc.gnu.org/

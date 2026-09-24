@@ -1,0 +1,4 @@
+FROM localhost/linux-oss-wave9-builder:el8-20260924-v2
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install libcmocka-devel libverto-devel libcom_err-devel libgudev1-devel libproxy-devel gsettings-desktop-schemas-devel cairo-devel gd-devel libcap-devel pango-devel json-c-devel libgcrypt-devel && dnf clean all
+USER builder

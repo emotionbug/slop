@@ -1,0 +1,7 @@
+FROM localhost/linux-oss-wave8-deps-builder:el8-20260924
+USER root
+COPY freetype*.rpm harfbuzz*.rpm /tmp/freetype-new/
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install cairo-devel libmspack-devel libmount iproute net-tools \
+ && dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/freetype-new/*.rpm \
+ && dnf clean all
+USER builder

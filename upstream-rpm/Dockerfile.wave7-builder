@@ -1,0 +1,11 @@
+FROM localhost/linux-oss-wave6-builder:el8-20260924-v2
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install \
+    pixman-devel fontconfig-devel glib2-devel libXrender-devel libxcb-devel \
+    libnghttp2-devel libpsl-devel libidn2-devel libssh-devel libxml2-devel libxslt-devel \
+    libffi-devel libtasn1-devel p11-kit-devel nettle-devel libunistring-devel \
+    libtiff-devel libtalloc-devel libcap-ng-devel keyutils-libs-devel libtirpc-devel \
+    libuv-devel tcl-devel cyrus-sasl-devel pam-devel systemd-devel gtk-doc \
+    gettext-devel libuuid-devel gperf libev-devel \
+    && dnf clean all
+USER builder

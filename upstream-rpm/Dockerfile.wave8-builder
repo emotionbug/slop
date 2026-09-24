@@ -1,0 +1,10 @@
+FROM localhost/linux-oss-wave7-pixman-builder:el8-20260924
+USER root
+COPY linuxoss-bsd-compat-0.12.2-1.linuxoss.el8.x86_64.rpm /tmp/bsd.rpm
+RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/bsd.rpm \
+ && dnf -y --enablerepo=powertools install libcap-devel libcap-ng-devel libselinux-devel libsemanage-devel \
+     audit-libs-devel systemd-devel json-c-devel libmount libffi-devel \
+     gobject-introspection-devel libseccomp-devel libnl3-devel libuuid-devel \
+     libaio-devel libtirpc-devel libtool-ltdl-devel python3-docutils \
+ && dnf clean all
+USER builder

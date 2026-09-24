@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave10-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install libverto-libevent libblkid-devel libudev-devel rpm-devel libnl3-devel libcurl-devel libmount-devel libselinux-devel audit-libs-devel && touch /etc/fstab && dnf clean all
+COPY *.rpm /tmp/custom-deps/
+RUN dnf -y --disablerepo='*' --setopt=clean_requirements_on_remove=False remove gnutls-dane gnutls-c++ && dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/custom-deps/*.rpm
+USER builder

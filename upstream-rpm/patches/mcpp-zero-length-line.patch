@@ -1,0 +1,16 @@
+--- a/src/support.c
++++ b/src/support.c
+@@ -1948,8 +1948,11 @@
+             dump_string( NULL, ptr);
+         }
+         len = strlen( ptr);
+-        if (len == 0)
+-                cwarn( "null character ignored", NULL, 0L, NULL);
++        if (len == 0) {
++            cwarn( "null character ignored", NULL, 0L, NULL);
++            /* A leading NUL is not a source line. Do not read ptr[-1]. */
++            continue;
++        }
+ 
+         if (NBUFF - 1 <= ptr - infile->buffer + len
+                 && *(ptr + len - 1) != '\n') {

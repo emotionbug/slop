@@ -26,13 +26,6 @@ def main():
     args = parser.parse_args()
     raw = args.catalog.read_bytes()
     catalog = json.loads(raw.decode("utf-8"))
-    trusted_paths = {path for row in catalog["artifacts"] for path in row["files"]}
-    checked = {}
-    for path in sorted(trusted_paths):
-        try:
-            checked[path] = {"sha256": sha_file(path)}
-        except OSError as exc:
-            checked[path] = {"error": str(exc)}
     fmt = "\t".join("%{" + tag + "}" for tag in TAGS) + "\n"
     raw_rpms = subprocess.check_output(["rpm", "-qa", "--qf", fmt], universal_newlines=True)
     packages = []
@@ -41,8 +34,20 @@ def main():
         if len(values) != len(TAGS):
             raise ValueError("Unexpected RPM query row")
         row = dict(zip((t.lower() for t in TAGS), values))
-        if row["vendor"] == "Linux OSS local build" or "linuxoss" in row["release"]:
+        if row["vendor"] == "Linux OSS local build" or "linuxoss" in row["release"] or "linuxoss" in row["version"]:
             packages.append(row)
+    # Large catalogues also contain optional/parallel runtimes. Hash only exact
+    # installed identities; unknown builds are still reported as coverage gaps.
+    keys = tuple(tag.lower() for tag in TAGS)
+    installed = {tuple(row[k] for k in keys) for row in packages}
+    trusted_paths = {path for row in catalog["artifacts"]
+                     if tuple(row[k] for k in keys) in installed for path in row["files"]}
+    checked = {}
+    for path in sorted(trusted_paths):
+        try:
+            checked[path] = {"sha256": sha_file(path)}
+        except OSError as exc:
+            checked[path] = {"error": str(exc)}
     snapshot = {"schema_version": 1, "catalog_sha256": hashlib.sha256(raw).hexdigest(),
                 "feed_sha256": sha_file(str(args.feed)),
                 "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),

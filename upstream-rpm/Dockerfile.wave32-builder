@@ -1,0 +1,5 @@
+FROM localhost/linux-oss-wave26-builder:el8-20260924
+USER root
+COPY *.rpm /tmp/wave32-deps/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/wave32-deps/linuxoss-libsemanage*.rpm /tmp/wave32-deps/sblim*.rpm && dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False reinstall /tmp/wave32-deps/linuxoss-rpm-sequoia*.rpm
+USER builder

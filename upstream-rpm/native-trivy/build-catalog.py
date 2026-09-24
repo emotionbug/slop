@@ -26,11 +26,13 @@ def main():
     parser.add_argument("bundle", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--reviews", type=Path, default=Path(__file__).with_name("reviewed-evidence.json"))
+    parser.add_argument("--source-projects", type=Path, default=Path(__file__).with_name("source-projects.json"))
     args = parser.parse_args()
     manifest = args.bundle / "manifest.json"
     data = json.loads(manifest.read_text(encoding="utf-8-sig"))
     files = {row["path"]: row["sha256"] for row in data["files"]}
     reviews = json.loads(args.reviews.read_text(encoding="utf-8"))["artifacts"]
+    source_projects = json.loads(args.source_projects.read_text(encoding="utf-8"))["artifacts"]
     artifacts = []
     for rel, expected in sorted(files.items()):
         if not rel.startswith("rpms/") or not rel.endswith(".rpm"):
@@ -41,14 +43,17 @@ def main():
         fmt = "\t".join("%{" + tag + "}" for tag in TAGS)
         values = subprocess.check_output(["rpm", "-qp", "--qf", fmt, str(path)], universal_newlines=True).split("\t")
         row = dict(zip((t.lower() for t in TAGS), values))
-        if row["vendor"] != "Linux OSS local build":
+        source_hash = files.get("srpms/" + row["sourcerpm"], "")
+        override = source_projects.get(source_hash, {})
+        if row["vendor"] != "Linux OSS local build" and not override.get("include_nonstandard_vendor", False):
             continue
         srpm = "srpms/" + row["sourcerpm"]
         if srpm not in files or sha(args.bundle / srpm) != files[srpm]:
             raise ValueError("Source RPM missing or digest mismatch: " + srpm)
         row.update(rpm_sha256=expected, srpm_sha256=files[srpm], files={}, assessments=[])
         row["project"] = row["sourcerpm"].rsplit("-", 2)[0]
-        row["components"] = ([{"project": "xxhash", "version": "0.8.4"}] if row["name"] == "rsync" else [])
+        row["project"] = override.get("project", row["project"])
+        row["components"] = override.get("components", [])
         raw = subprocess.check_output(["rpm", "-qp", "--qf", "[%{FILENAMES}\t%{FILEDIGESTS}\t%{FILEFLAGS}\n]", str(path)], universal_newlines=True)
         for line in raw.splitlines():
             filename, digest, flags = line.split("\t")
@@ -59,7 +64,7 @@ def main():
     if not artifacts:
         raise ValueError("No custom RPMs found")
     catalog = {"schema_version": 1, "scope": "Exact custom artifacts and reviewed evidence; selected upstream feed coverage remains incomplete",
-               "reviewed_evidence_sha256": sha(args.reviews),
+               "reviewed_evidence_sha256": sha(args.reviews), "source_projects_sha256": sha(args.source_projects),
                "bundle_manifest_sha256": sha(manifest), "artifacts": artifacts}
     args.output.write_text(json.dumps(catalog, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("Catalogue artifacts: {}".format(len(artifacts)))

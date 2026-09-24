@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave7-meson-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install \
+    openldap-devel libdaemon-devel source-highlight-devel libwbclient-devel dejavu-sans-fonts \
+    && dnf clean all
+USER builder

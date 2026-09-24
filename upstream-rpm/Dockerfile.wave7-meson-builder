@@ -1,0 +1,8 @@
+FROM localhost/linux-oss-wave7-builder:el8-20260924
+USER root
+COPY --from=localhost/linux-oss-font-builder:el8-20260924-v2 /opt/linuxoss-meson /opt/linuxoss-meson
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install ninja-build \
+    docbook-utils docbook-style-xsl libcap-devel check-devel \
+    && dnf clean all
+USER builder
+ENV PATH=/opt/linuxoss-meson/bin:$PATH

@@ -1,10 +1,12 @@
 %global debug_package %{nil}
+%global __provides_exclude_from ^/opt/linux-oss/.*
+%global __requires_exclude (^(ld-linux-x86-64[.]so[.]2|libBrokenLocale[.]so[.]1|libCNS[.]so|libGB[.]so|libISOIR165[.]so|libJIS[.]so|libJISX0213[.]so|libKSC[.]so|libanl[.]so[.]1|libc[.]so[.]6|libc_malloc_debug[.]so[.]0|libdl[.]so[.]2|libm[.]so[.]6|libmemusage[.]so|libmvec[.]so[.]1|libnsl[.]so[.]1|libnss_compat[.]so[.]2|libnss_db[.]so[.]2|libnss_dns[.]so[.]2|libnss_files[.]so[.]2|libnss_hesiod[.]so[.]2|libpcprofile[.]so|libpthread[.]so[.]0|libresolv[.]so[.]2|librt[.]so[.]1|libthread_db[.]so[.]1|libutil[.]so[.]1)[(])
 %global __strip /opt/rh/gcc-toolset-14/root/usr/bin/strip
 %global __objdump /opt/rh/gcc-toolset-14/root/usr/bin/objdump
 %global prefix /opt/linux-oss/glibc-2.44
 Name:           linuxoss-glibc-evaluation
 Version:        2.44
-Release:        1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary:        Private glibc build for ABI and runtime evaluation
 License:        LGPLv2+ and GPLv2+
 URL:            https://www.gnu.org/software/libc/

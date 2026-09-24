@@ -5,6 +5,17 @@ import (
 	"testing"
 )
 
+func TestMappingDigestIgnoresCheckoutLineEndings(t *testing.T) {
+	lf := []byte("{\n  \"project\": \"tar\"\n}\n")
+	crlf := []byte("{\r\n  \"project\": \"tar\"\r\n}\r\n")
+	if mappingDigest(lf) != mappingDigest(crlf) {
+		t.Fatal("Windows checkout line endings changed mapping identity")
+	}
+	if mappingDigest(lf) == mappingDigest([]byte("{\n  \"project\": \"npm-tar\"\n}\n")) {
+		t.Fatal("Changed product mapping retained identity")
+	}
+}
+
 func testInput(t *testing.T) (Snapshot, Catalog) {
 	t.Helper()
 	var c Catalog

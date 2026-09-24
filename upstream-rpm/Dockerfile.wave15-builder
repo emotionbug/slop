@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave14-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install java-1.8.0-openjdk-devel systemtap-sdt-devel zip libXtst-devel libXrender-devel alsa-lib-devel lua-devel jansson-devel popt-devel lmdb-devel protobuf-c-compiler docbook-style-xsl libxslt && mkdir -p /var/lib/iscsi/ifaces && chown -R builder:builder /var/lib/iscsi && dnf clean all
+COPY *.rpm /tmp/duktape/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/duktape/*.rpm
+USER builder

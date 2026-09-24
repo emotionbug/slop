@@ -1,0 +1,38 @@
+%global debug_package %{nil}
+%global __provides_exclude_from ^/opt/linux-oss/.*
+%global __requires_exclude (^(acl_tdb[.]so|acl_xattr[.]so|ad[.]so|aio_fork[.]so|aio_pthread[.]so|aio_ratelimit[.]so|asq[.]so|async_dns_krb5_locator[.]so|audit[.]so|autorid[.]so|btrfs[.]so|cap[.]so|catia[.]so|commit[.]so|crossrename[.]so|default_quota[.]so|dirsort[.]so|expand_msdfs[.]so|extd_audit[.]so|fake_perms[.]so|fileid[.]so|fruit[.]so|full_audit[.]so|glusterfs_fuse[.]so|gpfs[.]so|hash[.]so|ildap[.]so|ldap[.]so|ldb[.]so|ldbsamba_extensions[.]so|libCHARSET3-private-samba[.]so|libLIBWBCLIENT-OLD-private-samba[.]so|libMESSAGING-SEND-private-samba[.]so|libMESSAGING-private-samba[.]so|libREG-FULL-private-samba[.]so|libRPC-SERVER-LOOP-private-samba[.]so|libRPC-WORKER-private-samba[.]so|libaddns-private-samba[.]so|libads-private-samba[.]so|libasn1-private-samba[.]so|libasn1util-private-samba[.]so|libauth-private-samba[.]so|libauth-unix-token-private-samba[.]so|libauth4-private-samba[.]so|libauthkrb5-private-samba[.]so|libcli-cldap-private-samba[.]so|libcli-ldap-common-private-samba[.]so|libcli-ldap-private-samba[.]so|libcli-nbt-private-samba[.]so|libcli-smb-common-private-samba[.]so|libcli-spoolss-private-samba[.]so|libcliauth-private-samba[.]so|libclidns-private-samba[.]so|libcluster-private-samba[.]so|libcmdline-contexts-private-samba[.]so|libcmdline-private-samba[.]so|libcmocka-private-samba[.]so|libcom-err-private-samba[.]so|libcommon-auth-private-samba[.]so|libdbwrap-private-samba[.]so|libdcerpc-binding[.]so[.]0|libdcerpc-pkt-auth-private-samba[.]so|libdcerpc-private-samba[.]so|libdcerpc-samba-private-samba[.]so|libdcerpc-samba4-private-samba[.]so|libdcerpc-samr-private-samba[.]so|libdcerpc-server-core[.]so[.]0|libdnsserver-common-private-samba[.]so|libdsdb-module-private-samba[.]so|libevents-private-samba[.]so|libflag-mapping-private-samba[.]so|libgenrand-private-samba[.]so|libgensec-private-samba[.]so|libgpext-private-samba[.]so|libgpo-private-samba[.]so|libgse-private-samba[.]so|libgss-preauth-private-samba[.]so|libgssapi-private-samba[.]so|libhcrypto-private-samba[.]so|libhdb-private-samba[.]so|libheimbase-private-samba[.]so|libheimntlm-private-samba[.]so|libhttp-private-samba[.]so|libhx509-private-samba[.]so|libidmap-private-samba[.]so|libinterfaces-private-samba[.]so|libiov-buf-private-samba[.]so|libkdc-private-samba[.]so|libkrb5-private-samba[.]so|libkrb5samba-private-samba[.]so|libldb-cmdline-private-samba[.]so|libldb-key-value-private-samba[.]so|libldb-mdb-int-private-samba[.]so|libldb-private-samba[.]so|libldb-tdb-err-map-private-samba[.]so|libldb-tdb-int-private-samba[.]so|libldbsamba-private-samba[.]so|liblibcli-lsa3-private-samba[.]so|liblibcli-netlogon3-private-samba[.]so|liblibsmb-private-samba[.]so|libmessages-dgm-private-samba[.]so|libmessages-util-private-samba[.]so|libmscat-private-samba[.]so|libmsghdr-private-samba[.]so|libmsrpc3-private-samba[.]so|libndr-krb5pac[.]so[.]0|libndr-nbt[.]so[.]0|libndr-samba-private-samba[.]so|libndr-samba4-private-samba[.]so|libndr-standard[.]so[.]0|libndr[.]so[.]6|libnet-keytab-private-samba[.]so|libnetapi[.]so[.]1|libnetif-private-samba[.]so|libngtcp2-crypto-gnutls-private-samba[.]so|libngtcp2-private-samba[.]so|libnpa-tstream-private-samba[.]so|libnss-info-private-samba[.]so|libnss_winbind[.]so[.]2|libnss_wins[.]so[.]2|libposix-eadb-private-samba[.]so|libprinter-driver-private-samba[.]so|libprinting-migrate-private-samba[.]so|libquic-private-samba[.]so|libregistry-private-samba[.]so|libreplace-private-samba[.]so|libroken-private-samba[.]so|libsamba-cluster-support-private-samba[.]so|libsamba-credentials-private-samba[.]so|libsamba-debug-private-samba[.]so|libsamba-errors[.]so[.]1|libsamba-hostconfig-private-samba[.]so|libsamba-modules-private-samba[.]so|libsamba-net-private-samba[.]so|libsamba-passdb[.]so[.]0|libsamba-policy-private-samba[.]so|libsamba-security-private-samba[.]so|libsamba-security-trusts-private-samba[.]so|libsamba-sockets-private-samba[.]so|libsamba-util[.]so[.]0|libsamba3-util-private-samba[.]so|libsamdb-common-private-samba[.]so|libsamdb-private-samba[.]so|libsecrets3-private-samba[.]so|libserver-id-db-private-samba[.]so|libserver-role-private-samba[.]so|libshares-private-samba[.]so|libsmbclient-raw-private-samba[.]so|libsmbclient[.]so[.]0|libsmbconf[.]so[.]0|libsmbd-base-private-samba[.]so|libsmbd-shim-private-samba[.]so|libsmbldap[.]so[.]2|libsmbldaphelper-private-samba[.]so|libsmbpasswdparser-private-samba[.]so|libsocket-blocking-private-samba[.]so|libstable-sort-private-samba[.]so|libsys-rw-private-samba[.]so|libtalloc-private-samba[.]so|libtalloc-report-printf-private-samba[.]so|libtalloc-report-private-samba[.]so|libtdb-private-samba[.]so|libtdb-wrap-private-samba[.]so|libtevent-private-samba[.]so|libtevent-util-private-samba[.]so|libtime-basic-private-samba[.]so|libtorture-private-samba[.]so|libutil-crypt-private-samba[.]so|libutil-reg-private-samba[.]so|libutil-setid-private-samba[.]so|libutil-tdb-private-samba[.]so|libwbclient[.]so[.]0|libwind-private-samba[.]so|libxattr-tdb-private-samba[.]so|linux_xfs_sgid[.]so|mdb[.]so|media_harmony[.]so|offline[.]so|paged_searches[.]so|preopen[.]so|rdn_name[.]so|readahead[.]so|readonly[.]so|recycle[.]so|rfc2307[.]so|rid[.]so|sample[.]so|script[.]so|server_sort[.]so|sfu[.]so|sfu20[.]so|shadow_copy[.]so|shadow_copy2[.]so|shell_snap[.]so|skel[.]so|snapper[.]so|streams_depot[.]so|streams_xattr[.]so|syncops[.]so|tdb[.]so|tdb2[.]so|time_audit[.]so|unityed_media[.]so|virusfilter[.]so|widelinks[.]so|winbind_krb5_locator[.]so|worm[.]so|xattr_tdb[.]so)[(])
+Name: linuxoss-samba-evaluation
+Version: 4.24.7
+Release: 2.linuxoss%{?dist}
+Summary: linuxoss-samba-evaluation upstream EL8 evaluation build
+License: GPLv3+ and LGPLv3+
+URL: https://www.samba.org/
+Source0: samba-4.24.7.tar.gz
+BuildRequires: gcc, gcc-c++, make, python3.11-devel, perl, gnutls-devel, libarchive-devel, libacl-devel, libattr-devel, libaio-devel, jansson-devel, libcap-devel, lmdb-devel, libtirpc-devel
+Vendor: Linux OSS local build
+
+%description
+Upstream build for isolated EL8 compatibility testing. Production compatibility
+and all-CVE remediation are not implied by successful compilation.
+
+%global prefix /opt/linux-oss/samba-4.24.7
+%global __provides_exclude ^(lib.*[.]so|pkgconfig[(].*)
+%global __brp_mangle_shebangs %{nil}
+%prep
+%setup -q -n samba-4.24.7
+%build
+export PYTHON=python3.11
+export CFLAGS='-O2 -g -gdwarf-4 -fstack-protector-strong'
+export LDFLAGS='-Wl,-z,relro,-z,now -Wl,-rpath,%{prefix}/lib64 -Wl,-rpath,%{prefix}/lib64/private'
+./configure --prefix=%{prefix} --libdir=%{prefix}/lib64 --without-ad-dc --without-pam --without-regedit --disable-python --without-systemd
+make -j2
+%install
+make DESTDIR=%{buildroot} install
+%check
+bin/default/source3/client/smbclient --version
+mkdir -p "$PWD/smoke-state"/{lock,locks,cache,run}
+bin/default/source3/utils/testparm -s /dev/null --option="lock directory=$PWD/smoke-state/lock" --option="state directory=$PWD/smoke-state/locks" --option="cache directory=$PWD/smoke-state/cache" --option="pid directory=$PWD/smoke-state/run"
+# Local utility parsing only. Domain, SMB peer and credential behavior require a test host.
+%files
+%license COPYING
+%{prefix}/

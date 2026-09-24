@@ -1,0 +1,11 @@
+FROM localhost/linux-oss-wave7-crypto-builder:el8-20260924
+USER root
+COPY linuxoss-nettle4-4.0-1.linuxoss.el8.x86_64.rpm /tmp/nettle.rpm
+COPY libxml2-2.15.4-1.linuxoss.el8.x86_64.rpm libxml2-devel-2.15.4-1.linuxoss.el8.x86_64.rpm /tmp/
+RUN echo 'a31af49d30ed450805a7e6f146c85fb80b4e5b7f6b68b4d8409c39c97ace07b7  /tmp/nettle.rpm' | sha256sum -c - \
+ && dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/nettle.rpm \
+ && mkdir -p /opt/linux-oss/build-xml \
+ && cd /opt/linux-oss/build-xml \
+ && for pkg in /tmp/libxml2*.rpm; do rpm2cpio "$pkg" | cpio -idm --quiet; done \
+ && sed -i 's|=/usr|=/opt/linux-oss/build-xml/usr|g' usr/lib64/pkgconfig/*.pc
+USER builder

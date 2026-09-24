@@ -302,16 +302,6 @@
       "verification": "Official HTTPS release download; detached signature verification pending"
     },
     {
-      "name": "wget-1.25.0.tar.gz",
-      "url": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz",
-      "sha256": "766e48423e79359ea31e41db9e5c289675947a7fcf2efdcedb726ac9d0da3784",
-      "size": 5263736,
-      "upstream_signature_verified": false,
-      "verification": "Cryptographic signature matches but key is expired; source authenticity policy review pending",
-      "expected_signer": "6B98F637D879C5236E277C5C64FF90AAE8C70AF9",
-      "verification_log": "logs/gnu-wave-signatures.json"
-    },
-    {
       "name": "wget-1.25.0.tar.gz.sig",
       "url": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz.sig",
       "sha256": "47f0989685931c3df6166061069659bc13a75b221a62041625007fa2dad7411b",
@@ -1016,6 +1006,1579 @@
       "sha256": "4160b0617d2bd5f04c492b8563f9571e6142db895ce2d8095952c30fd0f840ec",
       "upstream_signature_verified": false,
       "verification": "Unmodified defaults from Red Hat UBI coreutils-common 8.30-21.el8_10; no target server files"
+    },
+    {
+      "name": "wget-1.25.0.tar.gz",
+      "url": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz",
+      "sha256": "766e48423e79359ea31e41db9e5c289675947a7fcf2efdcedb726ac9d0da3784",
+      "size": 5263736,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "curl-8.22.0.tar.xz",
+      "url": "https://curl.se/download/curl-8.22.0.tar.xz",
+      "sha256": "f7ef3ae8a22e521f289803fe93543eb64c329b58aa73a9e224dfd915a2a5f4f7",
+      "size": 2953092,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "flex-2.6.4.tar.gz",
+      "url": "https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz",
+      "sha256": "e87aae032bf07c26f85ac0ed3250998c37621d95f8bd748b31f15b33c45ee995",
+      "size": 1419096,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libxml2-2.15.4.tar.xz",
+      "url": "https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz",
+      "sha256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+      "size": 3177444,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libxslt-1.1.45.tar.xz",
+      "url": "https://download.gnome.org/sources/libxslt/1.1/libxslt-1.1.45.tar.xz",
+      "sha256": "9acfe68419c4d06a45c550321b3212762d92f41465062ca4ea19e632ee5d216e",
+      "size": 1519992,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sqlite-autoconf-3530400.tar.gz",
+      "url": "https://www.sqlite.org/2026/sqlite-autoconf-3530400.tar.gz",
+      "sha256": "0e9483900e92cd5de8fd48d16bf9200145a61f7fd5be542a5ac81d8a9516eb9c",
+      "size": 3283177,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libbpf-1.7.0.tar.gz",
+      "url": "https://github.com/libbpf/libbpf/archive/refs/tags/v1.7.0.tar.gz",
+      "sha256": "7ab5feffbf78557f626f2e3e3204788528394494715a30fc2070fcddc2051b7b",
+      "size": 1063399,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "efivar-39.tar.gz",
+      "url": "https://github.com/rhboot/efivar/archive/refs/tags/39.tar.gz",
+      "sha256": "c9edd15f2eeeea63232f3e669a48e992c7be9aff57ee22672ac31f5eca1609a6",
+      "size": 463349,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libgd-2.3.3.tar.xz",
+      "url": "https://github.com/libgd/libgd/releases/download/gd-2.3.3/libgd-2.3.3.tar.xz",
+      "sha256": "3fe822ece20796060af63b7c60acb151e5844204d289da0ce08f8fdf131e5a61",
+      "size": 2809056,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "cairo-1.18.6.tar.xz",
+      "url": "https://cairographics.org/releases/cairo-1.18.6.tar.xz",
+      "sha256": "1c767308174337a74694da0f3ec069c271452163a1ef4540964c50c301f157d4",
+      "size": 32725456,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "p11-kit-0.26.5.tar.xz",
+      "url": "https://github.com/p11-glue/p11-kit/releases/download/0.26.5/p11-kit-0.26.5.tar.xz",
+      "sha256": "f2cc09111e44bf3fea58f023180b33acea90aa82d042d6fbb623fbc5ba033bb7",
+      "size": 1082584,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "cifs-utils-7.7.tar.bz2",
+      "url": "https://download.samba.org/pub/linux-cifs/cifs-utils/cifs-utils-7.7.tar.bz2",
+      "sha256": "2f8aae9aa5ddd73fbaf4d61e2e5e19ef54124cbf2810b626820050e7bd2f6606",
+      "size": 426805,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "gdb-17.2.tar.xz",
+      "url": "https://ftp.gnu.org/gnu/gdb/gdb-17.2.tar.xz",
+      "sha256": "1c036c0d72e4b3d1fb5c94c88632add6f9d76f4d7c4d2ea793c12a9f19a3228c",
+      "size": 24658624,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "kbd-2.10.0.tar.xz",
+      "url": "https://github.com/legionus/kbd/releases/download/v2.10.0/kbd-2.10.0.tar.xz",
+      "sha256": "6e5ca4f8d76ee9e3a8db700b667f13e12aac9933828a64e1aaad93d26be9b479",
+      "size": 1788500,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "gnutls-3.8.13.tar.xz",
+      "url": "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.13.tar.xz",
+      "sha256": "ffed8ec1bf09c2426d4f14aae377de4753b53e537d685e604e99a8b16ca9c97e",
+      "size": 7275324,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "cups-2.4.19-source.tar.gz",
+      "url": "https://github.com/OpenPrinting/cups/releases/download/v2.4.19/cups-2.4.19-source.tar.gz",
+      "sha256": "820984b12a67f98705785aae2dd1347fe0ac097828001d4583ff64574aed6389",
+      "size": 7950335,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "openldap-2.7.1.tgz",
+      "url": "https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.7.1.tgz",
+      "sha256": "253db80f301258ea69cda1184766d57395b836aaabf41157eb0316eb0fac1341",
+      "size": 6509401,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "ncurses-6.6.tar.gz",
+      "url": "https://ftp.gnu.org/gnu/ncurses/ncurses-6.6.tar.gz",
+      "sha256": "355b4cbbed880b0381a04c46617b7656e362585d52e9cf84a67e2009b749ff11",
+      "size": 3791150,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "avahi-0.8.tar.gz",
+      "url": "https://github.com/avahi/avahi/releases/download/v0.8/avahi-0.8.tar.gz",
+      "sha256": "060309d7a333d38d951bc27598c677af1796934dbd98e1024e7ad8de798fedda",
+      "size": 1591458,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "nmap-7.991.tar.bz2",
+      "url": "https://nmap.org/dist/nmap-7.991.tar.bz2",
+      "sha256": "a5d507f29437bef3bedd4771ff9aaa8fc1c2a109ddba1f5b1cf12027456929be",
+      "size": 12877122,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "net-tools-2.10.tar.xz",
+      "url": "https://downloads.sourceforge.net/project/net-tools/net-tools-2.10.tar.xz",
+      "sha256": "b262435a5241e89bfa51c3cabd5133753952f7a7b7b93f32e08cb9d96f580d69",
+      "size": 229616,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "rpcbind-1.3.1.tar.bz2",
+      "url": "https://downloads.sourceforge.net/project/rpcbind/rpcbind/1.3.1/rpcbind-1.3.1.tar.bz2",
+      "sha256": "8e551b445f5172f8ef218845af342fb2a2d741b57ce8c777c781a01ea92f92a5",
+      "size": 130049,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sysstat-12.8.0.tar.gz",
+      "url": "https://github.com/sysstat/sysstat/archive/refs/tags/v12.8.0.tar.gz",
+      "sha256": "8aa2054c56c941ab30e1b14ad2e0076a7e6d6bf01f50e22d954885b8a7f9a679",
+      "size": 1536523,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream tag HTTPS; local SHA256 pin"
+    },
+    {
+      "name": "nettle-4.0.tar.gz",
+      "url": "https://ftp.gnu.org/gnu/nettle/nettle-4.0.tar.gz",
+      "sha256": "3addbc00da01846b232fb3bc453538ea5468da43033f21bb345cb1e9073f5094",
+      "size": 2630735,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS; local SHA256 pin"
+    },
+    {
+      "name": "pixman-0.46.4.tar.gz",
+      "url": "https://cairographics.org/releases/pixman-0.46.4.tar.gz",
+      "sha256": "d09c44ebc3bd5bee7021c79f922fe8fb2fb57f7320f55e97ff9914d2346a591c",
+      "size": 827198,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS; locally pinned SHA256"
+    },
+    {
+      "name": "libmd-1.2.0.tar.xz",
+      "url": "https://libbsd.freedesktop.org/releases/libmd-1.2.0.tar.xz",
+      "sha256": "ac15ffb8430502fbaccdec66c5a82ee0eab0b0f36220df56710feadfeb13d0a0",
+      "size": 287992,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS; locally pinned SHA256"
+    },
+    {
+      "name": "libbsd-0.12.2.tar.xz",
+      "url": "https://libbsd.freedesktop.org/releases/libbsd-0.12.2.tar.xz",
+      "sha256": "b88cc9163d0c652aaf39a99991d974ddba1c3a9711db8f1b5838af2a14731014",
+      "size": 446032,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS; locally pinned SHA256"
+    },
+    {
+      "name": "iputils-20250605.tar.xz",
+      "url": "https://github.com/iputils/iputils/releases/download/20250605/iputils-20250605.tar.xz",
+      "sha256": "6f213700dbf96b5cc4499ca70cb15ecd69c09f405b06785bb4a1a10b572b6276",
+      "size": 471904,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "shadow-4.20.3.tar.xz",
+      "url": "https://github.com/shadow-maint/shadow/releases/download/4.20.3/shadow-4.20.3.tar.xz",
+      "sha256": "623be9429f64fa2165bfc5957c6a642ec309c5cf23c0d53855c99f7591922297",
+      "size": 2331188,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "cronie-1.7.2.tar.gz",
+      "url": "https://github.com/cronie-crond/cronie/releases/download/cronie-1.7.2/cronie-1.7.2.tar.gz",
+      "sha256": "f1da374a15ba7605cf378347f96bc8b678d3d7c0765269c8242cfe5b0789c571",
+      "size": 272450,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "Linux-PAM-1.7.2.tar.xz",
+      "url": "https://github.com/linux-pam/linux-pam/releases/download/v1.7.2/Linux-PAM-1.7.2.tar.xz",
+      "sha256": "3d86b6383fb5fd9eb9578d2cd47d92801191f4bf3f9bc61419bfefc8aa1e531a",
+      "size": 511724,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "rsyslog-8.2608.0.tar.gz",
+      "url": "https://github.com/rsyslog/rsyslog/releases/download/v8.2608.0/rsyslog-8.2608.0.tar.gz",
+      "sha256": "50f5b3bcd821bcd5cc292519c244523f7e7bb29a4d332ae7c72c446e9e46a8b8",
+      "size": 11730929,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libfastjson-1.2609.0.tar.gz",
+      "url": "https://github.com/rsyslog/libfastjson/releases/download/v1.2609.0/libfastjson-1.2609.0.tar.gz",
+      "sha256": "7cd6f78c1c07f4140f6976a9a0e0048bcaa7292329c6ac2c0e070383d83d8edd",
+      "size": 447809,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "open-vm-tools-13.1.0-25218885.tar.gz",
+      "url": "https://github.com/vmware/open-vm-tools/releases/download/stable-13.1.0/open-vm-tools-13.1.0-25218885.tar.gz",
+      "sha256": "67a23d505aca77127b081445f758e269b1009e8824cf7f6f2d6efafb0b14d0fd",
+      "size": 4401560,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "firewalld-2.5.2.tar.bz2",
+      "url": "https://github.com/firewalld/firewalld/releases/download/v2.5.2/firewalld-2.5.2.tar.bz2",
+      "sha256": "99d7468c22f6cafd8c72aa53173a632f2ca29cb19aec913e8ed45b6102af322d",
+      "size": 1447960,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "glib-2.90.0.tar.xz",
+      "url": "https://download.gnome.org/sources/glib/2.90/glib-2.90.0.tar.xz",
+      "sha256": "17d15cac2af80a33271127408e0abc2748eb297c595c2a26409e81e14e7d1b8f",
+      "size": 5830480,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "glib-networking-2.90.0.tar.xz",
+      "url": "https://download.gnome.org/sources/glib-networking/2.90/glib-networking-2.90.0.tar.xz",
+      "sha256": "83a75e3d9c36b66ee86d3281c2fc997816101968a5126ba322b2acb9a74dd8c0",
+      "size": 290168,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "gdk-pixbuf-2.44.8.tar.xz",
+      "url": "https://download.gnome.org/sources/gdk-pixbuf/2.44/gdk-pixbuf-2.44.8.tar.xz",
+      "sha256": "919f529512961a12e81cd4b4b466a48c3933469e7f9a310c6513cd4fb252ba3c",
+      "size": 6037756,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libsoup-3.6.6.tar.xz",
+      "url": "https://download.gnome.org/sources/libsoup/3.6/libsoup-3.6.6.tar.xz",
+      "sha256": "51ed0ae06f9d5a40f401ff459e2e5f652f9a510b7730e1359ee66d14d4872740",
+      "size": 1572004,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "dbus-1.16.2.tar.xz",
+      "url": "https://dbus.freedesktop.org/releases/dbus/dbus-1.16.2.tar.xz",
+      "sha256": "0ba2a1a4b16afe7bceb2c07e9ce99a8c2c3508e5dec290dbb643384bd6beb7e2",
+      "size": 1115644,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "elfutils-0.196.tar.bz2",
+      "url": "https://sourceware.org/elfutils/ftp/0.196/elfutils-0.196.tar.bz2",
+      "sha256": "fd5cc6b77ad6773cac93cb3f415f9318ac3b3455eecf801f6b4a742c4f6c7209",
+      "size": 12165820,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "krb5-1.22.2.tar.gz",
+      "url": "https://web.mit.edu/kerberos/dist/krb5/1.22/krb5-1.22.2.tar.gz",
+      "sha256": "3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13",
+      "size": 8747729,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "openssh-10.3p1.tar.gz",
+      "url": "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-10.3p1.tar.gz",
+      "sha256": "56682a36bb92dcf4b4f016fd8ec8e74059b79a8de25c15d670d731e7d18e45f4",
+      "size": 2007369,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "mdadm-4.4.tar.xz",
+      "url": "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-4.4.tar.xz",
+      "sha256": "9b488f35ed153df99924b5fe41eed380e8512de8f18a118628cacdd681b1d573",
+      "size": 465860,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "mariadb-connector-c-3.4.10.tar.gz",
+      "url": "https://github.com/mariadb-corporation/mariadb-connector-c/archive/refs/tags/v3.4.10.tar.gz",
+      "sha256": "28c38b597a51e8eddd685c675420dd15e290f72d89834a97063e50cdc386f500",
+      "size": 1417203,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "vim-9.2.1125.tar.gz",
+      "url": "https://github.com/vim/vim/archive/refs/tags/v9.2.1125.tar.gz",
+      "sha256": "6242a0916e07d38c7c25b583e69f413806b772808e95130133a23c9d46cedb32",
+      "size": 20194423,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "polkit-127.tar.gz",
+      "url": "https://github.com/polkit-org/polkit/archive/refs/tags/127.tar.gz",
+      "sha256": "9b7bc16f086479dcc626c575976568ba4a85d34297a750d8ab3d2e57f6d8b988",
+      "size": 472872,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "util-linux-2.42.2.tar.gz",
+      "url": "https://www.kernel.org/pub/linux/utils/util-linux/v2.42/util-linux-2.42.2.tar.gz",
+      "sha256": "e73fe91d9b536c6e3548132c1e327843b0bac3c94be9f158ce112eb989d25fc7",
+      "size": 23131755,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "kbd-2.10.0-el8-test-headers.patch",
+      "url": "local:test-only EL8 compatibility patch; constants verified against linux-7.2.7/include/uapi/linux/kd.h",
+      "sha256": "be7e55fe557e3fb5a72ac87dfc69257e39a9488abfc3ccfef64959fb394f0fd0",
+      "size": 508,
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "jasper-4.2.9.tar.gz",
+      "url": "https://github.com/jasper-software/jasper/releases/download/version-4.2.9/jasper-4.2.9.tar.gz",
+      "sha256": "f71cf643937a5fcaedcfeb30a22ba406912948ad4413148214df280afc425454",
+      "size": 2127186,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "icu4c-78.3-sources.tgz",
+      "url": "https://github.com/unicode-org/icu/releases/download/release-78.3/icu4c-78.3-sources.tgz",
+      "sha256": "3a2e7a47604ba702f345878308e6fefeca612ee895cf4a5f222e7955fabfe0c0",
+      "size": 27977255,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "graphviz-16.1.0.tar.gz",
+      "url": "https://gitlab.com/graphviz/graphviz/-/archive/16.1.0/graphviz-16.1.0.tar.gz",
+      "sha256": "1e028b2b3e84e946c1d3e8c47590f8f0741bba1041fe6eff36eee87e598ea249",
+      "size": 41189481,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "bind-9.20.29.tar.xz",
+      "url": "https://downloads.isc.org/isc/bind9/9.20.29/bind-9.20.29.tar.xz",
+      "sha256": "587029508b3b1b43229fae416c97e5543aba45809cefaca98a5004a02a5736c1",
+      "size": 5966372,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "procps-ng-4.0.6.tar.xz",
+      "url": "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-4.0.6.tar.xz",
+      "sha256": "67bea6fbc3a42a535a0230c9e891e5ddfb4d9d39422d46565a2990d1ace15216",
+      "size": 1580516,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "perl-5.44.0.tar.xz",
+      "url": "https://www.cpan.org/src/5.0/perl-5.44.0.tar.xz",
+      "sha256": "505cf43912e9480495c344c70260452e32aa2a73c546a026b3f100053b23ce91",
+      "size": 14919940,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "emacs-31.1.tar.xz",
+      "url": "https://ftp.gnu.org/gnu/emacs/emacs-31.1.tar.xz",
+      "sha256": "1da5790d9580c81932b5bf700633114468da7b3412d69faa767daebf974f4586",
+      "size": 57977476,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libestr-0.1.11.tar.gz",
+      "url": "https://libestr.adiscon.com/files/download/libestr-0.1.11.tar.gz",
+      "sha256": "46632b2785ff4a231dcf241eeb0dcb5fc0c7d4da8ee49cf5687722cdbe8b2024",
+      "size": 355544,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "liblogging-1.0.8.tar.gz",
+      "url": "https://download.rsyslog.com/liblogging/liblogging-1.0.8.tar.gz",
+      "sha256": "6449b7bb75dc282ec6bf1b98a753c950746ea5b190ec9aee097881e4dc5c4bf1",
+      "size": 600040,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "LVM2.2.03.42.tgz",
+      "url": "https://sourceware.org/pub/lvm2/releases/LVM2.2.03.42.tgz",
+      "sha256": "352703ef5b72ebb22d4f250284a29b89fe64d4049c6bf64c693f9af486c8081e",
+      "size": 3117082,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "net-snmp-5.9.5.2.tar.gz",
+      "url": "https://github.com/net-snmp/net-snmp/archive/refs/tags/v5.9.5.2.tar.gz",
+      "sha256": "dc67748f382f7c0d2c17b62aabb1445724d80bb20a09081b7f010c9c86b84d45",
+      "size": 6886265,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "nspr-4.40.tar.gz",
+      "url": "https://archive.mozilla.org/pub/nspr/releases/v4.40/src/nspr-4.40.tar.gz",
+      "sha256": "c0c1884c627f3db7a783f7c7314c695226b2043696791d15519e7e0578c19bdc",
+      "size": 1008989,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "Python-3.14.7.tar.xz",
+      "url": "https://www.python.org/ftp/python/3.14.7/Python-3.14.7.tar.xz",
+      "sha256": "3b48dac8fb59f62eaa67ac83c1eb12bda1b7a08406dd286e252c11a66be27f81",
+      "size": 24053924,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libgudev-238.tar.xz",
+      "url": "https://download.gnome.org/sources/libgudev/238/libgudev-238.tar.xz",
+      "sha256": "61266ab1afc9d73dbc60a8b2af73e99d2fdff47d99544d085760e4fa667b5dd1",
+      "size": 30548,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "nss-3.130-with-nspr-4.39.tar.gz",
+      "url": "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_130_RTM/src/nss-3.130-with-nspr-4.39.tar.gz",
+      "sha256": "d122bd039416254567f2dfe7f4c9b6ed4d202d8c6a3ed91332da0d514d0974c0",
+      "size": 88738990,
+      "upstream_signature_verified": false,
+      "verification": "Official Mozilla HTTPS source; SHA256 pinned locally, signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "gnupg-2.5.24.tar.bz2",
+      "url": "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.5.24.tar.bz2",
+      "sha256": "bf149d01a2b9fcc0e4589b8ae8697d3d5c557ea48ed95a3fa55dd3b1187e6039",
+      "size": 8431157,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libassuan-3.0.2.tar.bz2",
+      "url": "https://gnupg.org/ftp/gcrypt/libassuan/libassuan-3.0.2.tar.bz2",
+      "sha256": "d2931cdad266e633510f9970e1a2f346055e351bb19f9b78912475b8074c36f6",
+      "size": 593917,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libksba-1.8.1.tar.bz2",
+      "url": "https://gnupg.org/ftp/gcrypt/libksba/libksba-1.8.1.tar.bz2",
+      "sha256": "c2f84393011827219ae117131dba8e7684c2bed0961eed11b0642c2acba440b5",
+      "size": 722040,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "npth-1.8.tar.bz2",
+      "url": "https://gnupg.org/ftp/gcrypt/npth/npth-1.8.tar.bz2",
+      "sha256": "8bd24b4f23a3065d6e5b26e98aba9ce783ea4fd781069c1b35d149694e90ca3e",
+      "size": 317739,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "librelp-1.13.0.tar.gz",
+      "url": "https://download.rsyslog.com/librelp/librelp-1.13.0.tar.gz",
+      "sha256": "58e976e31795d7309cf2d9f37fdc93522daa4a322f5012d7879fed9ebfa40068",
+      "size": 570276,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "samba-4.24.7.tar.gz",
+      "url": "https://download.samba.org/pub/samba/stable/samba-4.24.7.tar.gz",
+      "sha256": "45b7747a47452eff2b2159a44cc63eb43690d339fd1069088e023a015fed06c7",
+      "size": 43450847,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "open-iscsi-2.1.13.tar.gz",
+      "url": "https://github.com/open-iscsi/open-iscsi/archive/refs/tags/2.1.13.tar.gz",
+      "sha256": "1c3a8ad7d86e57d247a08c013f5055ef695b3a07ed760d1aea7d90b9f9011602",
+      "size": 649367,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "multipath-tools-0.15.1.tar.gz",
+      "url": "https://github.com/opensvc/multipath-tools/archive/refs/tags/0.15.1.tar.gz",
+      "sha256": "99e4a4b8c245479dd5c5d473a031acb67d752b94dcd76be172279cd445845421",
+      "size": 639409,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "thin-provisioning-tools-1.3.4.tar.gz",
+      "url": "https://github.com/jthornber/thin-provisioning-tools/archive/refs/tags/v1.3.4.tar.gz",
+      "sha256": "e09caa006ee6ff1e0b32dea934e6cb5d96412cd31163d82bd7ccdc1ac06304d5",
+      "size": 487052,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "rpm-6.1.0.tar.gz",
+      "url": "https://github.com/rpm-software-management/rpm/archive/refs/tags/rpm-6.1.0-release.tar.gz",
+      "sha256": "e33a48460c7c23c564bee11fdb08b2883f724feb44ad6ba2ebe55bc55349da00",
+      "size": 1214956,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "gtk+-2.24.33.tar.xz",
+      "url": "https://download.gnome.org/sources/gtk+/2.24/gtk%2B-2.24.33.tar.xz",
+      "sha256": "ac2ac757f5942d318a311a54b0c80b5ef295f299c2a73c632f6bfb1ff49cc6da",
+      "size": 12661828,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "rsyslog-local-test.py",
+      "url": "local:test-fixture",
+      "sha256": "6576d4190675df3b3c6dfb5ded775d4b49328240f0ebb73fb6b478497505e5a4",
+      "size": 2192,
+      "verification": "Authored isolated localhost-only functional test"
+    },
+    {
+      "name": "NetworkManager-1.58.1.tar.xz",
+      "url": "https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/releases/1.58.1/downloads/NetworkManager-1.58.1.tar.xz",
+      "sha256": "262864cfd198123d3e5dbe91937441b97ee9059d6d712e1a5bfbb1c54668d14d",
+      "size": 6513988,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libproxy-0.5.12.tar.gz",
+      "url": "https://github.com/libproxy/libproxy/archive/refs/tags/0.5.12.tar.gz",
+      "sha256": "a1fa55991998b80a567450a9e84382421a7176a84446c95caaa8b72cf09fa86f",
+      "size": 60529,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "ghostscript-10.08.0.tar.gz",
+      "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10080/ghostscript-10.08.0.tar.gz",
+      "sha256": "caf199e3f233f1290b27d0972d636f66c303355f2353309b7bfddf1edda06b3d",
+      "size": 90851112,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "librsvg-2.62.4.tar.xz",
+      "url": "https://download.gnome.org/sources/librsvg/2.62/librsvg-2.62.4.tar.xz",
+      "sha256": "c982b8157a054b803493bf994d31e50105eb948dd8da6b4ab9734e8d392712a3",
+      "size": 6761864,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sssd-2.13.1.tar.gz",
+      "url": "https://github.com/SSSD/sssd/releases/download/2.13.1/sssd-2.13.1.tar.gz",
+      "sha256": "05ea79e89f0be399983925b8874ac196d6dc5fd4416f83609557b9fc8ef798b5",
+      "size": 9136618,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "fwupd-2.1.8.tar.xz",
+      "url": "https://github.com/fwupd/fwupd/releases/download/2.1.8/fwupd-2.1.8.tar.xz",
+      "sha256": "8724305a52621ab6586de3290f6a78edb8393a4aa4bcb6c63f9228ae5e00acf8",
+      "size": 5082240,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sos-4.12.0.tar.gz",
+      "url": "https://github.com/sosreport/sos/archive/refs/tags/4.12.0.tar.gz",
+      "sha256": "3bc1a378aeca1ccc96ed8da0bd27d0ca38ebfe38489766daa0e74d78ca678fe0",
+      "size": 11318781,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "glusterfs-11.2.tar.gz",
+      "url": "https://github.com/gluster/glusterfs/archive/refs/tags/v11.2.tar.gz",
+      "sha256": "540683ab1acdc95c7fe940061fb24464e1d3d0955a8610d79376911b73ed4ce4",
+      "size": 3937297,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libstoragemgmt-1.11.0.tar.gz",
+      "url": "https://github.com/libstorage/libstoragemgmt/releases/download/1.11.0/libstoragemgmt-1.11.0.tar.gz",
+      "sha256": "07fd9c8e498a052b7ed201c56936120910ec4992fa1f3ade88a0c66e088bdc93",
+      "size": 1088833,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "policycoreutils-3.11.tar.gz",
+      "url": "https://github.com/SELinuxProject/selinux/releases/download/3.11/policycoreutils-3.11.tar.gz",
+      "sha256": "054e41ec039731a5ee6b797a8e0b8d6e346ee1d0a9bac2f252db48c23f9a8b1b",
+      "size": 759495,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libselinux-3.11.tar.gz",
+      "url": "https://github.com/SELinuxProject/selinux/releases/download/3.11/libselinux-3.11.tar.gz",
+      "sha256": "73d419c6e20e874adaa4019372cbd097eecf4d276e13f27ec5e67d35c0bd203c",
+      "size": 208732,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libsepol-3.11.tar.gz",
+      "url": "https://github.com/SELinuxProject/selinux/releases/download/3.11/libsepol-3.11.tar.gz",
+      "sha256": "79f3d2c88f44b7eb5cf54d9792e03232297e17f97a179163f2750099a00f164d",
+      "size": 533422,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libsemanage-3.11.tar.gz",
+      "url": "https://github.com/SELinuxProject/selinux/releases/download/3.11/libsemanage-3.11.tar.gz",
+      "sha256": "e76160286bbfb0821602c6c0c3220ebcf366ad3246d3b9d0a0fbefcd35e86043",
+      "size": 185656,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "duktape-2.7.0.tar.xz",
+      "url": "https://duktape.org/duktape-2.7.0.tar.xz",
+      "sha256": "90f8d2fa8b5567c6899830ddef2c03f3c27960b11aca222fa17aa7ac613c2890",
+      "size": 1026524,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "DBI-1.653.tgz",
+      "url": "https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/DBI-1.653.tgz",
+      "sha256": "a98c21fd37eed8f841172875d175d972fe87f063d7d0d2a3b7765908bb25eb58",
+      "size": 742238,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "Socket-2.043.tar.gz",
+      "url": "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Socket-2.043.tar.gz",
+      "sha256": "236aab8262e928d05be0bb0a68fae9e829913f9d3fa4bb6aebba9e30edb189ad",
+      "size": 47008,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "OpenJDK8U-jdk-sources_8u504b01.tar.gz",
+      "url": "https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u504-b01/OpenJDK8U-jdk-sources_8u504b01.tar.gz",
+      "sha256": "86cd14f299616dddca13268cc2fa794eb4d28fc732dedaad8c5b8a3078e5d3c9",
+      "size": 94314011,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "libndp-1.9.tar.gz",
+      "url": "https://github.com/jpirko/libndp/archive/refs/tags/v1.9.tar.gz",
+      "sha256": "e564f5914a6b1b799c3afa64c258824a801c1b79a29e2fe6525b682249c65261",
+      "size": 30025,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "xmlrpc-1.64.03.tgz",
+      "url": "https://downloads.sourceforge.net/project/xmlrpc-c/Xmlrpc-c%20Super%20Stable/1.64.03/xmlrpc-1.64.03.tgz",
+      "sha256": "74729d364edbedbe42e782822da1e076f3f45c65c4278a3cfba5f2342d7cedbe",
+      "size": 937735,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "checkpolicy-3.11.tar.gz",
+      "url": "https://github.com/SELinuxProject/selinux/releases/download/3.11/checkpolicy-3.11.tar.gz",
+      "sha256": "9b81bfceef7fa9d02f9872e56a786f343dc58ef4b5713dce0d5c416e5b84cefa",
+      "size": 76879,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "xdg-utils-1.2.1.tar.gz",
+      "url": "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v1.2.1/xdg-utils-v1.2.1.tar.gz",
+      "sha256": "f6b648c064464c2636884c05746e80428110a576f8daacf46ef2e554dcfdae75",
+      "size": 307637,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "thin-provisioning-tools-1.3.4-vendor.tar.xz",
+      "sha256": "63001d8349b9d43b44ee208017e73a3c82bef59a0d7f027dd7d17d0d986efe96",
+      "size": 16633820,
+      "url": "generated: cargo vendor --locked from upstream thin-provisioning-tools v1.3.4 Cargo.lock",
+      "verification": "Cargo.lock crate checksums; offline vendor archive SHA256",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "openssl-3.5.8.tar.gz",
+      "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+      "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2",
+      "size": 53213818,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "pango-1.58.2.tar.xz",
+      "url": "https://download.gnome.org/sources/pango/1.58/pango-1.58.2.tar.xz",
+      "sha256": "342385b6ca3b7c73455d7c80a13b7dbe4489e00bc3bd4c5bd6ed4dce421e374a",
+      "size": 1918112,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "fribidi-1.0.17.tar.xz",
+      "url": "https://github.com/fribidi/fribidi/releases/download/v1.0.17/fribidi-1.0.17.tar.xz",
+      "sha256": "6949dcde27d41cebad1fd741fcafc36d55a1020d2d872d4a6eb3914caabbada2",
+      "size": 1203284,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "rpm-sequoia-1.10.2.tar.gz",
+      "url": "https://github.com/rpm-software-management/rpm-sequoia/archive/refs/tags/v1.10.2.tar.gz",
+      "sha256": "ba740c16657498bb1a5a2b04472728089992e93a83d3584f00854b112dfd45df",
+      "size": 102128,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "librsvg-2.62.4-vendor.tar.xz",
+      "sha256": "e7524702739d5763e9cd189d3144e7ecd28cb6e5a4edc352ae457f03e2d5bc5a",
+      "size": 22079716,
+      "url": "generated: cargo vendor --locked from corresponding pinned upstream Cargo.lock",
+      "verification": "Cargo.lock checksums and locally pinned offline archive SHA256",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "rpm-sequoia-1.10.2-vendor.tar.xz",
+      "sha256": "ce02670390faa312f5a20a0ec51e8f4166f490cc4f3f0352805765f5da2fb430",
+      "size": 21245460,
+      "url": "generated: cargo vendor --locked from corresponding pinned upstream Cargo.lock",
+      "verification": "Cargo.lock checksums and locally pinned offline archive SHA256",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "fontconfig-2.18.3.tar.gz",
+      "url": "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/2.18.3/fontconfig-2.18.3.tar.gz",
+      "sha256": "9ae01e1d53acdef56010c5451cd34aa41d325b2faccd8606448d8fa01b2496b3",
+      "size": 666753,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "scdoc-1.11.3.tar.gz",
+      "url": "https://git.sr.ht/~sircmpwn/scdoc/archive/1.11.3.tar.gz",
+      "sha256": "4c5c6136540384e5455b250f768e7ca11b03fdba1a8efc2341ee0f1111e57612",
+      "size": 12768,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; locally pinned SHA256. Signature not independently verified.",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "dataclasses-0.8.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/1f/12/7919c5d8b9c497f9180db15ea8ead6499812ea8264a6ae18766d93c59fe5/dataclasses-0.8.tar.gz",
+      "sha256": "8479067f342acf957dc82ec415d355ab5edb7e7646b90dc6e2fd1d96ad084c97",
+      "size": 36581,
+      "upstream_signature_verified": false,
+      "verification": "Official PyPI sdist; SHA256 verified against PyPI metadata",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "secilc-3.11.tar.gz",
+      "url": "https://github.com/SELinuxProject/selinux/releases/download/3.11/secilc-3.11.tar.gz",
+      "sha256": "1fb7de005d35ae0ac6ff8f8fc955d08a15b5c1a67e961b97ef987576af0db11a",
+      "size": 187408,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, pinned SHA256; signature not independently verified",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "grub-2.14.tar.xz",
+      "url": "https://ftp.gnu.org/gnu/grub/grub-2.14.tar.xz",
+      "sha256": "bc8d3c73535b8838d8c8e2654d73edc4e6ae8c8acdb45d5df5dc9a1547446d43",
+      "size": 7725668,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, pinned SHA256; signature not independently verified",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "subscription-manager-1.30.16.tar.gz",
+      "url": "https://github.com/candlepin/subscription-manager/archive/refs/tags/subscription-manager-1.30.16-1.tar.gz",
+      "sha256": "d82cceea4a6026f5c2ee3590313014318e8b92b09471e7fbd685c7d773ead5f4",
+      "size": 1851993,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source, pinned SHA256; signature not independently verified",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-bzip2-configure.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-bzip2-configure.patch",
+      "sha256": "41aeebdb356cb6ffa7c0cd168aab63ece586dc03c533e1f720f98422951d79b2",
+      "size": 868,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-exec-shield.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-exec-shield.patch",
+      "sha256": "2c55be12907c42a454b91f53de92470d4f5d52e9ba7b0eef79684bd58efd4a1e",
+      "size": 396,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-close.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-close.patch",
+      "sha256": "10754a10be46ee8e7b9f84935e7f2087a99abd0a00dff77f97181c8fd71e0eef",
+      "size": 6218,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-attribs-overflow.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-attribs-overflow.patch",
+      "sha256": "74bc961e8013a4058687a3730590a709b7889203beb74a4a8369ba0301bef0e2",
+      "size": 636,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-configure.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-configure.patch",
+      "sha256": "a6920a9181d80c6c91a4a0ad57f811768b6f736464ebbf918862f65c7846b894",
+      "size": 356,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-manpage-fix.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-manpage-fix.patch",
+      "sha256": "47ffa1f54813287c671db80be3e525d19b09c03ad2749ce1dfd6e6dd0557c370",
+      "size": 614,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-fix-recmatch.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-fix-recmatch.patch",
+      "sha256": "3fc23fa7d46846a7089810c2926b3c3e2b3115d623765331876707e5e9d78041",
+      "size": 18736,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-symlink.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-symlink.patch",
+      "sha256": "fde8f9d6dbc5e9dc59f4497de8e4e313fd74318eaf5f33421acd74442fd10706",
+      "size": 493,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-caseinsensitive.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-caseinsensitive.patch",
+      "sha256": "357bc39af42a256084ba69a020c21ebc97429378c23bd5b8c7f22f02d0c68e63",
+      "size": 5448,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-format-secure.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-format-secure.patch",
+      "sha256": "8d9426bdd98cbba00c2d2e36c1dae17da069e6c85bf35811a434a8cbe704e6f4",
+      "size": 4320,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-valgrind.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-valgrind.patch",
+      "sha256": "da042334a1ae4a37ea0317ff27cee9eadd0af1529bd8391cde34467a377a4068",
+      "size": 1124,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-x-option.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-x-option.patch",
+      "sha256": "3007d6995eeec7fce12a41b4d37ef309ffe74cae86f952071e4653a1751f0190",
+      "size": 1167,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-overflow.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-overflow.patch",
+      "sha256": "c9a863e570bdaf2637c43bf1bba3d97808a1b0504d85418f6a8550ac286788f2",
+      "size": 1034,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-cve-2014-8139.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-cve-2014-8139.patch",
+      "sha256": "337131428f491b7030f96ee5b8ef3d8f5963730d1619b2754c624f4616d79adb",
+      "size": 3323,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-cve-2014-8140.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-cve-2014-8140.patch",
+      "sha256": "64f64985270e026c01d2c19c6b66c218cf5bcfc7cf3d4a44e601fad41975ec73",
+      "size": 1311,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-cve-2014-8141.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-cve-2014-8141.patch",
+      "sha256": "b7a14c33db93d1e5b4fc6ce113b4b99ff7a81ed56f46c87e001f22ec085e0273",
+      "size": 5032,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-overflow-long-fsize.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-overflow-long-fsize.patch",
+      "sha256": "251d5755ffb1e9701434c545fcda0fbfc2a16372f9d807fd07606b1364a1b55b",
+      "size": 1481,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-heap-overflow-infloop.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-heap-overflow-infloop.patch",
+      "sha256": "b6f64d7b57e74ceaa794dd13a6937f063ec915343f3d5d88b0f81c919e7bf171",
+      "size": 3302,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-alt-iconv-utf8.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-alt-iconv-utf8.patch",
+      "sha256": "ba67a8d6a751c9f4854e969da0470bdfff4f43aff8e9767b7e71a729b3b7d484",
+      "size": 14356,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-alt-iconv-utf8-print.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-alt-iconv-utf8-print.patch",
+      "sha256": "b990d8d8d8e02777999484a132170666ea736a865f9ad81da651dc63725475ff",
+      "size": 12880,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "0001-Fix-CVE-2016-9844-rhbz-1404283.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/0001-Fix-CVE-2016-9844-rhbz-1404283.patch",
+      "sha256": "7d8e5c77ad99f9bf56d4cbf224b5635367feb44f81745dec84b44365f8f5eb16",
+      "size": 1392,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-timestamp.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-timestamp.patch",
+      "sha256": "ea04cfc8b7ca3b3c03117da0d891870b8c542d26188ef5593fd7e479f4f29f4e",
+      "size": 1560,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-cve-2018-1000035-heap-based-overflow.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-cve-2018-1000035-heap-based-overflow.patch",
+      "sha256": "aced0f27191a67f9b8b3fdc5995938a64fd87cea64a0bbba2106e06137ef91c2",
+      "size": 1270,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-cve-2018-18384.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-cve-2018-18384.patch",
+      "sha256": "47e9deff12845e71de98cd19506a51c21d756a61bb67c0b17e77b84bdbe9fb84",
+      "size": 1623,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-COVSCAN-fix-unterminated-string.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-COVSCAN-fix-unterminated-string.patch",
+      "sha256": "866b8fc05731e4cf72f948c9540c3eb8b2372bf320442456b5b3ae9b74f0827c",
+      "size": 4800,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-part1.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-part1.patch",
+      "sha256": "24582ff3dcd926d1a46caf8506f76999d2525dd66e36f50b25dca50799695f12",
+      "size": 1020,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-part2.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-part2.patch",
+      "sha256": "f88b9d4119a1e256f3335a2d2c142dd95d13d7c5f9e5ecd4371e547249f3557c",
+      "size": 13046,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-part3.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-part3.patch",
+      "sha256": "ee9e26018190a515572b66a26118916843aa1002131a86b5c52769dc663b7acb",
+      "size": 5255,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-manpage.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-manpage.patch",
+      "sha256": "ec4a8e5745e37f3d2d57c594c610b71753b77c5fb4bd92edfb0fb25ef968d13e",
+      "size": 760,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-part4.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-part4.patch",
+      "sha256": "179330daaf395b631025d23ec666c227707caa8859a872cc39d3ea0e2a645e97",
+      "size": 882,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-part5.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-part5.patch",
+      "sha256": "44599c80ea507c1fcfb8fb58b4c9d8d18f3157de453c1e0469a703322deb042a",
+      "size": 942,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-part6.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-part6.patch",
+      "sha256": "81ca46cfd3cf732de8cf78c57790ed7d5c73a5e8d41943b8f6313cede6004f3e",
+      "size": 3695,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-part7.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-part7.patch",
+      "sha256": "7e5daf3850e42c7606cce5121eeef0d330537aebd9fd452ded1e4aeda53e60b8",
+      "size": 9766,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-zipbomb-switch.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-zipbomb-switch.patch",
+      "sha256": "c8a5a413f7d7a2098b187a4136b96e18356a19d13e0fd11f7f823f5dc85e6030",
+      "size": 7603,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-gnu89-build.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-gnu89-build.patch",
+      "sha256": "92d1b39bd8b4d1af567145781d60f434735f82941b77fae63f7221fbdda422d5",
+      "size": 558,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-wcstombs-fortify.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-wcstombs-fortify.patch",
+      "sha256": "d9abe3d0dd9f71c35aaee7646de9edeeae511615a655d8b2d536ec8158bf936f",
+      "size": 469,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-fix-warning-messages-on-big-files.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-fix-warning-messages-on-big-files.patch",
+      "sha256": "df3b0eeea8dcc161a2565e306b5dda13d27de43145e198baaf0eab822321ee7e",
+      "size": 440,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-sast.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-sast.patch",
+      "sha256": "278b4a41ca3b2a16f8fdd70e5b6bfe10fa0580c0ea27fd92fc1e0aa01f40892b",
+      "size": 450,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-RHEL-86228.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-RHEL-86228.patch",
+      "sha256": "1317b05a4248cce2b7a99f3574acd7f0fc6a15e4765d32b1bb1de409bb8b1e8e",
+      "size": 890,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip-6.0-CVE-2022-0529-and-0530.patch",
+      "url": "https://src.fedoraproject.org/rpms/unzip/raw/5787660118b7f462b8ff39151b773bf64fec6400/f/unzip-6.0-CVE-2022-0529-and-0530.patch",
+      "sha256": "f5c483ac06988212566d4df70d1f36a3e92e76fc5263911a8bf137b22b0a85ce",
+      "size": 5854,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.0-missing-fclose.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.0-missing-fclose.patch",
+      "sha256": "510502dc6b216e90f7855abce9ad16d03f4c26955058b7b19f0b5d013761a235",
+      "size": 474,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.0-methods-enable.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.0-methods-enable.patch",
+      "sha256": "5dd5fd75619cc7c05270c9f60d231e6dd98e9497fe99cd8782d1c60711eb7abf",
+      "size": 2505,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.1-double-fclose.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.1-double-fclose.patch",
+      "sha256": "3065adb74707979a3f1d3ca9554cc1b974f328313b0514d1f20d5400f305684c",
+      "size": 666,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.2-docdir.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.2-docdir.patch",
+      "sha256": "b68664a2469fdc40c37f021c42adffbad05d3c2c4adeec353514e7796decc492",
+      "size": 476,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.2-pegasus-interop.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.2-pegasus-interop.patch",
+      "sha256": "c00aa8d91e3c7b9180641396b52f9098b2b71d7efe84b3258410fb7c9c7bea22",
+      "size": 591,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-prov-reg-sfcb-systemd.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-prov-reg-sfcb-systemd.patch",
+      "sha256": "6edfa7282300da993c6f7cb5f94aff3514992abc58b14510848f64797912a91e",
+      "size": 1131,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-list-lib-dependencies.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-list-lib-dependencies.patch",
+      "sha256": "968e67aa226acb7c6d4d4a66759ee5e8cb235e4424c67262c8e677fa495a0f15",
+      "size": 4324,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-dont-install-license.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-dont-install-license.patch",
+      "sha256": "6318d6043d58cd58b22e390baaedd191d22c8e191414c830386b12fbdafa913b",
+      "size": 484,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-fix-get-os-install-date.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-fix-get-os-install-date.patch",
+      "sha256": "74b5432ffc1c8d78267f3718ac1a3271d44b43edaf00de8aa6bc372ac54c58c2",
+      "size": 2848,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-fix-possible-null-dereference.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-fix-possible-null-dereference.patch",
+      "sha256": "ffdb596223e9c1ebf2a28b03faaff54c02a65596b0e8cc3fd5e68d572eb2bb49",
+      "size": 2695,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-gcc15-fixes.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-gcc15-fixes.patch",
+      "sha256": "1b60a6cfce4aa7f147091eec24a8029706f265d37cbc6037368ec354e11c476e",
+      "size": 514,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-image-mode.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-image-mode.patch",
+      "sha256": "96e0885e27ebf7c4951deac4f155b256ce51032bda9232ab2deccb64cf4eed84",
+      "size": 3489,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-remove-wc-ldflag.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-remove-wc-ldflag.patch",
+      "sha256": "1c774f2c362b8d21a820de60087be1e2ef183aa83a3fca3c00dc7c29da415b08",
+      "size": 602,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4-secure-tmpfiles.patch",
+      "url": "https://src.fedoraproject.org/rpms/sblim-cmpi-base/raw/52ace56d28d1440bb8a828a91c6c601971569859/f/sblim-cmpi-base-1.6.4-secure-tmpfiles.patch",
+      "sha256": "1bb4c04d864dddad6e3621404290618260e10045bade0021087f75c7273e4288",
+      "size": 3826,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "unzip60.tar.gz",
+      "url": "https://downloads.sourceforge.net/infozip/unzip60.tar.gz",
+      "sha256": "036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37",
+      "size": 1376845,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-cmpi-base-1.6.4.tar.bz2",
+      "url": "https://downloads.sourceforge.net/sblim/sblim-cmpi-base-1.6.4.tar.bz2",
+      "sha256": "0e9cb016ac3103b3f564cb5d0cb5dd5609cd32084fafac08b0b42250f5dcda7f",
+      "size": 329049,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "mcpp-2.7.2.tar.gz",
+      "url": "https://downloads.sourceforge.net/project/mcpp/mcpp/V.2.7.2/mcpp-2.7.2.tar.gz",
+      "sha256": "3b9b4421888519876c4fc68ade324a3bbd81ceeb7092ecdbbc2055099fcb8864",
+      "size": 1533457,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "polkit-pkla-compat-0.1.tar.xz",
+      "url": "https://releases.pagure.org/polkit-pkla-compat/polkit-pkla-compat-0.1.tar.xz",
+      "sha256": "cbf804dfc235b40f2f7ea694c37d577f1cb5d3042d53063de1753016a46c39af",
+      "size": 291148,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "macros.qt5-srpm",
+      "url": "https://src.fedoraproject.org/rpms/qt5/raw/35a01cd5eb9ecd14600d3427e3c6359bae55d90e/f/macros.qt5-srpm",
+      "sha256": "825118da352dcaf274581f3c314332732cac0767293b872f2d76808ec483dd28",
+      "size": 500,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "pip-26.2.1.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/ae/15/4500e320e6b101ec3b719ae85b697d9940b6cda672bc555bd6016fc60c6f/pip-26.2.1.tar.gz",
+      "sha256": "f6ad667e89a1fe78046c8f13232b247200f5258d7828f3f7883d660878e0813f",
+      "size": 1848877,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream source or commit-pinned Fedora maintenance patch; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "sblim-indication_helper-0.5.0.tar.bz2",
+      "url": "https://downloads.sourceforge.net/sblim/sblim-indication_helper-0.5.0.tar.bz2",
+      "sha256": "542df88238429144d8f8f2712701f455e563bf5026d01e131224ae319b697622",
+      "size": 259038,
+      "upstream_signature_verified": false,
+      "verification": "Official upstream HTTPS source; SHA256 pinned",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "dataclasses-bpo-36470.patch",
+      "url": "local:patches/dataclasses-bpo-36470.patch",
+      "sha256": "764ad6a86469ce4b0fae1877079ba90e08c33eb3f723f4079087c9c70f48dc52",
+      "size": 568,
+      "upstream_signature_verified": false,
+      "verification": "Primary upstream source/fix; SHA256 pinned; dataclasses patch path adapted to backport layout",
+      "checked_on": "2026-09-24",
+      "upstream_reference": "https://github.com/python/cpython/commit/75220674c07abfc90c2cd7862d04cfa2e2354450.patch",
+      "local_path": "patches/dataclasses-bpo-36470.patch"
+    },
+    {
+      "name": "flit_core-3.12.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/69/59/b6fc2188dfc7ea4f936cd12b49d707f66a1cb7a1d2c16172963534db741b/flit_core-3.12.0.tar.gz",
+      "sha256": "18f63100d6f94385c6ed57a72073443e1a71a4acb4339491615d0f16d6ff01b2",
+      "size": 53690,
+      "upstream_signature_verified": false,
+      "verification": "Primary upstream source/fix; SHA256 pinned; dataclasses patch path adapted to backport layout",
+      "checked_on": "2026-09-24"
+    },
+    {
+      "name": "mcpp-test-do_msg01",
+      "url": "https://sourceforge.net/p/mcpp/bugs/13/attachment/test-do_msg01",
+      "sha256": "0fbf32aff3006e8c71ff7914719bbab8ce92a320338bb2fd29ee0bdef137f1a1",
+      "verification": "HTTPS upstream issue reproducer; SHA256 pinned"
+    },
+    {
+      "name": "mcpp-test-do_msg02",
+      "url": "https://sourceforge.net/p/mcpp/bugs/13/attachment/test-do_msg02",
+      "sha256": "673c9407f458e6c07f83ae12b20db20ebe3377ec37ec2ec0c211011b1b47f8ba",
+      "verification": "HTTPS upstream issue reproducer; SHA256 pinned"
+    },
+    {
+      "name": "mcpp_2.7.2-5.3.debian.tar.xz",
+      "url": "https://deb.debian.org/debian/pool/main/m/mcpp/mcpp_2.7.2-5.3.debian.tar.xz",
+      "sha256": "280ba2407e3251d406eb1aeb70fb8219d191ced28a56245c4beda0db461f174a",
+      "verification": "Official Debian source packaging archive; HTTPS and SHA256 pin; includes CVE-2019-14274 patch"
+    },
+    {
+      "name": "mcpp-zero-length-line.patch",
+      "url": "local:patches/mcpp-zero-length-line.patch",
+      "local_path": "patches/mcpp-zero-length-line.patch",
+      "sha256": "c7e421fde088ec328ae5b741c14b50b24f767dc40a2ce1a7418e5368cf06d5c8",
+      "verification": "Local zero-length bounds fix: official bug 13 second input retained invalid ptr[-1] read after Debian patches; both inputs checked under Valgrind",
+      "upstream_reference": "https://sourceforge.net/p/mcpp/bugs/13/"
     }
   ]
 }

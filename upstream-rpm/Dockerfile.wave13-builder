@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave12-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install kmod-devel cups-devel gdk-pixbuf2-devel libusb1-devel rust-toolset libarchive-devel libcap-ng-devel libsepol-devel libselinux-devel && dnf clean all
+COPY *.rpm /tmp/extra-deps/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/extra-deps/*.rpm
+USER builder

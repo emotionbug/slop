@@ -1,0 +1,7 @@
+FROM localhost/linux-oss-wave25-builder:el8-20260924
+USER root
+RUN dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install valgrind python3-nftables sblim-cmpi-devel && dnf clean all
+COPY *.rpm /tmp/wave26-deps/
+RUN dnf -y --disablerepo='*' --setopt=install_weak_deps=False --setopt=localpkg_gpgcheck=False install /tmp/wave26-deps/*.rpm
+RUN dnf -y install python3.11-pip && dnf clean all && /usr/bin/python3.11 -m pip install --no-cache-dir flit_core==3.12.0
+USER builder

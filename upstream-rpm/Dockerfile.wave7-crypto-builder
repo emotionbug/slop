@@ -1,0 +1,9 @@
+FROM localhost/linux-oss-wave7-builder:el8-20260924-v2
+USER root
+COPY linuxoss-openssl4-4.0.2-1.linuxoss.el8.x86_64.rpm /tmp/linuxoss-openssl4.rpm
+RUN echo '971c85f2cd67ee6261d4f59889aa701d8a683eba014e9934f85d61b51f2b58c3  /tmp/linuxoss-openssl4.rpm' | sha256sum -c - \
+ && dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/linuxoss-openssl4.rpm \
+ && dnf -y --enablerepo=powertools --setopt=install_weak_deps=False install \
+      ghostscript libtasn1-tools grub2-tools-minimal gdbm-devel \
+ && dnf clean all
+USER builder

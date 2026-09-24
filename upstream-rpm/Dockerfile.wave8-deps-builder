@@ -1,0 +1,6 @@
+FROM localhost/linux-oss-wave8-builder:el8-20260924
+USER root
+COPY *.rpm /tmp/wave8-deps/
+RUN dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False reinstall /tmp/wave8-deps/linuxoss-bsd-compat*.rpm \
+ && dnf -y --disablerepo='*' --setopt=localpkg_gpgcheck=False install /tmp/wave8-deps/pcre2*.rpm
+USER builder

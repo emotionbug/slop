@@ -23,12 +23,12 @@ preserve_evidence() {
   # Thousands of glibc result files are prohibitively slow across a Windows
   # bind mount. Preserve all raw evidence in one archive, plus readable sums.
   if [[ $(basename -- "$spec") == glibc-evaluation.spec ]]; then
-    (cd "$top" && find BUILD -type f \( -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) -print0 \
+    (cd "$top" && find BUILD -type f \( -name testlog.txt -o -name testlog.json -o -name testlog -o -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) -print0 \
       | tar --null -T - -czf "$top/test-results.tar.gz" \
       && cp "$top/test-results.tar.gz" /output/test-results.tar.gz \
       && find BUILD -type f -name '*.sum' -exec cp --parents -t /output/test-results -- {} +) || true
   else
-    (cd "$top" && find BUILD -type f \( -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) \
+    (cd "$top" && find BUILD -type f \( -name testlog.txt -o -name testlog.json -o -name testlog -o -name '*.sum' -o -name '*.trs' -o -name '*.log' -o -name '*.test-result' -o -name '*.out' \) \
       -exec cp --parents -t /output/test-results -- {} +) || true
   fi
   # OpenSSL's Perl tests keep failure details and generated fixtures here.

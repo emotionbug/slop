@@ -207,4 +207,8 @@ Trivy 0.74.0으로 설치된 자체 RPM 52개를 실제 검사했습니다. 목�
 식별되지만 모두 `third-party`로 분류되어 기본 RHEL 취약점 검사에서 제외됩니다.
 CVE 0건을 조치 완료로 해석하지 마세요. [실제 비교 결과, 누락 CSV 도구 및 추가 검사 연계 방법](TRIVY-INTEGRATION.md)을 참고하세요.
 
+[native Trivy 모듈 PoC](native-trivy/README.md)는 52개 자체 RPM의 제작 기록과 설치 정보를
+같은 Trivy JSON/통합 CSV에 연결합니다. bzip2의 CVE 한 건에 대해 실행파일 해시를 포함한
+수정 근거 대조를 검증했으며, 전체 자체 RPM용 CVE 피드는 아직 완성되지 않았습니다.
+
 출력 파일, CSV, 서버 수집 정보는 공개 Git 저장소에 추가하지 마세요.

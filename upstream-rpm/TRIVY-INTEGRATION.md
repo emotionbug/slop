@@ -118,8 +118,13 @@ NVD 제품/버전 검사만으로 추가 backport 패치까지 인식하지 못�
 
 Trivy 결과 안으로 직접 넣으려면 [WASM PostScanner 모듈](https://trivy.dev/docs/dev/advanced/modules/)
 또는 자체 탐지기/피드 구현이 가능합니다. 이 경우에도 정확한 제품 매핑, 영향 버전,
-추가 패치 반영 여부와 피드 갱신을 직접 유지해야 합니다. 현재 저장소에 그런 탐지기나
-전체 자체 취약점 DB가 구현된 상태는 아닙니다.
+추가 패치 반영 여부와 피드 갱신을 직접 유지해야 합니다. 전체 자체 취약점 DB가 구현된
+상태는 아닙니다.
+
+후속 작업으로 [native WASM 연계 PoC](native-trivy/README.md)를 구현했습니다.
+52개 배포 RPM/SRPM 카탈로그와 설치된 패키지의 정보를 연결하고, bzip2의 특정 CVE 한 건을
+실행파일 SHA-256까지 대조해 같은 Trivy JSON과 통합 CSV에 기록합니다.
+기존 RHEL 결과를 보존하며 미평가 패키지도 표시합니다. 전체 upstream 피드 구현은 아직입니다.
 
 [OpenVEX](https://trivy.dev/docs/dev/supply-chain/vex/file/)는 이미 탐지된 CVE에 대해
 제품/PURL별 평가를 적용하는 연계 수단입니다. 누락된 RPM을 새로 검사하는 기능이 아닙니다.

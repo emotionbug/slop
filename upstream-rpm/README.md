@@ -201,4 +201,10 @@ PVSCSI 디스크/XFS, VMXNET3, device mapper를 시험하도록 준비했습니�
 만들 수 없습니다. `perf`/`python3-perf`/`bpftool`도 커널 RPM 생성만으로 교체되지
 않으므로 별도 산출물과 테스트가 필요합니다.
 
+## Trivy와 자체 RPM
+
+Trivy 0.74.0으로 설치된 자체 RPM 52개를 실제 검사했습니다. 목록과 SBOM에는
+식별되지만 모두 `third-party`로 분류되어 기본 RHEL 취약점 검사에서 제외됩니다.
+CVE 0건을 조치 완료로 해석하지 마세요. [실제 비교 결과, 누락 CSV 도구 및 추가 검사 연계 방법](TRIVY-INTEGRATION.md)을 참고하세요.
+
 출력 파일, CSV, 서버 수집 정보는 공개 Git 저장소에 추가하지 마세요.

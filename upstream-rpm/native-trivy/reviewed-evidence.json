@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "21cc6b0a78578cbd0183e33003f50e9f71ba3f23d17c9084d72e61d8614da31b": [
+      {
+        "cve": "CVE-2026-56389",
+        "status": "fixed",
+        "scope": "Named CVE only; bison artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-56389/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-56390",
+        "status": "fixed",
+        "scope": "Named CVE only; bison artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-56389/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "7cfbe70625b0d6e6b9a1a0dd0a8a934769ee8941a1cf3c50a836981134aed9cd": [
+      {
+        "cve": "CVE-2026-42250",
+        "status": "fixed",
+        "scope": "bzip2recover executable only; not a libbz2 vulnerability verdict",
+        "advisory": "https://cert.pl/en/posts/2026/05/CVE-2026-42250/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here",
+        "patch_commit": "35d122a3df8b0cc4082a4d89fdc6ee99f375fe67"
+      }
+    ],
+    "dba684bd008d407d47739d7ab503af03fe4a220c6fc1064e8b764fcb5be00c3b": [
+      {
+        "cve": "CVE-2026-66484",
+        "status": "fixed",
+        "scope": "Named CVE only; cpio artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/08/CVE-2026-66484/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-66485",
+        "status": "fixed",
+        "scope": "Named CVE only; cpio artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/08/CVE-2026-66484/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-66486",
+        "status": "fixed",
+        "scope": "Named CVE only; cpio artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/08/CVE-2026-66484/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "24a364785d9d94843abf12fc89fe1ca267f83e5a237bf3e53d1689398a84b554": [
+      {
+        "cve": "CVE-2026-53910",
+        "status": "fixed",
+        "scope": "Named CVE only; diffutils artifact. Files on disk, not live processes.",
+        "advisory": "https://lists.ubuntu.com/archives/stonking-changes/2026-August/007706.html",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "7e6006a473b18e2788ce85342b17e0cac899a6498daeac232f6b089e7b0dd34b": [
+      {
+        "cve": "CVE-2026-40467",
+        "status": "fixed",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-40468",
+        "status": "fixed",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-40469",
+        "status": "fixed",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-40553",
+        "status": "fixed",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "e16d17cff8ccbeec4384e7066aac9250f7ca32c648f11753300434fb672ab46c": [
+      {
+        "cve": "CVE-2026-32316",
+        "status": "fixed",
+        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
+        "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-33947",
+        "status": "fixed",
+        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
+        "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-33948",
+        "status": "fixed",
+        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
+        "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "cf6da15bb0444dab963dd195f251ec43910ad4a98a44ff59cad4276692fea495": [
+      {
+        "cve": "CVE-2026-9149",
+        "status": "fixed",
+        "scope": "Named CVE only; libsolv artifact. Files on disk, not live processes.",
+        "advisory": "https://github.com/openSUSE/libsolv/blob/0.7.40/package/libsolv.changes",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-9150",
+        "status": "fixed",
+        "scope": "Named CVE only; libsolv artifact. Files on disk, not live processes.",
+        "advisory": "https://github.com/openSUSE/libsolv/blob/0.7.40/package/libsolv.changes",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-48863",
+        "status": "fixed",
+        "scope": "Named CVE only; libsolv artifact. Files on disk, not live processes.",
+        "advisory": "https://github.com/openSUSE/libsolv/blob/0.7.40/package/libsolv.changes",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "04e6935a696af4d5b0d5c69f8327c928f0d4f247474d4948980df9525b4d8341": [
+      {
+        "cve": "CVE-2026-59843",
+        "status": "fixed",
+        "scope": "Named CVE only; libssh artifact. Files on disk, not live processes.",
+        "advisory": "https://www.libssh.org/2026/07/28/libssh-0-12-2-security-release/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "32d34041c9e02ea889aedf4f83b8f655fa311772dc857605351d8915f8892283": [
+      {
+        "cve": "CVE-2025-13151",
+        "status": "fixed",
+        "scope": "Named CVE only; libtasn1 artifact. Files on disk, not live processes.",
+        "advisory": "https://lists.gnu.org/archive/html/info-gnu/2026-01/msg00003.html",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "f86979f04f16eefc6f229e72c162e39a8cb2a3cd4218985b546108318511031d": [
+      {
+        "cve": "CVE-2026-5958",
+        "status": "fixed",
+        "scope": "Named CVE only; sed artifact. Files on disk, not live processes.",
+        "advisory": "https://cert.pl/en/posts/2026/04/CVE-2026-5958/",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      }
+    ],
+    "9a073b73ba36b8eaa64f5914eda1f88653b2f0b6f254b4d8abc94c6c9b20a7e1": [
+      {
+        "cve": "CVE-2025-45582",
+        "status": "fixed",
+        "scope": "Named CVE only; tar artifact. Files on disk, not live processes.",
+        "advisory": "https://ubuntu.com/security/notices/USN-8477-3",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-5704",
+        "status": "fixed",
+        "scope": "Named CVE only; tar artifact. Files on disk, not live processes.",
+        "advisory": "https://ubuntu.com/security/notices/USN-8477-3",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-18477",
+        "status": "open",
+        "scope": "Previously unresolved advisory; do not infer fixed from newer version",
+        "advisory": "https://nvd.nist.gov/vuln/detail/CVE-2026-18477",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md"
+      },
+      {
+        "cve": "CVE-2026-18508",
+        "status": "open",
+        "scope": "Previously unresolved advisory; do not infer fixed from newer version",
+        "advisory": "https://nvd.nist.gov/vuln/detail/CVE-2026-18508",
+        "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md"
+      }
+    ]
+  }
+}

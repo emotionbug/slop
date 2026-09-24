@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build a public artifact catalogue from the published RPM bundle on EL8.
 
-This pins artifacts, not a complete advisory feed. One reviewed bzip2 CVE is
-included as a proof of integration. Requires Python 3.6+ and rpm CLI.
+Pins RPMs, source RPMs, immutable payloads and explicitly reviewed CVEs.
+Requires Python 3.6+ and rpm CLI. Reviews apply only to their exact RPM SHA-256.
 """
 import argparse
 import hashlib
@@ -25,10 +25,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("bundle", type=Path)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--reviews", type=Path, default=Path(__file__).with_name("reviewed-evidence.json"))
     args = parser.parse_args()
     manifest = args.bundle / "manifest.json"
     data = json.loads(manifest.read_text(encoding="utf-8-sig"))
     files = {row["path"]: row["sha256"] for row in data["files"]}
+    reviews = json.loads(args.reviews.read_text(encoding="utf-8"))["artifacts"]
     artifacts = []
     for rel, expected in sorted(files.items()):
         if not rel.startswith("rpms/") or not rel.endswith(".rpm"):
@@ -45,25 +47,19 @@ def main():
         if srpm not in files or sha(args.bundle / srpm) != files[srpm]:
             raise ValueError("Source RPM missing or digest mismatch: " + srpm)
         row.update(rpm_sha256=expected, srpm_sha256=files[srpm], files={}, assessments=[])
-        # Curated assessment is tied to this exact already reviewed artifact.
-        if expected == "7cfbe70625b0d6e6b9a1a0dd0a8a934769ee8941a1cf3c50a836981134aed9cd":
-            raw = subprocess.check_output(["rpm", "-qp", "--qf", "[%{FILENAMES}\t%{FILEDIGESTS}\n]", str(path)], universal_newlines=True)
-            digests = dict(line.split("\t") for line in raw.splitlines())
-            recover = "/usr/bin/bzip2recover"
-            if digests[recover] != "9a02c954f550943da56f526a470017a292fc4e95f3ea787ab146ae7901771283":
-                raise ValueError("Reviewed executable digest changed")
-            row["files"] = {recover: digests[recover]}
-            row["assessments"] = [{
-                "cve": "CVE-2026-42250", "status": "fixed",
-                "scope": "bzip2recover only; no assertion about other bzip2 CVEs or libbz2",
-                "advisory": "https://cert.pl/en/posts/2026/05/CVE-2026-42250/",
-                "patch_commit": "35d122a3df8b0cc4082a4d89fdc6ee99f375fe67",
-                "evidence": "https://github.com/emotionbug/slop/blob/5c97ae13b38655ecf5b76dda0bca5dd7c888afba/upstream-rpm/SECURITY-EVIDENCE.md",
-                "verification": "Previously recorded ASan original/patched regression and installed bzip2recover output protection tests"}]
+        row["project"] = row["sourcerpm"].rsplit("-", 2)[0]
+        row["components"] = ([{"project": "xxhash", "version": "0.8.4"}] if row["name"] == "rsync" else [])
+        raw = subprocess.check_output(["rpm", "-qp", "--qf", "[%{FILENAMES}\t%{FILEDIGESTS}\t%{FILEFLAGS}\n]", str(path)], universal_newlines=True)
+        for line in raw.splitlines():
+            filename, digest, flags = line.split("\t")
+            if len(digest) == 64 and not (int(flags) & 1):
+                row["files"][filename] = digest
+        row["assessments"] = reviews.get(expected, [])
         artifacts.append(row)
     if not artifacts:
         raise ValueError("No custom RPMs found")
-    catalog = {"schema_version": 1, "scope": "Artifact linkage PoC; one reviewed CVE, incomplete advisory coverage",
+    catalog = {"schema_version": 1, "scope": "Exact custom artifacts and reviewed evidence; selected upstream feed coverage remains incomplete",
+               "reviewed_evidence_sha256": sha(args.reviews),
                "bundle_manifest_sha256": sha(manifest), "artifacts": artifacts}
     args.output.write_text(json.dumps(catalog, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("Catalogue artifacts: {}".format(len(artifacts)))

@@ -22,6 +22,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--feed", type=Path, default=Path(__file__).with_name("advisories.json"))
     args = parser.parse_args()
     raw = args.catalog.read_bytes()
     catalog = json.loads(raw.decode("utf-8"))
@@ -43,6 +44,7 @@ def main():
         if row["vendor"] == "Linux OSS local build" or "linuxoss" in row["release"]:
             packages.append(row)
     snapshot = {"schema_version": 1, "catalog_sha256": hashlib.sha256(raw).hexdigest(),
+                "feed_sha256": sha_file(str(args.feed)),
                 "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 "packages": sorted(packages, key=lambda p: (p["name"], p["arch"], p["version"])),
                 "checked_files": checked}

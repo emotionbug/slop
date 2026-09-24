@@ -56,7 +56,7 @@ func name() uint64 { return send([]byte("linuxoss-artifact-evidence")) }
 func apiVersion() uint32 { return 1 }
 
 //go:wasmexport version
-func version() uint32 { return 1 }
+func version() uint32 { return 2 }
 
 //go:wasmexport is_analyzer
 func isAnalyzer() uint64 { return 1 }
@@ -127,14 +127,21 @@ func postScan(p, n uint32) uint64 {
 			vulns = append(vulns, map[string]interface{}{
 				"VulnerabilityID": row.CVE, "PkgName": row.Name,
 				"InstalledVersion": row.Version + "-" + row.Release,
-				"Status":           "under_investigation", "Severity": "UNKNOWN",
-				"Title":       "Custom RPM patch evidence could not be verified",
+				"Status":           "under_investigation", "Severity": severity(row),
+				"Title":       "Custom RPM upstream advisory requires review: " + row.Project,
 				"Description": row.Reason, "PrimaryURL": row.Advisory,
-				"DataSource": map[string]string{"ID": "linuxoss-poc", "Name": "Linux OSS reviewed artifact evidence (partial)", "URL": row.Evidence}})
+				"DataSource": map[string]string{"ID": "linuxoss-upstream", "Name": "Linux OSS NVD and reviewed artifact evidence (partial)", "URL": "https://github.com/emotionbug/slop/tree/main/upstream-rpm/native-trivy"}})
 		}
 	}
 	return response([]interface{}{map[string]interface{}{
 		"Target": "Linux OSS custom RPM evidence (incomplete CVE coverage)",
 		"Class":  "lang-pkgs", "Type": "linuxoss-native",
 		"CustomResources": resources, "Vulnerabilities": vulns}})
+}
+
+func severity(row Row) string {
+	if row.Severity == "" {
+		return "UNKNOWN"
+	}
+	return row.Severity
 }

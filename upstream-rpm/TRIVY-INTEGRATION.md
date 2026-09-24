@@ -121,10 +121,10 @@ Trivy 결과 안으로 직접 넣으려면 [WASM PostScanner 모듈](https://tri
 추가 패치 반영 여부와 피드 갱신을 직접 유지해야 합니다. 전체 자체 취약점 DB가 구현된
 상태는 아닙니다.
 
-후속 작업으로 [native WASM 연계 PoC](native-trivy/README.md)를 구현했습니다.
-52개 배포 RPM/SRPM 카탈로그와 설치된 패키지의 정보를 연결하고, bzip2의 특정 CVE 한 건을
-실행파일 SHA-256까지 대조해 같은 Trivy JSON과 통합 CSV에 기록합니다.
-기존 RHEL 결과를 보존하며 미평가 패키지도 표시합니다. 전체 upstream 피드 구현은 아직입니다.
+후속 작업으로 [native WASM 연계 모듈](native-trivy/README.md)을 구현했습니다.
+52개 배포 RPM/SRPM과 설치 파일을 대조하고, 38개 소스 프로젝트의 선택한 NVD CPE 피드,
+22개 CVE의 검토된 수정 근거를 같은 Trivy JSON과 CSV에 연결합니다.
+기존 RHEL 결과를 보존하며 미등록 제품·범위 부족도 표시합니다. 전체 upstream CVE 범위를 보장하지 않습니다.
 
 [OpenVEX](https://trivy.dev/docs/dev/supply-chain/vex/file/)는 이미 탐지된 CVE에 대해
 제품/PURL별 평가를 적용하는 연계 수단입니다. 누락된 RPM을 새로 검사하는 기능이 아닙니다.

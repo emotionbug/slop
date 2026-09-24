@@ -1,0 +1,626 @@
+{
+  "schema_version": 1,
+  "checker_commit": "b1d090539802c0c8ac29ae232a8a5a0c313caae1",
+  "projects": {
+    "bison": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "bison",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Abison"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/bison.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "bzip2": {
+      "aliases": [
+        {
+          "vendor": "bzip",
+          "product": "bzip2",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Abzip%3Abzip2"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/bzip2.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "c-ares": {
+      "aliases": [
+        {
+          "vendor": "c-ares",
+          "product": "c-ares",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Ac-ares%3Ac-ares"
+        },
+        {
+          "vendor": "c-ares_project",
+          "product": "c-ares",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Ac-ares_project%3Ac-ares"
+        },
+        {
+          "vendor": "daniel_stenberg",
+          "product": "c-ares",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Adaniel_stenberg%3Ac-ares"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/c_ares.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "coreutils": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "coreutils",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Acoreutils"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/coreutils.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "cpio": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "cpio",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Acpio"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/cpio.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "diffutils": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "diffutils",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Adiffutils"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "expat": {
+      "aliases": [
+        {
+          "vendor": "libexpat_project",
+          "product": "libexpat",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Alibexpat_project%3Alibexpat"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libexpat.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "file": {
+      "aliases": [
+        {
+          "vendor": "christos_zoulas",
+          "product": "file",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Achristos_zoulas%3Afile"
+        },
+        {
+          "vendor": "file",
+          "product": "file",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Afile%3Afile"
+        },
+        {
+          "vendor": "file_project",
+          "product": "file",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Afile_project%3Afile"
+        },
+        {
+          "vendor": "gentoo",
+          "product": "file",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agentoo%3Afile"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/file.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "freetype": {
+      "aliases": [
+        {
+          "vendor": "freetype",
+          "product": "freetype",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Afreetype%3Afreetype"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "gawk": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "gawk",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Agawk"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/gawk.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "harfbuzz": {
+      "aliases": [
+        {
+          "vendor": "harfbuzz_project",
+          "product": "harfbuzz",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aharfbuzz_project%3Aharfbuzz"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/harfbuzz.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "jbig2dec": {
+      "aliases": [
+        {
+          "vendor": "artifex",
+          "product": "jbig2dec",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aartifex%3Ajbig2dec"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "jq": {
+      "aliases": [
+        {
+          "vendor": "jq_project",
+          "product": "jq",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Ajq_project%3Ajq"
+        },
+        {
+          "vendor": "jqlang",
+          "product": "jq",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Ajqlang%3Ajq"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/jq.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "lcms2": {
+      "aliases": [
+        {
+          "vendor": "littlecms",
+          "product": "little_cms",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Alittlecms%3Alittle_cms"
+        },
+        {
+          "vendor": "littlecms",
+          "product": "little_cms_color_engine",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Alittlecms%3Alittle_cms_color_engine"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libXpm": {
+      "aliases": [
+        {
+          "vendor": "x.org",
+          "product": "libxpm",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Ax.org%3Alibxpm"
+        },
+        {
+          "vendor": "libxpm_project",
+          "product": "libxpm",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Alibxpm_project%3Alibxpm"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libgcrypt": {
+      "aliases": [
+        {
+          "vendor": "gnupg",
+          "product": "libgcrypt",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnupg%3Alibgcrypt"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libgcrypt.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libgpg-error": {
+      "aliases": [
+        {
+          "vendor": "gnupg",
+          "product": "libgpg-error",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnupg%3Alibgpg-error"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libjpeg-turbo": {
+      "aliases": [
+        {
+          "vendor": "d.r.commander",
+          "product": "libjpeg-turbo",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Ad.r.commander%3Alibjpeg-turbo"
+        },
+        {
+          "vendor": "libjpeg-turbo",
+          "product": "libjpeg-turbo",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Alibjpeg-turbo%3Alibjpeg-turbo"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libjpeg_turbo.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libpcap": {
+      "aliases": [
+        {
+          "vendor": "tcpdump",
+          "product": "libpcap",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Atcpdump%3Alibpcap"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libpcap.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libpng": {
+      "aliases": [
+        {
+          "vendor": "greg_roelofs",
+          "product": "libpng",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agreg_roelofs%3Alibpng"
+        },
+        {
+          "vendor": "libpng",
+          "product": "libpng",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Alibpng%3Alibpng"
+        },
+        {
+          "vendor": "redhat",
+          "product": "libpng",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aredhat%3Alibpng"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/png.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libsolv": {
+      "aliases": [
+        {
+          "vendor": "opensuse",
+          "product": "libsolv",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aopensuse%3Alibsolv"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libsolv.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libssh": {
+      "aliases": [
+        {
+          "vendor": "libssh",
+          "product": "libssh",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Alibssh%3Alibssh"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libssh.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "libtasn1": {
+      "aliases": [
+        {
+          "vendor": "free_software_foundation_inc.",
+          "product": "libtasn1",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Afree_software_foundation_inc.%3Alibtasn1"
+        },
+        {
+          "vendor": "gnu",
+          "product": "libtasn1",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Alibtasn1"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libtasn1.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "nano": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "nano",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Anano"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/nano.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "oniguruma": {
+      "aliases": [
+        {
+          "vendor": "oniguruma_project",
+          "product": "oniguruma",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aoniguruma_project%3Aoniguruma"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "patch": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "patch",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Apatch"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/patch.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "pcre2": {
+      "aliases": [
+        {
+          "vendor": "pcre",
+          "product": "pcre2",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Apcre%3Apcre2"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/pcre2.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "popt": {
+      "aliases": [
+        {
+          "vendor": "popt_project",
+          "product": "popt",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Apopt_project%3Apopt"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "protobuf-c": {
+      "aliases": [
+        {
+          "vendor": "protobuf-c_project",
+          "product": "protobuf-c",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aprotobuf-c_project%3Aprotobuf-c"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/protobuf_c.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "rsync": {
+      "aliases": [
+        {
+          "vendor": "andrew_tridgell",
+          "product": "rsync",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aandrew_tridgell%3Arsync"
+        },
+        {
+          "vendor": "redhat",
+          "product": "rsync",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Aredhat%3Arsync"
+        },
+        {
+          "vendor": "rsync",
+          "product": "rsync",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Arsync%3Arsync"
+        },
+        {
+          "vendor": "samba",
+          "product": "rsync",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Asamba%3Arsync"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/rsync.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "sed": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "sed",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Ased"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "tar": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "tar",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Atar"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/tar.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "tcpdump": {
+      "aliases": [
+        {
+          "vendor": "tcpdump",
+          "product": "tcpdump",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Atcpdump%3Atcpdump"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/tcpdump.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "time": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "time",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Atime"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "tmux": {
+      "aliases": [
+        {
+          "vendor": "tmux",
+          "product": "tmux",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Atmux%3Atmux"
+        },
+        {
+          "vendor": "tmux_project",
+          "product": "tmux",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Atmux_project%3Atmux"
+        }
+      ],
+      "mapping_references": [],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "xz": {
+      "aliases": [
+        {
+          "vendor": "tukaani",
+          "product": "xz",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Atukaani%3Axz"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/xz.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "zlib": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "zlib",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Agnu%3Azlib"
+        },
+        {
+          "vendor": "zlib",
+          "product": "zlib",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Azlib%3Azlib"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/zlib.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "zstd": {
+      "aliases": [
+        {
+          "vendor": "facebook",
+          "product": "zstandard",
+          "part": "a",
+          "reference": "https://nvd.nist.gov/products/cpe/search/results?keyword=cpe%3A2.3%3Aa%3Afacebook%3Azstandard"
+        }
+      ],
+      "mapping_references": [
+        "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/zstandard.py"
+      ],
+      "mapping_status": "selected-identifiers-pending-feed-query"
+    },
+    "xxhash": {
+      "aliases": [],
+      "mapping_references": [
+        "https://github.com/Cyan4973/xxHash"
+      ],
+      "mapping_status": "unmapped",
+      "reason": "Bundled component retained; no authoritative NVD CPE mapping verified"
+    }
+  }
+}

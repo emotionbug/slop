@@ -40,7 +40,8 @@ def main():
     if expected != observed or actual != expected:
         raise ValueError("RPM snapshot, Trivy RPM inventory and module output disagree; re-scan")
     fields = ["source", "package", "installed_version", "CVE", "severity", "status",
-              "fixed_version", "reason", "reference", "rpm_sha256", "srpm_sha256", "coverage"]
+              "fixed_version", "reason", "reference", "rpm_sha256", "srpm_sha256", "coverage",
+              "upstream_project", "component_version", "feed_state", "feed_sha256"]
     rows = []
     for result in data["Results"]:
         if result.get("Type") == "linuxoss-native":
@@ -48,23 +49,33 @@ def main():
         for v in result.get("Vulnerabilities", []):
             rows.append(["trivy:" + result.get("Type", ""), v["PkgName"], v["InstalledVersion"],
                          v["VulnerabilityID"], v.get("Severity", "UNKNOWN"), v.get("Status", "unknown"),
-                         v.get("FixedVersion", ""), v.get("Title", ""), v.get("PrimaryURL", ""), "", "", "vendor-feed"])
+                         v.get("FixedVersion", ""), v.get("Title", ""), v.get("PrimaryURL", ""), "", "", "vendor-feed", "", "", "", ""])
     for a in assessments:
         rows.append(["linuxoss-artifact-evidence", a["name"],
                      a["epochnum"] + ":" + a["version"] + "-" + a["release"] + "." + a["arch"],
-                     a.get("cve", ""), "UNKNOWN", a["assessment_status"], "", a["reason"],
-                     a.get("advisory", ""), a.get("rpm_sha256", ""), a.get("srpm_sha256", ""), a["coverage"]])
+                     a.get("cve", ""), a.get("severity") or "UNKNOWN", a["assessment_status"], "", a["reason"],
+                     a.get("advisory", ""), a.get("rpm_sha256", ""), a.get("srpm_sha256", ""), a["coverage"],
+                     a.get("project", ""), a.get("component_version", ""), a.get("feed_state", ""), a.get("feed_sha256", "")])
     args.output_dir.mkdir(parents=True, exist_ok=False)
     with (args.output_dir / "integrated.csv").open("x", encoding="utf-8-sig", newline="") as stream:
         writer = csv.writer(stream)
         writer.writerow(fields)
         writer.writerows([cell(value) for value in row] for row in rows)
+    actionable = [r for r in rows if r[3] and r[5] != "fixed-evidence-matched"]
+    with (args.output_dir / "actionable.csv").open("x", encoding="utf-8-sig", newline="") as stream:
+        writer = csv.writer(stream)
+        writer.writerow(fields)
+        writer.writerows([cell(value) for value in row] for row in actionable)
     summary = {"trivy_version": "0.74.0", "report_sha256": hashlib.sha256(raw).hexdigest(),
                "custom_packages": len(expected), "assessment_rows": len(assessments),
                "assessments": dict(Counter(a["assessment_status"] for a in assessments)),
+               "actionable_rows": len(actionable),
+               "native_cve_candidates": sum(bool(a.get("cve")) and a["assessment_status"] == "under-investigation" for a in assessments),
+               "selected_feed_states": dict(Counter(a.get("feed_state", "") for a in assessments if not a.get("cve"))),
+               "feed_sha256": snapshot["feed_sha256"],
                "custom_packages_without_complete_cve_coverage": len(expected),
                "complete_upstream_feed": False, "all_cves_fixed": False,
-               "scope": "One reviewed CVE; other CVEs and live processes are not evaluated by this module"}
+               "scope": "Selected NVD CPE version ranges and artifact-pinned reviews; mapping, feed and live-process gaps remain"}
     (args.output_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=2))
     return 3 if args.fail_on_gap and expected else 0

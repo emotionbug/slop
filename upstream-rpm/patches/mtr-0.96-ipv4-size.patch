@@ -1,0 +1,12 @@
+--- a/packet/construct_unix.c
++++ b/packet/construct_unix.c
+@@ -597,6 +597,9 @@
+      */
+     if (param->ip_version == 6 && net_state->platform.ip6_socket_raw) {
+         packet_size -= sizeof(struct IP6Header);
++    } else if (param->ip_version == 4 && net_state->platform.ip4_socket_raw) {
++        /* IPv4 raw sockets also let the kernel prepend the IP header. */
++        packet_size -= sizeof(struct IPHeader);
+     }
+ 
+     return packet_size;

@@ -6,22 +6,24 @@ glibc, OpenSSL을 포함하며 위험도가 높다는 이유로 분석 대상에
 한 Source RPM에 여러 upstream 소스가 포함될 수 있어 실제 빌드 프로젝트 수와는 다릅니다.
 서버별 수집 자료와 상세 분석 결과는 로컬의 무시된 폴더에만 보관합니다.
 
-## 현재 설치 묶음: 20260925-5
+## 현재 설치 묶음: 20260925-6
 
-[125 RPM 설치 묶음](deploy/README-ko.md)은 기존 77종을 유지하면서 48개 패키지 이름을
-추가했습니다. 설치된 이름을 업그레이드하고 필요한 의존성만 추가합니다.
-[수정 내용과 검증](deploy/NEXT-WAVE-20260925-5.md),
-[정확한 RPM 및 검증 manifest](deploy/NEXT-WAVE-MANIFEST.json),
-[다운로드](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-5).
+[161 RPM 설치 묶음](deploy/README-ko.md)은 앞 릴리스에서 ABI·의존성·시험 문제로
+남아 있던 13개 프로젝트를 보완합니다. 새 빌드 38개를 포함하며 설치된 이름을
+업그레이드하고 필요한 의존성만 추가합니다.
+[보완 내용과 검증](deploy/COMPAT-WAVE-20260925-6.md),
+[정확한 RPM 및 검증 manifest](deploy/COMPAT-WAVE-MANIFEST.json),
+[다운로드](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-6).
 
-Wget·patch·tar의 새 CVE 8건에 대한 보안 패치와 공식 UBI 업데이트를 포함합니다.
-EL8 참조 환경에서 41개 업그레이드와 의존성 1개 설치, DNF 검사, 공유 라이브러리 로딩,
-22개 실행 확인 및 오프라인 Trivy 연결을 검증했습니다. 운영 서버의 부팅·서비스 검증이나
-전체 323종의 교체, 모든 취약점 해결을 뜻하지 않습니다. 부팅 커널은 이번에 교체하지 않습니다.
+binutils의 GCC 8 LTO, GDK-Pixbuf/GTK2의 EL8 연결, libevent/libidn/libbpf/libxslt/TIFF의
+기존 ABI 유지와 보안 백포트, MTR 패킷 길이, OpenJPEG 오류 입력 시험을 보완했습니다.
+EL8 참조 환경에서 43개 업그레이드와 의존성 2개 설치, DNF 검사, 공유 라이브러리 로딩,
+36개 설치 후 회귀 검사 및 오프라인 Trivy 연결을 확인했습니다. 운영 서버의 부팅·서비스
+검증이나 전체 323종 교체, 모든 취약점 해결을 뜻하지 않습니다.
 
-[Trivy 통합](native-trivy/README.md)은 OpenSSL 문자 버전, NVD 환경 조건,
-설정/디렉터리 전용 패키지와 정확한 vendor 수정 근거의 판정을 보완했습니다.
-원본 JSON과 미해결 항목은 보존하며, 파일 일치와 명시적인 근거가 있는 수정만 반영합니다.
+[Trivy 통합](native-trivy/README.md)은 정확한 RPM·설치 파일 해시와 명시적 패치 근거를
+연결하고, split RPM별 비해당 근거도 구분합니다. 원본 JSON과 미해결 항목은 보존합니다.
+커널·glibc·systemd·SSH/PAM은 보안 백포트와 부팅·인증 의존성 보완이 남은 후속 작업입니다.
 
 ## 이전 전체 평가 산출물: 20260924-7
 
@@ -29,7 +31,7 @@ EL8 참조 환경에서 41개 업그레이드와 의존성 1개 설치, DNF 검�
 원래 140개 Source RPM 묶음 중 134개에 대응하는 빌드가 있으며,
 323개 이름 중 201개와 같은 이름의 산출물이 있습니다.
 별도 경로·일부 기능만 만든 경우를 포함하며 전체 교체 완료를 뜻하지 않습니다.
-이전 [77 RPM 후보 묶음](CANDIDATES.md)의 설치본은 위의 125 RPM 릴리스로 대체되었습니다.
+이전 [77 RPM 후보 묶음](CANDIDATES.md)의 설치본은 위의 161 RPM 릴리스로 대체되었습니다.
 
 ## 이전 단계와 상세 검증 기록
 

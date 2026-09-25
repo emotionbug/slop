@@ -1,0 +1,13 @@
+--- a/tests/nonregression/test_suite.ctest.in
++++ b/tests/nonregression/test_suite.ctest.in
+@@ -291,8 +291,8 @@
+ !opj_decompress -i @INPUT_NR_PATH@/issue165.jp2                  -o @TEMP_PATH@/issue165.jp2.pgx
+ # limit the decode area to avoid timeouts
+ opj_decompress -i @INPUT_NR_PATH@/broken.jpc                    -o @TEMP_PATH@/broken.jpc.pgx -d 0,0,203,254
+-# issue 226
+-opj_decompress -i @INPUT_NR_PATH@/issue226.j2k                   -o @TEMP_PATH@/issue226.j2k.pgx
++# issue 226: malformed next-tile marker; strict decoder must reject it
++!opj_decompress -i @INPUT_NR_PATH@/issue226.j2k                   -o @TEMP_PATH@/issue226.j2k.pgx
+ # issue 297
+ !opj_decompress -i @INPUT_NR_PATH@/edf_c2_1103421.jp2  -o @TEMP_PATH@/edf_c2_1103421.jp2.pgx
+ !opj_decompress -i @INPUT_NR_PATH@/edf_c2_1178956.jp2  -o @TEMP_PATH@/edf_c2_1178956.jp2.pgx

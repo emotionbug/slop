@@ -32,6 +32,36 @@ def vendor_review(finding, result, os_info, reviews):
     return None
 
 
+def artifact_review(finding, result, assessments):
+    """Bind a vendor row to one hash-verified custom RPM/CVE, never by name alone."""
+    if result.get('Class') != 'os-pkgs':
+        return None
+    matches = []
+    for package in result.get('Packages', []):
+        evr = package.get('Version', '') + '-' + package.get('Release', '')
+        epoch = str(package.get('Epoch', 0) or 0)
+        if epoch != '0':
+            evr = epoch + ':' + evr
+        if (package.get('Name'), evr) == (finding.get('PkgName'), finding.get('InstalledVersion')):
+            matches.append(package)
+    # A finding without an architecture binding cannot resolve multilib siblings.
+    if len(matches) != 1:
+        return None
+    package = matches[0]
+    if package.get('Maintainer') != 'Linux OSS local build':
+        return None
+    reviewed = [a for a in assessments if a.get('assessment_status') in ('fixed-evidence-matched', 'not-affected-evidence-matched')
+                and a.get('cve') == finding.get('VulnerabilityID')
+                and a.get('name') == package.get('Name')
+                and str(a.get('epochnum')) == str(package.get('Epoch', 0) or 0)
+                and a.get('version') == package.get('Version')
+                and a.get('release') == package.get('Release')
+                and a.get('arch') == package.get('Arch')
+                and len(a.get('rpm_sha256', '')) == 64
+                and len(a.get('srpm_sha256', '')) == 64]
+    return reviewed[0] if len(reviewed) == 1 else None
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("report", type=Path)
@@ -76,6 +106,11 @@ def main():
             if review:
                 row[16:19] = [row[5], row[8], row[7]]
                 row[5], row[7], row[8] = "vendor-fixed-version-confirmed", review["reason"], review["reference"]
+            exact = artifact_review(v, result, assessments)
+            if exact:
+                row[16:19] = [row[5], row[8], row[7]]
+                row[5], row[7], row[8] = exact['assessment_status'], exact['reason'], exact.get('advisory', '')
+                row[9:12] = [exact['rpm_sha256'], exact['srpm_sha256'], exact['coverage']]
             rows.append(row)
     for a in assessments:
         rows.append(["linuxoss-artifact-evidence", a["name"],
@@ -88,7 +123,7 @@ def main():
         writer = csv.writer(stream)
         writer.writerow(fields)
         writer.writerows([cell(value) for value in row] for row in rows)
-    resolved_statuses = {"fixed-evidence-matched", "not-affected-component", "vendor-fixed-version-confirmed"}
+    resolved_statuses = {"fixed-evidence-matched", "not-affected-component", "not-affected-evidence-matched", "vendor-fixed-version-confirmed"}
     actionable = [r for r in rows if r[3] and r[5] not in resolved_statuses]
     with (args.output_dir / "actionable.csv").open("x", encoding="utf-8-sig", newline="") as stream:
         writer = csv.writer(stream)
@@ -111,6 +146,8 @@ def main():
                "actionable_rows": len(actionable),
                "actionable_unique_cves": len({r[3] for r in actionable}),
                "vendor_reviews_applied": sum(r[5] == "vendor-fixed-version-confirmed" for r in rows),
+               "vendor_rows_matched_to_custom_patch_evidence": sum(r[0].startswith('trivy:') and r[5] == 'fixed-evidence-matched' for r in rows),
+               "vendor_rows_matched_to_component_evidence": sum(r[0].startswith('trivy:') and r[5] == 'not-affected-evidence-matched' for r in rows),
                "native_cve_candidates": sum(bool(a.get("cve")) and a["assessment_status"] == "under-investigation" for a in assessments),
                "selected_feed_states": dict(Counter(a.get("feed_state", "") for a in assessments if not a.get("cve"))),
                "feed_sha256": snapshot["feed_sha256"],

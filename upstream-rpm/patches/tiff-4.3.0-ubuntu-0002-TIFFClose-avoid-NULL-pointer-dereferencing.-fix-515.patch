@@ -1,0 +1,49 @@
+From f725591f198c1d6c58e7ea22182982a54bd84d64 Mon Sep 17 00:00:00 2001
+From: Su_Laus <sulau@freenet.de>
+Date: Fri, 3 Feb 2023 17:38:55 +0100
+Subject: TIFFClose() avoid NULL pointer dereferencing. fix#515
+
+Closes #515
+---
+ libtiff/tif_close.c | 3 +++
+ tools/tiffcrop.c    | 5 ++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/libtiff/tif_close.c b/libtiff/tif_close.c
+index e4228df9..e23e0244 100644
+--- a/libtiff/tif_close.c
++++ b/libtiff/tif_close.c
+@@ -120,11 +120,14 @@ TIFFCleanup(TIFF* tif)
+ void
+ TIFFClose(TIFF* tif)
+ {
++     if (tif != NULL)
++     {
+ 	TIFFCloseProc closeproc = tif->tif_closeproc;
+ 	thandle_t fd = tif->tif_clientdata;
+ 
+ 	TIFFCleanup(tif);
+ 	(void) (*closeproc)(fd);
++     }
+ }
+ 
+ /* vim: set ts=8 sts=8 sw=8 noet: */
+diff --git a/tools/tiffcrop.c b/tools/tiffcrop.c
+index 6042b14d..ee408905 100644
+--- a/tools/tiffcrop.c
++++ b/tools/tiffcrop.c
+@@ -2527,7 +2527,10 @@ main(int argc, char* argv[])
+       }
+     }
+ 
+-  TIFFClose(out);
++    if (out != NULL)
++    {
++        TIFFClose(out);
++    }
+ 
+   return (0);
+   } /* end main */
+-- 
+2.30.2
+

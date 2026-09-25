@@ -1,0 +1,28 @@
+From a937705882a4d7eb63e6e555c012ae7646eda03b Mon Sep 17 00:00:00 2001
+From: Su_Laus <sulau@freenet.de>
+Date: Thu, 16 Feb 2023 12:03:16 +0100
+Subject: tif_luv: Check and correct for NaN data in uv_encode().
+
+Closes #530
+
+See merge request !473
+---
+ libtiff/tif_luv.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+--- tiff-4.3.0.orig/libtiff/tif_luv.c
++++ tiff-4.3.0/libtiff/tif_luv.c
+@@ -908,6 +908,13 @@ uv_encode(double u, double v, int em)	/*
+ {
+ 	register int	vi, ui;
+ 
++	/* check for NaN */
++	if (u != u || v != v)
++	{
++ 		u = U_NEU;
++		v = V_NEU;
++	}
++
+ 	if (v < UV_VSTART)
+ 		return oog_encode(u, v);
+ 	vi = tiff_itrunc((v - UV_VSTART)*(1./UV_SQSIZ), em);

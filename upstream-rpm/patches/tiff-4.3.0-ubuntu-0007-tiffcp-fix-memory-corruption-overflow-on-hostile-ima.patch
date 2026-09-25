@@ -1,0 +1,24 @@
+From ea6d8ff30c7483d47ecc0eb6be9a67422c1a7009 Mon Sep 17 00:00:00 2001
+From: Arie Haenel <arie.haenel@jct.ac.il>
+Date: Wed, 19 Jul 2023 19:34:25 +0000
+Subject: tiffcp: fix memory corruption (overflow) on hostile images (fixes
+ #591)
+
+---
+ tools/tiffcp.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+--- tiff-4.3.0.orig/tools/tiffcp.c
++++ tiff-4.3.0/tools/tiffcp.c
+@@ -1577,6 +1577,11 @@ DECLAREreadFunc(readSeparateTilesIntoBuf
+ 		TIFFError(TIFFFileName(in), "Error, cannot handle that much samples per tile row (Tile Width * Samples/Pixel)");
+ 		return 0;
+ 	}
++	if ( (imagew - tilew * spp) > INT_MAX )
++	{
++		TIFFError(TIFFFileName(in), "Error, image raster scan line size is too large");
++		return 0;
++	}   
+ 	iskew = imagew - tilew*spp;
+ 	tilebuf = limitMalloc(tilesize);
+ 	if (tilebuf == 0)

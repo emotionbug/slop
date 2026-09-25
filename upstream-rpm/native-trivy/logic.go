@@ -157,6 +157,10 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 				r.Status = "fixed-evidence-matched"
 				r.Reason = "Reviewed patch plus exact RPM header and executable SHA-256 match; " + assessment.Scope
 			}
+			if verified && assessment.Status == "not_affected" {
+				r.Status = "not-affected-evidence-matched"
+				r.Reason = "Reviewed component scope plus exact RPM header and immutable payload SHA-256 match; " + assessment.Scope
+			}
 			rows = append(rows, r)
 		}
 		components := append([]Component{{Project: match.Project, Version: pkg.Version}}, match.Components...)

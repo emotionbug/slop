@@ -1,6 +1,6 @@
 Name: bzip2
 Version: 1.0.8
-Release: 1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary: Bzip2 compression utilities with the upstream recovery bounds fix
 License: BSD
 URL: https://sourceware.org/bzip2/
@@ -54,6 +54,18 @@ ln -sfn bzdiff %{buildroot}%{_bindir}/bzcmp
 ln -sfn bzgrep %{buildroot}%{_bindir}/bzegrep
 ln -sfn bzgrep %{buildroot}%{_bindir}/bzfgrep
 ln -sfn bzmore %{buildroot}%{_bindir}/bzless
+mkdir -p %{buildroot}%{_libdir}/pkgconfig
+cat > %{buildroot}%{_libdir}/pkgconfig/bzip2.pc <<'PC'
+prefix=/usr
+libdir=/usr/lib64
+includedir=/usr/include
+
+Name: bzip2
+Description: Bzip2 compression library
+Version: 1.0.8
+Libs: -L${libdir} -lbz2
+Cflags: -I${includedir}
+PC
 %check
 make test
 for level in 1 9; do
@@ -74,3 +86,4 @@ done
 %files devel
 %{_includedir}/bzlib.h
 %{_libdir}/libbz2.so
+%{_libdir}/pkgconfig/bzip2.pc

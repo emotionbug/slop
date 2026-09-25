@@ -43,14 +43,21 @@ def main():
         fmt = "\t".join("%{" + tag + "}" for tag in TAGS)
         values = subprocess.check_output(["rpm", "-qp", "--qf", fmt, str(path)], universal_newlines=True).split("\t")
         row = dict(zip((t.lower() for t in TAGS), values))
-        source_hash = files.get("srpms/" + row["sourcerpm"], "")
+        srpm = "srpms/" + row["sourcerpm"]
+        # RPM's SOURCERPM tag can retain .src.rpm when a large test-only
+        # NoSource archive makes the emitted source package .nosrc.rpm.
+        if srpm not in files and srpm.endswith('.src.rpm'):
+            alternate = srpm[:-8] + '.nosrc.rpm'
+            if alternate in files:
+                srpm = alternate
+        source_hash = files.get(srpm, "")
         override = source_projects.get(source_hash, {})
         if row["vendor"] != "Linux OSS local build" and not override.get("include_nonstandard_vendor", False):
             continue
-        srpm = "srpms/" + row["sourcerpm"]
         if srpm not in files or sha(args.bundle / srpm) != files[srpm]:
             raise ValueError("Source RPM missing or digest mismatch: " + srpm)
         row.update(rpm_sha256=expected, srpm_sha256=files[srpm], files={}, assessments=[])
+        row['source_archive'] = Path(srpm).name
         row["project"] = row["sourcerpm"].rsplit("-", 2)[0]
         row["project"] = override.get("project", row["project"])
         row["components"] = override.get("components", [])

@@ -1,10 +1,12 @@
 Name: libbpf
-Version: 1.7.0
+Version: 0.8.3
 Release: 1.linuxoss%{?dist}
 Summary: libbpf upstream EL8 evaluation build
 License: LGPLv2+ or BSD
 URL: https://github.com/libbpf/libbpf
-Source0: libbpf-1.7.0.tar.gz
+Source0: libbpf-0.8.3.tar.gz
+Patch100: libbpf-CVE-2021-45940-45941.patch
+Patch101: libbpf-CVE-2022-3606.patch
 BuildRequires: gcc, make, elfutils-libelf-devel, zlib-devel
 Vendor: Linux OSS local build
 
@@ -19,7 +21,9 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 devel files.
 
 %prep
-%setup -q -n libbpf-1.7.0
+%setup -q -n libbpf-0.8.3
+%patch100 -p1
+%patch101 -p1
 %build
 export CFLAGS='-O2 -g -gdwarf-4 -fstack-protector-strong -fcf-protection'
 export CXXFLAGS="$CFLAGS"
@@ -31,7 +35,7 @@ make -C src %{?_smp_mflags} BUILD_STATIC_ONLY=0
 make -C src DESTDIR=%{buildroot} PREFIX=/usr LIBDIR=/usr/lib64 install
 rm -f %{buildroot}/usr/lib64/libbpf.a
 %check
-test -s src/libbpf.so.1.7.0
+test -s src/libbpf.so.0.8.3
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

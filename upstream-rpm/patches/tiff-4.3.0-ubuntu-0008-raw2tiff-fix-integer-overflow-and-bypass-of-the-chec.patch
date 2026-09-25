@@ -1,0 +1,58 @@
+From 4cc97e3dfa6559f4d17af0d0687bcae07ca4b73d Mon Sep 17 00:00:00 2001
+From: Arie Haenel <arie.haenel@jct.ac.il>
+Date: Wed, 19 Jul 2023 19:40:01 +0000
+Subject: raw2tiff: fix integer overflow and bypass of the check (fixes #592)
+
+---
+ tools/raw2tiff.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+--- tiff-4.3.0.orig/tools/raw2tiff.c
++++ tiff-4.3.0/tools/raw2tiff.c
+@@ -36,6 +36,7 @@
+ #include <sys/types.h>
+ #include <math.h>
+ #include <ctype.h>
++#include <limits.h>
+ 
+ #ifdef HAVE_UNISTD_H
+ # include <unistd.h>
+@@ -101,6 +102,7 @@ main(int argc, char* argv[])
+ 	int	fd;
+ 	char	*outfilename = NULL;
+ 	TIFF	*out;
++	uint32_t  temp_limit_check = 0;
+ 
+ 	uint32_t row, col, band;
+ 	int	c;
+@@ -212,6 +214,30 @@ main(int argc, char* argv[])
+ 	if (guessSize(fd, dtype, hdr_size, nbands, swab, &width, &length) < 0)
+ 		return EXIT_FAILURE;
+ 
++	if ((width == 0) || (length == 0) ){
++		fprintf(stderr, "Too large nbands value specified.\n");
++		return (EXIT_FAILURE);
++	}
++
++	temp_limit_check = nbands * depth;
++
++	if ( !temp_limit_check || length > ( UINT_MAX / temp_limit_check ) )  {
++		fprintf(stderr, "Too large length size specified.\n");
++		return (EXIT_FAILURE);
++	}
++	temp_limit_check = temp_limit_check * length;
++
++	if ( !temp_limit_check || width > ( UINT_MAX / temp_limit_check ) )  {
++		fprintf(stderr, "Too large width size specified.\n");
++		return (EXIT_FAILURE);
++	}
++	temp_limit_check = temp_limit_check * width;
++
++	if ( !temp_limit_check || hdr_size > ( UINT_MAX - temp_limit_check ) )  {
++		fprintf(stderr, "Too large header size specified.\n");
++		return (EXIT_FAILURE);
++	}
++
+ 	if (outfilename == NULL)
+ 		outfilename = argv[optind+1];
+ 	out = TIFFOpen(outfilename, "w");

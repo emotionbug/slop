@@ -1,0 +1,33 @@
+From ce793299032068c886210288bbd1e1ecd3597015 Mon Sep 17 00:00:00 2001
+From: Su_Laus <sulau@freenet.de>
+Date: Fri, 5 May 2023 19:43:46 +0200
+Subject: =?UTF-8?q?Consider=20error=20return=20of=20writeSelections().=0AF?=
+ =?UTF-8?q?ixes=20#553?=
+
+---
+ tools/tiffcrop.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/tools/tiffcrop.c b/tools/tiffcrop.c
+index ee408905..3ea42261 100644
+--- a/tools/tiffcrop.c
++++ b/tools/tiffcrop.c
+@@ -2438,8 +2438,13 @@ main(int argc, char* argv[])
+         {  /* Whole image or sections not based on output page size */
+         if (crop.selections > 0)
+           {
+-	  writeSelections(in, &out, &crop, &image, &dump, seg_buffs,
+-                          mp, argv[argc - 1], &next_page, total_pages);
++	  if (writeSelections(in, &out, &crop, &image, &dump, seg_buffs,
++	                      mp, argv[argc - 1], &next_page, total_pages))
++	      {
++	         TIFFError("main",
++	                   "Unable to write new image selections");
++	         exit(EXIT_FAILURE);
++	      }
+           }
+ 	else  /* One file all images and sections */
+           {
+-- 
+2.30.2
+

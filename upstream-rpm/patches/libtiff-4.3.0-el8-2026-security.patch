@@ -1,0 +1,291 @@
+EL8 ABI5 security backports onto the Ubuntu 4.3.0 patched tree.
+Sources: Rocky libtiff-4.0.9-39.el8_10 SRPM (CVE-2026-4775,12912,52490);
+https://gitlab.com/libtiff/libtiff/-/merge_requests/729 (CVE-2026-18495).
+Adds a signed-allocation bound check for 64-bit StripByteCounts.
+
+--- a/tools/tiffcrop.c
++++ b/tools/tiffcrop.c
+@@ -408,6 +408,7 @@
+   uint16_t        res_unit; /* resolution unit for output image */
+   unsigned int  rows;     /* number of section rows */
+   unsigned int  cols;     /* number of section cols */
++  uint32_t        total_sections; /* overflow-safe rows * cols */
+   unsigned int  orient;   /* portrait, landscape, seascape, auto */
+ };
+ 
+@@ -2067,16 +2068,22 @@
+                   page->cols = atoi(optarg);
+                   page->rows = atoi(optarg);
+ 		  }
+-                if ((page->cols * page->rows) > MAX_SECTIONS)
+-                  {
+-		  TIFFError ("Limit for subdivisions, ie rows x columns, exceeded", "%d", MAX_SECTIONS);
+-		  exit (EXIT_FAILURE);
+-                  }
+-                if ((page->cols * page->rows) < 1)
+-                  {
+-                  TIFFError("No subdivisions", "%d", (page->cols * page->rows));
+-                  exit(EXIT_FAILURE);
+-                  }
++                {
++                  uint64_t total_sections64 =
++                      (uint64_t)page->cols * (uint64_t)page->rows;
++                  if (total_sections64 > (uint64_t)MAX_SECTIONS ||
++                      total_sections64 > (uint64_t)UINT32_MAX)
++                    {
++                    TIFFError ("Limit for subdivisions, ie rows x columns, exceeded", "%d", MAX_SECTIONS);
++                    exit (EXIT_FAILURE);
++                    }
++                  page->total_sections = (uint32_t)total_sections64;
++                  if (page->total_sections == 0)
++                    {
++                    TIFFError("No subdivisions", "%u", 0U);
++                    exit (EXIT_FAILURE);
++                    }
++                }
+                 page->mode |= PAGE_MODE_ROWSCOLS;
+ 		break;
+       case 'U':	/* units for measurements and offsets */
+@@ -5068,6 +5075,7 @@
+    page->vmargin = 0.0;
+    page->rows = 0;
+    page->cols = 0;
++   page->total_sections = 0;
+    page->orient = ORIENTATION_NONE;
+ 
+    for (i = 0; i < MAX_SECTIONS; i++)
+@@ -5921,21 +5929,25 @@
+          y1 = TIFFhowmany(iwidth, olength);
+          y2 = TIFFhowmany(ilength, owidth); 
+ 
+-         if ( (x1 * x2) < (y1 * y2))
+-           { /* Portrait */
+-           ocols = x1;
+-           orows = x2;
+-           /* orientation = ORIENTATION_PORTRAIT; */
+-	   }
+-         else
+-           { /* Landscape */
+-           ocols = y1;
+-           orows = y2;
+-           x1 = olength;
+-           olength = owidth;
+-           owidth = x1;
+-           /* orientation = ORIENTATION_LANDSCAPE; */
+-           }
++         {
++           uint64_t portrait_pages  = (uint64_t)x1 * (uint64_t)x2;
++           uint64_t landscape_pages = (uint64_t)y1 * (uint64_t)y2;
++           if (portrait_pages < landscape_pages)
++             { /* Portrait */
++             ocols = x1;
++             orows = x2;
++             /* orientation = ORIENTATION_PORTRAIT; */
++             }
++           else
++             { /* Landscape */
++             ocols = y1;
++             orows = y2;
++             x1 = olength;
++             olength = owidth;
++             owidth = x1;
++             /* orientation = ORIENTATION_LANDSCAPE; */
++             }
++         }
+     }
+ 
+   if (ocols < 1)
+@@ -5949,14 +5961,24 @@
+   if (page->cols < 1)
+     page->cols = ocols;
+ 
+-  line_bytes = TIFFhowmany8(owidth * image->bps) * image->spp;
+-
+-  if ((page->rows * page->cols) > MAX_SECTIONS)
++  if ((orows == 0) || (ocols == 0) || (ocols > (MAX_SECTIONS / orows)))
+    {
+    TIFFError("computeOutputPixelOffsets",
+ 	     "Rows and Columns exceed maximum sections\nIncrease resolution or reduce sections");
+    return (-1);
+    }
++  {
++    uint64_t total_sections64 = (uint64_t)orows * (uint64_t)ocols;
++    if (total_sections64 > (uint64_t)UINT32_MAX || total_sections64 == 0)
++      {
++      TIFFError("computeOutputPixelOffsets",
++                "Integer overflow computing subdivision count");
++      return (-1);
++      }
++    page->total_sections = (uint32_t)total_sections64;
++  }
++
++  line_bytes = TIFFhowmany8(owidth * image->bps) * image->spp;
+ 
+   /* build the list of offsets for each output section */
+   for (k = 0, i = 0 && k <= MAX_SECTIONS; i < orows; i++)
+@@ -5977,7 +5999,7 @@
+       sections[k].y2 = y2;
+       sections[k].buffsize = line_bytes * olength;
+       sections[k].position = k + 1;
+-      sections[k].total = orows * ocols;
++      sections[k].total = (int)page->total_sections;
+       } 
+     } 
+   return (0);
+@@ -7207,7 +7229,15 @@
+   hres = page->hres;
+   vres = page->vres;
+ 
+-  k = page->cols * page->rows;
++  if (page->total_sections == 0)
++    {
++    uint64_t total_sections64 =
++        (uint64_t)page->cols * (uint64_t)page->rows;
++    if (total_sections64 > (uint64_t)UINT32_MAX || total_sections64 == 0)
++      return (-1);
++    page->total_sections = (uint32_t)total_sections64;
++    }
++  k = page->total_sections;
+   if ((k < 1) || (k > MAX_SECTIONS))
+    {
+    TIFFError("writeImageSections",
+--- a/tools/tiff2pdf.c
++++ b/tools/tiff2pdf.c
+@@ -2248,7 +2248,7 @@
+ 	uint64_t* sbc;
+ 	unsigned char* stripbuffer;
+ 	tsize_t striplength=0;
+-	uint32_t max_striplength=0;
++	uint64_t max_striplength=0;
+ #endif /* ifdef JPEG_SUPPORT */
+ 
+ 	/* Fail if prior error (in particular, can't trust tiff_datasize) */
+@@ -2479,11 +2479,17 @@
+ 			for(i=0;i<stripcount;i++){
+ 				if(sbc[i]>max_striplength) max_striplength=sbc[i];
+ 			}
++			if (max_striplength > (uint64_t)TIFF_TMSIZE_T_MAX) {
++				TIFFError(TIFF2PDF_MODULE, "Strip byte count exceeds addressable memory");
++				_TIFFfree(buffer);
++				t2p->t2p_error = T2P_ERR_ERROR;
++				return 0;
++			}
+ 			stripbuffer = (unsigned char*)
+ 				_TIFFmalloc(max_striplength);
+ 			if(stripbuffer==NULL){
+ 				TIFFError(TIFF2PDF_MODULE,
+-					"Can't allocate %"PRId32" bytes of memory for t2p_readwrite_pdf_image, %s",
++					"Can't allocate %"PRIu64" bytes of memory for t2p_readwrite_pdf_image, %s",
+ 					max_striplength,
+ 					TIFFFileName(input));
+ 				_TIFFfree(buffer);
+--- a/libtiff/tif_getimage.c
++++ b/libtiff/tif_getimage.c
+@@ -1853,7 +1853,7 @@
+     uint32_t* cp1 = cp+w+toskew;
+     uint32_t* cp2 = cp1+w+toskew;
+     uint32_t* cp3 = cp2+w+toskew;
+-    int32_t incr = 3*w+4*toskew;
++    const tmsize_t incr = 3 * (tmsize_t)w + 4 * (tmsize_t)toskew;
+     int32_t   Cb, Cr;
+     int     group_size = v_group * h_group + 2;
+ 
+@@ -1914,7 +1914,7 @@
+     uint32_t* cp1 = cp + w + toskew;
+     uint32_t* cp2 = cp1 + w + toskew;
+     uint32_t* cp3 = cp2 + w + toskew;
+-    int32_t incr = 3 * w + 4 * toskew;
++    const tmsize_t incr = 3 * (tmsize_t)w + 4 * (tmsize_t)toskew;
+ 
+     (void) y;
+     /* adjust fromskew */
+@@ -2018,7 +2018,7 @@
+ DECLAREContigPutFunc(putcontig8bitYCbCr42tile)
+ {
+     uint32_t* cp1 = cp + w + toskew;
+-    int32_t incr = 2 * toskew + w;
++    const tmsize_t incr = 2 * (tmsize_t)toskew + w;
+ 
+     (void) y;
+     fromskew = (fromskew / 4) * (4*2+2);
+@@ -2144,7 +2144,7 @@
+ DECLAREContigPutFunc(putcontig8bitYCbCr22tile)
+ {
+ 	uint32_t* cp2;
+-	int32_t incr = 2 * toskew + w;
++	const tmsize_t incr = 2 * (tmsize_t)toskew + w;
+ 	(void) y;
+ 	fromskew = (fromskew / 2) * (2*2+2);
+ 	cp2 = cp+w+toskew;
+@@ -2239,7 +2239,7 @@
+ DECLAREContigPutFunc(putcontig8bitYCbCr12tile)
+ {
+ 	uint32_t* cp2;
+-	int32_t incr = 2 * toskew + w;
++	const tmsize_t incr = 2 * (tmsize_t)toskew + w;
+ 	(void) y;
+ 	fromskew = (fromskew / 1) * (1 * 2 + 2);
+ 	cp2 = cp+w+toskew;
+--- a/libtiff/tif_pixarlog.c
++++ b/libtiff/tif_pixarlog.c
+@@ -781,6 +781,45 @@
+ 
+ 	llen = sp->stride * td->td_imagewidth;
+ 
++	/* Fix: ABGR with stride=3 expands 3 samples to 4 output bytes per pixel */
++	if (sp->user_datafmt == PIXARLOGDATAFMT_8BITABGR && sp->stride == 3)
++	{
++		tmsize_t required = (tmsize_t)td->td_imagewidth * 4;
++        tmsize_t max_rows;
++        tmsize_t max_nsamples;
++
++        /*
++         * Ensure at least one expanded output row fits.
++         */
++		if (occ < required)
++		{
++			TIFFErrorExt(tif->tif_clientdata, module,
++				      "Output buffer too small for PixarLog ABGR data");
++			memset(op, 0, (size_t)occ);
++			return (0);
++		}
++
++        /*
++         * PixarLogDecode() may process multiple rows per call
++         * (e.g. strip decoding). Limit nsamples so the total
++         * output written by the loop below never exceeds occ.
++         */
++        max_rows = occ / required;
++        max_nsamples = max_rows * llen;
++
++        /*
++         * Truncate excess rows to preserve as much decoded data
++         * as possible while avoiding output buffer overflow.
++         */
++        if (nsamples > max_nsamples)
++        {
++            TIFFWarningExt(tif->tif_clientdata, module,
++                            "PixarLog ABGR decode truncated to avoid "
++                            "output buffer overflow");
++            nsamples = max_nsamples;
++        }
++	}
++
+ 	(void) s;
+ 	assert(sp != NULL);
+ 
+@@ -880,7 +919,13 @@
+ 		case PIXARLOGDATAFMT_8BITABGR:
+ 			horizontalAccumulate8abgr(up, llen, sp->stride,
+ 					(unsigned char *)op, sp->ToLinear8);
+-			op += llen * sizeof(unsigned char);
++
++			/* For stride == 3 (RGB), horizontalAccumulate8abgr expands to 4
++			 * bytes/pixel (ABGR) */
++			if (sp->stride == 3)
++				op += (unsigned long)td->td_imagewidth * 4;
++			else
++				op += (unsigned long)llen * sizeof(unsigned char);
+ 			break;
+ 		default:
+ 			TIFFErrorExt(tif->tif_clientdata, module,

@@ -1,10 +1,11 @@
 Name: openjpeg2
 Version: 2.5.4
-Release: 1.linuxoss%{?dist}
+Release: 3.linuxoss%{?dist}
 Summary: JPEG 2000 image codec
 License: BSD
 URL: https://www.openjpeg.org/
 Source0: openjpeg-2.5.4.tar.gz
+Patch100: openjpeg-2.5.4-reject-malformed-fixture.patch
 Source1: openjpeg-data-39524bd3a601d90ed8e0177559400d23945f96a9.tar.gz
 NoSource: 1
 BuildRequires: gcc, gcc-c++, cmake, libpng-devel, libtiff-devel, lcms2-devel
@@ -24,6 +25,7 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 OpenJPEG encoding, decoding and image information tools.
 %prep
 %setup -q -n openjpeg-2.5.4
+%patch100 -p1
 mkdir test-corpus
 tar -xf %{SOURCE1} -C test-corpus --strip-components=1
 %build
@@ -37,6 +39,13 @@ cmake --build build --parallel 2
 DESTDIR=%{buildroot} cmake --install build
 %check
 ctest --test-dir build --output-on-failure --parallel 2
+# This malformed fixture must still be rejected by the normal strict decoder.
+if build/bin/opj_decompress -i test-corpus/input/nonregression/issue226.j2k -o build/strict.pgx > build/strict-rejection.log 2>&1; then
+  echo 'Strict decoder unexpectedly accepted the truncated fixture' >&2
+  exit 1
+fi
+grep -q 'Stream too short, expected SOT' build/strict-rejection.log
+test ! -e build/strict_0.pgx
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 %files

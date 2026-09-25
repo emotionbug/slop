@@ -28,9 +28,11 @@ def main():
                         help='Scan only the supplied paths (for targeted checks; omits default coverage)')
     args = parser.parse_args()
     symbols = set(SYMBOLS)
+    removed_sonames = set()
     if args.symbols_file:
         try:
             data = json.loads(args.symbols_file.read_text(encoding='utf-8'))
+            removed_sonames.update(data.get('removed_sonames', []))
             for library in data['libraries']:
                 for symbol in library['scan_symbols']:
                     if not isinstance(symbol,str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',symbol):
@@ -111,7 +113,7 @@ def main():
                 with p.open('rb') as stream:
                     if stream.read(4) != b'\x7fELF':
                         continue
-                result = subprocess.run(['readelf','--dyn-syms','--wide',str(p)],
+                result = subprocess.run(['readelf','--dyn-syms','--dynamic','--wide',str(p)],
                     stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,
                     errors='replace',timeout=30,env=dict(os.environ,LC_ALL='C'))
                 if result.returncode:
@@ -119,6 +121,7 @@ def main():
                     continue
                 scanned += 1
                 found = set()
+                needed = set(re.findall(r'\(NEEDED\).*\[([^]]+)\]', result.stdout)) & removed_sonames
                 defined_targets = set()
                 for line in result.stdout.splitlines():
                     parts = line.split()
@@ -141,15 +144,16 @@ def main():
                                 name = parts[4].split('@')[0]
                                 if name in symbols:
                                     found.add(name)
-                if found:
+                if found or needed:
                     item = {'path':str(p), 'resolved_path':os.path.realpath(str(p)),
-                            'aliases':[str(p)], 'symbols':sorted(found)}
+                            'aliases':[str(p)], 'symbols':sorted(found), 'removed_needed':sorted(needed)}
                     matched_inodes[inode] = item
                     matches.append(item)
             except (OSError, subprocess.TimeoutExpired) as error:
                 record_error(filename, error)
     print(json.dumps({'audit_version':3,'read_only':True,'roots':roots,'elf_files_scanned':scanned,
-        'symbols_checked':sorted(symbols),'direct_import_matches':matches,'errors':errors,
+        'symbols_checked':sorted(symbols),'removed_sonames_checked':sorted(removed_sonames),
+        'direct_import_matches':matches,'errors':errors,
         'directory_symlinks_outside_roots':sorted(directory_links.values(), key=lambda item:item['path']),
         'coverage_complete_for_declared_roots':not errors and not directory_links,
         'limit':'ELF imports and COPY relocations only. Does not clear dlsym/plugins/containers/unmounted paths or target compatibility.'},

@@ -1,11 +1,13 @@
 Name: mtr
 Version: 0.96
 Epoch: 2
-Release: 1.linuxoss%{?dist}
+Release: 3.linuxoss%{?dist}
 Summary: mtr upstream EL8 evaluation build
 License: GPLv2+
 URL: https://www.bitwizard.nl/mtr/
 Source0: mtr-0.96.tar.gz
+Patch101: mtr-CVE-2026-14461.patch
+Patch100: mtr-0.96-ipv4-size.patch
 BuildRequires: gcc, make, ncurses-devel, jansson-devel, libcap-devel, python3
 Vendor: Linux OSS local build
 %bcond_with network_tests
@@ -15,6 +17,8 @@ Upstream build for EL8 evaluation. Target deployment requires separate review.
 
 %prep
 %setup -q -n mtr-0.96
+%patch100 -p1
+%patch101 -p1
 
 %build
 export CFLAGS='-O2 -g -gdwarf-4 -fstack-protector-strong -fcf-protection'

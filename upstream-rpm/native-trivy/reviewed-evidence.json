@@ -439,6 +439,1880 @@
         "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
         "verification": "Pinned upstream fixes and subsequent regression corrections; complete make check ran successfully. Metalink runtime support is disabled in this build."
       }
+    ],
+    "05dfd6597b384323dba3b9e23401a3714a30adf3b7777a042ee70f20d5e24ef3": [
+      {
+        "cve": "CVE-2026-42250",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-42250",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Same pinned bzip2recover security fix as prior release; this release adds pkg-config metadata and passes upstream check/roundtrip."
+      }
+    ],
+    "5405d12446902fd45b981b4a42f919c50d1fdb5ffc6248f292d61f60f27a5d2d": [
+      {
+        "cve": "CVE-2026-42250",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-42250",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Same pinned bzip2recover security fix as prior release; this release adds pkg-config metadata and passes upstream check/roundtrip."
+      }
+    ],
+    "0b3766f674c1ebb76702e30a75f3d6bc45020393ee3845a03a4b76e778e048ca": [
+      {
+        "cve": "CVE-2026-42250",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-42250",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Same pinned bzip2recover security fix as prior release; this release adds pkg-config metadata and passes upstream check/roundtrip."
+      }
+    ],
+    "3eb44e6b1baf46d6e6bf374fc04be13cbc282afd5ab360b7eebe2f50ad39c7f6": [
+      {
+        "cve": "CVE-2024-6655",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2024-6655",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official cwd module-search fix backported to GTK2; complete Xvfb/openbox make check plus rejected relative module and explicit absolute module positive control."
+      }
+    ],
+    "b459ae843c9c06ba442da0aeaf4cca281c7ff96781c0192c824e5488550f6d8c": [
+      {
+        "cve": "CVE-2024-6655",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2024-6655",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official cwd module-search fix backported to GTK2; complete Xvfb/openbox make check plus rejected relative module and explicit absolute module positive control."
+      }
+    ],
+    "f10a3df4515024f07d53d71415c12d8b3e7ba52093925ae66bed7520315bbd2b": [
+      {
+        "cve": "CVE-2021-45940",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2021-45940",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official extended-section-count and empty-program guards backported onto ABI0; installed empty and extended-section BPF ELF plus malformed input checks."
+      },
+      {
+        "cve": "CVE-2021-45941",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2021-45941",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official extended-section-count and empty-program guards backported onto ABI0; installed empty and extended-section BPF ELF plus malformed input checks."
+      },
+      {
+        "cve": "CVE-2022-3606",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3606",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official extended-section-count and empty-program guards backported onto ABI0; installed empty and extended-section BPF ELF plus malformed input checks."
+      }
+    ],
+    "4cef15d32459fa5b1c755cd778cb957e4800218f1a648251b4fb4adc93d41637": [
+      {
+        "cve": "CVE-2021-45940",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2021-45940",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official extended-section-count and empty-program guards backported onto ABI0; installed empty and extended-section BPF ELF plus malformed input checks."
+      },
+      {
+        "cve": "CVE-2021-45941",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2021-45941",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official extended-section-count and empty-program guards backported onto ABI0; installed empty and extended-section BPF ELF plus malformed input checks."
+      },
+      {
+        "cve": "CVE-2022-3606",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3606",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official extended-section-count and empty-program guards backported onto ABI0; installed empty and extended-section BPF ELF plus malformed input checks."
+      }
+    ],
+    "fc0475167214001972570a4c3569bba7ce0e71e06d585a8c65fa33b76cc7a3e1": [
+      {
+        "cve": "CVE-2026-63379",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63379",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63381",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63381",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63382",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63382",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63383",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63383",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63384",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63384",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63385",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63385",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63387",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63387",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63388",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63388",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63380",
+        "status": "not_affected",
+        "scope": "This 2.1.8 build has no WebSocket implementation; the reviewed flaw concerns the later WebSocket component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63380",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Pinned 2.1.8 source and complete RPM payload inspection; no WebSocket implementation is compiled or shipped."
+      }
+    ],
+    "879a6093319289e9988b387cea90c775fd05b5d98b33681e9b830760e089b46d": [
+      {
+        "cve": "CVE-2026-63379",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63379",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63381",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63381",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63382",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63382",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63383",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63383",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63384",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63384",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63385",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63385",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63387",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63387",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63388",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63388",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Eight security backports onto EL8 ABI6; full upstream backend suites with unchanged assertions. Four observed host scheduling timing cases have bounded retries requiring three consecutive passes; other tests are not retried."
+      },
+      {
+        "cve": "CVE-2026-63380",
+        "status": "not_affected",
+        "scope": "This 2.1.8 build has no WebSocket implementation; the reviewed flaw concerns the later WebSocket component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-63380",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Pinned 2.1.8 source and complete RPM payload inspection; no WebSocket implementation is compiled or shipped."
+      }
+    ],
+    "5855cfc9135f860769b498dfa26122aa1e481e32e3819a1e6977963040fb6f75": [
+      {
+        "cve": "CVE-2026-57053",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://lists.gnu.org/archive/html/help-libidn/2026-05/msg00000.html",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "ACE prefix bound guard backported onto ABI11 with EL8 Stringprep_profile layout; upstream make check and installed ACE input/control checks."
+      }
+    ],
+    "fe996165fb6c05deb2e1a7bc23030d0a8695dc7d5db0b26ebaba1433d8ad9bf9": [
+      {
+        "cve": "CVE-2026-57053",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://lists.gnu.org/archive/html/help-libidn/2026-05/msg00000.html",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "ACE prefix bound guard backported onto ABI11 with EL8 Stringprep_profile layout; upstream make check and installed ACE input/control checks."
+      }
+    ],
+    "3ae4370da1083c173ef40efb63c5de4934c60ef09e88444dec6d3bb2256ffbab": [
+      {
+        "cve": "CVE-2018-19210",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2018-19210",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2019-6128",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-6128",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0561",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0561",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0562",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0562",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0865",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0865",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0891",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0891",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0907",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0907",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0908",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0908",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0909",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0909",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0924",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0924",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-1354",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-1354",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-1355",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-1355",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2056",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2056",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2057",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2057",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2058",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2058",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-22844",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-22844",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2867",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2867",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2868",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2868",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2869",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2869",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-34526",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-34526",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3570",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3570",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3598",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3598",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3599",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3599",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3970",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3970",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-40090",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-40090",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-48281",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-48281",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0795",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0795",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0796",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0796",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0797",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0797",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0798",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0798",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0799",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0799",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0800",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0800",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-1916",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-1916",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-25433",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-25433",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-26965",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-26965",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-26966",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-26966",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-2908",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-2908",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3164",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3164",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3316",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3316",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3576",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3576",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3618",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3618",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-38288",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-38288",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-38289",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-38289",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-52356",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-52356",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-6228",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-6228",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-6277",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-6277",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2024-7006",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2024-7006",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61143",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61143",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61144",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61144",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61145",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61145",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8176",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8176",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8534",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8534",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8851",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8851",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8961",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8961",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-9165",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-9165",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-9900",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-9900",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-12912",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-12912",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-18495",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-18495",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-4775",
+        "status": "fixed",
+        "scope": "Named CVE patched in library component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-4775",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-52490",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-52490",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      }
+    ],
+    "a74ed17e7760b0f2f2765fa3a2e2265d020e87a0ea0bff0bbb1bc3c9d513fbda": [
+      {
+        "cve": "CVE-2018-19210",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2018-19210",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2019-6128",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-6128",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0561",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0561",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0562",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0562",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0865",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0865",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0891",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0891",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0907",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0907",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0908",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0908",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0909",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0909",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0924",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0924",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-1354",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-1354",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-1355",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-1355",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2056",
+        "status": "not_affected",
+        "scope": "The affected library,tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2056",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2057",
+        "status": "not_affected",
+        "scope": "The affected library,tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2057",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2058",
+        "status": "not_affected",
+        "scope": "The affected library,tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2058",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-22844",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-22844",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2867",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2867",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2868",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2868",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2869",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2869",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-34526",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-34526",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3570",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3570",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3598",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3598",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3599",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3599",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3970",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3970",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-40090",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-40090",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-48281",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-48281",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0795",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0795",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0796",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0796",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0797",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0797",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0798",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0798",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0799",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0799",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0800",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0800",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-1916",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-1916",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-25433",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-25433",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-26965",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-26965",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-26966",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-26966",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-2908",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-2908",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3164",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3164",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3316",
+        "status": "not_affected",
+        "scope": "The affected library,tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3316",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3576",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3576",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3618",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3618",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-38288",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-38288",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-38289",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-38289",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-52356",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-52356",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-6228",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-6228",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-6277",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-6277",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2024-7006",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2024-7006",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61143",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61143",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61144",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61144",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61145",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61145",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8176",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8176",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8534",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8534",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8851",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8851",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8961",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8961",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-9165",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-9165",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-9900",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-9900",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-12912",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-12912",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-18495",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-18495",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-4775",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-4775",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-52490",
+        "status": "not_affected",
+        "scope": "The affected tools implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-52490",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      }
+    ],
+    "f8187b6d694a8576e2d437fea34d25d6c1edbe300d56762d028beff924a8d02e": [
+      {
+        "cve": "CVE-2018-19210",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2018-19210",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2019-6128",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-6128",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0561",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0561",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0562",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0562",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0865",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0865",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0891",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0891",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0907",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0907",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0908",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0908",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0909",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0909",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-0924",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-0924",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-1354",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-1354",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-1355",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-1355",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2056",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2056",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2057",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2057",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2058",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2058",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-22844",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-22844",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2867",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2867",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2868",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2868",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-2869",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-2869",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-34526",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-34526",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3570",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3570",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3598",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3598",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3599",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3599",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-3970",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-3970",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-40090",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-40090",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2022-48281",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2022-48281",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0795",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0795",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0796",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0796",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0797",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0797",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0798",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0798",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0799",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0799",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-0800",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-0800",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-1916",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-1916",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-25433",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-25433",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-26965",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-26965",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-26966",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-26966",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-2908",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-2908",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3164",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3164",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3316",
+        "status": "fixed",
+        "scope": "Named CVE patched in library,tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3316",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3576",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3576",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-3618",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-3618",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-38288",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-38288",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-38289",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-38289",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-52356",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-52356",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-6228",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-6228",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2023-6277",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-6277",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2024-7006",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2024-7006",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61143",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61143",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61144",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61144",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-61145",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-61145",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8176",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8176",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8534",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8534",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8851",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8851",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-8961",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-8961",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-9165",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-9165",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2025-9900",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-9900",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-12912",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-12912",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-18495",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-18495",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-4775",
+        "status": "not_affected",
+        "scope": "The affected library implementation is not in this exact split RPM; its separately installed package is assessed independently.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-4775",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      },
+      {
+        "cve": "CVE-2026-52490",
+        "status": "fixed",
+        "scope": "Named CVE patched in tools component.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-52490",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Ubuntu 4.3.0-6ubuntu0.13 patch series plus EL8 2026 backports. ABI5 build; 108 upstream CTests and installed old-header TIFF read/write. Tool-specific regressions are listed separately in the release guide."
+      }
+    ],
+    "4745ed51989a6c43ed568095dfb3346079a366e11f6922de4cd2984242fa8f91": [
+      {
+        "cve": "CVE-2019-11068",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-11068",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2019-13117",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-13117",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2019-13118",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-13118",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2019-18197",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-18197",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2023-40403",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-40403",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2024-55549",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2024-55549",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2025-10911",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-10911",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2025-11731",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-11731",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2025-24855",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-24855",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      }
+    ],
+    "20c2de55826569bc1d3831da0d299bbe413866e9ce41bcb1b4e7258245cb3eed": [
+      {
+        "cve": "CVE-2019-11068",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-11068",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2019-13117",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-13117",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2019-13118",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-13118",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2019-18197",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2019-18197",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2023-40403",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2023-40403",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2024-55549",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2024-55549",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2025-10911",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-10911",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2025-11731",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-11731",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      },
+      {
+        "cve": "CVE-2025-24855",
+        "status": "not_affected",
+        "scope": "This exact package payload contains no affected runtime component; corresponding runtime RPM is assessed separately.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2025-24855",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "EL8 vendor patches retained; official 2019-13117/13118 and 2025-11731 patches backported. Upstream make tests and installed old-ABI XSLT transform passed."
+      }
+    ],
+    "ce87d449cd54f870adcf1c5bc4b619d1d18dfdf8836959badd6a52f717f6f9e2": [
+      {
+        "cve": "CVE-2026-14461",
+        "status": "fixed",
+        "scope": "Named CVE in the patched component; exact immutable files on disk, not live processes.",
+        "advisory": "https://www.cve.org/CVERecord?id=CVE-2026-14461",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/COMPAT-WAVE-20260925-6.md",
+        "verification": "Official ASN hostname fix in pinned source; full build and installed command parser/IPv4 and IPv6 loopback packet tests. Loopback tests validate compatibility, not exploitation of the ASN CVE."
+      }
     ]
   }
 }

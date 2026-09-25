@@ -1,11 +1,12 @@
 Name:           binutils
 Version:        2.47
-Release:        2.linuxoss%{?dist}
+Release:        3.linuxoss%{?dist}
 Summary:        GNU binary utilities, upstream EL8 evaluation build
 License:        GPLv3+
 URL:            https://www.gnu.org/software/binutils/
 Vendor:         Linux OSS local build
 Source0:        binutils-2.47.tar.xz
+Patch100: binutils-2.47-gcc8-lto.patch
 Source1:        gnu-standards.info.tar.gz
 BuildRequires:  gcc, gcc-c++, make, bison, flex, texinfo, zlib-devel
 BuildRequires:  dejagnu, expect
@@ -17,6 +18,7 @@ being deployed to an existing RHEL system.
 
 %prep
 %setup -q
+%patch100 -p1
 
 %build
 # EL8's RPM debugedit supports DWARF 4, while GCC 16 defaults to DWARF 5.

@@ -12,7 +12,7 @@ case "$mode" in check|apply) ;; *) echo 'Usage: sudo bash install.sh [check|appl
     echo 'Requires RHEL 8 x86_64.' >&2; exit 2;
 }
 [[ -x /usr/libexec/platform-python ]] || exit 2
-for command in rpm dnf tar sha256sum readelf flock; do command -v "$command" >/dev/null || exit 2; done
+for command in rpm rpm2cpio cpio dnf tar sha256sum readelf flock; do command -v "$command" >/dev/null || exit 2; done
 exec 9>/run/linuxoss-install.lock
 flock -n 9 || { echo 'Another linuxoss installation is running.' >&2; exit 2; }
 cd -- "$here"

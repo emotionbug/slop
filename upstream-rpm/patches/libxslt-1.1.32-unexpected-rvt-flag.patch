@@ -1,0 +1,313 @@
+From 7d81bd62d5788a9e2931c20a3d0a6be7e703c608 Mon Sep 17 00:00:00 2001
+From: Nick Wellnhofer <wellnhofer@aevum.de>
+Date: Mon, 23 Jul 2018 22:52:12 +0200
+Subject: [PATCH] Fix EXSLT functions returning RVTs from outer scopes
+
+The RVTs referenced from function results must not be blindly registered
+as local, as they might be part of variables from an outer scope. Remove
+LOCAL/VARIABLE distinction for RVTs. Don't register as local RVT
+unconditionally when reflagging as LOCAL. Instead, register function
+result RVTs from inner variables as local RVTs when they're released in
+xsltFreeStackElem. Keep local function result RVTs xsltReleaseLocalRVTs
+instead of reregistering.
+
+Closes: https://gitlab.gnome.org/GNOME/libxslt/issues/2
+
+Thanks to Daniel Mendler and Martin Gieseking for the reports.
+---
+ libexslt/functions.c      | 11 ++++++++++-
+ libxslt/transform.c       | 17 ++++++++++++++---
+ libxslt/variables.c       | 27 +++++++++++----------------
+ libxslt/variables.h       | 12 ++----------
+ tests/docs/bug-210.xml    |  1 +
+ tests/docs/bug-211.xml    |  1 +
+ tests/general/bug-210.out |  2 ++
+ tests/general/bug-210.xsl | 20 ++++++++++++++++++++
+ tests/general/bug-211.out |  2 ++
+ tests/general/bug-211.xsl | 26 ++++++++++++++++++++++++++
+ 10 files changed, 89 insertions(+), 30 deletions(-)
+ create mode 100644 tests/docs/bug-210.xml
+ create mode 100644 tests/docs/bug-211.xml
+ create mode 100644 tests/general/bug-210.out
+ create mode 100644 tests/general/bug-210.xsl
+ create mode 100644 tests/general/bug-211.out
+ create mode 100644 tests/general/bug-211.xsl
+
+diff --git a/libexslt/functions.c b/libexslt/functions.c
+index 2b83ca34..b7b968f8 100644
+--- a/libexslt/functions.c
++++ b/libexslt/functions.c
+@@ -426,7 +426,15 @@ exsltFuncFunctionFunction (xmlXPathParserContextPtr ctxt, int nargs) {
+ 	}
+     }
+     /*
+-     * actual processing
++     * Actual processing. Note that contextVariable is set to NULL which
++     * means that RVTs returned from functions always end up as local RVTs,
++     * not as variable fragments if the function is called in the select
++     * expression of an xsl:variable. This is a hack that only works because
++     * xsltReleaseLocalRVTs isn't called after processing xsl:variable.
++     *
++     * It would probably be better to remove the fragile contextVariable
++     * logic and make xsltEvalVariable move the required RVTs into the
++     * variable manually.
+      */
+     fake = xmlNewDocNode(tctxt->output, NULL,
+ 			 (const xmlChar *)"fake", NULL);
+@@ -766,6 +774,7 @@ exsltFuncResultElem (xsltTransformContextPtr ctxt,
+ 	    return;
+ 	}
+         /* Mark as function result. */
++        xsltRegisterLocalRVT(ctxt, container);
+         container->psvi = XSLT_RVT_FUNC_RESULT;
+ 
+ 	oldInsert = ctxt->insert;
+diff --git a/libxslt/transform.c b/libxslt/transform.c
+index 90d2731d..d7af31f1 100644
+--- a/libxslt/transform.c
++++ b/libxslt/transform.c
+@@ -2295,6 +2295,7 @@ static void
+ xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
+ {
+     xmlDocPtr cur = ctxt->localRVT, tmp;
++    xmlDocPtr prev = NULL;
+ 
+     if (cur == base)
+         return;
+@@ -2308,16 +2309,26 @@ xsltReleaseLocalRVTs(xsltTransformContextPtr ctxt, xmlDocPtr base)
+             xsltReleaseRVT(ctxt, tmp);
+         } else if (tmp->psvi == XSLT_RVT_GLOBAL) {
+             xsltRegisterPersistRVT(ctxt, tmp);
+-        } else if (tmp->psvi != XSLT_RVT_FUNC_RESULT) {
++        } else if (tmp->psvi == XSLT_RVT_FUNC_RESULT) {
++            if (prev == NULL)
++                ctxt->localRVT = tmp;
++            else
++                prev->next = (xmlNodePtr) tmp;
++            tmp->prev = (xmlNodePtr) prev;
++            prev = tmp;
++        } else {
+             xmlGenericError(xmlGenericErrorContext,
+                     "xsltReleaseLocalRVTs: Unexpected RVT flag %p\n",
+                     tmp->psvi);
+         }
+     } while (cur != base);
+ 
++    if (prev == NULL)
++        ctxt->localRVT = base;
++    else
++        prev->next = (xmlNodePtr) base;
+     if (base != NULL)
+-        base->prev = NULL;
+-    ctxt->localRVT = base;
++        base->prev = (xmlNodePtr) prev;
+ }
+ 
+ /**
+diff --git a/libxslt/variables.c b/libxslt/variables.c
+index fe6f299c..8f88e573 100644
+--- a/libxslt/variables.c
++++ b/libxslt/variables.c
+@@ -123,7 +123,7 @@ xsltRegisterTmpRVT(xsltTransformContextPtr ctxt, xmlDocPtr RVT)
+ 	return(-1);
+ 
+     RVT->prev = NULL;
+-    RVT->psvi = XSLT_RVT_VARIABLE;
++    RVT->psvi = XSLT_RVT_LOCAL;
+ 
+     /*
+     * We'll restrict the lifetime of user-created fragments
+@@ -163,6 +163,7 @@ xsltRegisterLocalRVT(xsltTransformContextPtr ctxt,
+ 	return(-1);
+ 
+     RVT->prev = NULL;
++    RVT->psvi = XSLT_RVT_LOCAL;
+ 
+     /*
+     * When evaluating "select" expressions of xsl:variable
+@@ -173,7 +174,6 @@ xsltRegisterLocalRVT(xsltTransformContextPtr ctxt,
+     if ((ctxt->contextVariable != NULL) &&
+ 	(XSLT_TCTXT_VARIABLE(ctxt)->flags & XSLT_VAR_IN_SELECT))
+     {
+-        RVT->psvi = XSLT_RVT_VARIABLE;
+ 	RVT->next = (xmlNodePtr) XSLT_TCTXT_VARIABLE(ctxt)->fragment;
+ 	XSLT_TCTXT_VARIABLE(ctxt)->fragment = RVT;
+ 	return(0);
+@@ -183,7 +183,6 @@ xsltRegisterLocalRVT(xsltTransformContextPtr ctxt,
+     * If not reference by a returning instruction (like EXSLT's function),
+     * then this fragment will be freed, when the instruction exits.
+     */
+-    RVT->psvi = XSLT_RVT_LOCAL;
+     RVT->next = (xmlNodePtr) ctxt->localRVT;
+     if (ctxt->localRVT != NULL)
+ 	ctxt->localRVT->prev = (xmlNodePtr) RVT;
+@@ -314,14 +313,8 @@ xsltFlagRVTs(xsltTransformContextPtr ctxt, xmlXPathObjectPtr obj, void *val) {
+ #endif
+ 
+             if (val == XSLT_RVT_LOCAL) {
+-                if (doc->psvi != XSLT_RVT_FUNC_RESULT) {
+-		    xmlGenericError(xmlGenericErrorContext,
+-                            "xsltFlagRVTs: Invalid transition %p => LOCAL\n",
+-                            doc->psvi);
+-                    return(-1);
+-                }
+-
+-                xsltRegisterLocalRVT(ctxt, doc);
++                if (doc->psvi == XSLT_RVT_FUNC_RESULT)
++                    doc->psvi = XSLT_RVT_LOCAL;
+             } else if (val == XSLT_RVT_GLOBAL) {
+                 if (doc->psvi != XSLT_RVT_LOCAL) {
+ 		    xmlGenericError(xmlGenericErrorContext,
+@@ -585,10 +578,12 @@ xsltFreeStackElem(xsltStackElemPtr elem) {
+ 	    cur = elem->fragment;
+ 	    elem->fragment = (xmlDocPtr) cur->next;
+ 
+-            if (cur->psvi == XSLT_RVT_VARIABLE) {
+-		xsltReleaseRVT((xsltTransformContextPtr) elem->context,
+-		    cur);
+-            } else if (cur->psvi != XSLT_RVT_FUNC_RESULT) {
++            if (cur->psvi == XSLT_RVT_LOCAL) {
++		xsltReleaseRVT(elem->context, cur);
++            } else if (cur->psvi == XSLT_RVT_FUNC_RESULT) {
++                xsltRegisterLocalRVT(elem->context, cur);
++                cur->psvi = XSLT_RVT_FUNC_RESULT;
++            } else {
+                 xmlGenericError(xmlGenericErrorContext,
+                         "xsltFreeStackElem: Unexpected RVT flag %p\n",
+                         cur->psvi);
+@@ -992,7 +987,7 @@ xsltEvalVariable(xsltTransformContextPtr ctxt, xsltStackElemPtr variable,
+ 		* the Result Tree Fragment.
+ 		*/
+ 		variable->fragment = container;
+-                container->psvi = XSLT_RVT_VARIABLE;
++                container->psvi = XSLT_RVT_LOCAL;
+ 
+ 		oldOutput = ctxt->output;
+ 		oldInsert = ctxt->insert;
+diff --git a/libxslt/variables.h b/libxslt/variables.h
+index 24acf8d1..039288fb 100644
+--- a/libxslt/variables.h
++++ b/libxslt/variables.h
+@@ -45,14 +45,6 @@ extern "C" {
+  */
+ #define XSLT_RVT_LOCAL       ((void *)1)
+ 
+-/**
+- * XSLT_RVT_VARIABLE:
+- *
+- * RVT is part of a local variable and destroyed after the variable goes out
+- * of scope.
+- */
+-#define XSLT_RVT_VARIABLE    ((void *)2)
+-
+ /**
+  * XSLT_RVT_FUNC_RESULT:
+  *
+@@ -60,14 +52,14 @@ extern "C" {
+  * destroyed after exiting a template and will be reset to XSLT_RVT_LOCAL or
+  * XSLT_RVT_VARIABLE in the template that receives the return value.
+  */
+-#define XSLT_RVT_FUNC_RESULT ((void *)3)
++#define XSLT_RVT_FUNC_RESULT ((void *)2)
+ 
+ /**
+  * XSLT_RVT_GLOBAL:
+  *
+  * RVT is part of a global variable.
+  */
+-#define XSLT_RVT_GLOBAL      ((void *)4)
++#define XSLT_RVT_GLOBAL      ((void *)3)
+ 
+ /*
+  * Interfaces for the variable module.
+diff --git a/tests/docs/bug-210.xml b/tests/docs/bug-210.xml
+new file mode 100644
+index 00000000..69d62f2c
+--- /dev/null
++++ b/tests/docs/bug-210.xml
+@@ -0,0 +1 @@
++<doc/>
+diff --git a/tests/docs/bug-211.xml b/tests/docs/bug-211.xml
+new file mode 100644
+index 00000000..69d62f2c
+--- /dev/null
++++ b/tests/docs/bug-211.xml
+@@ -0,0 +1 @@
++<doc/>
+diff --git a/tests/general/bug-210.out b/tests/general/bug-210.out
+new file mode 100644
+index 00000000..445906d6
+--- /dev/null
++++ b/tests/general/bug-210.out
+@@ -0,0 +1,2 @@
++<?xml version="1.0"?>
++<var>value</var>
+diff --git a/tests/general/bug-210.xsl b/tests/general/bug-210.xsl
+new file mode 100644
+index 00000000..1915171d
+--- /dev/null
++++ b/tests/general/bug-210.xsl
+@@ -0,0 +1,20 @@
++<xsl:stylesheet version="1.0"
++    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++    xmlns:exsl="http://exslt.org/common"
++    xmlns:func="http://exslt.org/functions"
++    xmlns:my="my-namespace"
++    extension-element-prefixes="exsl func">
++
++<xsl:template match="/">
++    <xsl:variable name="var">
++        <var>value</var>
++    </xsl:variable>
++    <xsl:copy-of select="my:func($var)"/>
++</xsl:template>
++
++<func:function name="my:func">
++    <xsl:param name="var"/>
++    <func:result select="$var"/>
++</func:function>
++
++</xsl:stylesheet>
+diff --git a/tests/general/bug-211.out b/tests/general/bug-211.out
+new file mode 100644
+index 00000000..7b3cf11c
+--- /dev/null
++++ b/tests/general/bug-211.out
+@@ -0,0 +1,2 @@
++<?xml version="1.0"?>
++__
+diff --git a/tests/general/bug-211.xsl b/tests/general/bug-211.xsl
+new file mode 100644
+index 00000000..557f5fb3
+--- /dev/null
++++ b/tests/general/bug-211.xsl
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<xsl:stylesheet version="1.0"
++                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++                xmlns:str="http://exslt.org/strings"
++                xmlns:fn="http://exslt.org/functions"
++                xmlns:adoc="http://asciidoc.org/"
++                extension-element-prefixes="fn">
++
++  <fn:function name="adoc:sanitize">
++    <xsl:param name="id"/>
++    <xsl:variable name="tmp" select="str:replace($id, '__', '_')"/>
++    <xsl:choose>
++      <xsl:when test="contains($tmp, '__')">
++        <fn:result select="adoc:sanitize($tmp)"/>
++      </xsl:when>
++      <xsl:otherwise>
++        <fn:result select="$id"/>
++      </xsl:otherwise>
++    </xsl:choose>
++  </fn:function>
++
++  <xsl:template match="*">
++    <xsl:value-of select="adoc:sanitize('________')"/>
++  </xsl:template>
++
++</xsl:stylesheet>
+-- 
+GitLab
+

@@ -2641,6 +2641,543 @@
       "name": "gnu-standards.info.tar.gz",
       "url": "https://www.gnu.org/prep/standards/standards.info.tar.gz",
       "sha256": "005010bc7fd1848e665bb12cd997f0e4d4d2b0c25f6455fe5b588dd6f731b854"
+    },
+    {
+      "name": "openjpeg-2.5.4-partial-fixture.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/openjpeg-2.5.4-partial-fixture.patch",
+      "sha256": "18f293cbb0e0ed8da50a8145bcd39276d07e1308169cd988a416fe77449fcd7b",
+      "provenance": "Local compatibility patch against pinned upstream source",
+      "reason": "The truncated issue226 fixture requires the existing explicit partial-decoding mode; default strict rejection is checked separately."
+    },
+    {
+      "name": "mtr-0.96-ipv4-size.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/mtr-0.96-ipv4-size.patch",
+      "sha256": "a583242f92de035f81f88e3da80eb71cd8bfc016804b652cc468f1d1c698d97b",
+      "provenance": "Local compatibility patch against pinned upstream source",
+      "reason": "Respect the documented total packet length: current raw IPv4 construction supplies ICMP/UDP but the kernel adds the 20-byte IPv4 header."
+    },
+    {
+      "name": "binutils-2.47-gcc8-lto.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/binutils-2.47-gcc8-lto.patch",
+      "sha256": "1926a304ab9fb4e795639348b09125474f216b9851e3ee4c9e842458b9beed74",
+      "provenance": "Local compatibility patch against pinned upstream source",
+      "reason": "Recognize the legacy GCC 8 LTO object format rather than treating it as native code; retain the original full upstream LTO tests."
+    },
+    {
+      "name": "mtr-CVE-2026-14461.patch",
+      "url": "https://github.com/traviscross/mtr/commit/48e1794414d338ce47abc0f27c25ade8788af9c3.patch",
+      "sha256": "f5b13c68b2fa7ac3edb96a6cf97c22859d27cd70a659177974982c3600507870"
+    },
+    {
+      "name": "openjpeg-2.5.4-reject-malformed-fixture.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/openjpeg-2.5.4-reject-malformed-fixture.patch",
+      "sha256": "5b69498d559539df357d2160eb590c4d18d39ed0edf08ffb27046ef7f131cecd",
+      "reason": "Update a stale success expectation: the fixture has an invalid marker after decoded tile data. Assert strict rejection and no output, preserving all other positive image checks."
+    },
+    {
+      "name": "libxslt-1.1.43.tar.xz",
+      "url": "https://download.gnome.org/sources/libxslt/1.1/libxslt-1.1.43.tar.xz",
+      "sha256": "5a3d6b383ca5afc235b171118e90f5ff6aa27e9fea3303065231a6d403f0183a"
+    },
+    {
+      "name": "libevent-2.1.8-stable.tar.gz",
+      "url": "https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz",
+      "sha256": "965cc5a8bb46ce4199a47e9b2c9e1cae3b137e8356ffdad6d94d3b9069b71dc2"
+    },
+    {
+      "name": "port-scripts-to-python3.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libevent-2.1.8-11.el8_10.src.rpm",
+      "sha256": "83ab49922f95c0d2679b19371758a76523d3acd49be066adbdbe513967590874",
+      "reason": "Preserved EL8 source-package patch"
+    },
+    {
+      "name": "libevent-2.1.8-CVE-2026-63382.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libevent-2.1.8-11.el8_10.src.rpm",
+      "sha256": "217e786a0f760034717db4330f83feef481900eca5d0c032bf00c849d3ac4983",
+      "reason": "Preserved EL8 source-package patch"
+    },
+    {
+      "name": "libevent-2.1.8-CVE-2026-63383.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libevent-2.1.8-11.el8_10.src.rpm",
+      "sha256": "901dcebc9c21d523e72d2039b435bbd139e0f8460d6e7ce946001b79bc98c33b",
+      "reason": "Preserved EL8 source-package patch"
+    },
+    {
+      "name": "libevent-2.1.8-CVE-2026-63384.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libevent-2.1.8-11.el8_10.src.rpm",
+      "sha256": "fdca1dfa67eb01308caf81488f199eae8cc38b88e033f4061242359b1128fb00",
+      "reason": "Preserved EL8 source-package patch"
+    },
+    {
+      "name": "libevent-2.1.8-CVE-2026-63385.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libevent-2.1.8-11.el8_10.src.rpm",
+      "sha256": "b1533f4baac6bee691ce10f67e03ae2b2acaf85d3ea3e348584fc8b9303cf0ed",
+      "reason": "Preserved EL8 source-package patch"
+    },
+    {
+      "name": "libevent-2.1.8-CVE-2026-63387.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libevent-2.1.8-11.el8_10.src.rpm",
+      "sha256": "05b1fd425c49d24b486e8b6cd9793540af8ac35808b14d1be249bc06ccdc42e1",
+      "reason": "Preserved EL8 source-package patch"
+    },
+    {
+      "name": "libevent-2.1.8-CVE-2026-63388.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libevent-2.1.8-11.el8_10.src.rpm",
+      "sha256": "53b0a63eac83d96700ee1ebc17c277653a42e0c92dd13aed5aa55ab16bf96cb0",
+      "reason": "Preserved EL8 source-package patch"
+    },
+    {
+      "name": "libidn-1.34.tar.gz",
+      "url": "https://ftp.gnu.org/gnu/libidn/libidn-1.34.tar.gz",
+      "sha256": "3719e2975f2fb28605df3479c380af2cf4ab4e919e1506527e4c7670afff6e3c"
+    },
+    {
+      "name": "libidn-1.33-Allow-disabling-Emacs-support.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/AppStream/source/tree/Packages/l/libidn-1.34-5.el8.src.rpm",
+      "sha256": "74328d1da72ba342343f79902514b102f1baf7d1c5a493090b72bd39c348aa9b",
+      "reason": "Preserved EL8 ABI/source patch"
+    },
+    {
+      "name": "libidn-tablesize-revert.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/AppStream/source/tree/Packages/l/libidn-1.34-5.el8.src.rpm",
+      "sha256": "9c83b2f919b9593d284ca362cb069c2c16dc230a22c7db07b7a4f01f240625a6",
+      "reason": "Preserved EL8 ABI/source patch"
+    },
+    {
+      "name": "libidn-1.34-CVE-2026-57053.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/libidn-1.34-CVE-2026-57053.patch",
+      "sha256": "5e8327d5524a54639f31845c68322e89dd1199e3c09ba9f5723f6294f1f0c854",
+      "reason": "Backport the reported ACE-prefix guard before advancing the ToASCII buffer pointer; preserves libidn.so.11 and EL8 Stringprep_profile layout."
+    },
+    {
+      "name": "libxslt-1.1.43-el8-fuzz.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/libxslt-1.1.43-el8-fuzz.patch",
+      "sha256": "f5d60837b73bd61a6e700142bd542409c2a79844ecf480b43ecf02884a33f01a",
+      "reason": "Implement the test-only hash free callback using the existing EL8 libxml2 API rather than disabling fuzz regression tests."
+    },
+    {
+      "name": "gtk-CVE-2024-6655.patch",
+      "url": "https://gitlab.gnome.org/GNOME/gtk/-/commit/3bbf0b6176d42836d23c36a6ac410e807ec0a7a7.patch",
+      "sha256": "b4899f9045790467057a5a753da8f69ca246afed72ee0d4699e36e5c9c644571"
+    },
+    {
+      "name": "libbpf-0.8.3.tar.gz",
+      "url": "https://github.com/libbpf/libbpf/archive/refs/tags/v0.8.3.tar.gz",
+      "sha256": "cad7984e55d951abbb8378d2481acae5b390d2e3f3f71f247d609f64186b6a4e",
+      "note": "Standalone libbpf path adjustment where applicable"
+    },
+    {
+      "name": "libbpf-CVE-2021-45940-45941.patch",
+      "url": "https://github.com/libbpf/libbpf/commit/741277511035893c72a34df05da3b943afa747a4.patch",
+      "sha256": "1f3c90b88cccb6b2549287c99e42e8f8887ad835366494d62b1c8473ef09c8a1",
+      "note": "Standalone libbpf path adjustment where applicable",
+      "verification": "Upstream security fix adapted to 0.8.3 struct context; no ABI layout change in public structs."
+    },
+    {
+      "name": "libbpf-CVE-2022-3606.patch",
+      "url": "https://github.com/torvalds/linux/commit/d0d382f95a9270dcf803539d6781d6bd67e3f5b2.patch",
+      "sha256": "a3f711d8dd0cd441aabb380931e01942fdf45b989365327c9f21c39b9631eecd",
+      "note": "Standalone libbpf path adjustment where applicable"
+    },
+    {
+      "name": "libevent-CVE-2026-63379.patch",
+      "url": "https://github.com/libevent/libevent/commit/b847071141b3827900d536594ec9045eb0a4c485",
+      "sha256": "b87900badccdb12eaf2e0c4ec8b44a195d4348fce462462661cf33ae8576ab97",
+      "verification": "Upstream security change adapted to EL8 parser context; full diff included."
+    },
+    {
+      "name": "tiff_4.3.0.orig.tar.gz",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0.orig.tar.gz",
+      "sha256": "0e46e5acb087ce7d1ac53cf4f56a09b221537fc86dfc5daaad1c2e89e1b37ac8",
+      "verification": "SHA256 matches Ubuntu source descriptor tiff_4.3.0-6ubuntu0.13.dsc"
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-fix_TIFFReadRawStrip_man_page_typo.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "ef9c0d7ea850ae51dc3e5fd9c4a2a63c76587d213dd68255172dcce15abd6f32",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-22844.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "08306515a485f5ca4002573d59c18b8dceb4b973e3a8dc2c2a2c812fe044999a",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0561.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "463aeb36f43e1999e01ce2d6176c280c3cce668d85226705b4fa8c28340e0094",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0562.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "5f15c6376a8d0ca515b05094d0927a6524711bbfec652720bf24b236872151cc",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0865.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "6b6c1fd5b7d95e25e4d98fcf3ffb4a19a162a3e17be5001b51d20921dd08d829",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0908.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "1c4ae12970f3605b806efba7e4bb289b3174e7906277d0a96707b8ee6512f97b",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0907.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "fbc6abf7dee6291471f8daf6c9149aa0af22a32dffc1d53475ad14379663a2aa",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0909.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "1f931e34d3a210005fec3925a1a77d154c49ffda512b21d85298d45f4111f28c",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0891.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "a1dc443f338d3a731d76773065f80d911ceeb6e32a0eae012eda098d517d9b48",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-0924.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "ce4f00ae14f8a1ff860748ca0ba69aefc5e128f1d398003abaf2bdfccc8b7b2b",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-1354.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "402775d74d6ab23569443f37aad61a4a4e2a4f94a118abd0dbfe137d5a8e2fa1",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-1355.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "13f0f67377ff2a99b80a88ec82e6e5a451a43d97bb80024ee7ad7ec1223a1820",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-2056_2057_2058.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "e6b10b2509e18cb368b32c160c86cb1033f80c3cbfefb36e0c76ae14efe6594b",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-2867_2868_2869.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "e8e8bb44254ebb5e51a3857aee79144ea2b50ea3eef5dfc21dc0238030db989b",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-3570_3598.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "ad258b4cc491f0d2221777d725fb85a5b9bf103c981b74b2b368367b110e4d37",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-3599.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "d5b6ef63b42b63e68890f1d829b28a4701bb8da10fe57bb1c2d48654a0ee87c8",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-34526.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "05994884dbbf0a52b87cc9257d73a96d5edba3a5965f80fa400fda6528bb56e4",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-3970.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "02410d79bd3f45864bcf9df0645fe62177e7fa29777d46c45ca3ae2fee1fa52d",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-0795.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "4e9256d933e64980dfe10818aab0fc79ec1ef387ed31b524b54412f979585305",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-0800.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "97990f81bc441ab8925263d4424b57d333b9987af485a6a84b11cbbffcc3c9b4",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-48281.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "d917738dc8ab745f1044c53d3a1b54977d12109f8988a274294844ac6156f1f2",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0001-countInkNamesString-fix-UndefinedBehaviorSanitizer-a.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "9d2a06ce47a53862fcb7991f79affe72920640c835d1fdb0d324fe183be3e72a",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0002-TIFFClose-avoid-NULL-pointer-dereferencing.-fix-515.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "344a7cd32540685a2e23b2747e2563d43f8003f429f3055aa3b824eeffb82ed8",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0003-Consider-error-return-of-writeSelections.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "5199424298fbc55e1133324ee98560bbb25c5df20f41452ea119601624d68e04",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0004-tiffcrop-correctly-update-buffersize-after-rotateIma.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "31a7467ea30ba52119b138fd927732dd82711cbebccb69fb129c8d90368ee35a",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0005-tiffcrop-Do-not-reuse-input-buffer-for-subsequent-im.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "6d8f31e069eec0f6ff59442101250dc6d5d2f5a9ef448031bc8ae5a6d96ebe2a",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0006-tif_luv-Check-and-correct-for-NaN-data-in-uv_encode.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "13508920528cbdacd75b482f55f4e240630f930f1b80e10e8578f1ecd98cb3dc",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0007-tiffcp-fix-memory-corruption-overflow-on-hostile-ima.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "7d1e654cff0aecacac056af63e06cf3be5ac0af1fadb0e0986fb6083eaed39be",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-0008-raw2tiff-fix-integer-overflow-and-bypass-of-the-chec.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "afa6aba2ab389e7116e559dbb6c424b8b6cbff46cdc45012a64ec250a8d0136f",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-1916.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "b38583eadec482e2096043c0275ee4807b4ccb5b3bf357db1d09ba14edc3e0ce",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2022-40090.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "b33e4579023cb9e3c9204c13f5ac526d62b91eb101b9f483e0095d48081fb578",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-3576.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "6dddc02ea03920d2d7d969df23975c627903bca3cb4a6c881acdbf52dad6b84e",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-6228.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "6a853ff175d5a8de05e6d3258287c002814efd38d327352a769953c60614d49a",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-6277-1.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "b11b949dd303267132060935d79738c38ca04fa8442c1554cf19354439b6245f",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-6277-2.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "b0eec7e4d2389639f54a18da31a260ba8a353ea3d54056c553df07ae09cb0db7",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-6277-3.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "405d42233eec2423b6ccaad1ea91003467984acc490fddfff044bea430ed90cf",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-6277-4.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "ecb9a1c8b247115d96c9f91e667a71a8904cc842d1505db88bcc368706d8ed6c",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-52356.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "03aea49de2c7d7b9efc2dc8236a03539a072ce177e8f363276641262b66cbbcb",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2023-3164.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "6022c49b496946dd41b1e10ef2d94dabc175592aa93f42bb698ba6f8cdb76363",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2024-7006.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "6c1fd2778382c3fe33b472c70661427e278da4e6816f7fa326d1eff4235869dc",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-8176.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "7a82086836075613b8203d54bf3c780fac70bcd67c79e1ac4168e7738047f9f3",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-8534.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "6e5387bdb808fcb797a801454dd109797b8e8e57b64cfdf8f8b2485fb08b4caf",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-8851.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "1aab81b21d470a711f8bef17f5b1d2652d31b91060abe5ab673d5340709d72cc",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-8961.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "b939952fd11e2f7fd1c607aef5e3bee9e2fe482d419530e2990ed955724ed7d6",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-9165.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "2cfdd937cac75e0e695774a7133a30424cfb91b4a53b4af156216427844facf2",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-9900.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "237f521a11d871fd83ce62adcf9a2ff9677e87e6628bda962243152747fc7b3d",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-61143.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "10e7c5acb35bcd050981a2ed36db309436f152d7b12abd620fd02eadbec2d004",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "tiff-4.3.0-ubuntu-CVE-2025-61144.patch",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tiff/tiff_4.3.0-6ubuntu0.13.debian.tar.xz",
+      "sha256": "b052e681a901daa50403425d25d99cfc95b988f3e8feb9801d4835a200c9b9b4",
+      "verification": "Ubuntu 22.04 security source patch; patch order preserved from debian/patches/series."
+    },
+    {
+      "name": "libevent-CVE-2026-63381.patch",
+      "url": "https://github.com/libevent/libevent/commit/9db091b04f569be3a700fa9860ef02f90b830af9",
+      "sha256": "2acc355c4158809e091fcc1d92ada53a93531159d4d03d874e7f71323ade7052"
+    },
+    {
+      "name": "multilib.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "befe4876749dbaf423c6ee6a08abae3a4af9284f289d09a7d090b09b6a84d1a0"
+    },
+    {
+      "name": "libxslt-1.1.26-utf8-docs.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "881dc715689de466902a527bf71e4879e0d14e2f6185b309bedd8d0dddd49bf6"
+    },
+    {
+      "name": "multilib2.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "9199fa550d2dda674b5eef4143e21d4f62eb4d5eaaf404476e03e6adb01cae76"
+    },
+    {
+      "name": "libxslt-1.1.32-CVE-2019-18197.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "751c076addfcb077be19ccf3b365cf20cf855e6239caa69915c163854a689408"
+    },
+    {
+      "name": "libxslt-1.1.32-CVE-2019-11068.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "6b56e77d2f2c2770bb1739970729c0ad1c0bf330162d2bef185dad41d6de0cd7"
+    },
+    {
+      "name": "libxslt-1.1.32-unexpected-rvt-flag.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "88ef709930e3659ce3de3bc4536fc3ee228f2b73a89a636b3047cf792303f133"
+    },
+    {
+      "name": "libxslt-1.1.32-CVE-2024-55549.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "631d5235d0826395f4f3e1fb1a72488b6487709bdce56873a2fa6f39dbdd99b3"
+    },
+    {
+      "name": "libxslt-1.1.32-CVE-2025-24855.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "60a4a3c538bcf392b0a29209084ad01f5c9986e6b79080151c22b0d7a5d42d8f"
+    },
+    {
+      "name": "libxslt-1.1.32-CVE-2023-40403.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "cd017cdef00087cb3793200b56587506f068609a89b4fed9acc25425f74daf44"
+    },
+    {
+      "name": "libxslt-1.1.32-CVE-2025-10911.patch",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "669c2db644ff4d8911589aa31453f1e6ea8ce4f15e2583992d4db57709b7fbb6"
+    },
+    {
+      "name": "libxslt-1.1.32.tar.gz",
+      "url": "https://download.rockylinux.org/pub/rocky/8/BaseOS/source/tree/Packages/l/libxslt-1.1.32-6.4.el8_10.src.rpm",
+      "sha256": "526ecd0abaf4a7789041622c3950c0e7f2c4c8835471515fd77eec684a355460"
+    },
+    {
+      "name": "libxslt-CVE-2019-13117.patch",
+      "url": "https://gitlab.gnome.org/GNOME/libxslt/-/commit/c5eb6cf3aba0af048596106ed839b4ae17ecbcb1.patch",
+      "sha256": "d9f3a609c18a59280cfa55b7a4ea10d716c331ade911e7d33bd1c4a25500e9ce"
+    },
+    {
+      "name": "libxslt-CVE-2019-13118.patch",
+      "url": "https://gitlab.gnome.org/GNOME/libxslt/-/commit/6ce8de69330783977dd14f6569419489875fb71b.patch",
+      "sha256": "34e734760d30ee6b77b3c2303a80161a3e4149dc402e864c3c88cf3ffbb28328"
+    },
+    {
+      "name": "libxslt-CVE-2025-11731.patch",
+      "url": "https://gitlab.gnome.org/GNOME/libxslt/-/commit/fe508f201efb9ea37bfbe95413b8b28251497de3.patch",
+      "sha256": "9fecaf56958333b1c4b3d9ab785304f5849710ac9cc89131373edc664ab71772"
+    },
+    {
+      "name": "graphviz-12.2.1.tar.gz",
+      "url": "https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/12.2.1/graphviz-12.2.1.tar.gz",
+      "sha256": "242bc18942eebda6db4039f108f387ec97856fc91ba47f21e89341c34b554df8"
+    },
+    {
+      "name": "brotli-1.2.0.tar.gz",
+      "url": "https://github.com/google/brotli/archive/refs/tags/v1.2.0.tar.gz",
+      "sha256": "816c96e8e8f193b40151dad7e8ff37b1221d019dbcb9c35cd3fadbfe6477dfec"
+    },
+    {
+      "name": "brotli-1.2.0-testdata.txz",
+      "url": "https://github.com/google/brotli/releases/download/v1.2.0/testdata.txz",
+      "sha256": "e8624d888f13067e7635353397cf42956bf4ca1382da67f9cec8d43e800deecb"
+    },
+    {
+      "name": "libevent-el8-timing-retry.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/libevent-el8-timing-retry.patch",
+      "sha256": "c259ce69cf31f3d286030baeeb9bfdc6b976f65a77e87c6e703dcf0400b568ae"
+    },
+    {
+      "name": "libtiff-4.3.0-el8-2026-security.patch",
+      "url": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/patches/libtiff-4.3.0-el8-2026-security.patch",
+      "sha256": "1289135e885d541ce050c87c467bc83ccc43ef76d90a839a689f655b73e07a8c"
     }
   ]
 }

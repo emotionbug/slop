@@ -1595,6 +1595,102 @@
         "https://github.com/ossf/cve-bin-tool/blob/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/linux_kernel.py"
       ],
       "mapping_status": "selected-identifiers"
+    },
+    "binutils": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "binutils",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/binutils.py"
+        }
+      ],
+      "mapping_references": [
+        "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/binutils.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "libevent": {
+      "aliases": [
+        {
+          "vendor": "libevent_project",
+          "product": "libevent",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libevent.py"
+        },
+        {
+          "vendor": "niels_provos",
+          "product": "libevent",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libevent.py"
+        }
+      ],
+      "mapping_references": [
+        "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libevent.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "libidn": {
+      "aliases": [
+        {
+          "vendor": "gnu",
+          "product": "libidn",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libidn.py"
+        }
+      ],
+      "mapping_references": [
+        "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libidn.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "libtiff": {
+      "aliases": [
+        {
+          "vendor": "libtiff",
+          "product": "libtiff",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libtiff.py"
+        }
+      ],
+      "mapping_references": [
+        "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/libtiff.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "mtr": {
+      "aliases": [
+        {
+          "vendor": "matt_kimball_and_roger_wolff",
+          "product": "mtr",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/mtr.py"
+        },
+        {
+          "vendor": "mtr",
+          "product": "mtr",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/mtr.py"
+        }
+      ],
+      "mapping_references": [
+        "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/mtr.py"
+      ],
+      "mapping_status": "selected-identifiers"
+    },
+    "openjpeg2": {
+      "aliases": [
+        {
+          "vendor": "uclouvain",
+          "product": "openjpeg",
+          "part": "a",
+          "reference": "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openjpeg.py"
+        }
+      ],
+      "mapping_references": [
+        "https://raw.githubusercontent.com/ossf/cve-bin-tool/b1d090539802c0c8ac29ae232a8a5a0c313caae1/cve_bin_tool/checkers/openjpeg.py"
+      ],
+      "mapping_status": "selected-identifiers"
     }
   }
 }

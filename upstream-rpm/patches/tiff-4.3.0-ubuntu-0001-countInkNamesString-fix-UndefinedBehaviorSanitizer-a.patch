@@ -1,0 +1,25 @@
+From 14a5088edeed135e4ba060af1a2af409a9d9c1f8 Mon Sep 17 00:00:00 2001
+From: xiaoxiaoafeifei <lliangliang2007@163.com>
+Date: Fri, 21 Apr 2023 13:01:34 +0000
+Subject: countInkNamesString(): fix `UndefinedBehaviorSanitizer`: applying
+ zero offset to null pointer
+
+---
+ libtiff/tif_dir.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- tiff-4.3.0.orig/libtiff/tif_dir.c
++++ tiff-4.3.0/libtiff/tif_dir.c
+@@ -145,10 +145,10 @@ static uint16_t
+ countInkNamesString(TIFF *tif, uint32_t slen, const char *s)
+ {
+ 	uint16_t i = 0;
+-	const char *ep = s + slen;
+-	const char *cp = s;
+ 
+ 	if (slen > 0) {
++		const char *ep = s + slen;
++		const char *cp = s;
+ 		do {
+ 			for (; cp < ep && *cp != '\0'; cp++) {}
+ 			if (cp >= ep)

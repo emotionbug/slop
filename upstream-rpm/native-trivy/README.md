@@ -3,14 +3,15 @@
 배포 RPM/SRPM → 설치 파일 대조 → upstream CVE 평가 → **한 번의 Trivy 검사와 CSV**로 연결합니다.
 Trivy 0.74.0의 WASM 모듈을 사용하며 공식 RHEL 결과는 보존합니다.
 
-[실행 번들](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-5)
+[실행 번들](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-6)
 
 ## 연결 범위
 
 - 확장 평가 묶음의 자체 RPM 전체의 RPM/SRPM/헤더/비설정 일반 파일 SHA-256을 대조합니다.
 - Source RPM별로 출처가 있는 NVD CPE 식별자를 선택합니다. GNU tar와 npm/Rust tar를 합치지 않습니다.
 - NVD 응답 해시, 조회 시각, 페이지 수, 실패를 보존합니다. 선택한 영향 버전 범위 후보는 실제 Trivy `Vulnerabilities`의 `under_investigation`으로 들어갑니다.
-- `reviewed-evidence.json`의 명시적 CVE 수정 근거를 정확히 일치하는 RPM과 파일에만 적용합니다. 20260925-5에서 Wget/patch/tar 수정과 jq 확인 근거를 추가했습니다.
+- `reviewed-evidence.json`의 명시적 CVE 수정 근거를 정확히 일치하는 RPM과 파일에만 적용합니다. 20260925-5의 Wget/patch/tar/jq 근거를 유지하고, 20260925-6에서 ABI를 유지한 보안 백포트와 split RPM의 구성요소별 비해당 근거를 추가했습니다.
+- 공식 결과의 동일 CVE도 이름·epoch·버전·release·아키텍처가 하나로 일치하고 파일 해시 검증을 통과한 경우에만 근거 판정으로 연결합니다. 원래 상태·참조·설명을 별도 열에 남깁니다.
 - rsync에 포함된 xxHash 0.8.4도 표시합니다. 검증한 CPE 매핑이 없어 `unmapped`입니다.
 - 제외한 과거 CVE는 JSON 평가의 `range_excluded_cves`에 남습니다.
 - OpenSSL 공식 문자 버전을 해석합니다. 다른 해석 불가능한 버전 접미사, 환경 조건, 배포판 별칭은 검토 대상으로 유지합니다.

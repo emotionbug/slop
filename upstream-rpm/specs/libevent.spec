@@ -1,10 +1,20 @@
 Name: libevent
-Version: 2.1.13
-Release: 1.linuxoss%{?dist}
+Version: 2.1.8
+Release: 12.linuxoss%{?dist}
 Summary: libevent upstream EL8 evaluation
 License: BSD
 URL: https://libevent.org/
-Source0: libevent-2.1.13-stable.tar.gz
+Source0: libevent-2.1.8-stable.tar.gz
+Patch100: port-scripts-to-python3.patch
+Patch101: libevent-2.1.8-CVE-2026-63382.patch
+Patch102: libevent-2.1.8-CVE-2026-63383.patch
+Patch103: libevent-2.1.8-CVE-2026-63384.patch
+Patch104: libevent-2.1.8-CVE-2026-63385.patch
+Patch105: libevent-2.1.8-CVE-2026-63387.patch
+Patch106: libevent-2.1.8-CVE-2026-63388.patch
+Patch107: libevent-CVE-2026-63379.patch
+Patch108: libevent-CVE-2026-63381.patch
+Patch109: libevent-el8-timing-retry.patch
 BuildRequires: gcc, make, openssl-devel
 Vendor: Linux OSS local build
 
@@ -18,7 +28,17 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 devel files from libevent.
 
 %prep
-%setup -q -n libevent-2.1.13-stable
+%setup -q -n libevent-2.1.8-stable
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
 
 %build
 export CFLAGS='-O2 -g -gdwarf-4 -fstack-protector-strong -fcf-protection'
@@ -36,7 +56,9 @@ find %{buildroot} -name "*.la" -delete
 rm -f %{buildroot}%{_bindir}/event_rpcgen.py
 
 %check
-make %{?_smp_mflags} check
+# Backend suites contain 50 ms wall-clock assertions. Serialize them so the
+# suites do not contend with one another in the isolated build container.
+make -j1 check
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

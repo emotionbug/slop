@@ -74,6 +74,52 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 	}
 }
 
+func TestComponentReviewNeedsExactPayload(t *testing.T) {
+	s, c := testInput(t)
+	for i := range c.Artifacts {
+		a := &c.Artifacts[i]
+		if len(a.Files) == 0 {
+			continue
+		}
+		s.Packages = []RPM{a.RPM}
+		for p, h := range a.Files {
+			s.Files[p] = FileCheck{Hash: h}
+		}
+		a.Assessments = []Assessment{{CVE: "CVE-COMPONENT-TEST", Status: "not_affected", Scope: "Reviewed build omits the affected component"}}
+		for _, changed := range []bool{false, true} {
+			if changed {
+				for p := range a.Files {
+					s.Files[p] = FileCheck{Hash: "changed"}
+					break
+				}
+			}
+			rows, err := evaluate(s, c)
+			if err != nil {
+				t.Fatal(err)
+			}
+			found := false
+			for _, row := range rows {
+				if row.CVE != "CVE-COMPONENT-TEST" {
+					continue
+				}
+				found = true
+				want := "not-affected-evidence-matched"
+				if changed {
+					want = "under-investigation"
+				}
+				if row.Status != want {
+					t.Fatalf("changed=%v status=%s", changed, row.Status)
+				}
+			}
+			if !found {
+				t.Fatal("review disappeared")
+			}
+		}
+		return
+	}
+	t.Fatal("no immutable artifact fixture")
+}
+
 func TestRetainedLegacyReleasesMatchIndividually(t *testing.T) {
 	_, c := testInput(t)
 	for _, a := range c.Artifacts {

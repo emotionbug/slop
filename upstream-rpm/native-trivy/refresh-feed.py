@@ -70,6 +70,7 @@ def main():
     p.add_argument("--output", type=Path, default=Path(__file__).with_name("advisories.json"))
     p.add_argument("--cache-dir", type=Path, required=True)
     p.add_argument("--reuse-cache", action="store_true", help="Resume a dated snapshot; cached retrieval dates stay unchanged")
+    p.add_argument("--page-size", type=int, default=2000, choices=range(1,2001), metavar='1..2000', help="NVD page size; smaller pages can recover incomplete service responses")
     p.add_argument("--fallback-feed", type=Path, help="Retain earlier advisories when a query fails; the refresh error remains visible")
     args = p.parse_args()
     raw = args.mapping.read_bytes().replace(b"\r\n", b"\n")
@@ -94,7 +95,7 @@ def main():
             try:
                 while True:
                     url = "https://services.nvd.nist.gov/rest/json/cves/2.0?" + urllib.parse.urlencode(
-                        {"virtualMatchString": cpe, "resultsPerPage": 2000, "startIndex": start})
+                        {"virtualMatchString": cpe, "resultsPerPage": args.page_size, "startIndex": start})
                     cache = args.cache_dir / (hashlib.sha256(url.encode()).hexdigest() + ".json")
                     if args.reuse_cache and cache.is_file():
                         saved = json.loads(cache.read_text(encoding="utf-8"))

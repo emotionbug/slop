@@ -5,9 +5,11 @@ import importlib.util
 import json
 import logging
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 
 import dnf
 import rpm
@@ -110,8 +112,12 @@ def main():
             return
         # Include old paths: a library removed entirely is absent from incoming files.
         changed_files = set()
+        incoming_paths = {}
         for package in incoming:
-            changed_files.update(subprocess.check_output(['rpm', '-qpl', package.localPkg()]).decode().splitlines())
+            paths = subprocess.check_output(['rpm', '-qpl', package.localPkg()]).decode().splitlines()
+            changed_files.update(paths)
+            for path in paths:
+                incoming_paths[path] = package.localPkg()
         outgoing_flags, outgoing_owners = {}, set()
         ts = rpm.TransactionSet()
         for package in outgoing:
@@ -127,6 +133,12 @@ def main():
             for name, flags in zip(header['filenames'], header['fileflags']):
                 outgoing_flags[name] = outgoing_flags.get(name, 0) | int(flags)
         symbols = json.loads((root / 'expected-export-removals.json').read_text())
+        outgoing_ids = {str(p) for p in outgoing}
+        surviving_provides = {str(cap) for p in installed if str(p) not in outgoing_ids for cap in p.provides}
+        surviving_provides.update(str(cap) for p in incoming for cap in p.provides)
+        removed_caps = {str(cap) for p in outgoing for cap in p.provides} - surviving_provides
+        symbols['removed_sonames'] = sorted({m.group(1) for cap in removed_caps
+            for m in [re.fullmatch(r'(lib[^/() ]+\.so[^/() ]*)\(\)(?:\(64bit\))?', cap)] if m})
         symbols['libraries'] = [item for item in symbols['libraries']
                                if item['library'] in changed_files or item['library'] in outgoing_flags]
         (report / 'transaction-symbols.json').write_text(json.dumps(symbols))
@@ -142,7 +154,31 @@ def main():
         spec = importlib.util.spec_from_file_location('symbol_policy', str(root / 'symbol-policy.py'))
         policy_module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(policy_module)
-        policy = policy_module.classify(audit, symbols, changed_files, outgoing_flags, outgoing_owners)
+        # Inspect actual replacement ELF payloads. The old executable may use a
+        # removed interface while its incoming replacement no longer does.
+        aliases = {os.path.realpath(p) for match in audit['direct_import_matches']
+                   for p in match.get('aliases', [match['path']])}
+        replacements = aliases & set(incoming_paths)
+        incoming_elf = {}
+        with tempfile.TemporaryDirectory(prefix='linuxoss-incoming-elf-') as folder:
+            for package_path in sorted({p.localPkg() for p in incoming}):
+                child = subprocess.Popen(['rpm2cpio', package_path], stdout=subprocess.PIPE)
+                subprocess.run(['cpio', '-idmu', '--quiet', '--no-absolute-filenames'],
+                               cwd=folder, stdin=child.stdout, check=True)
+                child.stdout.close()
+                if child.wait():
+                    fail('Cannot extract incoming ELF payload')
+            for path in incoming_paths:
+                extracted = Path(folder) / path.lstrip('/')
+                if extracted.is_file() and not extracted.is_symlink():
+                    with extracted.open('rb') as payload:
+                        if payload.read(4) != b'\x7fELF':
+                            continue
+                    incoming_elf[path] = policy_module.DETAILS.elf_details(str(extracted), set(audit['symbols_checked']))
+                    # Resolve $ORIGIN as it will be after installation, not in
+                    # the temporary extraction directory.
+                    incoming_elf[path]['resolved_path'] = path
+            policy = policy_module.classify(audit, symbols, changed_files, outgoing_flags, outgoing_owners, incoming_elf)
         (report / 'symbol-audit-policy.json').write_text(json.dumps(policy, indent=2) + '\n')
         print('Symbol review: {} accounted for; {} blocking; {} pre-existing dangling links (not repaired).'.format(
             len(policy['accepted_matches']), len(policy['blocking_matches']), len(policy['preexisting_dangling_links'])), flush=True)

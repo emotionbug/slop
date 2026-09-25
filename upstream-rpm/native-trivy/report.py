@@ -13,6 +13,14 @@ def cell(value):
     return "'" + value if value.lstrip().startswith(("=", "+", "-", "@")) else value
 
 
+def custom_package(package):
+    # Upstream kernel rpm-pkg puts linuxoss in VERSION, with Vendor=The Linux
+    # Community and Release=2.el8. Match the collector's identity selection.
+    return (package.get('Maintainer') == 'Linux OSS local build' or
+            'linuxoss' in package.get('Release', '') or
+            'linuxoss' in package.get('Version', ''))
+
+
 def vendor_review(finding, result, os_info, reviews):
     """Exact vendor fix attestations; never compare modular context hashes as versions."""
     if result.get("Type") != "redhat" or os_info.get("Family") != "redhat" or os_info.get("Name") != "8.10":
@@ -48,7 +56,7 @@ def artifact_review(finding, result, assessments):
     if len(matches) != 1:
         return None
     package = matches[0]
-    if package.get('Maintainer') != 'Linux OSS local build':
+    if not custom_package(package):
         return None
     reviewed = [a for a in assessments if a.get('assessment_status') in ('fixed-evidence-matched', 'not-affected-evidence-matched')
                 and a.get('cve') == finding.get('VulnerabilityID')
@@ -57,6 +65,7 @@ def artifact_review(finding, result, assessments):
                 and a.get('version') == package.get('Version')
                 and a.get('release') == package.get('Release')
                 and a.get('arch') == package.get('Arch')
+                and a.get('vendor') == package.get('Maintainer')
                 and len(a.get('rpm_sha256', '')) == 64
                 and len(a.get('srpm_sha256', '')) == 64]
     return reviewed[0] if len(reviewed) == 1 else None
@@ -85,7 +94,7 @@ def main():
     observed = {key(p) for p in assessments}
     packages = [p for r in data["Results"] if r.get("Class") == "os-pkgs" for p in r.get("Packages", [])]
     actual = {(p["Name"], str(p.get("Epoch", 0)), p["Version"], p.get("Release", ""), p.get("Arch", ""))
-              for p in packages if p.get("Maintainer") == "Linux OSS local build" or "linuxoss" in p.get("Release", "")}
+              for p in packages if custom_package(p)}
     if expected != observed or actual != expected:
         raise ValueError("RPM snapshot, Trivy RPM inventory and module output disagree; re-scan")
     fields = ["source", "package", "installed_version", "CVE", "severity", "status",

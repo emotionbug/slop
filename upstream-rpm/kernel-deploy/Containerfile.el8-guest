@@ -1,0 +1,11 @@
+FROM localhost/linuxoss-compat-wave-validated:el8
+USER 0
+RUN dnf -y --noplugins --enablerepo=fixture-baseos,fixture-appstream,fixture-powertools \
+    --setopt=install_weak_deps=False install \
+    dracut grubby grub2-tools grub2-efi-x64 grub2-efi-x64-modules shim-x64 \
+    lvm2 xfsprogs e2fsprogs dosfstools openssh-server openssh-clients \
+    java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel \
+    systemd-udev selinux-policy-targeted policycoreutils firewalld iproute \
+    kernel-core kernel-modules && dnf clean all
+# Test-only userspace. No target machine identity or application files are copied.
+CMD ["bash"]

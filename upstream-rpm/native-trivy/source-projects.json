@@ -258,6 +258,17 @@
       "package_roles": {
         "vim-filesystem": "filesystem-only"
       }
+    },
+    "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4": {
+      "project": "kernel",
+      "include_nonstandard_vendor": true,
+      "components": [
+        {
+          "project": "kernel",
+          "version": "7.2.7"
+        }
+      ],
+      "evidence": "Hash-verified Linux 7.2.7 source; release 3 restores EL8 cgroup v1 memory controller and preserves BTF. RPM version suffix is packaging identity, not an upstream version."
     }
   }
 }

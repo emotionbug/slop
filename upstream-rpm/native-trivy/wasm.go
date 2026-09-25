@@ -7,17 +7,32 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"unsafe"
 )
 
 var buffers = map[uint32][]byte{}
 
+//go:wasmimport env error
+func hostError(p uint32, n uint32)
+
+func moduleError(message string) {
+	b := []byte(message)
+	p := reserve(uint32(len(b)))
+	copy(buffers[p], b)
+	hostError(p, uint32(len(b)))
+	release(p, uint32(len(b)))
+}
+
 func main() {}
 
 //go:wasmexport malloc
 func reserve(n uint32) uint32 {
-	if n == 0 || n > 64*1024*1024 {
+	// post_scan receives the complete Trivy result, including all installed
+	// fallback kernels. A single EL8 kernel can exceed the former 64 MiB cap.
+	if n == 0 || n > 512*1024*1024 {
+		moduleError(fmt.Sprintf("linuxoss WASM allocation rejected: %d bytes (limit 512 MiB)", n))
 		panic("invalid WASM allocation")
 	}
 	b := make([]byte, n)
@@ -56,7 +71,7 @@ func name() uint64 { return send([]byte("linuxoss-artifact-evidence")) }
 func apiVersion() uint32 { return 1 }
 
 //go:wasmexport version
-func version() uint32 { return 3 }
+func version() uint32 { return 4 }
 
 //go:wasmexport is_analyzer
 func isAnalyzer() uint64 { return 1 }
@@ -91,6 +106,12 @@ func postScanSpec() uint64 { return response(map[string]string{"Action": "INSERT
 
 //go:wasmexport post_scan
 func postScan(p, n uint32) uint64 {
+	defer func() {
+		if err := recover(); err != nil {
+			moduleError(fmt.Sprintf("linuxoss post_scan failed (%d input bytes): %v", n, err))
+			panic(err)
+		}
+	}()
 	var results []struct {
 		CustomResources []struct {
 			Type string

@@ -1,0 +1,4 @@
+FROM localhost/linuxoss-kernel-boot-tools:20260925
+USER 0
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libguestfs-xfs && rm -rf /var/lib/apt/lists/*
+USER tester

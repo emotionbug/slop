@@ -1,0 +1,12 @@
+{
+  "name": "linux-7.2.7.tar.xz",
+  "url": "https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.2.7.tar.xz",
+  "sha256": "4ac34c47db2540ffb2713943f8d891ff1702e0ba6934525a493b7d1cad43145a",
+  "size": 160321592,
+  "signature_url": "https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.2.7.tar.sign",
+  "expected_signer": "647F28654894E3BD457199BE38DBBDC86092693E",
+  "upstream_signature_verified": true,
+  "intake_record": "../sources.lock.json",
+  "release_source_rpm": "kernel-7.2.7_linuxoss+-3.el8.src.rpm",
+  "release_source_rpm_sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4"
+}

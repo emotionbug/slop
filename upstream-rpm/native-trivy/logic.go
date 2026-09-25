@@ -163,7 +163,16 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 			}
 			rows = append(rows, r)
 		}
-		components := append([]Component{{Project: match.Project, Version: pkg.Version}}, match.Components...)
+		components := append([]Component(nil), match.Components...)
+		primaryMapped := false
+		for _, component := range components {
+			if component.Project == match.Project {
+				primaryMapped = true
+			}
+		}
+		if !primaryMapped {
+			components = append([]Component{{Project: match.Project, Version: pkg.Version}}, components...)
+		}
 		for _, component := range components {
 			summary := row
 			summary.Project = component.Project

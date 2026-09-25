@@ -8,10 +8,16 @@ spec=importlib.util.spec_from_file_location('report',Path(__file__).with_name('r
 report=importlib.util.module_from_spec(spec);spec.loader.exec_module(report)
 
 class VendorReviewTests(unittest.TestCase):
+    def test_upstream_kernel_version_marker_is_included(self):
+        kernel = dict(Name='kernel', Version='7.2.7_linuxoss+', Release='2.el8', Maintainer='The Linux Community')
+        self.assertTrue(report.custom_package(kernel))
+        self.assertTrue(report.custom_package(dict(kernel, Name='kernel-devel')))
+        self.assertFalse(report.custom_package(dict(kernel, Version='4.18.0', Maintainer='Red Hat, Inc.')))
+
     def test_custom_backport_requires_exact_verified_identity(self):
         package=dict(Name='libevent',Version='2.1.8',Release='12.linuxoss.el8',Epoch=0,Arch='x86_64',Maintainer='Linux OSS local build')
         finding=dict(PkgName='libevent',InstalledVersion='2.1.8-12.linuxoss.el8',VulnerabilityID='CVE-2026-63379')
-        assessment=dict(name='libevent',version='2.1.8',release='12.linuxoss.el8',epochnum='0',arch='x86_64',cve='CVE-2026-63379',assessment_status='fixed-evidence-matched',rpm_sha256='a'*64,srpm_sha256='b'*64)
+        assessment=dict(name='libevent',version='2.1.8',release='12.linuxoss.el8',epochnum='0',arch='x86_64',vendor='Linux OSS local build',cve='CVE-2026-63379',assessment_status='fixed-evidence-matched',rpm_sha256='a'*64,srpm_sha256='b'*64)
         result={'Class':'os-pkgs','Packages':[package]}
         self.assertEqual(report.artifact_review(finding,result,[assessment]),assessment)
         component=dict(assessment,assessment_status='not-affected-evidence-matched')

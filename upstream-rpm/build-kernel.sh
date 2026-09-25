@@ -31,9 +31,13 @@ ln -s /usr/bin/python3.11 "$workspace/bin/python3"
 export PATH="$workspace/bin:$PATH"
 export KBUILD_BUILD_USER=linuxoss KBUILD_BUILD_HOST=isolated-builder
 make olddefconfig
+# EL8 uses cgroup v1 by default. Preserve its memory limit/accounting contract.
+# Compress DWARF on disk; BTF and normal debug type information remain enabled.
+scripts/config --enable MEMCG_V1 --disable DEBUG_INFO_COMPRESSED_NONE --enable DEBUG_INFO_COMPRESSED_ZLIB
+make olddefconfig
 cp .config /output/config-after
 scripts/diffconfig /output/config-before /output/config-after > /output/config-diff.txt
-for required in CONFIG_VMWARE_PVSCSI CONFIG_VMXNET3 CONFIG_XFS_FS CONFIG_BLK_DEV_DM CONFIG_EFI CONFIG_EFI_STUB CONFIG_BLK_DEV_INITRD; do
+for required in CONFIG_VMWARE_PVSCSI CONFIG_VMXNET3 CONFIG_XFS_FS CONFIG_BLK_DEV_DM CONFIG_EFI CONFIG_EFI_STUB CONFIG_BLK_DEV_INITRD CONFIG_MEMCG_V1; do
   grep -Eq "^${required}=(y|m)$" .config || { echo "Missing required boot/driver option: $required" >&2; exit 1; }
 done
 grep -q '^CONFIG_DEBUG_INFO_BTF=y$' .config
@@ -42,9 +46,11 @@ jobs=${BUILD_JOBS:-8}
 [[ $jobs =~ ^[1-9][0-9]*$ ]] || exit 2
 trap 'printf "%s\n" "$?" > /output/build-exit-code.txt' EXIT
 make -j"$jobs" bzImage KBUILD_BUILD_VERSION=1
+printf '%s\n' "$(( ${RPM_BUILD_RELEASE:-3} - 1 ))" > .version
+touch scripts/package/mkspec
 # Drop module DWARF debug sections before signing/packaging. Keep BTF and all
 # configured drivers; full unstripped build files remain in the build container.
-make -j"$jobs" rpm-pkg RPMOPTS="--define \"_smp_mflags -j$jobs\" --define \"install_mod_strip 1\""
+make -j"$jobs" rpm-pkg KBUILD_BUILD_VERSION="${RPM_BUILD_RELEASE:-3}" RPMOPTS="--define \"_smp_mflags -j$jobs\" --define \"install_mod_strip 1\""
 find rpmbuild -type f -name '*.rpm' -exec cp -t /output -- {} +
 cp .config System.map /output/
 find . -name '*.ko' -printf '%P\n' | sort > /output/built-modules.txt

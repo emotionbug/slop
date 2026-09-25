@@ -5,6 +5,11 @@ Trivy 0.74.0의 WASM 모듈을 사용하며 공식 RHEL 결과는 보존합니�
 
 [실행 번들](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-6)
 
+커널을 추가할 때는 [커널 키트](https://github.com/emotionbug/slop/tree/main/upstream-rpm/kernel-deploy)의 갱신된 모듈을 사용합니다.
+RPM 버전 `7.2.7_linuxoss+`를 출처가 고정된 upstream `7.2.7`로 평가하며,
+같은 커널을 접미사 버전으로 다시 평가하던 중복을 제거했습니다. 버전에만 `linuxoss`가
+포함된 커널도 설치 목록과 CSV에 포함합니다. 복구용으로 남긴 구 커널 결과는 유지합니다.
+
 ## 연결 범위
 
 - 확장 평가 묶음의 자체 RPM 전체의 RPM/SRPM/헤더/비설정 일반 파일 SHA-256을 대조합니다.

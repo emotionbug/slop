@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "release": "linuxoss-kernel-20260925-1",
+  "kernel_release": "7.2.7-linuxoss+",
+  "rpm_release": "3.el8",
+  "rpms": [
+    {
+      "path": "rpms/kernel-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+      "name": "kernel",
+      "sha256": "30e55eae0148cde89df0779417763928ee46f7abc3a66d18ff4510934084e885",
+      "size": 86264228,
+      "srpm_sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4"
+    },
+    {
+      "path": "rpms/kernel-devel-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+      "name": "kernel-devel",
+      "sha256": "2b71c6ce965c56ebf91c0ab3850d17db0b7f845ea153722f6584e0efea8034ba",
+      "size": 13343780,
+      "srpm_sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4"
+    }
+  ],
+  "source_rpm": "kernel-7.2.7_linuxoss+-3.el8.src.rpm",
+  "source_rpm_sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4",
+  "build": {
+    "compiler": "GCC 8.5.0 (EL8)",
+    "binutils": "2.47",
+    "dwarves": "1.32",
+    "memcg_v1": true,
+    "btf": true,
+    "module_dwarf_stripped": true,
+    "private_key_packaging_audit": "passed"
+  },
+  "vm": {
+    "engine": "Unprivileged QEMU TCG",
+    "userspace": "EL8 reference with prior compatibility RPMs; no target application files",
+    "firmware": "OVMF UEFI, Secure Boot capable, not enabled",
+    "boot_storage": "virtio EFI and boot partitions (OVMF has no PVSCSI firmware driver)",
+    "root_storage": "VMware PVSCSI + LVM + XFS V5",
+    "network": "VMXNET3 + QEMU user networking",
+    "phases": [
+      {
+        "phase": 0,
+        "exit_code": 0,
+        "marker": "KERNEL_EL8_INSTALL_AND_BOOT_ONCE_PASSED",
+        "passed": true
+      },
+      {
+        "phase": 1,
+        "exit_code": 0,
+        "marker": "KERNEL_EL8_UEFI_LVM_XFS_SSH_JAVA_SELINUX_NFT_PASSED",
+        "passed": true
+      },
+      {
+        "phase": 2,
+        "exit_code": 0,
+        "marker": "KERNEL_EL8_OLD_DEFAULT_BOOT_PASSED",
+        "passed": true
+      }
+    ],
+    "check_mode_preserves_rpm_inventory": true,
+    "transactions": [
+      {
+        "install": [
+          "kernel-7.2.7_linuxoss+-3.el8.x86_64",
+          "kernel-devel-7.2.7_linuxoss+-3.el8.x86_64"
+        ],
+        "remove": []
+      },
+      {
+        "install": [
+          "kernel-7.2.7_linuxoss+-3.el8.x86_64",
+          "kernel-devel-7.2.7_linuxoss+-3.el8.x86_64"
+        ],
+        "remove": []
+      }
+    ],
+    "selinux": "Enforcing; unknown new kernel classes and permissions allowed by the old EL8 policy",
+    "java": "OpenJDK 8 HTTP service",
+    "memory_limit_bytes": 268435456,
+    "host_ssh_and_http": "passed",
+    "nftables_and_firewalld": "passed",
+    "dnf_check": "passed",
+    "confirm_and_fallback": "passed",
+    "old_default_reboot": "passed"
+  },
+  "devel": {
+    "external_module_build": "passed",
+    "vermagic": "7.2.7-linuxoss+",
+    "load_tested": false,
+    "external_module_btf": "skipped: matching vmlinux absent in build container"
+  },
+  "trivy": {
+    "version": "0.74.0",
+    "module_version": 4,
+    "offline_execution": "passed",
+    "custom_packages": 146,
+    "kernel_identities": [
+      {
+        "package": "kernel",
+        "installed_version": "0:7.2.7_linuxoss+-3.el8.x86_64",
+        "rpm_sha256": "30e55eae0148cde89df0779417763928ee46f7abc3a66d18ff4510934084e885",
+        "component_version": "7.2.7",
+        "status": "coverage-gap",
+        "feed_state": "query-incomplete"
+      },
+      {
+        "package": "kernel-devel",
+        "installed_version": "0:7.2.7_linuxoss+-3.el8.x86_64",
+        "rpm_sha256": "2b71c6ce965c56ebf91c0ab3850d17db0b7f845ea153722f6584e0efea8034ba",
+        "component_version": "7.2.7",
+        "status": "coverage-gap",
+        "feed_state": "query-incomplete"
+      }
+    ],
+    "all_cves_fixed": false,
+    "complete_upstream_feed": false,
+    "report_sha256": "a87e072b6f6084e78bb6d66a3d57f07405927595fb52c49e9824b31dc7af3511",
+    "module_sha256": "7b5a90e06f15f52aeb4fd11ec39454affdfa5bc269afebb57e8cc019bd1a72a6"
+  },
+  "tests": {
+    "go": "passed",
+    "python": {
+      "passed": 5
+    }
+  },
+  "evidence_sha256": {
+    "boot-0.log": "bd5ead0951828b43a35018277be94ba52b081c56e9ff781899d6432d95c9b9d1",
+    "boot-1.log": "30656dad9005685a9d9186350efaf7b587b4b51c38f902f20417131dd8eba704",
+    "boot-2.log": "f31f37dd45b3d32be61e991a253fcbaacf450e15c5781434c32ae0d525f54bf3",
+    "host-ssh-http.log": "ca07c13095ed765eaf11303e20bae991a8a7b3ab24c299e8b55ceb6ad249950b",
+    "installer-logs.tar.gz": "8673f8d9ce122f8b03a3b87dfd9abad330f314797b13eacf7a861a01a3f1de6f",
+    "scan-devel-final3.log": "510139bdaf3b883b3970091b477939ecfb4fed4a7aa94d69facda1376e3063cd",
+    "artifact-audit3.log": "ca8b0250cff7736517fed3612cc0c0e65b987a4435814e45b0131080e53e3f65"
+  },
+  "limitations": [
+    "Actual VMware host, Java daemon, Tomcat and security agents have not been tested.",
+    "EL8 SELinux policy does not cover every new kernel class or permission; Enforcing is not full policy equivalence.",
+    "This is an upstream kernel, not a Red Hat signed/supported or kABI-compatible kernel.",
+    "Old fallback kernel vulnerability findings remain; kernel NVD query coverage is incomplete."
+  ]
+}

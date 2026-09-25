@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "release": "linuxoss-kernel-20260925-1",
+  "files": [
+    {
+      "path": "rpms/kernel-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+      "sha256": "30e55eae0148cde89df0779417763928ee46f7abc3a66d18ff4510934084e885",
+      "bytes": 86264228
+    },
+    {
+      "path": "rpms/kernel-devel-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+      "sha256": "2b71c6ce965c56ebf91c0ab3850d17db0b7f845ea153722f6584e0efea8034ba",
+      "bytes": 13343780
+    },
+    {
+      "path": "rpms/kernel-headers-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+      "sha256": "f383d6309065051f5db9c89e011e992f6125f2e67fb50f89e0c9c2431e240f68",
+      "bytes": 1829672
+    },
+    {
+      "path": "srpms/kernel-7.2.7_linuxoss+-3.el8.src.rpm",
+      "sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4",
+      "bytes": 259382836
+    }
+  ]
+}

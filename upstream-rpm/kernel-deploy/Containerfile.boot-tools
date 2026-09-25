@@ -1,0 +1,9 @@
+FROM docker.io/library/ubuntu@sha256:1e0a86e57d247923571b75e0aaf48a1449cf8c543d51fb3e07a4a7d7bfa79316
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    qemu-system-x86 qemu-utils ovmf busybox-static rpm2cpio cpio kmod xfsprogs \
+    guestfish libguestfs-tools linux-image-generic openssh-client python3 xz-utils zstd ca-certificates \
+    && chmod a+r /boot/vmlinuz-* && rm -rf /var/lib/apt/lists/*
+ENV LIBGUESTFS_BACKEND=direct LIBGUESTFS_BACKEND_SETTINGS=force_tcg
+RUN useradd --uid 1001 --create-home tester
+USER tester
+WORKDIR /tmp

@@ -62,7 +62,14 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 		if !installed[a.RPM] {
 			continue
 		}
-		expectedCoverage += 1 + len(a.Components)
+		expectedCoverage += len(a.Components)
+		primaryMapped := false
+		for _, component := range a.Components {
+			primaryMapped = primaryMapped || component.Project == a.Project
+		}
+		if !primaryMapped {
+			expectedCoverage++
+		}
 		for _, r := range a.Assessments {
 			if r.Status == "fixed" && len(a.Files) > 0 {
 				expectedFixed++
@@ -71,6 +78,44 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 	}
 	if counts["fixed-evidence-matched"] != expectedFixed || counts["coverage-gap"]+counts["payload-unverified"]+counts["configuration-only"]+counts["filesystem-only"] != expectedCoverage {
 		t.Fatal(counts)
+	}
+}
+
+func TestKernelUsesPinnedUpstreamVersion(t *testing.T) {
+	s, c := testInput(t)
+	found := false
+	for _, a := range c.Artifacts {
+		if a.Name != "kernel" || a.Version != "7.2.7_linuxoss+" {
+			continue
+		}
+		found = true
+		s.Packages = []RPM{a.RPM}
+		s.Files = map[string]FileCheck{}
+		for path, hash := range a.Files {
+			s.Files[path] = FileCheck{Hash: hash}
+		}
+		rows, err := evaluate(s, c)
+		if err != nil {
+			t.Fatal(err)
+		}
+		summaries := 0
+		for _, row := range rows {
+			if row.ComponentVersion == a.Version {
+				t.Fatal("RPM suffix created a second unparseable kernel version")
+			}
+			if row.CVE == "" && row.Project == "kernel" {
+				summaries++
+				if row.ComponentVersion != "7.2.7" || len(row.Excluded) == 0 || row.Coverage != "incomplete" {
+					t.Fatal("Lost version-range evaluation or asserted complete coverage", row)
+				}
+			}
+		}
+		if summaries != 1 {
+			t.Fatal("Kernel source was evaluated more than once", summaries)
+		}
+	}
+	if !found {
+		t.Fatal("Pinned kernel artifact missing from test catalogue")
 	}
 }
 

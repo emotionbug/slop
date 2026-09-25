@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kernel_release": "7.2.7-linuxoss+",
+  "kernel_image_sha256": "19da34a852b906d08ba6665ba35a4aacd1f8f8af82159476c3cee1c28fda50a8",
+  "rpms": [
+    {
+      "path": "rpms/kernel-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+      "name": "kernel",
+      "sha256": "30e55eae0148cde89df0779417763928ee46f7abc3a66d18ff4510934084e885",
+      "size": 86264228,
+      "srpm_sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4"
+    },
+    {
+      "path": "rpms/kernel-devel-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+      "name": "kernel-devel",
+      "sha256": "2b71c6ce965c56ebf91c0ab3850d17db0b7f845ea153722f6584e0efea8034ba",
+      "size": 13343780,
+      "srpm_sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4"
+    }
+  ],
+  "source_release": "https://github.com/emotionbug/slop/releases/tag/linuxoss-kernel-20260925-1",
+  "source_rpm": "kernel-7.2.7_linuxoss+-3.el8.src.rpm",
+  "source_rpm_sha256": "d817277c72756c5663ae44982fa4cc06758e957f054faecf8db605146b38cef4",
+  "source_signature": "Official Linux 7.2.7 source signature verified in the original source intake; pinned release source reused.",
+  "scope": "Add kernel and matching kernel-devel alongside existing kernels; /usr/include headers remain unchanged."
+}

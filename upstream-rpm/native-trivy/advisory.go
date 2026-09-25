@@ -1,6 +1,7 @@
 package main
 
 import (
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -48,11 +49,12 @@ func (p ProjectFeed) state(now time.Time) string {
 }
 
 type Advisory struct {
-	CVE      string         `json:"cve"`
-	Severity string         `json:"severity"`
-	Status   string         `json:"status"`
-	Advisory string         `json:"advisory"`
-	Matches  []VersionRange `json:"matches"`
+	CVE         string         `json:"cve"`
+	Severity    string         `json:"severity"`
+	Status      string         `json:"status"`
+	Advisory    string         `json:"advisory"`
+	Matches     []VersionRange `json:"matches"`
+	ContextOnly bool           `json:"context_only,omitempty"`
 }
 type VersionRange struct {
 	Version        string `json:"version"`
@@ -119,7 +121,40 @@ func compareVersions(a, b string) (int, bool) {
 	}
 	return 0, true
 }
-func (v VersionRange) match(version string) verdict {
+func compareProjectVersions(project, a, b string) (int, bool) {
+	if project != "openssl" {
+		return compareVersions(a, b)
+	}
+	// OpenSSL's documented legacy letter releases, not arbitrary suffix stripping.
+	re := regexp.MustCompile(`^(0|1)\.[0-9]+\.[0-9]+([a-z]*)$`)
+	parse := func(s string) (string, string, bool) {
+		if m := re.FindStringSubmatch(s); m != nil {
+			return strings.TrimSuffix(s, m[2]), m[2], true
+		}
+		if _, ok := compareVersions(s, s); ok {
+			return s, "", true
+		}
+		return "", "", false
+	}
+	x, xs, xo := parse(a)
+	y, ys, yo := parse(b)
+	if !xo || !yo {
+		return 0, false
+	}
+	if cmp, ok := compareVersions(x, y); !ok || cmp != 0 {
+		return cmp, ok
+	}
+	if len(xs) < len(ys) {
+		return -1, true
+	}
+	if len(xs) > len(ys) {
+		return 1, true
+	}
+	return strings.Compare(xs, ys), true
+}
+
+func (v VersionRange) match(version string) verdict { return v.matchProject("", version) }
+func (v VersionRange) matchProject(project, version string) verdict {
 	// Distribution aliases may encode vendor release semantics, not upstream.
 	if v.Distro || v.Negated {
 		return uncertain
@@ -128,7 +163,7 @@ func (v VersionRange) match(version string) verdict {
 	if v.Version != "*" {
 		if v.Version == version && version != "-" {
 		} else {
-			cmp, ok := compareVersions(version, v.Version)
+			cmp, ok := compareProjectVersions(project, version, v.Version)
 			if !ok {
 				unknown = true
 			} else if cmp != 0 {
@@ -146,7 +181,7 @@ func (v VersionRange) match(version string) verdict {
 		if bound.value == "" {
 			continue
 		}
-		cmp, ok := compareVersions(version, bound.value)
+		cmp, ok := compareProjectVersions(project, version, bound.value)
 		if !ok {
 			unknown = true
 			continue
@@ -161,12 +196,15 @@ func (v VersionRange) match(version string) verdict {
 	return candidate
 }
 func (a Advisory) match(version string) verdict {
+	return a.matchProject("", version)
+}
+func (a Advisory) matchProject(project, version string) verdict {
 	if len(a.Matches) == 0 {
 		return uncertain
 	}
 	result := excluded
 	for _, m := range a.Matches {
-		v := m.match(version)
+		v := m.matchProject(project, version)
 		if v == candidate {
 			return candidate
 		}

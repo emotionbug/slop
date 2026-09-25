@@ -9,7 +9,10 @@ root, output = map(Path, sys.argv[1:3])
 if not output.name.endswith('.tar.gz'):
     raise SystemExit('Output must end in .tar.gz')
 name = output.name[:-len('.tar.gz')]
-files = sorted(p for p in root.rglob('*') if p.is_file() and p != root / 'SHA256SUMS')
+files = sorted(p for p in root.rglob('*') if p.is_file() and p != root / 'SHA256SUMS'
+               and '__pycache__' not in p.parts and p.suffix != '.pyc')
+if any(p.is_symlink() for p in files):
+    raise SystemExit('Symlinks are not allowed in the public kit')
 hashes = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 (root / 'SHA256SUMS').write_text(''.join('{}  {}\n'.format(v, k) for k, v in hashes.items()), encoding='utf-8', newline='\n')
 
@@ -22,7 +25,8 @@ def normalize(info):
 
 
 with tarfile.open(output, 'w:gz', compresslevel=6) as archive:
-    archive.add(root, arcname=name, filter=normalize)
+    for path in files + [root / 'SHA256SUMS']:
+        archive.add(path, arcname=name + '/' + path.relative_to(root).as_posix(), filter=normalize, recursive=False)
 archive_hash = hashlib.sha256(output.read_bytes()).hexdigest()
 output.with_name(output.name + '.sha256').write_text('{}  {}\n'.format(archive_hash, output.name), encoding='ascii', newline='\n')
 seen = set()

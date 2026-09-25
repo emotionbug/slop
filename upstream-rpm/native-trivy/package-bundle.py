@@ -17,7 +17,8 @@ stage.mkdir(parents=True, exist_ok=False)
 names = ['build-catalog.py', 'catalog.json', 'collect-installed.py', 'go.mod', 'logic.go',
          'logic_test.go', 'wasm.go', 'report.py', 'scan-native.sh', 'README.md',
          'advisory.go', 'advisories.json', 'project-map.json', 'reviewed-evidence.json',
-         'source-projects.json', 'refresh-feed.py', 'package-bundle.py', 'build-integration.ps1', 'test_feed.py']
+         'source-projects.json', 'refresh-feed.py', 'package-bundle.py', 'build-integration.ps1', 'test_feed.py',
+         'vendor-reviews.json', 'test_report.py']
 for name in names:
     shutil.copy2(source / name, stage / name)
 (stage / 'modules').mkdir()
@@ -26,7 +27,7 @@ goroot = Path(subprocess.check_output(['go', 'env', 'GOROOT'], universal_newline
 shutil.copy2(goroot / 'LICENSE', stage / 'GO-LICENSE.txt')
 hashes = [hashlib.sha256(path.read_bytes()).hexdigest() + '  ' + path.relative_to(stage).as_posix()
           for path in sorted(stage.rglob('*')) if path.is_file()]
-(stage / 'SHA256SUMS').write_text('\n'.join(hashes) + '\n', encoding='utf-8')
+(stage / 'SHA256SUMS').write_text('\n'.join(hashes) + '\n', encoding='utf-8', newline='\n')
 archive = stage.with_suffix('.tar.gz')
 with archive.open('xb') as stream:
     with tarfile.open(fileobj=stream, mode='w:gz') as out:
@@ -40,5 +41,5 @@ with archive.open('xb') as stream:
             with path.open('rb') as src:
                 out.addfile(info, src)
 digest = hashlib.sha256(archive.read_bytes()).hexdigest()
-archive.with_suffix(archive.suffix + '.sha256').write_text(digest + '  ' + archive.name + '\n', encoding='utf-8')
+archive.with_suffix(archive.suffix + '.sha256').write_text(digest + '  ' + archive.name + '\n', encoding='utf-8', newline='\n')
 print(json.dumps({'archive': str(archive), 'bytes': archive.stat().st_size, 'sha256': digest, 'files': len(hashes)+1}))

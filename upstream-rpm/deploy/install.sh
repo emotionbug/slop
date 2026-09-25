@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Offline installer for the pinned, reference-tested 77-RPM subset.
+# Offline installer for the exact reference-tested manifest.
 set -Eeuo pipefail
 umask 077
 here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)

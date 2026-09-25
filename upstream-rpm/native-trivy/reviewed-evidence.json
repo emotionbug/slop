@@ -102,28 +102,36 @@
     ],
     "e16d17cff8ccbeec4384e7066aac9250f7ca32c648f11753300434fb672ab46c": [
       {
+        "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
         "cve": "CVE-2026-32316",
-        "status": "fixed",
-        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
-        "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
         "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
+        "status": "fixed",
         "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
       },
       {
+        "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
         "cve": "CVE-2026-33947",
-        "status": "fixed",
-        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
-        "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
         "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
+        "status": "fixed",
         "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
       },
       {
-        "cve": "CVE-2026-33948",
-        "status": "fixed",
-        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
         "advisory": "https://github.com/jqlang/jq/releases/tag/jq-1.8.2",
+        "cve": "CVE-2026-33948",
         "evidence": "https://github.com/emotionbug/slop/blob/1154e3a/upstream-rpm/SECURITY-EVIDENCE.md",
+        "scope": "Named CVE only; jq artifact. Files on disk, not live processes.",
+        "status": "fixed",
         "verification": "Previously recorded build/patch evidence in SECURITY-EVIDENCE.md; exact RPM/SRPM pinned here"
+      },
+      {
+        "cve": "CVE-2026-44777",
+        "status": "fixed",
+        "scope": "jq module-cycle denial of service only; immutable files on disk.",
+        "advisory": "https://github.com/jqlang/jq/security/advisories/GHSA-rmpv-jgvr-wpr9",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Exact published jq 1.8.2 artifact: circular include exits 3 with circular import diagnostic; acyclic control exits 0 and outputs 1. Upstream advisory lists 1.8.2 fixed."
       }
     ],
     "cf6da15bb0444dab963dd195f251ec43910ad4a98a44ff59cad4276692fea495": [
@@ -344,6 +352,92 @@
         "scope": "Named CVE only; bison artifact. Files on disk, not live processes.",
         "status": "fixed",
         "verification": "Same hash-pinned source and both security patches; full upstream suite and installed-binary grammar program/output/header regression checks passed. Only the generic yacc wrapper and manual were excluded from this RPM. Packaging coexistence is not a new CVE fix."
+      }
+    ],
+    "bc46d7465aa7bd4f23fbd4c6765c384d3bc05e5cbdcc7023eddc98f8c7febc68": [
+      {
+        "cve": "CVE-2026-56288",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-56288",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Two pinned upstream security fixes; upstream suite: 46 passed, 1 skipped, 2 expected failures, 0 unexpected failures."
+      },
+      {
+        "cve": "CVE-2026-56289",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-56288",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Two pinned upstream security fixes; upstream suite: 46 passed, 1 skipped, 2 expected failures, 0 unexpected failures."
+      }
+    ],
+    "f62491a315854546468a2b11dca909f2235c15d3b7ffd3bdc56cdfa06fb8ffc8": [
+      {
+        "cve": "CVE-2025-45582",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://access.redhat.com/security/cve/CVE-2025-45582",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Official hash-pinned tar 1.35-13.el10_2 source backports, compiled on EL8; 226 upstream tests passed, 25 skipped. Not an EL10 binary."
+      },
+      {
+        "cve": "CVE-2026-5704",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://access.redhat.com/security/cve/CVE-2026-5704",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Official hash-pinned tar 1.35-13.el10_2 source backports, compiled on EL8; 226 upstream tests passed, 25 skipped. Not an EL10 binary."
+      },
+      {
+        "cve": "CVE-2026-18477",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://access.redhat.com/security/cve/CVE-2026-18477",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Official hash-pinned tar 1.35-13.el10_2 source backports, compiled on EL8; 226 upstream tests passed, 25 skipped. Not an EL10 binary."
+      },
+      {
+        "cve": "CVE-2026-18508",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://access.redhat.com/security/cve/CVE-2026-18508",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Official hash-pinned tar 1.35-13.el10_2 source backports, compiled on EL8; 226 upstream tests passed, 25 skipped. Not an EL10 binary."
+      }
+    ],
+    "9a940ba18ec27732d96e090135fa7177f1abd5edfff78e9aa57f830fc48bced8": [
+      {
+        "cve": "CVE-2026-58469",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://gitlab.com/gnuwget/wget/-/commit/37a40fcb450153f69537c7cbc2a7a4fb0b6f7826",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Pinned upstream fixes and subsequent regression corrections; complete make check ran successfully. Metalink runtime support is disabled in this build."
+      },
+      {
+        "cve": "CVE-2026-58470",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://gitlab.com/gnuwget/wget/-/commit/43d3ba9336bc94937e6fae2365c6ffd30c34ffcf",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Pinned upstream fixes and subsequent regression corrections; complete make check ran successfully. Metalink runtime support is disabled in this build."
+      },
+      {
+        "cve": "CVE-2026-58471",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://gitlab.com/gnuwget/wget/-/commit/c2640fe5171c59f87c58dc9fcb195b2d18b010ee",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Pinned upstream fixes and subsequent regression corrections; complete make check ran successfully. Metalink runtime support is disabled in this build."
+      },
+      {
+        "cve": "CVE-2026-58472",
+        "status": "fixed",
+        "scope": "Named CVE and exact immutable files on disk only; no live-process verdict.",
+        "advisory": "https://gitlab.com/gnuwget/wget/-/commit/dd692d9cea5335b181d877ae917fe6e75587a812",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/NEXT-WAVE-20260925-5.md",
+        "verification": "Pinned upstream fixes and subsequent regression corrections; complete make check ran successfully. Metalink runtime support is disabled in this build."
       }
     ]
   }

@@ -3,17 +3,18 @@
 배포 RPM/SRPM → 설치 파일 대조 → upstream CVE 평가 → **한 번의 Trivy 검사와 CSV**로 연결합니다.
 Trivy 0.74.0의 WASM 모듈을 사용하며 공식 RHEL 결과는 보존합니다.
 
-[실행 번들](https://github.com/emotionbug/slop/releases/tag/trivy-native-rpm-20260924-3)
+[실행 번들](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-5)
 
 ## 연결 범위
 
 - 확장 평가 묶음의 자체 RPM 전체의 RPM/SRPM/헤더/비설정 일반 파일 SHA-256을 대조합니다.
 - Source RPM별로 출처가 있는 NVD CPE 식별자를 선택합니다. GNU tar와 npm/Rust tar를 합치지 않습니다.
 - NVD 응답 해시, 조회 시각, 페이지 수, 실패를 보존합니다. 선택한 영향 버전 범위 후보는 실제 Trivy `Vulnerabilities`의 `under_investigation`으로 들어갑니다.
-- 기존 검증의 **기존 22개와 MCPP 1개의 CVE 수정 근거**를 정확히 일치하는 RPM과 파일에만 적용합니다. tar의 미해결 2건은 유지합니다.
+- `reviewed-evidence.json`의 명시적 CVE 수정 근거를 정확히 일치하는 RPM과 파일에만 적용합니다. 20260925-5에서 Wget/patch/tar 수정과 jq 확인 근거를 추가했습니다.
 - rsync에 포함된 xxHash 0.8.4도 표시합니다. 검증한 CPE 매핑이 없어 `unmapped`입니다.
 - 제외한 과거 CVE는 JSON 평가의 `range_excluded_cves`에 남습니다.
-- 해석 불가능한 버전 접미사, 환경 조건, 배포판 별칭은 검토 대상으로 유지합니다.
+- OpenSSL 공식 문자 버전을 해석합니다. 다른 해석 불가능한 버전 접미사, 환경 조건, 배포판 별칭은 검토 대상으로 유지합니다.
+- `vulnerable:false` 환경 CPE와 정확히 확인한 설정/디렉터리 전용 RPM은 코드 CVE와 분리합니다.
 - 미등록 RPM, 파일 변경, 조회 실패, 30일 초과 피드, 비정상 미래 조회 시각을 표시합니다.
 
 **전체 CVE 탐지 완료를 보장하지 않습니다.** NVD 매핑·분석 지연이 있어 모든 자체 RPM에
@@ -37,6 +38,9 @@ sudo bash scan-native.sh \
 | 파일 | 내용 |
 |---|---|
 | `reports/actionable.csv` | 공식 Trivy 취약점과 자체 RPM 검토 필요 CVE |
+| `reports/fix-available.csv` | 수정 버전이 있는 vendor 항목 |
+| `reports/vendor-actionable.csv`, `reports/native-review.csv` | vendor 취약점 / 자체 RPM 검토 대상 |
+| `reports/reviewed-resolutions.csv`, `reports/scan-gaps.csv` | 수정·비해당 근거 / 검사 범위 제한 |
 | `reports/integrated.csv` | 위 결과 + 수정 근거 일치 + 제품/피드 범위 부족 |
 | `reports/summary.json` | 개수, 피드 상태, 전체 범위 미완료 여부 |
 | `integrated.json` | 공식 결과와 추가 평가가 들어 있는 원본 Trivy 출력 |
@@ -94,3 +98,5 @@ python3 package-bundle.py --output-dir /work/native-new
 - 323종 전체 교체 완료나 운영 서버 모든 CVE 해결을 뜻하지 않습니다.
 
 This product uses data from the NVD API but is not endorsed or certified by the NVD.
+
+20260925-5 판정 기준과 검증은 [다음 묶음 변경 내용](../deploy/NEXT-WAVE-20260925-5.md)을 참조하세요.

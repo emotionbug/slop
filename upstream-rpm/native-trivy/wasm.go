@@ -56,7 +56,7 @@ func name() uint64 { return send([]byte("linuxoss-artifact-evidence")) }
 func apiVersion() uint32 { return 1 }
 
 //go:wasmexport version
-func version() uint32 { return 2 }
+func version() uint32 { return 3 }
 
 //go:wasmexport is_analyzer
 func isAnalyzer() uint64 { return 1 }

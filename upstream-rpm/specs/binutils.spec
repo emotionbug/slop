@@ -1,11 +1,12 @@
 Name:           binutils
 Version:        2.47
-Release:        1.linuxoss%{?dist}
+Release:        2.linuxoss%{?dist}
 Summary:        GNU binary utilities, upstream EL8 evaluation build
 License:        GPLv3+
 URL:            https://www.gnu.org/software/binutils/
 Vendor:         Linux OSS local build
 Source0:        binutils-2.47.tar.xz
+Source1:        gnu-standards.info.tar.gz
 BuildRequires:  gcc, gcc-c++, make, bison, flex, texinfo, zlib-devel
 BuildRequires:  dejagnu, expect
 
@@ -42,6 +43,9 @@ make -C build %{?_smp_mflags} check
 
 %install
 make -C build DESTDIR=%{buildroot} install
+# EL8's outgoing binutils postun unconditionally removes this Info index.
+# Keep the real GNU manual present during the upgrade transaction.
+tar -xzf %{SOURCE1} -C %{buildroot}%{_infodir} standards.info
 find %{buildroot} -name '*.la' -delete
 rm -f %{buildroot}%{_infodir}/dir
 

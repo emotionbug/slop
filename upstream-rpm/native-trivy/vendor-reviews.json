@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "package": "perl-DBI",
+      "installed_version": "1.641-10.module+el8.10.0+24875+bc962974",
+      "version": "1.641",
+      "release": "10.module+el8.10.0+24875+bc962974",
+      "arch": "x86_64",
+      "cve": "CVE-2026-73194",
+      "reference": "https://security.access.redhat.com/data/csaf/v2/advisories/2026/rhsa-2026_69112.json",
+      "reference_sha256": "ff4425cdfcf9b8381dd9da0a12dba9b0a579983a3c9c9915e80c70b9df5f9413",
+      "product_id": "AppStream-8.10.0.Z.MAIN.EUS:perl-DBI-0:1.641-10.module+el8.10.0+24875+bc962974.x86_64::perl-DBI:1.641",
+      "reason": "Red Hat RHSA-2026:69112 explicitly lists this exact modular build as fixed; alternate module context is not a newer required version. RPM inventory evidence, not live-file integrity proof."
+    }
+  ]
+}

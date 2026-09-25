@@ -2579,6 +2579,68 @@
       "sha256": "c7e421fde088ec328ae5b741c14b50b24f767dc40a2ce1a7418e5368cf06d5c8",
       "verification": "Local zero-length bounds fix: official bug 13 second input retained invalid ptr[-1] read after Debian patches; both inputs checked under Valgrind",
       "upstream_reference": "https://sourceforge.net/p/mcpp/bugs/13/"
+    },
+    {
+      "name": "wget-CVE-2026-58469.patch",
+      "url": "https://gitlab.com/gnuwget/wget/-/commit/37a40fcb450153f69537c7cbc2a7a4fb0b6f7826.patch",
+      "sha256": "dad7ba5af1ea284c7b43d1188163086810c3d7f08944854d74701530498b5846"
+    },
+    {
+      "name": "wget-CVE-2026-58470.patch",
+      "url": "https://gitlab.com/gnuwget/wget/-/commit/43d3ba9336bc94937e6fae2365c6ffd30c34ffcf.patch",
+      "sha256": "f4ade3445a9c1426271f3ae5ca4bc893b07ec27bba9af856dbfcda89602f4788"
+    },
+    {
+      "name": "wget-CVE-2026-58471.patch",
+      "url": "https://gitlab.com/gnuwget/wget/-/commit/c2640fe5171c59f87c58dc9fcb195b2d18b010ee.patch",
+      "sha256": "1cf705d8020435be06fe8daca1ab3dfa8cd2bc93937b613dfb1c49d56135878e"
+    },
+    {
+      "name": "wget-CVE-2026-58472.patch",
+      "url": "https://gitlab.com/gnuwget/wget/-/commit/dd692d9cea5335b181d877ae917fe6e75587a812.patch",
+      "sha256": "0162d60cfe9ad46e47bf1dca59a25b88f26d34546030c0380ae213cb982bf30c"
+    },
+    {
+      "name": "patch-CVE-2026-56288.patch",
+      "url": "https://cgit.git.savannah.gnu.org/cgit/patch.git/patch/?id=e6d6a4e021660679d7fc9150f981d4920f722313",
+      "sha256": "e0f95282b985cc20c8f5abeecdb79417e7f072b8ef8ece5ba9c10c9162846b6b"
+    },
+    {
+      "name": "patch-CVE-2026-56289.patch",
+      "url": "https://cgit.git.savannah.gnu.org/cgit/patch.git/patch/?id=faba04ef4f2b410257f76c1b9dc85e350929c4b9",
+      "sha256": "fa1b2c646779aa094753aa5897ba1e12a3d63be71574564186078e0d5ddca538"
+    },
+    {
+      "name": "wget-metalink-trim-followup.patch",
+      "url": "https://gitlab.com/gnuwget/wget/-/commit/7b1cdecc49bc77bde220fc575c8a00386c3f3bcf.patch",
+      "sha256": "0322cd2ce9076b2341245cc5ad195c022db94179d0967201ccc93dcbd36a5342"
+    },
+    {
+      "name": "wget-metalink-ctype-followup.patch",
+      "url": "https://gitlab.com/gnuwget/wget/-/commit/82d945ff5dc9942b78b2bf736aac298c24fe00a1.patch",
+      "sha256": "93041fe87cf132e10d5e1c855255f85f9ce1391ca82aa94322cdfc4a476fe914"
+    },
+    {
+      "name": "wget-html-size-followup.patch",
+      "url": "https://gitlab.com/gnuwget/wget/-/commit/f76978a51ba9365e7ecaed96c1cfb73197a38ca2.patch",
+      "sha256": "4e6a2ed1ddc590a0cdd8e94f5b4f35ce49602ff9311689c57263276bb6223bf3"
+    },
+    {
+      "name": "tcsh-6.24.16.tar.gz",
+      "url": "https://astron.com/pub/tcsh/tcsh-6.24.16.tar.gz",
+      "sha256": "4208cf4630fb64d91d81987f854f9570a5a0e8a001a92827def37d0ed8f37364",
+      "upstream_signature_verified": false
+    },
+    {
+      "name": "tar-1.35-13.el10_2.src.rpm",
+      "url": "https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi10/10/x86_64/baseos/source/SRPMS/Packages/t/tar-1.35-13.el10_2.src.rpm",
+      "sha256": "bc5615cd89d1295b0541c80d7e717a509f2ffeb807665aab98cb7105fb2936bb",
+      "note": "Official UBI 10 source RPM only; binaries are rebuilt on EL8"
+    },
+    {
+      "name": "gnu-standards.info.tar.gz",
+      "url": "https://www.gnu.org/prep/standards/standards.info.tar.gz",
+      "sha256": "005010bc7fd1848e665bb12cd997f0e4d4d2b0c25f6455fe5b588dd6f731b854"
     }
   ]
 }

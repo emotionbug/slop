@@ -50,8 +50,9 @@ def main():
     entries = [item for item in manifest['files'] if item['path'].startswith('rpms/')]
     expected = {item['path']: item for item in entries}
     actual = {str(p.relative_to(root)) for p in (root / 'rpms').glob('*.rpm')}
-    if len(expected) != 77 or actual != set(expected):
-        fail('Expected the exact pinned 77-RPM candidate set.')
+    count = manifest.get('rpm_count', 77)  # Older signed-off bundles used 77.
+    if type(count) is not int or count < 1 or len(entries) != count or len(expected) != count or actual != set(expected):
+        fail('Expected the exact RPM set and count pinned in candidate-manifest.json.')
     for name, item in expected.items():
         path = root / name
         if path.is_symlink() or path.stat().st_size != item['size'] or digest(path) != item['sha256']:
@@ -131,8 +132,9 @@ def main():
         (report / 'transaction-symbols.json').write_text(json.dumps(symbols))
         audit_file = report / 'symbol-audit.json'
         extra_roots = sys.argv[4:]
-        if Path('/usr/src').is_dir():
-            extra_roots = ['/usr/src'] + extra_roots
+        for directory in ('/usr/src', '/usr/share'):
+            if Path(directory).is_dir():
+                extra_roots = [directory] + extra_roots
         with audit_file.open('w') as stream:
             result = subprocess.run([sys.executable, str(root / 'check-removed-symbol-users.py'),
                                      '--symbols-file', str(report / 'transaction-symbols.json')] + extra_roots, stdout=stream)

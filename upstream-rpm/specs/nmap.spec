@@ -1,7 +1,8 @@
 Name: nmap
+Epoch: 2
 %global debug_package %{nil}
 Version: 7.991
-Release: 1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary: nmap upstream EL8 evaluation build
 License: NPSL
 URL: https://nmap.org/

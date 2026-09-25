@@ -40,12 +40,13 @@ type Assessment struct {
 }
 type Artifact struct {
 	RPM
-	Project     string            `json:"project"`
-	Components  []Component       `json:"components"`
-	RPMHash     string            `json:"rpm_sha256"`
-	SourceHash  string            `json:"srpm_sha256"`
-	Files       map[string]string `json:"files"`
-	Assessments []Assessment      `json:"assessments"`
+	Project       string            `json:"project"`
+	Components    []Component       `json:"components"`
+	RPMHash       string            `json:"rpm_sha256"`
+	SourceHash    string            `json:"srpm_sha256"`
+	Files         map[string]string `json:"files"`
+	Assessments   []Assessment      `json:"assessments"`
+	ComponentRole string            `json:"component_role,omitempty"`
 }
 type Catalog struct {
 	Schema    int        `json:"schema_version"`
@@ -128,6 +129,15 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 		}
 		row.RPMHash, row.SourceHash = match.RPMHash, match.SourceHash
 		row.Project = match.Project
+		if (match.ComponentRole == "configuration-only" || match.ComponentRole == "filesystem-only") && len(match.Files) == 0 {
+			row.Status = match.ComponentRole
+			row.Reason = "Reviewed exact RPM contains configuration only; code CVEs are assessed on its library package. Configuration content is not verified."
+			if match.ComponentRole == "filesystem-only" {
+				row.Reason = "Reviewed exact RPM owns directory layout only; executable/library CVEs belong to the code packages. Directory permissions are not verified."
+			}
+			rows = append(rows, row)
+			continue
+		}
 		verified := len(match.Files) > 0
 		for path, expected := range match.Files {
 			actual, found := s.Files[path]
@@ -174,7 +184,15 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 				if component.Project == match.Project && reviewed[advisory.CVE] {
 					continue
 				}
-				result := advisory.match(component.Version)
+				if advisory.ContextOnly && verified {
+					r := summary
+					r.CVE, r.Advisory, r.Severity = advisory.CVE, advisory.Advisory, advisory.Severity
+					r.Status = "not-affected-component"
+					r.Reason = "Queried CPE is only a non-vulnerable environment/dependency in NVD; the vulnerable product must be assessed separately"
+					rows = append(rows, r)
+					continue
+				}
+				result := advisory.matchProject(component.Project, component.Version)
 				if result == excluded && verified {
 					summary.Excluded = append(summary.Excluded, advisory.CVE)
 					continue
@@ -191,6 +209,9 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 				}
 				if !verified {
 					r.Reason = "Payload mismatch prevents reliable installed-version exclusion"
+					if len(match.Files) == 0 {
+						r.Reason = "No immutable files to verify; source-project applicability requires review"
+					}
 				}
 				rows = append(rows, r)
 			}

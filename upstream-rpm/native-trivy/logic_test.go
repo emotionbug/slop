@@ -69,7 +69,7 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 			}
 		}
 	}
-	if counts["fixed-evidence-matched"] != expectedFixed || counts["coverage-gap"]+counts["payload-unverified"] != expectedCoverage {
+	if counts["fixed-evidence-matched"] != expectedFixed || counts["coverage-gap"]+counts["payload-unverified"]+counts["configuration-only"]+counts["filesystem-only"] != expectedCoverage {
 		t.Fatal(counts)
 	}
 }
@@ -133,6 +133,74 @@ func TestFeedDigestMismatchFails(t *testing.T) {
 	if _, e := evaluate(s, c); e == nil {
 		t.Fatal("feed mismatch accepted")
 	}
+}
+
+func TestOpenSSLVersionRules(t *testing.T) {
+	for _, c := range []struct {
+		a, b string
+		want int
+	}{
+		{"4.0.2", "1.1.1l", 1}, {"1.1.1k", "1.1.1l", -1}, {"1.0.2z", "1.0.2za", -1},
+		{"1.1.1", "1.1.1a", -1}, {"1.1.1za", "1.1.1za", 0},
+	} {
+		if got, ok := compareProjectVersions("openssl", c.a, c.b); !ok || got != c.want {
+			t.Fatal(c, got, ok)
+		}
+	}
+	if _, ok := compareProjectVersions("openssl", "4.0.2", "1.1.1-pre9"); ok {
+		t.Fatal("prerelease guessed")
+	}
+	if _, ok := compareProjectVersions("other", "4.0.2", "1.1.1l"); ok {
+		t.Fatal("OpenSSL policy leaked")
+	}
+}
+
+func TestConfigurationPackageDoesNotDuplicateLibraryCVEs(t *testing.T) {
+	s, c := testInput(t)
+	rows, err := evaluate(s, c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	for _, r := range rows {
+		if r.Name == "libssh-config" {
+			if r.CVE != "" || r.Status != "configuration-only" {
+				t.Fatalf("config treated as code: %+v", r)
+			}
+			found = true
+		}
+	}
+	if !found {
+		t.Fatal("configuration evidence disappeared")
+	}
+}
+
+func TestSQLiteEnvironmentCVEIsNotSQLiteCodeButTamperingStaysOpen(t *testing.T) {
+	s, c := testInput(t)
+	check := func(want string) {
+		rows, err := evaluate(s, c)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, r := range rows {
+			if r.Name == "sqlite-libs" && r.CVE == "CVE-2022-31631" {
+				if r.Status != want {
+					t.Fatalf("expected %s: %+v", want, r)
+				}
+				return
+			}
+		}
+		t.Fatal("PHP/SQLite environment evidence disappeared")
+	}
+	check("not-affected-component")
+	for _, a := range c.Artifacts {
+		if a.Name == "sqlite-libs" {
+			for path := range a.Files {
+				s.Files[path] = FileCheck{Hash: "changed"}
+			}
+		}
+	}
+	check("under-investigation")
 }
 func TestChangedExecutableRequiresInvestigation(t *testing.T) {
 	s, c := testInput(t)

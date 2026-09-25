@@ -35,7 +35,7 @@ $previousArch = $env:GOARCH
 Push-Location $PSScriptRoot
 try {
     Remove-Item Env:GOOS,Env:GOARCH -ErrorAction SilentlyContinue
-    & python -m unittest test_feed.py
+    & python -m unittest test_feed.py test_report.py
     if ($LASTEXITCODE -ne 0) { throw 'Feed tests failed' }
     & go test ./...
     if ($LASTEXITCODE -ne 0) { throw 'Module tests failed' }

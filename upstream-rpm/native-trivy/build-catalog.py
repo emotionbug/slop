@@ -54,12 +54,19 @@ def main():
         row["project"] = row["sourcerpm"].rsplit("-", 2)[0]
         row["project"] = override.get("project", row["project"])
         row["components"] = override.get("components", [])
+        role = override.get("package_roles", {}).get(row["name"])
+        if role:
+            if role not in ("configuration-only", "filesystem-only"):
+                raise ValueError("Unsupported component role")
+            row["component_role"] = role
         raw = subprocess.check_output(["rpm", "-qp", "--qf", "[%{FILENAMES}\t%{FILEDIGESTS}\t%{FILEFLAGS}\n]", str(path)], universal_newlines=True)
         for line in raw.splitlines():
             filename, digest, flags = line.split("\t")
             if len(digest) == 64 and not (int(flags) & 1):
                 row["files"][filename] = digest
         row["assessments"] = reviews.get(expected, [])
+        if row.get("component_role") in ("configuration-only", "filesystem-only") and row["files"]:
+            raise ValueError("Configuration-only review disagrees with payload")
         artifacts.append(row)
     if not artifacts:
         raise ValueError("No custom RPMs found")

@@ -247,6 +247,17 @@
       "project": "sssd",
       "components": [],
       "evidence": "Project identity from the full recipe in this exact source RPM. Parallel builds do not replace system packages. Unmapped products retain coverage gaps."
+    },
+    "db6af61f1e508fd5701a9ea0dde0d544605043bb5f6ad56e87b084681eb182fb": {
+      "project": "libssh",
+      "package_roles": {
+        "libssh-config": "configuration-only"
+      }
+    },
+    "a8e35ea0a8e7d01333ce1561cdb4d830ef5c1d2d0dfcdaa2ba9fdea533975614": {
+      "package_roles": {
+        "vim-filesystem": "filesystem-only"
+      }
     }
   }
 }

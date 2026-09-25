@@ -1,6 +1,6 @@
 Name: gdb
 Version: 17.2
-Release: 1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary: gdb upstream EL8 evaluation build
 License: GPLv3+
 URL: https://www.gnu.org/software/gdb/
@@ -17,6 +17,11 @@ and all-CVE remediation are not implied by successful compilation.
 Summary: headless files
 %description headless
 headless files.
+
+%package gdbserver
+Summary: Standalone remote debugger server
+%description gdbserver
+Remote debugger and in-process tracing library, retaining the EL8 package split.
 
 %prep
 %setup -q -n gdb-17.2
@@ -45,13 +50,16 @@ rm -f %{buildroot}/usr/lib64/*.a
 %license COPYING3
 /usr/bin/gdb-add-index
 /usr/bin/gcore
-/usr/bin/gdbserver
 /usr/bin/gstack
 /usr/share/man/man1/*
+%exclude /usr/share/man/man1/gdbserver.1*
 %files headless
 /usr/bin/gdb
 /usr/include/gdb/
 /usr/share/gdb/
 /usr/share/info/*
-/usr/lib64/libinproctrace.so
 /usr/share/man/man5/*
+%files gdbserver
+/usr/bin/gdbserver
+/usr/lib64/libinproctrace.so
+/usr/share/man/man1/gdbserver.1*

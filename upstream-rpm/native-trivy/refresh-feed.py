@@ -22,12 +22,21 @@ def cpe_parts(value):
 
 def normalize(cve, alias):
     matches = []
+    context_matches = []
     def walk(node, conditional=False, negated=False):
         negated = negated or node.get("negate", False)
         conditional = conditional or node.get("operator") == "AND"
         for m in node.get("cpeMatch", []):
             p = cpe_parts(m.get("criteria", ""))
-            if len(p) != 13 or p[2:5] != [alias["part"], alias["vendor"], alias["product"]] or not m.get("vulnerable"):
+            if len(p) != 13 or p[2:5] != [alias["part"], alias["vendor"], alias["product"]]:
+                continue
+            if m.get("vulnerable") is False:
+                # The query can return a dependency/environment CPE of another product.
+                # Retain this distinction; missing configurations alone never mean safe.
+                if not negated:
+                    context_matches.append(m["criteria"])
+                continue
+            if m.get("vulnerable") is not True:
                 continue
             match = {"criteria": m["criteria"], "version": p[5],
                      "conditional": conditional or any(x not in ("*", "-") for x in p[6:]),
@@ -50,7 +59,9 @@ def normalize(cve, alias):
             break
     return {"cve": cve["id"], "severity": severity, "status": cve.get("vulnStatus", "Unknown"),
             "published": cve.get("published", ""), "modified": cve.get("lastModified", ""),
-            "advisory": "https://nvd.nist.gov/vuln/detail/" + cve["id"], "matches": matches}
+            "advisory": "https://nvd.nist.gov/vuln/detail/" + cve["id"], "matches": matches,
+            "context_only": bool(context_matches) and not matches,
+            "context_cpes": sorted(set(context_matches))}
 
 
 def main():
@@ -59,6 +70,7 @@ def main():
     p.add_argument("--output", type=Path, default=Path(__file__).with_name("advisories.json"))
     p.add_argument("--cache-dir", type=Path, required=True)
     p.add_argument("--reuse-cache", action="store_true", help="Resume a dated snapshot; cached retrieval dates stay unchanged")
+    p.add_argument("--fallback-feed", type=Path, help="Retain earlier advisories when a query fails; the refresh error remains visible")
     args = p.parse_args()
     raw = args.mapping.read_bytes().replace(b"\r\n", b"\n")
     mapping = json.loads(raw.decode("utf-8"))
@@ -69,6 +81,9 @@ def main():
             "projects": {}}
     last_request = 0
     failed = False
+    fallback = json.loads(args.fallback_feed.read_text(encoding="utf-8")) if args.fallback_feed else {}
+    if fallback and fallback.get("mapping_sha256") != feed["mapping_sha256"]:
+        raise ValueError("Fallback mapping differs from the current mapping")
     for project, config in sorted(mapping["projects"].items()):
         out = {"queries": [], "advisories": [], "mapping_status": config["mapping_status"]}
         by_cve = {}
@@ -101,6 +116,8 @@ def main():
                         item = normalize(entry["cve"], alias)
                         if item["cve"] in by_cve:
                             previous = by_cve[item["cve"]]
+                            previous["context_only"] = previous.get("context_only", False) and item["context_only"]
+                            previous["context_cpes"] = sorted(set(previous.get("context_cpes", []) + item["context_cpes"]))
                             for match in item["matches"]:
                                 if match not in previous["matches"]:
                                     previous["matches"].append(match)
@@ -116,8 +133,13 @@ def main():
                 failed = True
             out["queries"].append(query)
             print("{} {} {} CVEs {}".format(project, alias["vendor"], query["total_results"], query["status"]), flush=True)
-        out["advisories"] = [by_cve[k] for k in sorted(by_cve)]
         out["query_complete"] = bool(out["queries"]) and all(q["status"] == "ok" for q in out["queries"])
+        if not out["query_complete"] and project in fallback.get("projects", {}):
+            previous = fallback["projects"][project]
+            for item in previous["advisories"]:
+                by_cve.setdefault(item["cve"], item)
+            out["retained_snapshot"] = {"generated_at": fallback.get("generated_at"), "queries": previous["queries"]}
+        out["advisories"] = [by_cve[k] for k in sorted(by_cve)]
         feed["projects"][project] = out
     args.output.write_text(json.dumps(feed, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("Wrote {} projects; failed={}".format(len(feed["projects"]), failed), flush=True)

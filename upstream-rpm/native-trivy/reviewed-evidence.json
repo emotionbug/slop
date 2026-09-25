@@ -327,6 +327,24 @@
         "status": "open",
         "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
       }
+    ],
+    "767ef11c266891b3a5e0c01d6fe36315e76673cc6150cd801470386fbb260c52": [
+      {
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-56389/",
+        "cve": "CVE-2026-56389",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/BISON-YACC-FIX.md",
+        "scope": "Named CVE only; bison artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Same hash-pinned source and both security patches; full upstream suite and installed-binary grammar program/output/header regression checks passed. Only the generic yacc wrapper and manual were excluded from this RPM. Packaging coexistence is not a new CVE fix."
+      },
+      {
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-56389/",
+        "cve": "CVE-2026-56390",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/BISON-YACC-FIX.md",
+        "scope": "Named CVE only; bison artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Same hash-pinned source and both security patches; full upstream suite and installed-binary grammar program/output/header regression checks passed. Only the generic yacc wrapper and manual were excluded from this RPM. Packaging coexistence is not a new CVE fix."
+      }
     ]
   }
 }

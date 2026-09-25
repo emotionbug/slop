@@ -77,7 +77,7 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 func TestRetainedLegacyReleasesMatchIndividually(t *testing.T) {
 	_, c := testInput(t)
 	for _, a := range c.Artifacts {
-		if a.Name != "sed" && a.Name != "gawk" && a.Name != "cpio" && a.Name != "tar" && a.Name != "coreutils" && a.Name != "coreutils-common" {
+		if a.Name != "sed" && a.Name != "gawk" && a.Name != "cpio" && a.Name != "tar" && a.Name != "coreutils" && a.Name != "coreutils-common" && a.Name != "bison" {
 			continue
 		}
 		s := Snapshot{Schema: 1, CatalogHash: catalogueHash(), FeedHash: digest(feedBytes), CreatedAt: "2026-09-25T00:00:00Z", Packages: []RPM{a.RPM}, Files: map[string]FileCheck{}}

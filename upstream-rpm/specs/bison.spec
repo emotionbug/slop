@@ -1,6 +1,6 @@
 Name: bison
 Version: 3.8.2
-Release: 3.linuxoss%{?dist}
+Release: 4.linuxoss%{?dist}
 Summary: GNU parser generator, upstream EL8 candidate
 License: GPLv3+
 URL: https://www.gnu.org/software/bison/
@@ -41,17 +41,19 @@ make %{?_smp_mflags}
 %install
 make DESTDIR=%{buildroot} install
 rm -f %{buildroot}%{_infodir}/dir
+# EL8 byacc owns the generic yacc entry point and its manual. Keep Bison's
+# own binary and liby.a; Bison's yacc-compatible mode remains `bison -y`.
+rm -f %{buildroot}%{_bindir}/yacc %{buildroot}%{_mandir}/man1/yacc.1*
 %check
 make %{?_smp_mflags} check
 %files
 %license COPYING
 %doc NEWS README
 %{_bindir}/bison
-%{_bindir}/yacc
 %{_libdir}/liby.a
 %{_datadir}/bison/
 %{_datadir}/aclocal/bison-i18n.m4
 %{_datadir}/locale/*/LC_MESSAGES/bison*.mo
 %{_docdir}/bison/
-%{_mandir}/man1/*
+%{_mandir}/man1/bison.1*
 %{_infodir}/bison.info*

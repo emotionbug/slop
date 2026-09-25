@@ -1,7 +1,9 @@
 # RHEL 8 x86_64 프록시 다운로드 및 설치 — 2026-09-25
 
-`20260925-3`는 같은 심볼 이름을 쓰는 별도 라이브러리와 함께 제거되는 구버전 파일을
-구분하도록 설치기 검사를 수정했습니다. [변경 내용과 검증](SYMBOL-POLICY-FIX.md).
+`20260925-4`는 Bison의 `yacc` 파일이 기존 byacc와 충돌하는 문제를 수정했습니다.
+[변경 내용과 검증](BISON-YACC-FIX.md). 기존 byacc 파일과 기능은 유지합니다.
+같은 심볼 이름과 함께 제거되는 구버전 파일을 구분하는
+[기존 검사 수정](SYMBOL-POLICY-FIX.md)도 포함합니다.
 sed 등의 `/bin/*` 의존성 수정도 유지합니다([기존 수정](LEGACY-PATH-FIX.md)).
 기존 77개 후보에서 현재 설치된 패키지를
 업그레이드합니다(`noarch`↔`x86_64` 전환 허용). 아직 설치되지 않은 패키지는 필수 의존성일 때만 추가합니다.
@@ -17,22 +19,22 @@ RHSM 등록이나 외부 DNF 저장소 인증은 필요하지 않습니다.
 (
 set -e
 PROXY='http://PROXY_HOST:PORT'
-mkdir -p linuxoss-update-20260925-3
-cd linuxoss-update-20260925-3
-BASE='https://github.com/emotionbug/slop/releases/download/linuxoss-install-20260925-3'
-for FILE in linuxoss-install-20260925-3.tar.gz linuxoss-install-20260925-3.tar.gz.sha256; do
+mkdir -p linuxoss-update-20260925-4
+cd linuxoss-update-20260925-4
+BASE='https://github.com/emotionbug/slop/releases/download/linuxoss-install-20260925-4'
+for FILE in linuxoss-install-20260925-4.tar.gz linuxoss-install-20260925-4.tar.gz.sha256; do
 wget -e use_proxy=yes -e https_proxy="$PROXY" -e http_proxy="$PROXY" \
   --timeout=60 --tries=3 \
   -O "$FILE" "$BASE/$FILE"
 done
-sha256sum -c linuxoss-install-20260925-3.tar.gz.sha256
-tar -xzf linuxoss-install-20260925-3.tar.gz
-cd linuxoss-install-20260925-3
+sha256sum -c linuxoss-install-20260925-4.tar.gz.sha256
+tar -xzf linuxoss-install-20260925-4.tar.gz
+cd linuxoss-install-20260925-4
 sudo bash install.sh apply
 )
 ```
 
-[릴리스와 체크섬 파일](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-3).
+[릴리스와 체크섬 파일](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-4).
 다운로드 실패 또는 체크섬 불일치 시 설치하지 않습니다.
 
 `apply`가 체크섬, 의존성, 해당 라이브러리에서 제거된 심볼의 직접 사용 여부,
@@ -101,9 +103,9 @@ RPM 조회, `readelf`, `ldconfig -p`만 사용합니다. 검사 대상 프로그
 
 ## 범위와 중단 조건
 
-- 기준: 기존 77 RPM 중 sed/coreutils/coreutils-common/gawk/cpio/tar 6개를 재빌드한
-  `linuxoss-install-20260925-2`와 RPM/Trivy 데이터가 동일한 설치기 수정판
-  `linuxoss-install-20260925-3`입니다.
+- 기준: `linuxoss-install-20260925-3`의 77 RPM 중 Bison 1개를 release 4로
+  교체했습니다. Trivy 카탈로그/모듈도 새 Bison 식별 정보를 포함합니다.
+  나머지 76 RPM과 기존 설치기의 심볼 검사 수정은 유지합니다.
 - 전체 342개 제작본을 한 서버에 모두 설치하는 스크립트가 아닙니다.
   커널·GCC·glibc·systemd와 `/opt` 평가본의 일괄 전환은 포함하지 않습니다.
 - 새 OpenSSL은 해당 후보의 의존성인 `/opt`용 `linuxoss-openssl4`입니다.
@@ -126,16 +128,19 @@ RPM 조회, `readelf`, `ldconfig -p`만 사용합니다. 검사 대상 프로그
 
 ## 출처
 
-수정판 설치기 검증: 기존 CUPS 라이브러리를 추가한 UBI 8.10 참조 컨테이너에서
-40개 업그레이드와 필수 의존성 2개 추가, `dnf check`, CUPS 로딩과 경로 의존성
-검사가 통과했습니다. 남아 있는 외부 CGI 소비자는 설치 전에 차단했습니다.
-Trivy의 새 RPM 6개 식별은 동일 RPM을 쓰는 이전 수정판에서 확인했으며,
-이번에는 RPM/Trivy 데이터가 바뀌지 않아 스캔을 반복하지 않았습니다.
+수정판 설치기 검증: Bison/byacc와 CUPS가 있는 UBI 8.10 참조 컨테이너에서
+41개 업그레이드와 필수 의존성 2개 추가, `dnf check`, byacc 파일 보존 및
+Bison의 보안 회귀 검사가 통과했습니다. Bison/byacc 참조 RPM은 동일 EL8 버전의
+Rocky 배포본이며 서버의 Red Hat 바이너리와 동일하다는 의미는 아닙니다.
+Trivy 카탈로그는 새 Bison 해시를 포함하도록 갱신했고 기존 피드는 유지했습니다.
+오프라인 통합 스캔에서 새 Bison RPM 식별과 기존 보안 패치 2건의 해시 일치를
+확인했습니다. 이 결과만으로 모든 취약점이 해결되었다는 의미는 아닙니다.
 참조 환경은 binutils·Perl·Cairo·graphite2 등의 기본 의존성을 갖춘 조건입니다.
 이 개수는 실제 서버의 적용 개수나 취약점 해결 개수가 아닙니다.
 
 - RPM/SRPM: https://github.com/emotionbug/slop/releases/tag/upstream-rpm-candidates-20260924-7
 - 수정 RPM/SRPM: https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-2
+- Bison 수정 RPM/SRPM: https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-4
 - Trivy v3: https://github.com/emotionbug/slop/releases/tag/trivy-native-rpm-20260924-3
 - 원래 후보 압축 SHA256: `f701fdbb1031ace9af6a4248c3b6ed309a563341fa7c9d8cbe7391bd8c85682b`
 - 원래 native 압축 SHA256: `278f91968a0178208029ff6b747149f50f7a18924e25c88afeca031481cc84a0`

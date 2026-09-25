@@ -71,6 +71,32 @@ Java DB를 중복 포함하지 않습니다. RPM 설치 자체는 Trivy 없이�
 이 검사는 한 번 실행하며 공식 RHEL 결과와 자체 RPM 근거를 함께 표시합니다.
 피드/DB 기준 이후의 신규 CVE는 별도 데이터 갱신 전에는 반영되지 않습니다.
 
+## 심볼 검사에서 중단된 경우
+
+`symbol-audit.json`의 일치는 취약점 개수가 아니라 ELF가 참조하는 심볼 이름입니다.
+여러 라이브러리가 같은 이름을 제공하거나, 참조 파일도 같은 트랜잭션에서 교체될 수
+있으므로 이름 일치만으로 실제 ABI 충돌을 단정하지 않습니다. `.build-id` 경로도
+실제 ELF 경로로 해석해야 합니다. 기존 설치기의 차단 조건을 임의로 삭제하지 마세요.
+
+[`diagnose-symbol-audit.py`](diagnose-symbol-audit.py)는 기존 검사에서 걸린 파일만
+상세히 조사합니다. 실제 경로·RPM 소유자·DT_NEEDED·해당 심볼의 import/export와
+직접 의존 라이브러리 후보, 디버그 링크 이외의 오류, 예정 트랜잭션을 JSON으로
+출력합니다. 기본값은 가장 최근 `/var/log/linuxoss-install/run-*/symbol-audit.json`입니다.
+
+```bash
+sudo /usr/libexec/platform-python diagnose-symbol-audit.py > symbol-details.json
+# 특정 실행 결과를 선택하려면:
+sudo /usr/libexec/platform-python diagnose-symbol-audit.py \
+  /var/log/linuxoss-install/run-실제경로/symbol-audit.json > symbol-details.json
+```
+
+RPM 조회, `readelf`, `ldconfig -p`만 사용합니다. 검사 대상 프로그램이나 `ldd`를 실행하지
+않고 패키지·서비스·링크를 변경하지 않습니다. 전체 파일 재검사도 하지 않습니다.
+라이브러리 후보는 실행 중의 실제 바인딩 증명이 아니며, 이 결과로 설치를 자동 승인하거나
+기존 검사를 우회하지 않습니다. 서버 경로와 패키지 정보가 들어 있는 결과 파일은
+공개 저장소에 올리지 마세요. EL8 Python 3.6에서 실제 ELF·심볼 제공 라이브러리·
+별칭 링크·끊어진 링크를 이용한 진단 테스트를 통과했습니다.
+
 ## 범위와 중단 조건
 
 - 기준: 기존 77 RPM 중 sed/coreutils/coreutils-common/gawk/cpio/tar 6개를 재빌드한

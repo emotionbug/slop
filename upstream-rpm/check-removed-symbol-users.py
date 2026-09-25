@@ -44,6 +44,7 @@ def main():
         raise SystemExit('readelf is required (binutils package)')
     roots = list(dict.fromkeys(([] if args.only_roots else DEFAULT_ROOTS) + args.roots))
     seen, matches, errors = set(), [], []
+    matched_inodes = {}
     directory_links = {}
     directory_roots = [os.path.realpath(p) for p in roots if os.path.isdir(p)]
     scanned = 0
@@ -101,9 +102,12 @@ def main():
             try:
                 p = pathlib.Path(filename)
                 file_stat = p.stat()
-                if not stat.S_ISREG(file_stat.st_mode) or (file_stat.st_dev,file_stat.st_ino) in seen:
+                inode = (file_stat.st_dev, file_stat.st_ino)
+                if inode in matched_inodes:
+                    matched_inodes[inode]['aliases'].append(str(p))
+                if not stat.S_ISREG(file_stat.st_mode) or inode in seen:
                     continue
-                seen.add((file_stat.st_dev,file_stat.st_ino))
+                seen.add(inode)
                 with p.open('rb') as stream:
                     if stream.read(4) != b'\x7fELF':
                         continue
@@ -138,7 +142,10 @@ def main():
                                 if name in symbols:
                                     found.add(name)
                 if found:
-                    matches.append({'path':str(p),'symbols':sorted(found)})
+                    item = {'path':str(p), 'resolved_path':os.path.realpath(str(p)),
+                            'aliases':[str(p)], 'symbols':sorted(found)}
+                    matched_inodes[inode] = item
+                    matches.append(item)
             except (OSError, subprocess.TimeoutExpired) as error:
                 record_error(filename, error)
     print(json.dumps({'audit_version':3,'read_only':True,'roots':roots,'elf_files_scanned':scanned,

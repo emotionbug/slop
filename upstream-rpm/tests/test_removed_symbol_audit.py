@@ -59,6 +59,8 @@ class RemovedSymbolAuditTests(unittest.TestCase):
         self.assertEqual(result['elf_files_scanned'], 2)  # provider + deduplicated consumer
         self.assertEqual(len(result['direct_import_matches']), 1)
         self.assertEqual(result['direct_import_matches'][0]['symbols'], sorted(AUDIT.SYMBOLS))
+        self.assertEqual(set(result['direct_import_matches'][0]['aliases']),
+                         {str(executable), str(self.root / 'hardlink')})
 
     def test_missing_symlink_is_not_silently_ignored(self):
         path = self.root / 'dangling'

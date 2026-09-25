@@ -1,7 +1,9 @@
 # RHEL 8 x86_64 프록시 다운로드 및 설치 — 2026-09-25
 
-`20260925-2`는 sed 등의 `/bin/*` 의존성 누락을 보완한 수정판입니다.
-[수정 내용과 검증](LEGACY-PATH-FIX.md). 기존 77개 후보에서 현재 설치된 패키지를
+`20260925-3`는 같은 심볼 이름을 쓰는 별도 라이브러리와 함께 제거되는 구버전 파일을
+구분하도록 설치기 검사를 수정했습니다. [변경 내용과 검증](SYMBOL-POLICY-FIX.md).
+sed 등의 `/bin/*` 의존성 수정도 유지합니다([기존 수정](LEGACY-PATH-FIX.md)).
+기존 77개 후보에서 현재 설치된 패키지를
 업그레이드합니다(`noarch`↔`x86_64` 전환 허용). 아직 설치되지 않은 패키지는 필수 의존성일 때만 추가합니다.
 이전에 제거한 도구를 77개 모두 재설치하는 방식이 아닙니다.
 
@@ -15,22 +17,22 @@ RHSM 등록이나 외부 DNF 저장소 인증은 필요하지 않습니다.
 (
 set -e
 PROXY='http://PROXY_HOST:PORT'
-mkdir -p linuxoss-update-20260925-2
-cd linuxoss-update-20260925-2
-BASE='https://github.com/emotionbug/slop/releases/download/linuxoss-install-20260925-2'
-for FILE in linuxoss-install-20260925-2.tar.gz linuxoss-install-20260925-2.tar.gz.sha256; do
+mkdir -p linuxoss-update-20260925-3
+cd linuxoss-update-20260925-3
+BASE='https://github.com/emotionbug/slop/releases/download/linuxoss-install-20260925-3'
+for FILE in linuxoss-install-20260925-3.tar.gz linuxoss-install-20260925-3.tar.gz.sha256; do
 wget -e use_proxy=yes -e https_proxy="$PROXY" -e http_proxy="$PROXY" \
   --timeout=60 --tries=3 \
   -O "$FILE" "$BASE/$FILE"
 done
-sha256sum -c linuxoss-install-20260925-2.tar.gz.sha256
-tar -xzf linuxoss-install-20260925-2.tar.gz
-cd linuxoss-install-20260925-2
+sha256sum -c linuxoss-install-20260925-3.tar.gz.sha256
+tar -xzf linuxoss-install-20260925-3.tar.gz
+cd linuxoss-install-20260925-3
 sudo bash install.sh apply
 )
 ```
 
-[릴리스와 체크섬 파일](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-2).
+[릴리스와 체크섬 파일](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-3).
 다운로드 실패 또는 체크섬 불일치 시 설치하지 않습니다.
 
 `apply`가 체크섬, 의존성, 해당 라이브러리에서 제거된 심볼의 직접 사용 여부,
@@ -100,7 +102,8 @@ RPM 조회, `readelf`, `ldconfig -p`만 사용합니다. 검사 대상 프로그
 ## 범위와 중단 조건
 
 - 기준: 기존 77 RPM 중 sed/coreutils/coreutils-common/gawk/cpio/tar 6개를 재빌드한
-  `linuxoss-install-20260925-2`. Trivy 통합 v3 카탈로그에 수정 RPM 6개를 추가했습니다.
+  `linuxoss-install-20260925-2`와 RPM/Trivy 데이터가 동일한 설치기 수정판
+  `linuxoss-install-20260925-3`입니다.
 - 전체 342개 제작본을 한 서버에 모두 설치하는 스크립트가 아닙니다.
   커널·GCC·glibc·systemd와 `/opt` 평가본의 일괄 전환은 포함하지 않습니다.
 - 새 OpenSSL은 해당 후보의 의존성인 `/opt`용 `linuxoss-openssl4`입니다.
@@ -109,9 +112,12 @@ RPM 조회, `readelf`, `ldconfig -p`만 사용합니다. 검사 대상 프로그
   모두 없으면 적용 전에 중단합니다. Perl·graphite2·X11 라이브러리 등은 이 조건에
   해당할 수 있습니다. 의존성을 무시하거나 자동으로 패키지를 지우지 않습니다.
 - 제거·다운그레이드·다른 이름으로의 교체·묶음 외 패키지 설치를 거절합니다.
-- 제거된 심볼 사용이나 검사 누락이 있으면 `symbol-audit.json`을 남기고 중단합니다.
-  대상 ELF가 이미 없는 `.build-id` 디버그 링크만 중단 사유에서 제외하고
-  `symbol-audit-policy.json`에 따로 기록합니다. 실제 파일의 검사 오류는 중단합니다.
+- 심볼 일치 결과는 변경 대상과 제공 라이브러리를 함께 판단해
+  `symbol-audit-policy.json`에 기록합니다. 확인되지 않은 사용과 검사 오류는 중단합니다.
+  기존 끊어진 심볼릭 링크는 대상을 재확인하고 경고로 남기며 삭제하거나 복구하지
+  않습니다. 해당 프로그램이 정상이라는 의미도 아닙니다. 존재하는 `/usr/src`는
+  자동으로 추가 검사해 커널 소스 링크를 포함합니다. 자세한 조건은
+  [심볼 검사 수정 내용](SYMBOL-POLICY-FIX.md)을 참조하세요.
   일치가 없다는 결과만으로 모든 플러그인, dlsym, JNI, 실제 운영 호환성이
   검증되는 것은 아닙니다. 기본 경로 밖의 프로그램은 반드시 경로를 추가하세요.
 - 자동 재부팅이나 Java/Tomcat 재시작 명령은 없습니다. 개별 RPM의 scriptlet은
@@ -120,9 +126,11 @@ RPM 조회, `readelf`, `ldconfig -p`만 사용합니다. 검사 대상 프로그
 
 ## 출처
 
-수정판 설치기 검증: UBI 8.10 참조 컨테이너에서 38개 업그레이드와 필수 의존성 2개
-추가, `dnf check`, 경로 의존성·실행 검사가 통과했습니다. 기존 경로를 요구하는
-소비 패키지도 유지했습니다. Trivy 오프라인 검사에서 새 RPM 6개의 식별을 확인했습니다.
+수정판 설치기 검증: 기존 CUPS 라이브러리를 추가한 UBI 8.10 참조 컨테이너에서
+40개 업그레이드와 필수 의존성 2개 추가, `dnf check`, CUPS 로딩과 경로 의존성
+검사가 통과했습니다. 남아 있는 외부 CGI 소비자는 설치 전에 차단했습니다.
+Trivy의 새 RPM 6개 식별은 동일 RPM을 쓰는 이전 수정판에서 확인했으며,
+이번에는 RPM/Trivy 데이터가 바뀌지 않아 스캔을 반복하지 않았습니다.
 참조 환경은 binutils·Perl·Cairo·graphite2 등의 기본 의존성을 갖춘 조건입니다.
 이 개수는 실제 서버의 적용 개수나 취약점 해결 개수가 아닙니다.
 

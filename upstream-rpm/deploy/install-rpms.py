@@ -1,6 +1,7 @@
 #!/usr/libexec/platform-python
 """Use EL8 DNF to upgrade installed names only, with local hard dependencies."""
 import hashlib
+import importlib.util
 import json
 import logging
 import os
@@ -106,26 +107,44 @@ def main():
         if not changed:
             print('Nothing to do: no applicable upgrades in this candidate subset.', flush=True)
             return
-        # Check only symbol removals belonging to libraries in this transaction.
+        # Include old paths: a library removed entirely is absent from incoming files.
         changed_files = set()
         for package in incoming:
             changed_files.update(subprocess.check_output(['rpm', '-qpl', package.localPkg()]).decode().splitlines())
+        outgoing_flags, outgoing_owners = {}, set()
+        ts = rpm.TransactionSet()
+        for package in outgoing:
+            headers = [h for h in ts.dbMatch('name', package.name)
+                       if h['arch'] == package.arch and h['version'] == package.version
+                       and h['release'] == package.release
+                       and int(h['epoch'] or 0) == int(package.epoch or 0)]
+            if len(headers) != 1:
+                fail('Cannot identify outgoing RPM header: ' + str(package))
+            header = headers[0]
+            outgoing_owners.add('{}\t{}:{}-{}\t{}'.format(package.name, package.epoch or 0,
+                package.version, package.release, package.arch))
+            for name, flags in zip(header['filenames'], header['fileflags']):
+                outgoing_flags[name] = outgoing_flags.get(name, 0) | int(flags)
         symbols = json.loads((root / 'expected-export-removals.json').read_text())
-        symbols['libraries'] = [item for item in symbols['libraries'] if item['library'] in changed_files]
+        symbols['libraries'] = [item for item in symbols['libraries']
+                               if item['library'] in changed_files or item['library'] in outgoing_flags]
         (report / 'transaction-symbols.json').write_text(json.dumps(symbols))
         audit_file = report / 'symbol-audit.json'
+        extra_roots = sys.argv[4:]
+        if Path('/usr/src').is_dir():
+            extra_roots = ['/usr/src'] + extra_roots
         with audit_file.open('w') as stream:
             result = subprocess.run([sys.executable, str(root / 'check-removed-symbol-users.py'),
-                                     '--symbols-file', str(report / 'transaction-symbols.json')] + sys.argv[4:], stdout=stream)
+                                     '--symbols-file', str(report / 'transaction-symbols.json')] + extra_roots, stdout=stream)
         audit = json.loads(audit_file.read_text())
-        ignored = [item for item in audit['errors'] if item.get('kind') == 'broken_symlink' and
-                   item.get('path', '').startswith(('/usr/lib/.build-id/', '/usr/lib/debug/.build-id/'))]
-        blocking = [item for item in audit['errors'] if item not in ignored]
-        (report / 'symbol-audit-policy.json').write_text(json.dumps({
-            'ignored_dangling_debug_links': ignored, 'blocking_errors': blocking,
-            'reason': 'Dangling build-id debug metadata has no existing ELF target; raw audit is preserved.'}, indent=2))
-        if result.returncode not in (0, 1, 2) or audit.get('audit_version') != 3 or blocking or \
-                audit['direct_import_matches'] or audit['directory_symlinks_outside_roots']:
+        spec = importlib.util.spec_from_file_location('symbol_policy', str(root / 'symbol-policy.py'))
+        policy_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(policy_module)
+        policy = policy_module.classify(audit, symbols, changed_files, outgoing_flags, outgoing_owners)
+        (report / 'symbol-audit-policy.json').write_text(json.dumps(policy, indent=2) + '\n')
+        print('Symbol review: {} accounted for; {} blocking; {} pre-existing dangling links (not repaired).'.format(
+            len(policy['accepted_matches']), len(policy['blocking_matches']), len(policy['preexisting_dangling_links'])), flush=True)
+        if result.returncode not in (0, 1, 2) or not policy['allow_transaction']:
             fail('Symbol imports or incomplete audit found; see symbol-audit.json. No RPMs installed.')
         if mode == 'check':
             # DNF's actual RPM transaction test, including file conflicts, without installing.

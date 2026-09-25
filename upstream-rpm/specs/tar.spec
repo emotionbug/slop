@@ -1,7 +1,7 @@
 Name: tar
 Epoch: 2
 Version: 1.35
-Release: 2.linuxoss%{?dist}
+Release: 3.linuxoss%{?dist}
 Summary: GNU tar, upstream EL8 candidate
 License: GPLv3+
 URL: https://www.gnu.org/software/tar/
@@ -33,6 +33,7 @@ Patch23: tar-exclude17.patch
 Patch24: tar-exclude18.patch
 BuildRequires: gcc, make, libselinux-devel, libacl-devel, libattr-devel
 Vendor: Linux OSS local build
+Provides: /bin/tar /bin/gtar
 %description
 GNU tar with ACL, SELinux and extended attribute support. This latest release
 alone is not an assertion that every currently reported tar CVE is fixed.
@@ -96,6 +97,7 @@ export LDFLAGS='-Wl,--build-id -Wl,-z,relro,-z,now'
 make %{?_smp_mflags}
 %install
 make DESTDIR=%{buildroot} install
+ln -s tar %{buildroot}%{_bindir}/gtar
 rm -f %{buildroot}%{_infodir}/dir
 %check
 make %{?_smp_mflags} check
@@ -103,6 +105,7 @@ make %{?_smp_mflags} check
 %license COPYING
 %doc NEWS README
 %{_bindir}/tar
+%{_bindir}/gtar
 %{_mandir}/man1/tar.1*
 %{_infodir}/tar.info*
 %{_datadir}/locale/*/LC_MESSAGES/tar.mo

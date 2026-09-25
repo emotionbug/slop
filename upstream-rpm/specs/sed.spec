@@ -1,12 +1,14 @@
 Name: sed
 Version: 4.10
-Release: 1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary: GNU stream editor, upstream EL8 candidate
 License: GPLv3+
 URL: https://www.gnu.org/software/sed/
 Source0: sed-4.10.tar.xz
 BuildRequires: gcc, make, libselinux-devel, libacl-devel
 Vendor: Linux OSS local build
+# EL8 /bin is a symlink to /usr/bin, but RPM file dependencies use exact paths.
+Provides: /bin/sed
 %description
 GNU sed with the upstream regression suite and EL8 runtime validation.
 %prep

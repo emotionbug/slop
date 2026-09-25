@@ -1,37 +1,37 @@
 # RHEL 8 x86_64 프록시 다운로드 및 설치 — 2026-09-25
 
-기존 77개 참조 검증 RPM에서 현재 서버에 설치된 이름·아키텍처의 패키지를
+`20260925-2`는 sed 등의 `/bin/*` 의존성 누락을 보완한 수정판입니다.
+[수정 내용과 검증](LEGACY-PATH-FIX.md). 기존 77개 후보에서 현재 설치된 패키지를
 업그레이드합니다(`noarch`↔`x86_64` 전환 허용). 아직 설치되지 않은 패키지는 필수 의존성일 때만 추가합니다.
 이전에 제거한 도구를 77개 모두 재설치하는 방식이 아닙니다.
 
 ## 프록시로 다운로드하고 설치
 
 서버에서 프록시 주소를 지정해 실행합니다. 약 43 MB 묶음을 GitHub에서 받은 뒤
-고정 SHA256과 대조하고 설치합니다. RPM 설치 단계는 로컬 파일만 사용하므로
+릴리스의 SHA256과 대조하고 설치합니다. RPM 설치 단계는 로컬 파일만 사용하므로
 RHSM 등록이나 외부 DNF 저장소 인증은 필요하지 않습니다.
 
 ```bash
 (
 set -e
 PROXY='http://PROXY_HOST:PORT'
-mkdir -p linuxoss-update-20260925
-cd linuxoss-update-20260925
+mkdir -p linuxoss-update-20260925-2
+cd linuxoss-update-20260925-2
+BASE='https://github.com/emotionbug/slop/releases/download/linuxoss-install-20260925-2'
+for FILE in linuxoss-install-20260925-2.tar.gz linuxoss-install-20260925-2.tar.gz.sha256; do
 wget -e use_proxy=yes -e https_proxy="$PROXY" -e http_proxy="$PROXY" \
   --timeout=60 --tries=3 \
-  -O linuxoss-install-20260925.tar.gz \
-  https://github.com/emotionbug/slop/releases/download/linuxoss-install-20260925/linuxoss-install-20260925.tar.gz
-printf '%s  %s\n' \
-  92d32c93d770347b9e713759d58fae6c651170f0ed8bb0d317008bd835dd04d3 \
-  linuxoss-install-20260925.tar.gz | sha256sum -c -
-tar -xzf linuxoss-install-20260925.tar.gz
-cd linuxoss-install-20260925
+  -O "$FILE" "$BASE/$FILE"
+done
+sha256sum -c linuxoss-install-20260925-2.tar.gz.sha256
+tar -xzf linuxoss-install-20260925-2.tar.gz
+cd linuxoss-install-20260925-2
 sudo bash install.sh apply
 )
 ```
 
-[릴리스와 체크섬 파일](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925).
-다운로드 실패 또는 체크섬 불일치 시 설치하지 않습니다. 압축 안의 설치기는 이미
-검증한 것과 동일하며, 동봉 안내의 반입 단계는 위 다운로드 단계로 대신합니다.
+[릴리스와 체크섬 파일](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-2).
+다운로드 실패 또는 체크섬 불일치 시 설치하지 않습니다.
 
 `apply`가 체크섬, 의존성, 해당 라이브러리에서 제거된 심볼의 직접 사용 여부,
 RPM 트랜잭션 검사를 수행한 다음 설치합니다. 별도의 `check`를 먼저 실행할
@@ -73,7 +73,8 @@ Java DB를 중복 포함하지 않습니다. RPM 설치 자체는 Trivy 없이�
 
 ## 범위와 중단 조건
 
-- 기준: `upstream-rpm-candidates-20260924-7`의 77 RPM, Trivy 통합 v3.
+- 기준: 기존 77 RPM 중 sed/coreutils/coreutils-common/gawk/cpio/tar 6개를 재빌드한
+  `linuxoss-install-20260925-2`. Trivy 통합 v3 카탈로그에 수정 RPM 6개를 추가했습니다.
 - 전체 342개 제작본을 한 서버에 모두 설치하는 스크립트가 아닙니다.
   커널·GCC·glibc·systemd와 `/opt` 평가본의 일괄 전환은 포함하지 않습니다.
 - 새 OpenSSL은 해당 후보의 의존성인 `/opt`용 `linuxoss-openssl4`입니다.
@@ -93,12 +94,14 @@ Java DB를 중복 포함하지 않습니다. RPM 설치 자체는 Trivy 없이�
 
 ## 출처
 
-이번 설치기 검증: UBI 8.10 참조 컨테이너에서 29개 업그레이드와 필수 의존성 2개
-추가, `dnf check`, curl 및 DNF 실행이 통과했습니다. 확인 모드 전후의 RPM 목록도
-동일했습니다. 참조 환경은 binutils·Perl·Cairo·graphite2를 먼저 갖춘 조건입니다.
+수정판 설치기 검증: UBI 8.10 참조 컨테이너에서 38개 업그레이드와 필수 의존성 2개
+추가, `dnf check`, 경로 의존성·실행 검사가 통과했습니다. 기존 경로를 요구하는
+소비 패키지도 유지했습니다. Trivy 오프라인 검사에서 새 RPM 6개의 식별을 확인했습니다.
+참조 환경은 binutils·Perl·Cairo·graphite2 등의 기본 의존성을 갖춘 조건입니다.
 이 개수는 실제 서버의 적용 개수나 취약점 해결 개수가 아닙니다.
 
 - RPM/SRPM: https://github.com/emotionbug/slop/releases/tag/upstream-rpm-candidates-20260924-7
+- 수정 RPM/SRPM: https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-2
 - Trivy v3: https://github.com/emotionbug/slop/releases/tag/trivy-native-rpm-20260924-3
 - 원래 후보 압축 SHA256: `f701fdbb1031ace9af6a4248c3b6ed309a563341fa7c9d8cbe7391bd8c85682b`
 - 원래 native 압축 SHA256: `278f91968a0178208029ff6b747149f50f7a18924e25c88afeca031481cc84a0`

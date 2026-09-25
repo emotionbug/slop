@@ -6,7 +6,9 @@ import sys
 import tarfile
 
 root, output = map(Path, sys.argv[1:3])
-name = 'linuxoss-install-20260925'
+if not output.name.endswith('.tar.gz'):
+    raise SystemExit('Output must end in .tar.gz')
+name = output.name[:-len('.tar.gz')]
 files = sorted(p for p in root.rglob('*') if p.is_file() and p != root / 'SHA256SUMS')
 hashes = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 (root / 'SHA256SUMS').write_text(''.join('{}  {}\n'.format(v, k) for k, v in hashes.items()), encoding='utf-8', newline='\n')

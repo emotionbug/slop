@@ -23,7 +23,16 @@ func testInput(t *testing.T) (Snapshot, Catalog) {
 		t.Fatal(err)
 	}
 	s := Snapshot{Schema: 1, CatalogHash: catalogueHash(), FeedHash: digest(feedBytes), CreatedAt: "2026-09-24T00:00:00Z", Files: map[string]FileCheck{}}
-	for _, a := range c.Artifacts {
+	// A catalogue can retain old and rebuilt RPMs; only one non-installonly
+	// version of each name/arch is installed in this fixture at a time.
+	selected := map[string]int{}
+	for i, a := range c.Artifacts {
+		selected[a.Name+"."+a.Arch] = i
+	}
+	for i, a := range c.Artifacts {
+		if selected[a.Name+"."+a.Arch] != i {
+			continue
+		}
 		s.Packages = append(s.Packages, a.RPM)
 		for p, h := range a.Files {
 			s.Files[p] = FileCheck{Hash: h}
@@ -45,7 +54,14 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 		}
 	}
 	expectedFixed, expectedCoverage := 0, 0
+	installed := map[RPM]bool{}
+	for _, p := range s.Packages {
+		installed[p] = true
+	}
 	for _, a := range c.Artifacts {
+		if !installed[a.RPM] {
+			continue
+		}
 		expectedCoverage += 1 + len(a.Components)
 		for _, r := range a.Assessments {
 			if r.Status == "fixed" && len(a.Files) > 0 {
@@ -55,6 +71,28 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 	}
 	if counts["fixed-evidence-matched"] != expectedFixed || counts["coverage-gap"]+counts["payload-unverified"] != expectedCoverage {
 		t.Fatal(counts)
+	}
+}
+
+func TestRetainedLegacyReleasesMatchIndividually(t *testing.T) {
+	_, c := testInput(t)
+	for _, a := range c.Artifacts {
+		if a.Name != "sed" && a.Name != "gawk" && a.Name != "cpio" && a.Name != "tar" && a.Name != "coreutils" && a.Name != "coreutils-common" {
+			continue
+		}
+		s := Snapshot{Schema: 1, CatalogHash: catalogueHash(), FeedHash: digest(feedBytes), CreatedAt: "2026-09-25T00:00:00Z", Packages: []RPM{a.RPM}, Files: map[string]FileCheck{}}
+		for p, h := range a.Files {
+			s.Files[p] = FileCheck{Hash: h}
+		}
+		rows, err := evaluate(s, c)
+		if err != nil || len(rows) == 0 {
+			t.Fatalf("%s %s: rows=%d err=%v", a.Name, a.Release, len(rows), err)
+		}
+		for _, row := range rows {
+			if row.Status == "artifact-mismatch" || row.Status == "payload-mismatch" || row.Status == "unregistered" {
+				t.Fatalf("retained artifact was not matched: %+v", row)
+			}
+		}
 	}
 }
 

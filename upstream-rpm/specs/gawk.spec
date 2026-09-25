@@ -1,13 +1,14 @@
 %global _find_debuginfo_dwz_opts %{nil}
 Name: gawk
 Version: 5.4.1
-Release: 1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary: GNU awk, upstream EL8 candidate
 License: GPLv3+
 URL: https://www.gnu.org/software/gawk/
 Source0: gawk-5.4.1.tar.xz
 BuildRequires: gcc, make, readline-devel, mpfr-devel, gmp-devel
 Vendor: Linux OSS local build
+Provides: /bin/awk /bin/gawk
 %description
 GNU awk with arbitrary precision support, loadable extensions and tests.
 %prep

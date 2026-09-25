@@ -1,6 +1,6 @@
 Name: coreutils
 Version: 9.12
-Release: 1.linuxoss%{?dist}
+Release: 2.linuxoss%{?dist}
 Summary: coreutils upstream EL8 evaluation build
 License: GPLv3+
 URL: https://www.gnu.org/software/coreutils/
@@ -14,6 +14,12 @@ BuildRequires: gcc, make, gmp-devel, libacl-devel, libattr-devel, libcap-devel, 
 Vendor: Linux OSS local build
 Requires: coreutils-common = %{version}-%{release}
 Conflicts: coreutils-single
+# Preserve EL8's exact legacy file capabilities across the /usr merge.
+Provides: /bin/basename /bin/cat /bin/chgrp /bin/chmod /bin/chown /bin/cp /bin/cut
+Provides: /bin/date /bin/dd /bin/df /bin/echo /bin/env /bin/false /bin/ln /bin/ls
+Provides: /bin/mkdir /bin/mknod /bin/mktemp /bin/mv /bin/nice /bin/pwd /bin/readlink
+Provides: /bin/rm /bin/rmdir /bin/sleep /bin/sort /bin/stty /bin/sync /bin/touch
+Provides: /bin/true /bin/uname
 
 %description
 Upstream build for EL8 evaluation. Target deployment requires separate review.

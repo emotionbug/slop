@@ -1,6 +1,6 @@
 Name: cpio
 Version: 2.15
-Release: 2.linuxoss%{?dist}
+Release: 3.linuxoss%{?dist}
 Summary: GNU cpio, upstream EL8 candidate
 License: GPLv3+
 URL: https://www.gnu.org/software/cpio/
@@ -10,6 +10,7 @@ Patch1: cpio-CVE-2026-66485.patch
 Patch2: cpio-CVE-2026-66486.patch
 BuildRequires: gcc, make
 Vendor: Linux OSS local build
+Provides: /bin/cpio
 %description
 GNU cpio with the upstream test suite. Unreleased upstream security fixes
 require separate review; changing the release number is not remediation proof.

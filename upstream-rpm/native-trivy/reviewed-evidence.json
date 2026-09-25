@@ -223,6 +223,110 @@
         "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/MCPP-EVIDENCE.md",
         "verification": "Pinned Debian 2.7.2-5.3 patch series plus local zero-length bounds fix. Both official bug 13 reproducers have zero Valgrind invalid-memory errors; macro expansion smoke passed."
       }
+    ],
+    "93ed42720a1963e9ead362714bdb5b62854228617b0529fc9b36ac5c834033f5": [
+      {
+        "advisory": "https://cert.pl/en/posts/2026/08/CVE-2026-66484/",
+        "cve": "CVE-2026-66484",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; cpio artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://cert.pl/en/posts/2026/08/CVE-2026-66484/",
+        "cve": "CVE-2026-66485",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; cpio artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://cert.pl/en/posts/2026/08/CVE-2026-66484/",
+        "cve": "CVE-2026-66486",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; cpio artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      }
+    ],
+    "e8d6a3c50f17367fd37a8745c558d5ccb89a579a8f95c57e8be73736def024ef": [
+      {
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "cve": "CVE-2026-40467",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "cve": "CVE-2026-40468",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "cve": "CVE-2026-40469",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://cert.pl/en/posts/2026/07/CVE-2026-40467/",
+        "cve": "CVE-2026-40553",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; gawk artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      }
+    ],
+    "ef6a8495b80166adb4d2fa697b1feceaa7a4ccf93d67ac61af86eff9af531049": [
+      {
+        "advisory": "https://cert.pl/en/posts/2026/04/CVE-2026-5958/",
+        "cve": "CVE-2026-5958",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; sed artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      }
+    ],
+    "a04df483813847ea23eb697fb97ec45c00885f204df8ac40bea6622770787f78": [
+      {
+        "advisory": "https://ubuntu.com/security/notices/USN-8477-3",
+        "cve": "CVE-2025-45582",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; tar artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://ubuntu.com/security/notices/USN-8477-3",
+        "cve": "CVE-2026-5704",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Named CVE only; tar artifact. Files on disk, not live processes.",
+        "status": "fixed",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://nvd.nist.gov/vuln/detail/CVE-2026-18477",
+        "cve": "CVE-2026-18477",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Previously unresolved advisory; do not infer fixed from newer version",
+        "status": "open",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      },
+      {
+        "advisory": "https://nvd.nist.gov/vuln/detail/CVE-2026-18508",
+        "cve": "CVE-2026-18508",
+        "evidence": "https://github.com/emotionbug/slop/blob/main/upstream-rpm/deploy/LEGACY-PATH-FIX.md",
+        "scope": "Previously unresolved advisory; do not infer fixed from newer version",
+        "status": "open",
+        "verification": "Rebuilt with the same hash-pinned upstream source/security patches; new RPM upstream suite and UBI installed-binary checks passed. cpio additionally passed the three bounded CVE regression inputs. Legacy-path Provides change is not a new CVE fix."
+      }
     ]
   }
 }

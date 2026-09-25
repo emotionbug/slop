@@ -1,0 +1,89 @@
+{
+  "release": "linuxoss-kernel-20260925-2",
+  "kernel_rpms_unchanged_from": "linuxoss-kernel-20260925-1",
+  "kernel_release": "7.2.7-linuxoss+",
+  "rpm_release": "3.el8",
+  "base_validation_file": "VALIDATION.json",
+  "base_validation_sha256": "de883ab2d3af3410d0b6a43916171a2f0f096a5aff4fa10fb18dc536c7b10357",
+  "controls_sha256": {
+    "kernel.py": "65121c9eb24762601e2c94954c1cf124ebe78574322b4f9ad910fe618a0f38d4",
+    "kernel.sh": "4c44b4700ea4f29422e3112950507d1bed15302f59c43bc07b088f21d518cb1c",
+    "remote_guard.py": "90d478886bb61225ef4386cbea64d12c44df314ce53da323c58a9fc8a64bf66e"
+  },
+  "tests": {
+    "unit_tests": 8,
+    "vm_phases": [
+      {
+        "phase": 0,
+        "exit_code": 0,
+        "marker": "KERNEL_REMOTE_INSTALL_AND_ARM_PASSED",
+        "passed": true
+      },
+      {
+        "phase": 1,
+        "exit_code": 0,
+        "marker": "KERNEL_REMOTE_SSH_CONFIRM_CANCELS_DEADLINE_PASSED",
+        "passed": true
+      },
+      {
+        "phase": 2,
+        "exit_code": 0,
+        "marker": "KERNEL_REMOTE_NO_CONFIRM_TRIAL_ARMED",
+        "passed": true
+      },
+      {
+        "phase": 3,
+        "exit_code": 0,
+        "marker": "LINUXOSS_REMOTE_GUARD_TIMEOUT_REBOOT_OLD_KERNEL",
+        "passed": true
+      },
+      {
+        "phase": 4,
+        "exit_code": 0,
+        "marker": "KERNEL_REMOTE_PANIC_TRIAL_ARMED",
+        "passed": true
+      },
+      {
+        "phase": 5,
+        "exit_code": 0,
+        "marker": "Kernel panic - not syncing:",
+        "passed": true
+      },
+      {
+        "phase": 6,
+        "exit_code": 0,
+        "marker": "KERNEL_REMOTE_PANIC_RETURNED_OLD_PASSED",
+        "passed": true
+      }
+    ],
+    "manual_ssh_confirmation": "passed",
+    "running_kernel_selected_over_unbooted_default": true,
+    "sshd_stopped_then_unconfirmed_deadline": "passed: old kernel rebooted automatically",
+    "injected_sysrq_kernel_panic": "passed: panic injected after userspace startup; rebooted after panic=60 and returned to old kernel",
+    "selinux": "Enforcing",
+    "firmware": "OVMF UEFI, Secure Boot disabled",
+    "devices": "PVSCSI LVM/XFS root, VMXNET3, virtio EFI/boot",
+    "timeout_test_seconds": 180,
+    "distributed_timeout_seconds": 1200
+  },
+  "not_tested": [
+    "Actual server and applications",
+    "Complete early kernel/firmware/GRUB hangs",
+    "Panic injection before userspace startup",
+    "Hypervisor or hardware watchdog reset",
+    "Forced shutdown escalation",
+    "Dracut missing-root failure injection",
+    "Kdump panic path"
+  ],
+  "evidence_sha256": {
+    "boot-0.log": "99da582d2eac3292feb152bfdaf530ef40a46cffab4db9fc20893b4363aaac5c",
+    "boot-1.log": "dd45cc56d5e4e0a0d307245424e24351707adf5c1cbd932853a6fea816a575e3",
+    "boot-2.log": "cfcae3ccad0d53e510907ba7adca45ec9ee2863cc83cd67a2099caf3f91b690c",
+    "boot-3.log": "334027186f544103197b36bcc0807ebc0c05742d479de162fc5a37551cffeadf",
+    "boot-4.log": "8972d4aaae2e9c635d93c5eb5095847b0bb1c92da7fcd0f9216c243faa5e4467",
+    "boot-5.log": "b3d480489d0e6778d7c1b3e810cd86536b3673ad52f7e6ced66d5b0e9f5c0f0e",
+    "boot-6.log": "aae77608f17e1544166b862255da62a890cce8505add025339359dffc029bea4",
+    "host-ssh-http.log": "810194e7d87027073e48b71806526d021b0ae07c8a9868c06e335c98ff42e40d",
+    "installer-logs.tar.gz": "d9486f86e1e6ba3b801054698b28e6042e1a82faacd99e28dc81d08d957b3bf6"
+  }
+}

@@ -4,6 +4,10 @@
 `kernel-devel`입니다. 정확한 산출물·소스 해시와 검증 로그 해시는
 `VALIDATION.json`에 기록합니다.
 
+이 문서는 최초 커널 묶음의 빌드·기본 설치 검증입니다. 같은 RPM을 사용하는
+`linuxoss-kernel-20260925-2`의 SSH 확정·자동 복귀 변경은
+`REMOTE-BOOT-VALIDATION.json`에 별도로 기록합니다.
+
 ## 설치와 부팅
 
 실제 서버 파일을 사용하지 않은 EL8 참조 VM에서 다음 세 단계를 실행했습니다.

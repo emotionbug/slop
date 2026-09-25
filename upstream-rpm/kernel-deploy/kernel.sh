@@ -5,7 +5,7 @@ umask 077
 here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 [[ $EUID == 0 ]] || { echo 'Run with sudo.' >&2; exit 2; }
 mode=${1:-status}
-case "$mode" in check|apply|boot-once|confirm|fallback|status) ;; *) echo 'Usage: sudo bash kernel.sh [check|apply|boot-once|confirm|fallback|status]' >&2; exit 2;; esac
+case "$mode" in check|apply|boot-once|boot-once-remote|confirm|fallback|status) ;; *) echo 'Usage: sudo bash kernel.sh [check|apply|boot-once|boot-once-remote|confirm|fallback|status]' >&2; exit 2;; esac
 [[ $# -le 1 ]] || exit 2
 . /etc/os-release
 [[ $ID == rhel && $VERSION_ID == 8.* && $(uname -m) == x86_64 ]] || exit 2

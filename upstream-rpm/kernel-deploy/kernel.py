@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import remote_guard
 
 STATE = Path('/var/lib/linuxoss-kernel')
 
@@ -200,7 +201,7 @@ def install(mode, root, report, manifest):
             raise RuntimeError('Fallback default restoration did not take effect.')
         state['ready'] = True
         save(state_file, state)
-        print('KERNEL_INSTALLED_OLD_DEFAULT_RETAINED; next: sudo bash kernel.sh boot-once')
+        print('KERNEL_INSTALLED_OLD_DEFAULT_RETAINED; SSH-only trial: sudo bash kernel.sh boot-once-remote')
 
 
 def main():
@@ -224,11 +225,30 @@ def main():
         raise RuntimeError('Deployment manifest changed.')
     if mode == 'status':
         print(json.dumps({'running': os.uname().release, 'default': run(['grubby', '--default-kernel']),
-                          'environment': run(['grub2-editenv', '-', 'list']), 'fallback': state['old_default']}, indent=2))
-    elif mode == 'boot-once':
+                          'environment': run(['grub2-editenv', '-', 'list']), 'fallback': state['old_default'],
+                          'remote_guard': remote_guard.status()}, indent=2))
+    elif mode in ('boot-once', 'boot-once-remote'):
         if not state.get('ready') or sha(Path('/boot/vmlinuz-' + kver)) != manifest['kernel_image_sha256']:
             raise RuntimeError('Kernel deployment was incomplete or the installed image changed.')
         new = entry('/boot/vmlinuz-' + kver)
+        if mode == 'boot-once-remote':
+            if os.uname().release == kver:
+                raise RuntimeError('Arm the remote trial from the existing running kernel.')
+            # A package upgrade may already have selected a never-booted kernel
+            # as the configured default. Recover to the kernel serving this SSH session.
+            fallback = '/boot/vmlinuz-' + os.uname().release
+            if not Path(fallback).is_file() or not Path('/boot/initramfs-' + os.uname().release + '.img').is_file():
+                raise RuntimeError('The currently running fallback image/initramfs is missing.')
+            fallback_entry = entry(fallback)
+            if state['old_default'] != fallback:
+                state['previous_configured_default'] = state['old_default']
+                state['old_default'] = fallback
+                state['old_entry'] = fallback_entry
+                save(state_file, state)
+            return remote_guard.arm(manifest, state, new)
+        guard = remote_guard.load()
+        if guard and guard['phase'] in remote_guard.ACTIVE:
+            raise RuntimeError('Remote trial is active; use fallback before plain boot-once.')
         run(['grubby', '--set-default=' + state['old_default']])
         run(['grub2-reboot', new['id']])
         env = run(['grub2-editenv', '-', 'list'])
@@ -238,14 +258,19 @@ def main():
     elif mode == 'confirm':
         if os.uname().release != kver:
             raise RuntimeError('Boot the new kernel before confirming it.')
+        guard = remote_guard.confirmation_state()
         run(['grub2-editenv', '-', 'unset', 'next_entry'])
         run(['grubby', '--set-default=/boot/vmlinuz-' + kver])
+        if run(['grubby', '--default-kernel']) != '/boot/vmlinuz-' + kver:
+            raise RuntimeError('New default verification failed.')
+        remote_guard.confirmed(guard)
         print('NEW_KERNEL_SET_AS_DEFAULT')
     elif mode == 'fallback':
         if not Path(state['old_default']).is_file():
             raise RuntimeError('Saved fallback image is missing.')
         run(['grub2-editenv', '-', 'unset', 'next_entry'])
         run(['grubby', '--set-default=' + state['old_default']])
+        remote_guard.cancel()
         print('OLD_KERNEL_SET_AS_DEFAULT; reboot manually if needed.')
     else:
         raise RuntimeError('Unsupported action.')

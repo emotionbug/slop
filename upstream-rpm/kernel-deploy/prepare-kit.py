@@ -21,7 +21,7 @@ with catalog_path.open('w', encoding='utf-8', newline='\n') as f:
 kit.mkdir(exist_ok=False)
 (kit / 'rpms').mkdir()
 recipe = Path(__file__).resolve().parent
-for name in ('kernel.sh', 'kernel.py', 'README-ko.md'):
+for name in ('kernel.sh', 'kernel.py', 'remote_guard.py', 'README-ko.md'):
     shutil.copyfile(recipe / name, kit / name)
 shutil.copyfile(recipe.parent / 'deploy/scan.sh', kit / 'scan.sh')
 core = next(p for p in extra['artifacts'] if p['name'] == 'kernel')

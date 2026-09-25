@@ -9,6 +9,7 @@ import urllib.request
 
 assert os.geteuid() != 0
 assert Path('/run/.containerenv').exists() or Path('/.dockerenv').exists()
+remote_guard_test = os.environ.get('REMOTE_GUARD_TEST') == '1'
 out=Path('/next/'+os.environ.get('VALIDATION_DIR','boot-validation'))
 baseout=out
 attempt=0
@@ -99,13 +100,16 @@ sh "sed -i '1i function load_video { set linuxoss_video=serial; }' /boot/efi/EFI
 command "/usr/bin/systemctl unmask systemd-remount-fs.service systemd-logind.service dbus-org.freedesktop.login1.service"
 upload /recipe/fixture-run.sh /usr/local/sbin/linuxoss-kernel-fixture
 upload /recipe/kernel.py /opt/kernel-fixture/kit/kernel.py
+upload /recipe/remote_guard.py /opt/kernel-fixture/kit/remote_guard.py
 upload /recipe/fixture-repair.py /opt/kernel-fixture/fixture-repair.py
 command "/usr/libexec/platform-python /opt/kernel-fixture/fixture-repair.py"
-sh "cd /opt/kernel-fixture/kit && sha256sum kernel.py kernel.sh kernel-manifest.json rpms/*.rpm > SHA256SUMS"
+sh "cd /opt/kernel-fixture/kit && sha256sum kernel.py kernel.sh remote_guard.py kernel-manifest.json rpms/*.rpm > SHA256SUMS"
 command "/sbin/setfiles -F -e /boot/efi /etc/selinux/targeted/contexts/files/file_contexts /boot"
 sync
 umount-all
 '''
+if remote_guard_test:
+    repair = repair.replace('upload /recipe/fixture-run.sh ', 'upload /recipe/fixture-remote-run.sh ')
 with (out/'boot-repair.log').open('w') as log:
     p=subprocess.run(['guestfish','--rw','-a',str(disk),'-a',str(bootdisk)],input=repair,universal_newlines=True,stdout=log,stderr=subprocess.STDOUT,timeout=180)
 assert p.returncode==0, 'fixture boot repair failed'
@@ -113,6 +117,11 @@ shutil.copyfile('/usr/share/OVMF/OVMF_VARS_4M.fd',work/'vars.fd')
 key=work/'fixture-key';shutil.copyfile('/next/fixture-key',key);key.chmod(0o600)
 ssh=['ssh','-i',str(key),'-p','2222','-o','StrictHostKeyChecking=no','-o','UserKnownHostsFile=/dev/null','-o','ConnectTimeout=3','root@127.0.0.1']
 markers=['KERNEL_EL8_INSTALL_AND_BOOT_ONCE_PASSED','KERNEL_EL8_UEFI_LVM_XFS_SSH_JAVA_SELINUX_NFT_PASSED','KERNEL_EL8_OLD_DEFAULT_BOOT_PASSED']
+if remote_guard_test:
+    markers = ['KERNEL_REMOTE_INSTALL_AND_ARM_PASSED', 'KERNEL_REMOTE_SSH_CONFIRM_CANCELS_DEADLINE_PASSED',
+               'KERNEL_REMOTE_NO_CONFIRM_TRIAL_ARMED', 'LINUXOSS_REMOTE_GUARD_TIMEOUT_REBOOT_OLD_KERNEL',
+               'KERNEL_REMOTE_PANIC_TRIAL_ARMED', 'Kernel panic - not syncing:',
+               'KERNEL_REMOTE_PANIC_RETURNED_OLD_PASSED']
 results=[]
 for phase,marker in enumerate(markers):
     path=out/('boot-'+str(phase)+'.log');verified=False
@@ -137,7 +146,10 @@ for phase,marker in enumerate(markers):
                 if phase==1 and not verified and 'KERNEL_EL8_WAITING_HOST_SSH_HTTP' in path.read_text(errors='replace'):
                     response=urllib.request.urlopen('http://127.0.0.1:18080',timeout=5).read()
                     assert response==b'JAVA8_KERNEL_HTTP_OK\n'
-                    check=subprocess.run(ssh+['uname -r; touch /var/lib/linuxoss-fixture/host-verified'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,universal_newlines=True,timeout=15)
+                    verify_command = 'uname -r; touch /var/lib/linuxoss-fixture/host-verified'
+                    if remote_guard_test:
+                        verify_command = 'uname -r && bash /opt/kernel-fixture/kit/kernel.sh confirm && touch /var/lib/linuxoss-fixture/host-verified'
+                    check=subprocess.run(ssh+[verify_command],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,universal_newlines=True,timeout=60)
                     (out/'host-ssh-http.log').write_text(check.stdout)
                     assert check.returncode==0 and '7.2.7-linuxoss+' in check.stdout
                     verified=True

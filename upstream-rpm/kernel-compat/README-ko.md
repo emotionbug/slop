@@ -33,8 +33,10 @@ vermagic이나 심볼 CRC를 조작하거나 모듈 강제 로드를 사용하�
 | dsa_filter_hook kernel imports | 39 | 0 |
 | dsa_filter → dsa_filter_hook imports | 8 | 0 |
 
-심볼 일치는 전체 에이전트 기능 검증과 다릅니다. 서버의 Guardicore 바이너리는
-제공되지 않아 로드·정책 집행을 시험하지 못했습니다.
+심볼 일치는 전체 에이전트 기능 검증과 다릅니다. 이후 서버의 실제 바이너리를
+받아 Guardicore와 Trend 8491의 동시 로드·ICMP/TCP/UDP·해제를 격리 QEMU에서
+통과했습니다. [추가 분석과 모듈 준비 방법](SERVER-MODULES-20260926.md)을
+확인하세요. 전체 에이전트와 운영 정책 집행은 아직 시험하지 못했습니다.
 
 ## 완료한 검증
 
@@ -53,8 +55,9 @@ vermagic이나 심볼 CRC를 조작하거나 모듈 강제 로드를 사용하�
 이 최종 RPM으로 OpenSSL/glibc 동시 업그레이드 환경에서 DNF 설치, `rpm -V`,
 외부 모듈 빌드도 통과했습니다.
 
-Trend 시험은 공개 KSP 8527 기준이며 서버의 8491 바이너리나 전체 ds_agent,
-Guardicore, 관리 서버 연결, 보호 정책을 검증한 것은 아닙니다.
+최초 Trend 시험은 공개 KSP 8527 기준이고, 이후 실제 서버의 8491과 Guardicore
+바이너리로 추가 시험했습니다. 전체 ds_agent/Guardicore 사용자 공간 프로그램,
+관리 서버 연결, 보호 정책을 검증한 것은 아닙니다.
 Secure Boot 및 대상 VMware 부팅도 아직 검증하지 않았습니다.
 
 ## 배포 동작

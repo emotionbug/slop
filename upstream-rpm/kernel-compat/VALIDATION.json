@@ -29,11 +29,10 @@
     "rpm_install_reinstall_verify": "PASS",
     "external_module_devel_build": "PASS",
     "final_dependency_repacked_rpm_dnf_install_verify": "PASS",
-    "final_devel_build_with_combined_glibc_openssl": "PASS"
+    "final_devel_build_with_combined_glibc_openssl": "PASS",
+    "actual_server_guardicore_trend_8491_load_network_unload": "PASS; see SERVER-MODULE-VALIDATION.json"
   },
   "not_tested": [
-    "Actual Guardicore module binary",
-    "Actual server Trend module 8491",
     "Full agent policy enforcement",
     "Target VMware boot",
     "Secure Boot",
@@ -54,5 +53,6 @@
     "payload": "All file digests, modes, ownership and symlink targets match the previously boot-tested payload. Only RPM auto-generated directory artifact markers differ.",
     "ghost_index_modes": "Explicit 0644; depmod files remain ghost/mutable.",
     "kernel_code_changed": false
-  }
+  },
+  "additional_validation": "SERVER-MODULE-VALIDATION.json"
 }

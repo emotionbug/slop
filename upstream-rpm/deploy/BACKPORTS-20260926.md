@@ -49,8 +49,9 @@ sudo bash download-kernel-compat.sh apply
 기본 커널 변경 및 재부팅은 하지 않습니다. 실행 커널의 CVE 조치는 새 커널로
 부팅하고 실제 서비스를 확인한 뒤에 판단해야 합니다.
 
-공개 Trend KSP 모듈 8527의 로드/해제와 NFQUEUE 시험은 통과했지만, 서버의
-Guardicore 실물 모듈과 전체 정책 집행은 아직 시험하지 못했습니다.
+공개 Trend KSP 8527 시험 이후 실제 서버의 Guardicore·Trend 8491 바이너리도
+동시 로드·ICMP/TCP/UDP·해제를 통과했습니다. [추가 결과와 모듈 파일 준비](../kernel-compat/SERVER-MODULES-20260926.md)를
+확인하세요. 전체 에이전트와 정책 집행은 아직 시험하지 못했습니다.
 SSH만 접근 가능한 서버의 부팅 전 완전 정지를 자동 복구한다고 보장하지 않습니다.
 [커널 근거와 한계](../kernel-compat/README-ko.md)를 함께 확인하세요.
 
@@ -92,11 +93,11 @@ sudo bash scan.sh /실제/경로/trivy /실제/경로/cache
 
 설치기는 `/etc`와 RPM 목록을 저장하지만 전체 시스템 복구 이미지를 만들지는 않습니다.
 
-## 다음 커널 분석에 필요한 자료
+## 모듈 수집과 후속 분석
 
-현재 파일 `security-kmods.txt`에는 심볼·버전 메타데이터가 있으며 Guardicore의
-실제 기계어는 없습니다. 최신 커널과의 구조체 접근·호출 규약을 분석하려면
-서버에서 실제로 사용하는 모듈이 필요합니다. 아래 수집기는 모듈 파일과 해당
+`security-kmods.txt`에는 심볼·버전 메타데이터만 있으며, 이후 별도로 받은
+실제 바이너리로 [추가 분석](../kernel-compat/SERVER-MODULES-20260926.md)을 완료했습니다.
+모듈 버전이 다시 바뀌었을 때는 아래 수집기를 사용합니다. 모듈 파일과 해당
 메타데이터만 복사하고, 서비스를 중단하거나 모듈을 해제하지 않습니다.
 
 ```bash
@@ -107,5 +108,4 @@ sudo bash collect-module-binaries.sh
 ```
 
 출력된 `security-module-binaries-….tar.gz`를 개발기로 옮겨 로컬 분석에 사용합니다.
-상용 에이전트 바이너리이므로 공개 GitHub에는 올리지 않습니다. 이 자료 없이는
-Guardicore 실물과 새 커널을 함께 검증하는 단계까지 완료할 수 없습니다.
+상용 에이전트 바이너리이므로 공개 GitHub에는 올리지 않습니다.

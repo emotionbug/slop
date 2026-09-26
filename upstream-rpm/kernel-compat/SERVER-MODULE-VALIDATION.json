@@ -1,0 +1,97 @@
+{
+  "date": "2026-09-26",
+  "scope": "Private server binaries; isolated QEMU/runtime analysis, not target-server remediation proof",
+  "kernel_release": "4.18.0-553.168.1.linuxoss1.el8_10.x86_64",
+  "kernel_image_sha256": "199d5c598ba44d38277f54bf9b464cab16fe7963ea706e0b75e31a762a5b0c8c",
+  "modules": [
+    {
+      "name": "dsa_filter_hook.ko",
+      "sha256": "198bb5c9c11c294f7122c85a48883d7e92ad255dc997ece83064c8316cb8e45c",
+      "metadata": {
+        "version": "1.0",
+        "license": "GPL",
+        "srcversion": "533BB7E5866E52F63B9ACCB",
+        "depends": "",
+        "vermagic": "4.18.0-553.148.1.el8_10.x86_64 SMP mod_unload modversions "
+      }
+    },
+    {
+      "name": "dsa_filter.ko",
+      "sha256": "abf6aea64fb58678d80387c2c000f5f9437e730f2a41843082c9f0130807d3b2",
+      "metadata": {
+        "license": "Proprietary",
+        "version": "12.6.0.8491 (HUA)",
+        "depends": "dsa_filter_hook",
+        "vermagic": "4.18.0-553.148.1.el8_10.x86_64 SMP mod_unload modversions "
+      }
+    },
+    {
+      "name": "gc-enforcement.ko",
+      "sha256": "e5895f7a3148497dd809408a4acb2600df900d8eb95d61e8a4ad72ead1147dad",
+      "metadata": {
+        "version": "5.0",
+        "license": "GPL",
+        "srcversion": "1E3CF09EA0054B840FB024B",
+        "depends": "",
+        "vermagic": "4.18.0-553.166.1.el8_10.x86_64 SMP mod_unload modversions "
+      }
+    }
+  ],
+  "tests": {
+    "simultaneous_unmodified_module_load": "PASS",
+    "icmp_packets": "3/3",
+    "tcp_udp_cross_namespace_echo": "PASS",
+    "namespace_teardown": "PASS",
+    "module_unload": "PASS",
+    "oops_bug_warning_detected": false,
+    "staging_safety_tests": "3 PASS",
+    "el8_real_rpm_depmod_staging_and_idempotence": "PASS with fixture live identity and grubby query"
+  },
+  "not_tested": [
+    "Full userspace security agents",
+    "Real allow/deny policy enforcement",
+    "Target VMware boot",
+    "Secure Boot",
+    "Actual application runtime with these modules",
+    "7.2.7 compatibility port"
+  ],
+  "log_sha256": {
+    "el8-v1.log": "8163b583c13a1dc3928e7a90d1515fc67b38d101a3f97b32232ce7c308596592",
+    "el8-v2.log": "493d30906a99e443e702e35fc292d96f359b2ae44315d41e4ef527bb982f02e4",
+    "el8-v3.log": "35d3af202fd15a87c4a99a36d7c5fb0469291e59de4a0b4280e3dcc3ef7bfaff"
+  },
+  "initial_test_failures": "BusyBox shell ip applet; final trial uses absolute /usr/sbin/ip",
+  "upstream_7_2_7_kernel_imports": [
+    {
+      "module": "gc_enforcement",
+      "total": 161,
+      "matched": 38,
+      "crc_changed": 96,
+      "missing": 27
+    },
+    {
+      "module": "dsa_filter",
+      "total": 120,
+      "matched": 30,
+      "crc_changed": 67,
+      "missing": 23
+    },
+    {
+      "module": "dsa_filter_hook",
+      "total": 39,
+      "matched": 11,
+      "crc_changed": 21,
+      "missing": 7
+    }
+  ],
+  "trend_peer_imports_matched": 8,
+  "layout_probe": {
+    "sdk": "kernel-devel-7.2.7_linuxoss+-3.el8.x86_64.rpm",
+    "compiler": "GCC 15; original kernel used GCC 8.5",
+    "scope": "Compile-only DWARF; exact SDK autoconf, no objtool postprocess or module load",
+    "proto_sendmsg_offset": 104,
+    "proto_recvmsg_offset": 112,
+    "guardicore_sendmsg_offset": 120,
+    "guardicore_recvmsg_offset": 128
+  }
+}

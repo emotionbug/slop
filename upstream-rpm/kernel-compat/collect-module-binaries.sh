@@ -13,6 +13,10 @@ mkdir "$output/modules"
 for name in gc_enforcement dsa_filter dsa_filter_hook; do
   modinfo "$name" > "$output/$name-modinfo.txt" 2>&1 || :
   if [[ -d /sys/module/$name ]]; then echo loaded; else echo not-loaded; fi > "$output/$name-state.txt"
+  # modinfo follows the disk alias, which can differ from the loaded module.
+  for field in version srcversion taint; do
+    [[ ! -f /sys/module/$name/$field ]] || cat "/sys/module/$name/$field" > "$output/$name-loaded-$field.txt"
+  done
 done
 # Restrict traversal to known kernel/agent trees; copy module binaries only.
 roots=()

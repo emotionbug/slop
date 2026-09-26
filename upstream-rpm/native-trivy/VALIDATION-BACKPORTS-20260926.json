@@ -1,0 +1,139 @@
+{
+  "date": "2026-09-26",
+  "scope": "Isolated EL8 container, network disabled; not the target server or its running kernel",
+  "scanner_bundle": "trivy-native-rpm-20260926-4",
+  "scanner_bundle_sha256": "2c95d14d4b0008d00d7906082e3ab8e94d9584bc5e303b359c10f4291406d2de",
+  "integration_summary": {
+    "trivy_version": "0.74.0",
+    "report_sha256": "cf198f5891a4caf6fff58307687387e327a06c35a62661dc907e79b6ae685a15",
+    "running_kernel": "6.18.33.2-microsoft-standard-WSL2",
+    "kernel_scope": "Installed package files only; a fixed RPM does not establish that its kernel is running",
+    "custom_packages": 155,
+    "assessment_rows": 25877,
+    "assessments": {
+      "under-investigation": 16624,
+      "coverage-gap": 152,
+      "fixed-evidence-matched": 256,
+      "not-affected-evidence-matched": 183,
+      "not-affected-component": 8658,
+      "payload-unverified": 2,
+      "configuration-only": 1,
+      "filesystem-only": 1
+    },
+    "actionable_rows": 21308,
+    "actionable_unique_cves": 8532,
+    "actionable_rows_by_kernel_execution_state": {
+      "not-a-kernel-package": 1224,
+      "kernel-development-or-userspace": 12144,
+      "installed-other-kernel-files": 7940
+    },
+    "vendor_reviews_applied": 0,
+    "vendor_rows_matched_to_custom_patch_evidence": 0,
+    "vendor_rows_matched_to_component_evidence": 0,
+    "native_cve_candidates": 16624,
+    "selected_feed_states": {
+      "selected-cpe-queries-current": 121,
+      "unmapped": 33,
+      "": 2
+    },
+    "feed_sha256": "098f461286a7add57d76c3099cea78925331515aa2877936490c3071ca655f7d",
+    "custom_packages_without_complete_cve_coverage": 155,
+    "complete_upstream_feed": false,
+    "all_cves_fixed": false,
+    "scope": "Selected NVD CPE version ranges and artifact-pinned reviews; mapping, feed and live-process gaps remain"
+  },
+  "new_backport_families": {
+    "openssl": {
+      "fixed_cves": [
+        "CVE-2023-0464",
+        "CVE-2023-0465",
+        "CVE-2023-0466",
+        "CVE-2023-2650",
+        "CVE-2024-0727",
+        "CVE-2024-13176",
+        "CVE-2024-2511",
+        "CVE-2025-68160",
+        "CVE-2025-69418",
+        "CVE-2025-69420",
+        "CVE-2025-69421",
+        "CVE-2026-22795",
+        "CVE-2026-22796",
+        "CVE-2026-28387",
+        "CVE-2026-28388",
+        "CVE-2026-28389",
+        "CVE-2026-34180",
+        "CVE-2026-42766",
+        "CVE-2026-42768",
+        "CVE-2026-54874",
+        "CVE-2026-63072",
+        "CVE-2026-7383",
+        "CVE-2026-9076"
+      ],
+      "not_affected_cves": [
+        "CVE-2025-15468",
+        "CVE-2025-15469",
+        "CVE-2026-31789",
+        "CVE-2026-42765",
+        "CVE-2026-42770",
+        "CVE-2026-42771",
+        "CVE-2026-54876"
+      ],
+      "unresolved_unique_candidates": 19
+    },
+    "glibc": {
+      "fixed_cves": [
+        "CVE-2026-18374",
+        "CVE-2026-19542",
+        "CVE-2026-6368",
+        "CVE-2026-6791",
+        "CVE-2026-77117",
+        "CVE-2026-80489",
+        "CVE-2026-8674",
+        "CVE-2026-86805",
+        "CVE-2026-95818"
+      ],
+      "not_affected_cves": [
+        "CVE-2026-19499",
+        "CVE-2026-4437",
+        "CVE-2026-4438",
+        "CVE-2026-89092"
+      ],
+      "unresolved_unique_candidates": 177
+    },
+    "kernel": {
+      "fixed_cves": [
+        "CVE-2026-31566",
+        "CVE-2026-43370",
+        "CVE-2026-52912",
+        "CVE-2026-63831",
+        "CVE-2026-64564",
+        "CVE-2026-68121",
+        "CVE-2026-72261",
+        "CVE-2026-80714",
+        "CVE-2026-80844",
+        "CVE-2026-81000",
+        "CVE-2026-89480",
+        "CVE-2026-89846"
+      ],
+      "not_affected_cves": [],
+      "unresolved_unique_candidates": 7940
+    }
+  },
+  "regressions": {
+    "quadratic_context_exclusion_list_removed": true,
+    "wasm_memory_limit_increased": false,
+    "rpm_generated_gconv_cache_not_treated_as_immutable": true,
+    "libc_loader_and_conversion_libraries_still_hashed": true,
+    "unreviewed_baseline_cves_retained": true,
+    "kernel_installed_and_running_distinguished": true
+  },
+  "validation": {
+    "go_tests": "PASS",
+    "python_feed_and_report_tests": "6 PASS",
+    "offline_trivy_integration": "PASS"
+  },
+  "private_log_sha256": {
+    "trivy.log": "03e0db12717cd2db024799c3ddc79e972c5761407ec9838140e7da01c520fb73",
+    "report-summary.json": "df60298367395cdf6876289684bcaaaefd022959a0f8115d3a1704185af6de5c"
+  }
+}

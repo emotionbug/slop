@@ -4,6 +4,7 @@ import argparse
 import datetime
 import hashlib
 import json
+import platform
 from pathlib import Path
 import subprocess
 
@@ -48,9 +49,25 @@ def main():
             checked[path] = {"sha256": sha_file(path)}
         except OSError as exc:
             checked[path] = {"error": str(exc)}
+    kernel_images = []
+    image_paths = list(Path('/boot').glob('vmlinuz-*')) + list(Path('/lib/modules').glob('*/vmlinuz'))
+    for path in sorted(image_paths):
+        release = path.parent.name if path.name == 'vmlinuz' else path.name[len('vmlinuz-'):]
+        item = {"path": str(path), "kernel_release": release}
+        try:
+            owner = subprocess.check_output(['rpm', '-qf', '--qf', fmt, str(path)],
+                                            universal_newlines=True, stderr=subprocess.DEVNULL).strip().split('\t')
+            if len(owner) != len(TAGS):
+                raise ValueError('Ambiguous kernel image RPM owner')
+            item['owner'] = dict(zip((t.lower() for t in TAGS), owner))
+        except (subprocess.CalledProcessError, ValueError) as exc:
+            item['error'] = str(exc)
+        kernel_images.append(item)
     snapshot = {"schema_version": 1, "catalog_sha256": hashlib.sha256(raw).hexdigest(),
                 "feed_sha256": sha_file(str(args.feed)),
                 "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "running_kernel": platform.uname().release,
+                "kernel_images": kernel_images,
                 "packages": sorted(packages, key=lambda p: (p["name"], p["arch"], p["version"])),
                 "checked_files": checked}
     # Refuse to overwrite old or symlinked evidence files.

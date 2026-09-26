@@ -1,0 +1,14 @@
+--- a/tools/objtool/elf.c
++++ b/tools/objtool/elf.c
+@@ -234,8 +234,9 @@ static int read_symbols(struct elf *elf)
+ 
+ 	symtab = find_section_by_name(elf, ".symtab");
+ 	if (!symtab) {
+-		WARN("missing symbol table");
+-		return -1;
++		/* New binutils can omit the symbol table in an empty thunk_64.o.
++		 * Same handling as upstream Linux v5.11 tools/objtool/elf.c. */
++		return 0;
+ 	}
+ 
+ 	symbols_nr = symtab->sh.sh_size / symtab->sh.sh_entsize;

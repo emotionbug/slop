@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-26",
+  "project": "kernel",
+  "scope": "Isolated local validation only; no target-server remediation proof.",
+  "artifacts": [
+    {
+      "name": "kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss1.el8_10.x86_64.rpm",
+      "sha256": "5ffa618fd3563fb46a2a5145be9802a548aaedfef654be531149d8f9b081fcf0",
+      "size": 58980508
+    },
+    {
+      "name": "kernel-linuxoss-el8-compat-devel-4.18.0-553.168.1.linuxoss1.el8_10.x86_64.rpm",
+      "sha256": "64d2a7ef42a6d6494ba55d512eff39081f3cfd1ad171038ee6ac63439dce15b9",
+      "size": 12061468
+    },
+    {
+      "name": "kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss1.el8_10.src.rpm",
+      "sha256": "83c78934856f4cebde278c8889593eb88d04d928456f7ab50b6639e2dc639077",
+      "size": 124802633
+    }
+  ],
+  "kernel_release": "4.18.0-553.168.1.linuxoss1.el8_10.x86_64",
+  "source": "Official signature-verified Rocky EL8 .168 SRPM plus NFQUEUE private-tail ABI patch",
+  "tests": {
+    "qemu_boot": "PASS",
+    "nfqueue_held_packet_bridge_teardown": "PASS",
+    "trend_ksp_8527_module_pair_load_unload_without_force": "PASS",
+    "rpm_install_reinstall_verify": "PASS",
+    "external_module_devel_build": "PASS",
+    "final_dependency_repacked_rpm_dnf_install_verify": "PASS",
+    "final_devel_build_with_combined_glibc_openssl": "PASS"
+  },
+  "not_tested": [
+    "Actual Guardicore module binary",
+    "Actual server Trend module 8491",
+    "Full agent policy enforcement",
+    "Target VMware boot",
+    "Secure Boot",
+    "FIPS"
+  ],
+  "log_sha256": {
+    "nfqueue-boot-v3.log": "db619a68f9baf4da4558b86d95c31dd3966121149d3a5f2be05f60729846e40f",
+    "rpm-transaction-ghost-final.log": "5bf065f71f37883d0207f1d9e216a06514e885f8f8e390d2680f2238a9ecbb7a",
+    "rpm-verify-ghost-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "devel-test-ghost-final.log": "dc8f6187f52386d728c6b8b4eec05de3f9b50f78b76d40750c9139c404dc3205",
+    "combined-kernel-stage.log": "d75ddbf627221e62f9e354c803ff62d9c71832a9d1f2914ef4b9687dc3c61706",
+    "combined-kernel-verify.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "combined-devel-build.log": "a68d34bfc52fac4cd810f2a29d7849b601efbd801d126daaf362d7fc05f64cdb"
+  },
+  "additional_baseline_cve_fixes": 12,
+  "metadata_repack": {
+    "devel_dependency": "/usr/bin/perl replaces unnecessary perl umbrella package",
+    "payload": "All file digests, modes, ownership and symlink targets match the previously boot-tested payload. Only RPM auto-generated directory artifact markers differ.",
+    "ghost_index_modes": "Explicit 0644; depmod files remain ghost/mutable.",
+    "kernel_code_changed": false
+  }
+}

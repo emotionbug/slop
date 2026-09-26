@@ -26,8 +26,12 @@ def main():
                         help='Add scan_symbols from a reviewed export-removal JSON file')
     parser.add_argument('--only-roots', action='store_true',
                         help='Scan only the supplied paths (for targeted checks; omits default coverage)')
+    parser.add_argument('--no-default-symbols', action='store_true',
+                        help='Use only symbols/SONAMEs from the transaction symbols file')
     args = parser.parse_args()
-    symbols = set(SYMBOLS)
+    if args.no_default_symbols and not args.symbols_file:
+        parser.error('--no-default-symbols requires --symbols-file')
+    symbols = set() if args.no_default_symbols else set(SYMBOLS)
     removed_sonames = set()
     if args.symbols_file:
         try:

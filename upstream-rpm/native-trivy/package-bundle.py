@@ -18,7 +18,7 @@ names = ['build-catalog.py', 'catalog.json', 'collect-installed.py', 'go.mod', '
          'logic_test.go', 'wasm.go', 'report.py', 'scan-native.sh', 'README.md',
          'advisory.go', 'advisories.json', 'project-map.json', 'reviewed-evidence.json',
          'source-projects.json', 'refresh-feed.py', 'package-bundle.py', 'build-integration.ps1', 'test_feed.py',
-         'vendor-reviews.json', 'test_report.py']
+         'vendor-reviews.json', 'test_report.py', 'attach-backport-evidence.py']
 for name in names:
     shutil.copy2(source / name, stage / name)
 (stage / 'modules').mkdir()

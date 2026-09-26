@@ -49,6 +49,10 @@ def main():
         fail('Use sudo bash install.sh [check|apply].')
     root, report = Path(folder).resolve(), Path(output).resolve()
     manifest = json.loads((root / 'candidate-manifest.json').read_text())
+    if manifest.get('requires_non_fips', False):
+        fips = Path('/proc/sys/crypto/fips_enabled')
+        if fips.exists() and fips.read_text().strip() != '0':
+            fail('This locally built crypto/glibc bundle is not FIPS validated. No RPMs installed.')
     entries = [item for item in manifest['files'] if item['path'].startswith('rpms/')]
     expected = {item['path']: item for item in entries}
     actual = {str(p.relative_to(root)) for p in (root / 'rpms').glob('*.rpm')}
@@ -143,13 +147,14 @@ def main():
                                if item['library'] in changed_files or item['library'] in outgoing_flags]
         (report / 'transaction-symbols.json').write_text(json.dumps(symbols))
         audit_file = report / 'symbol-audit.json'
+        audit_options = ['--no-default-symbols'] if manifest.get('transaction_symbols_only', False) else []
         extra_roots = sys.argv[4:]
         for directory in ('/usr/src', '/usr/share'):
             if Path(directory).is_dir():
                 extra_roots = [directory] + extra_roots
         with audit_file.open('w') as stream:
             result = subprocess.run([sys.executable, str(root / 'check-removed-symbol-users.py'),
-                                     '--symbols-file', str(report / 'transaction-symbols.json')] + extra_roots, stdout=stream)
+                                     '--symbols-file', str(report / 'transaction-symbols.json')] + audit_options + extra_roots, stdout=stream)
         audit = json.loads(audit_file.read_text())
         spec = importlib.util.spec_from_file_location('symbol_policy', str(root / 'symbol-policy.py'))
         policy_module = importlib.util.module_from_spec(spec)

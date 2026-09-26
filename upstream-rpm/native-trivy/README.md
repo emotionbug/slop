@@ -93,6 +93,33 @@ python3 package-bundle.py --output-dir /work/native-new
 
 ## 근거와 한계
 
+2026-09-26 갱신에서는 Linux CNA의 고정된 Git 스냅샷과 실제 제작한
+7.2.7 릴리스 3의 소스·RPM 해시를 연결했습니다. 명시적인 수정 버전 범위가
+확인된 CVE만 해당 산출물의 수정 근거로 사용합니다. 4.18 기반 EL8 커널에는
+이 판정을 복사하지 않습니다. EL8은 배포판의 백포트 근거가 별도로 필요합니다.
+
+`installed-evidence.json`에 실행 중인 `uname -r` 값과 설치된 커널 이미지의 RPM
+소유자를 함께 기록합니다. CSV의 `kernel_execution_state`는 설치 파일과 실행
+커널을 구별합니다. 새 커널 RPM을 설치했어도 재부팅 전의 커널 취약점은 해결된
+것으로 해석할 수 없습니다.
+
+- `running-kernel-actionable.csv`: 실행 커널 이미지와 일치하는 패키지의 미해결 행.
+- `other-installed-kernel-actionable.csv`: 다른 설치 커널의 미해결 행.
+- `actionable.csv`: 전체 미해결 행을 계속 보존합니다. 이미지 소유자를 확인하지
+  못한 경우도 누락시키지 않습니다.
+- `kernel-development-or-userspace`: 개발 헤더 등의 파일 판정으로, 실행 커널의
+  안전성 판정에 합산하지 않습니다.
+
+피드를 일부 프로젝트만 갱신하려면 `refresh-feed.py --projects PROJECT ...
+--fallback-feed advisories.json`을 사용합니다. 선택하지 않은 프로젝트는 기존
+조회 시각과 상태를 유지합니다. 조회 완료는 CPE 매핑의 완전성을 보장하지 않습니다.
+
+EL8 백포트는 `attach-backport-evidence.py`로 별도 근거를 연결합니다. 정확한
+바이너리/SRPM 해시와 SOURCERPM 태그를 확인하고, 원래 CSV의 미검토 CVE와
+심각도를 새 자체 RPM에도 유지합니다. 버전이나 이름 변경만으로 해결 처리하지 않습니다.
+대형 커널 피드에서 구성요소 제외 목록이 개별 CVE 행마다 중복되던 문제도
+수정하여, 제외 목록은 구성요소 요약에 한 번만 기록합니다.
+
 - [Trivy third-party 제한](https://trivy.dev/docs/v0.74/guide/scanner/vulnerability/#third-party-packages)
 - [Trivy 실험 모듈 API](https://trivy.dev/docs/dev/advanced/modules/): 버전 변경 시 호환성 재검증 필요.
 - [NVD API](https://nvd.nist.gov/developers/vulnerabilities)

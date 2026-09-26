@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-26",
+  "project": "openssl",
+  "scope": "Isolated local validation only; no target-server remediation proof.",
+  "artifacts": [
+    {
+      "name": "openssl-1.1.1k-17.el8_10.linuxoss.1.x86_64.rpm",
+      "sha256": "df45d7ae7edaf096d73ac51c1dc31f32e48c1d7fab6eaf6df4ae0dbf304439fa",
+      "size": 727764
+    },
+    {
+      "name": "openssl-devel-1.1.1k-17.el8_10.linuxoss.1.x86_64.rpm",
+      "sha256": "ea357d2358c43a839981f6b53600b69a08d4f5ca502c838cf9e8e32034de8c17",
+      "size": 2438992
+    },
+    {
+      "name": "openssl-libs-1.1.1k-17.el8_10.linuxoss.1.x86_64.rpm",
+      "sha256": "9a3ed3c3ede114ea8b8c0683ff10f7852d925a029d3de8c610b0683768bbe066",
+      "size": 1543588
+    },
+    {
+      "name": "openssl-perl-1.1.1k-17.el8_10.linuxoss.1.x86_64.rpm",
+      "sha256": "7f65074ba2198f8d8e2338d0745f587d0813f14adfe4a51c51e219b35a13bef4",
+      "size": 85364
+    },
+    {
+      "name": "openssl-static-1.1.1k-17.el8_10.linuxoss.1.x86_64.rpm",
+      "sha256": "112af7636f2ddab43f582bd6c6757a4e7c75812561cbfc7fe6502c3225c634a0",
+      "size": 1693800
+    },
+    {
+      "name": "openssl-1.1.1k-17.el8_10.linuxoss.1.src.rpm",
+      "sha256": "bb92e27c961e1cdaa7ef7977f5ccd606ef48740a5c577c828269a3924136f1bb",
+      "size": 7783535
+    }
+  ],
+  "source": "Official signature-verified Rocky OpenSSL 1.1.1k-17 EL8 SRPM plus pinned OpenSSL/Debian patches",
+  "tests": {
+    "upstream_recipes": 160,
+    "upstream_tests": 1482,
+    "upstream_result": "PASS",
+    "original_config_skips_retained": true,
+    "offline_dnf_upgrade_verify": "PASS",
+    "exported_symbol_removals": 0,
+    "tls_1_2_and_1_3": "PASS",
+    "curl_platform_python_https": "PASS",
+    "openssh_8_loopback_pubkey_and_pam": "PASS"
+  },
+  "baseline_cve_assessments": {
+    "fixed_or_upstream_documentation_fixed": 23,
+    "exact_nonapplicability": 7,
+    "unresolved": [
+      "CVE-2024-41996"
+    ]
+  },
+  "log_sha256": {
+    "build-release.log": "e6926c6ce94fbba081e45714cad43bb775bf531a5592b8e04c34efeb44662890",
+    "openssl-pam-runtime.log": "ad2962ac00e6ec35f0246ce9bfadc24f3847b829b5eb242705a29cfc86d3d521"
+  },
+  "not_tested": [
+    "Target applications and agent policies",
+    "FIPS validation"
+  ]
+}

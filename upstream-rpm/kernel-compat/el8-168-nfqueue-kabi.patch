@@ -1,0 +1,96 @@
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -10,7 +10,6 @@
+ struct nf_queue_entry {
+ 	struct list_head	list;
+ 	struct sk_buff		*skb;
+-	struct net_device	*skb_dev;
+ 	unsigned int		id;
+ 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
+ #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+@@ -24,6 +23,20 @@
+ };
+ 
+ #define nf_queue_entry_reroute(x) ((void *)x + sizeof(struct nf_queue_entry))
++
++/* Keep the EL8 public entry layout and the route-key offset unchanged.
++ * __nf_queue allocates an aligned pointer after the route keys; e->size
++ * includes it, so nf_queue_entry_dup also copies the held device pointer.
++ */
++static inline struct net_device **nf_queue_entry_skb_dev_ptr(struct nf_queue_entry *entry)
++{
++	return (struct net_device **)((char *)entry + entry->size - sizeof(struct net_device *));
++}
++
++static inline struct net_device *nf_queue_entry_skb_dev(struct nf_queue_entry *entry)
++{
++	return *nf_queue_entry_skb_dev_ptr(entry);
++}
+ 
+ /* Packet queuing */
+ struct nf_queue_handler {
+--- a/net/netfilter/nf_queue.c
++++ b/net/netfilter/nf_queue.c
+@@ -60,7 +60,7 @@
+ 	struct nf_hook_state *state = &entry->state;
+ 
+ 	/* Release those devices we held, or Alexey will kill me. */
+-	dev_put(entry->skb_dev);
++	dev_put(nf_queue_entry_skb_dev(entry));
+ 	dev_put(state->in);
+ 	dev_put(state->out);
+ 	if (state->sk)
+@@ -102,7 +102,7 @@
+ 	if (state->sk && !refcount_inc_not_zero(&state->sk->sk_refcnt))
+ 		return false;
+ 
+-	dev_hold(entry->skb_dev);
++	dev_hold(nf_queue_entry_skb_dev(entry));
+ 	dev_hold(state->in);
+ 	dev_hold(state->out);
+ 
+@@ -163,7 +163,7 @@
+ 	struct nf_queue_entry *entry = NULL;
+ 	const struct nf_queue_handler *qh;
+ 	struct net *net = state->net;
+-	unsigned int route_key_size;
++	unsigned int route_key_size, entry_size;
+ 
+ 	/* QUEUE == DROP if no one is waiting, to be safe. */
+ 	qh = rcu_dereference(net->nf.queue_handler);
+@@ -196,7 +196,9 @@
+ 		}
+ 	}
+ 
+-	entry = kmalloc(sizeof(*entry) + route_key_size, GFP_ATOMIC);
++	entry_size = ALIGN(sizeof(*entry) + route_key_size, __alignof__(struct net_device *))
++		     + sizeof(struct net_device *);
++	entry = kmalloc(entry_size, GFP_ATOMIC);
+ 	if (!entry) {
+ 		status = -ENOMEM;
+ 		goto err;
+@@ -209,11 +211,11 @@
+ 
+ 	*entry = (struct nf_queue_entry) {
+ 		.skb	= skb,
+-		.skb_dev = skb->dev,
+ 		.state	= *state,
+ 		.hook_index = index,
+-		.size	= sizeof(*entry) + route_key_size,
++		.size	= entry_size,
+ 	};
++	*nf_queue_entry_skb_dev_ptr(entry) = skb->dev;
+ 	__nf_queue_entry_init_physdevs(entry);
+ 
+ 	if (!nf_queue_entry_get_refs(entry)) {
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -921,7 +921,7 @@
+ 	if (physinif == ifindex || physoutif == ifindex)
+ 		return 1;
+ #endif
+-	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
++	if (nf_queue_entry_skb_dev(entry) && nf_queue_entry_skb_dev(entry)->ifindex == ifindex)
+ 		return 1;
+ 	if (entry->state.in)
+ 		if (entry->state.in->ifindex == ifindex)

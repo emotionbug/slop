@@ -37,6 +37,7 @@ type Assessment struct {
 	Patch        string `json:"patch_commit"`
 	Evidence     string `json:"evidence"`
 	Verification string `json:"verification"`
+	Severity     string `json:"severity,omitempty"`
 }
 type Artifact struct {
 	RPM
@@ -148,6 +149,7 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 			r := row
 			reviewed[assessment.CVE] = true
 			r.CVE, r.Advisory, r.Evidence, r.Patch = assessment.CVE, assessment.Advisory, assessment.Evidence, assessment.Patch
+			r.Severity = assessment.Severity
 			r.Status = "under-investigation"
 			r.Reason = "Security-relevant executable hash missing or different; patch evidence cannot be applied"
 			if assessment.Status != "fixed" {
@@ -155,7 +157,7 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 			}
 			if verified && assessment.Status == "fixed" {
 				r.Status = "fixed-evidence-matched"
-				r.Reason = "Reviewed patch plus exact RPM header and executable SHA-256 match; " + assessment.Scope
+				r.Reason = "Reviewed fix evidence plus exact RPM header and executable SHA-256 match; " + assessment.Scope
 			}
 			if verified && assessment.Status == "not_affected" {
 				r.Status = "not-affected-evidence-matched"
@@ -199,6 +201,7 @@ func evaluate(s Snapshot, c Catalog) ([]Row, error) {
 				}
 				if advisory.ContextOnly && verified {
 					r := summary
+					r.Excluded = nil // Exclusions belong only to the component summary.
 					r.CVE, r.Advisory, r.Severity = advisory.CVE, advisory.Advisory, advisory.Severity
 					r.Status = "not-affected-component"
 					r.Reason = "Queried CPE is only a non-vulnerable environment/dependency in NVD; the vulnerable product must be assessed separately"

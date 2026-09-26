@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-26",
+  "project": "glibc",
+  "validation_state": "local-validation-completed",
+  "scope": "Exact isolated local builds and tests; target-server runtime and policies not tested.",
+  "artifacts": [
+    {
+      "name": "glibc-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "2a2ff5ea608445fb6fd1d84b2a67b9d1878fb710cc35031022defb39f8be5a4b",
+      "size": 1973764
+    },
+    {
+      "name": "glibc-common-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "ba76de308e07af58f4e2d9761186b7db9e649749e373047f2665a48a19029007",
+      "size": 1052564
+    },
+    {
+      "name": "glibc-devel-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "e8dafcfc19411bed3fdb20f456526e1b89f279b6b8358fab66c1119ed8126313",
+      "size": 84932
+    },
+    {
+      "name": "glibc-gconv-extra-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "65d254e062d44decbea2aaa2c8f021a0e37be66d0e61fdae7e653e3c5d2d1931",
+      "size": 1616252
+    },
+    {
+      "name": "glibc-headers-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "9b08f946ed24355912dec4161ce149d4f34c9ba8b8493f77d20ad7da9a1ff49d",
+      "size": 507768
+    },
+    {
+      "name": "glibc-langpack-en-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "d8c896f8e78fa895313647bbce6d1ffd90eb252135bbaf8bdf584e987bd687d0",
+      "size": 854452
+    },
+    {
+      "name": "glibc-langpack-ko-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "50083ccfbe200733e8c04d0b859812d3fbc8f103fa097c74483539b52b3695c5",
+      "size": 377924
+    },
+    {
+      "name": "glibc-minimal-langpack-2.28-251.el8_10.40.linuxoss.1.x86_64.rpm",
+      "sha256": "dd4d8e14c6efa480381feb0087f8807dead7c49fb7dca4a4a86bb91cf702190f",
+      "size": 74712
+    },
+    {
+      "name": "glibc-2.28-251.el8_10.40.linuxoss.1.src.rpm",
+      "sha256": "1e5ff58ad502db5d1c31422c1b39601f1bbfd174ea7b308d1f47826e45e15bf2",
+      "size": 18621922
+    }
+  ],
+  "tests": {
+    "full_upstream_suite_in_container": {
+      "PASS": 6157,
+      "XFAIL": 16,
+      "UNSUPPORTED": 25,
+      "XPASS": 2,
+      "FAIL": 9
+    },
+    "all_nine_container_failures_on_real_el8_qemu": "PASS",
+    "new_fopen_wordexp_loader_regressions": "PASS",
+    "valgrind_loader_smoke_errors": 0,
+    "fresh_srpm_prep_changed_source_hashes": 21,
+    "exact_installer_check_and_apply": "PASS",
+    "glibc_export_symbols_checked": 3915,
+    "glibc_libraries_checked": 9,
+    "glibc_export_removals_or_object_size_changes": 0,
+    "tls_1_2_1_3_python_curl": "PASS",
+    "openssh_pubkey_with_pam": "PASS",
+    "java8_nss_pthread_mmap_charset_zlib_spawn": "PASS",
+    "tomcat9_http_jsp": "PASS"
+  },
+  "test_fixture_versions": {
+    "java": "Eclipse Temurin 8u504-b01",
+    "tomcat": "9.0.122"
+  },
+  "notes": [
+    "25 unsupported, 16 XFAIL and 2 XPASS from upstream configuration remain visible.",
+    "The cached testroot was regenerated with the final libc before wordexp tests.",
+    "RPM packaging resumed from tested binaries; fresh source preparation matched all 21 modified files.",
+    "Full sources are in SRPM; no debugsource split package is published.",
+    "nscd/aicache.c remains vulnerable; the delivered split RPMs do not contain nscd."
+  ],
+  "log_sha256": {
+    "glibc-el8-compat-20260926\\artifacts\\tests.sum": "4721d1b37c0f6516eb0f35cc16f0fff4f5e5f502c31e64ca52b23f58922e3dda",
+    "glibc-el8-compat-20260926\\guest-v3.log": "d4b75ac9b0b07b47da121e3f19e84706aa12b304c619057709f2075146b568ad",
+    "glibc-el8-compat-20260926\\fresh-srpm-source-hashes.log": "4ccc3b7962be53207dfda4597107d9e3470e3409725186460f98cac812e0a1a5",
+    "backport-runtime-20260926\\combined-installer-apply.log": "c41f55c17317816543db069d45ccca7beacb2da7f743b44f252d0f4fadd952dc",
+    "backport-runtime-20260926\\combined-runtime.log": "ad2962ac00e6ec35f0246ce9bfadc24f3847b829b5eb242705a29cfc86d3d521",
+    "backport-runtime-20260926\\java-tomcat-runtime.log": "e9ae1dcf5f1a8307578a9b8f07a3d434dca19936adbcfc3b0bb52f86231e3a52",
+    "backport-runtime-20260926\\glibc-abi-comparison.json": "2cbe703d601604fdd0d3c2d9931dae76763d44139a2a7f1f3327d162aded34f7"
+  }
+}

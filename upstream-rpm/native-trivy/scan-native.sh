@@ -63,4 +63,6 @@ if ((rc != 0 && rc != 3)); then echo FAILED > "$OUT_DIR/status.txt"; exit "$rc";
 echo SCAN_COMPLETED_COVERAGE_INCOMPLETE > "$OUT_DIR/status.txt"
 cat "$OUT_DIR/summary.txt"
 echo "Integrated CSV: $OUT_DIR/reports/integrated.csv"
+echo "Running kernel CSV: $OUT_DIR/reports/running-kernel-actionable.csv"
+echo "Other installed kernels CSV: $OUT_DIR/reports/other-installed-kernel-actionable.csv"
 exit "$rc"

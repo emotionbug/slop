@@ -1,5 +1,8 @@
 # RHEL 8 x86_64 프록시 다운로드 및 설치 — 20260925-6
 
+2026-09-26 추가 작업: [OpenSSL·glibc 보안 백포트와 별도 EL8 호환 커널](BACKPORTS-20260926.md).
+아래 사용자 공간 묶음 적용 후 이어서 사용하는 추가 릴리스입니다.
+
 [이번 묶음의 수정 내용과 검증](COMPAT-WAVE-20260925-6.md),
 [배포 파일](https://github.com/emotionbug/slop/releases/tag/linuxoss-install-20260925-6).
 이전 Bison/byacc·legacy `/bin` 경로·심볼 판정 수정도 유지합니다.

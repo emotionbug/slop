@@ -16,6 +16,47 @@ func TestMappingDigestIgnoresCheckoutLineEndings(t *testing.T) {
 	}
 }
 
+func TestEL8BackportEvidenceDoesNotClearUnreviewedCVEs(t *testing.T) {
+	_, catalogue := testInput(t)
+	cases := []struct{ name, cve, status string }{
+		{"kernel-linuxoss-el8-compat", "CVE-2026-52912", "fixed-evidence-matched"},
+		{"kernel-linuxoss-el8-compat", "CVE-2019-19339", "under-investigation"},
+		{"openssl-libs", "CVE-2026-42768", "fixed-evidence-matched"},
+		{"openssl-libs", "CVE-2024-41996", "under-investigation"},
+		{"glibc", "CVE-2026-6791", "fixed-evidence-matched"},
+		{"glibc", "CVE-2026-89092", "not-affected-evidence-matched"},
+	}
+	for _, tc := range cases {
+		found := false
+		for _, a := range catalogue.Artifacts {
+			if a.Name != tc.name || (a.Project != "kernel" && a.Release != "17.el8_10.linuxoss.1" && a.Release != "251.el8_10.40.linuxoss.1") {
+				continue
+			}
+			s := Snapshot{Schema: 1, CatalogHash: catalogueHash(), FeedHash: digest(feedBytes),
+				CreatedAt: "2026-09-26T12:00:00Z", Packages: []RPM{a.RPM}, Files: map[string]FileCheck{}}
+			for path, hash := range a.Files {
+				s.Files[path] = FileCheck{Hash: hash}
+			}
+			rows, err := evaluate(s, catalogue)
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, row := range rows {
+				if row.CVE != tc.cve {
+					continue
+				}
+				if row.Status != tc.status {
+					t.Fatalf("%s %s: got %s, want %s", tc.name, tc.cve, row.Status, tc.status)
+				}
+				found = true
+			}
+		}
+		if !found {
+			t.Fatalf("missing pinned backport assessment: %s %s", tc.name, tc.cve)
+		}
+	}
+}
+
 func testInput(t *testing.T) (Snapshot, Catalog) {
 	t.Helper()
 	var c Catalog
@@ -49,6 +90,9 @@ func TestKnownPatchAndUnknownCoverage(t *testing.T) {
 	counts := map[string]int{}
 	for _, r := range rows {
 		counts[r.Status]++
+		if r.CVE != "" && len(r.Excluded) != 0 {
+			t.Fatal("CVE row copied the component exclusion list; response grows quadratically")
+		}
 		if r.Coverage != "incomplete" {
 			t.Fatal("false complete verdict")
 		}

@@ -71,6 +71,27 @@ def artifact_review(finding, result, assessments):
     return reviewed[0] if len(reviewed) == 1 else None
 
 
+def kernel_execution_state(package, version, snapshot):
+    runtime_names = {'kernel', 'kernel-core', 'kernel-modules', 'kernel-modules-extra', 'kernel-linuxoss-el8-compat'}
+    if package not in runtime_names:
+        if package.startswith('kernel-') or package in ('bpftool', 'perf', 'python3-perf'):
+            return 'kernel-development-or-userspace'
+        return 'not-a-kernel-package'
+    matches = []
+    for image in snapshot.get('kernel_images', []):
+        owner = image.get('owner', {})
+        if owner.get('name') not in runtime_names or not owner.get('arch'):
+            continue
+        evr = owner.get('version', '') + '-' + owner.get('release', '')
+        epoch = str(owner.get('epochnum', '0'))
+        variants = {evr, epoch + ':' + evr, epoch + ':' + evr + '.' + owner['arch']}
+        if version in variants:
+            matches.append(image['kernel_release'])
+    if len(set(matches)) != 1 or not snapshot.get('running_kernel'):
+        return 'kernel-image-or-running-version-unidentified'
+    return 'running-kernel-files' if matches[0] == snapshot['running_kernel'] else 'installed-other-kernel-files'
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("report", type=Path)
@@ -100,7 +121,7 @@ def main():
     fields = ["source", "package", "installed_version", "CVE", "severity", "status",
               "fixed_version", "reason", "reference", "rpm_sha256", "srpm_sha256", "coverage",
               "upstream_project", "component_version", "feed_state", "feed_sha256",
-              "original_status", "original_reference", "original_reason"]
+              "original_status", "original_reference", "original_reason", "kernel_execution_state"]
     rows = []
     reviews = json.loads(Path(__file__).with_name("vendor-reviews.json").read_text(encoding="utf-8"))["reviews"]
     os_info = data.get("Metadata", {}).get("OS", {})
@@ -127,6 +148,8 @@ def main():
                      a.get("cve", ""), a.get("severity") or "UNKNOWN", a["assessment_status"], "", a["reason"],
                      a.get("advisory", ""), a.get("rpm_sha256", ""), a.get("srpm_sha256", ""), a["coverage"],
                      a.get("project", ""), a.get("component_version", ""), a.get("feed_state", ""), a.get("feed_sha256", ""), "", "", ""])
+    for row in rows:
+        row.append(kernel_execution_state(row[1], row[2], snapshot))
     args.output_dir.mkdir(parents=True, exist_ok=False)
     with (args.output_dir / "integrated.csv").open("x", encoding="utf-8-sig", newline="") as stream:
         writer = csv.writer(stream)
@@ -144,16 +167,21 @@ def main():
         "fix-available.csv": [r for r in actionable if r[6]],
         "reviewed-resolutions.csv": [r for r in rows if r[3] and r[5] in resolved_statuses],
         "scan-gaps.csv": [r for r in rows if not r[3]],
+        "running-kernel-actionable.csv": [r for r in actionable if r[19] == 'running-kernel-files'],
+        "other-installed-kernel-actionable.csv": [r for r in actionable if r[19] == 'installed-other-kernel-files'],
     }
     for name, selected in groups.items():
         with (args.output_dir / name).open("x", encoding="utf-8-sig", newline="") as stream:
             writer = csv.writer(stream); writer.writerow(fields)
             writer.writerows([cell(value) for value in row] for row in selected)
     summary = {"trivy_version": "0.74.0", "report_sha256": hashlib.sha256(raw).hexdigest(),
+               "running_kernel": snapshot.get("running_kernel", "not-collected"),
+               "kernel_scope": "Installed package files only; a fixed RPM does not establish that its kernel is running",
                "custom_packages": len(expected), "assessment_rows": len(assessments),
                "assessments": dict(Counter(a["assessment_status"] for a in assessments)),
                "actionable_rows": len(actionable),
                "actionable_unique_cves": len({r[3] for r in actionable}),
+               "actionable_rows_by_kernel_execution_state": dict(Counter(r[19] for r in actionable)),
                "vendor_reviews_applied": sum(r[5] == "vendor-fixed-version-confirmed" for r in rows),
                "vendor_rows_matched_to_custom_patch_evidence": sum(r[0].startswith('trivy:') and r[5] == 'fixed-evidence-matched' for r in rows),
                "vendor_rows_matched_to_component_evidence": sum(r[0].startswith('trivy:') and r[5] == 'not-affected-evidence-matched' for r in rows),

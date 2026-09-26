@@ -72,6 +72,7 @@ def main():
     p.add_argument("--reuse-cache", action="store_true", help="Resume a dated snapshot; cached retrieval dates stay unchanged")
     p.add_argument("--page-size", type=int, default=2000, choices=range(1,2001), metavar='1..2000', help="NVD page size; smaller pages can recover incomplete service responses")
     p.add_argument("--fallback-feed", type=Path, help="Retain earlier advisories when a query fails; the refresh error remains visible")
+    p.add_argument("--projects", nargs="+", help="Refresh selected projects; requires --fallback-feed to retain other projects")
     args = p.parse_args()
     raw = args.mapping.read_bytes().replace(b"\r\n", b"\n")
     mapping = json.loads(raw.decode("utf-8"))
@@ -85,7 +86,16 @@ def main():
     fallback = json.loads(args.fallback_feed.read_text(encoding="utf-8")) if args.fallback_feed else {}
     if fallback and fallback.get("mapping_sha256") != feed["mapping_sha256"]:
         raise ValueError("Fallback mapping differs from the current mapping")
+    if args.projects:
+        if not fallback:
+            p.error("--projects requires --fallback-feed")
+        unknown = set(args.projects) - set(mapping["projects"])
+        if unknown:
+            p.error("Unknown projects: " + ", ".join(sorted(unknown)))
+        feed["projects"] = dict(fallback["projects"])
     for project, config in sorted(mapping["projects"].items()):
+        if args.projects and project not in args.projects:
+            continue
         out = {"queries": [], "advisories": [], "mapping_status": config["mapping_status"]}
         by_cve = {}
         for alias in config["aliases"]:

@@ -1,2 +1,7 @@
 # Unified patch context lines are significant, including a single space.
 patches/*.patch -whitespace
+kernel-compat/*.patch -whitespace
+glibc-compat/*.patch -whitespace
+openssl-compat/*.patch -whitespace
+# Preserve the imported vendor spec, including its historical changelog.
+openssl-compat/openssl.spec -whitespace

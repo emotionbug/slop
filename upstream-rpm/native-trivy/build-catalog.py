@@ -66,10 +66,17 @@ def main():
             if role not in ("configuration-only", "filesystem-only"):
                 raise ValueError("Unsupported component role")
             row["component_role"] = role
-        raw = subprocess.check_output(["rpm", "-qp", "--qf", "[%{FILENAMES}\t%{FILEDIGESTS}\t%{FILEFLAGS}\n]", str(path)], universal_newlines=True)
+        raw = subprocess.check_output(["rpm", "-qp", "--qf", "[%{FILENAMES}\t%{FILEDIGESTS}\t%{FILEFLAGS}\t%{FILEVERIFYFLAGS}\n]", str(path)], universal_newlines=True)
         for line in raw.splitlines():
-            filename, digest, flags = line.split("\t")
-            if len(digest) == 64 and not (int(flags) & 1):
+            filename, digest, flags, verify_flags = line.split("\t")
+            # EL8 glibc ships an empty cache then regenerates it in scriptlets.
+            # RPM explicitly disables digest verification for this data file.
+            # Keep every converter/loader/libc executable hash mandatory.
+            generated_gconv_cache = (row['project'] == 'glibc' and filename in (
+                '/usr/lib64/gconv/gconv-modules.cache', '/usr/lib/gconv/gconv-modules.cache')
+                and not (int(verify_flags) & 1))
+            # Config and generated %ghost files are intentionally mutable.
+            if len(digest) == 64 and not (int(flags) & (1 | 64)) and not generated_gconv_cache:
                 row["files"][filename] = digest
         row["assessments"] = reviews.get(expected, [])
         if row.get("component_role") in ("configuration-only", "filesystem-only") and row["files"]:

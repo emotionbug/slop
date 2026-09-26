@@ -1,0 +1,1947 @@
+--- a/apps/s_client.c
++++ b/apps/s_client.c
+@@ -2688,8 +2688,9 @@
+                 goto end;
+             }
+             atyp = ASN1_generate_nconf(genstr, cnf);
+-            if (atyp == NULL) {
++            if (atyp == NULL || atyp->type != V_ASN1_SEQUENCE) {
+                 NCONF_free(cnf);
++                ASN1_TYPE_free(atyp);
+                 BIO_printf(bio_err, "ASN1_generate_nconf failed\n");
+                 goto end;
+             }
+--- a/crypto/asn1/a_mbstr.c
++++ b/crypto/asn1/a_mbstr.c
+@@ -178,11 +178,27 @@
+         break;
+ 
+     case MBSTRING_BMP:
++        if (nchar > INT_MAX / 2) {
++            ASN1err(ASN1_F_ASN1_MBSTRING_NCOPY, ASN1_R_STRING_TOO_LONG);
++            if (free_out) {
++                ASN1_STRING_free(dest);
++                *out = NULL;
++            }
++            return -1;
++        }
+         outlen = nchar << 1;
+         cpyfunc = cpy_bmp;
+         break;
+ 
+     case MBSTRING_UNIV:
++        if (nchar > INT_MAX / 4) {
++            ASN1err(ASN1_F_ASN1_MBSTRING_NCOPY, ASN1_R_STRING_TOO_LONG);
++            if (free_out) {
++                ASN1_STRING_free(dest);
++                *out = NULL;
++            }
++            return -1;
++        }
+         outlen = nchar << 2;
+         cpyfunc = cpy_univ;
+         break;
+@@ -191,7 +207,10 @@
+         outlen = 0;
+         ret = traverse_string(in, len, inform, out_utf8, &outlen);
+         if (ret < 0) {
+-	    ASN1err(ASN1_F_ASN1_MBSTRING_NCOPY, ASN1_R_INVALID_UTF8STRING);
++            if (free_out) {
++                ASN1_STRING_free(dest);
++                *out = NULL;
++            }
+             return -1;
+         }
+         cpyfunc = cpy_utf8;
+@@ -273,9 +292,15 @@
+     int *outlen, len;
+ 
+     len = UTF8_putc(NULL, -1, value);
+-    if (len <= 0)
++    if (len <= 0) {
++        ASN1err(ASN1_F_ASN1_MBSTRING_NCOPY, ASN1_R_INVALID_UTF8STRING);
+         return len;
++    }
+     outlen = arg;
++    if (*outlen > INT_MAX - len) {
++        ASN1err(ASN1_F_ASN1_MBSTRING_NCOPY, ASN1_R_STRING_TOO_LONG);
++        return -1;
++    }
+     *outlen += len;
+     return 1;
+ }
+--- a/crypto/asn1/tasn_dec.c
++++ b/crypto/asn1/tasn_dec.c
+@@ -57,7 +57,7 @@
+                                  const ASN1_ITEM *it,
+                                  int tag, int aclass, char opt,
+                                  ASN1_TLC *ctx);
+-static int asn1_ex_c2i(ASN1_VALUE **pval, const unsigned char *cont, int len,
++static int asn1_ex_c2i(ASN1_VALUE **pval, const unsigned char *cont, long len,
+                        int utype, char *free_cont, const ASN1_ITEM *it);
+ 
+ /* Table to convert tags to bit values, used for MSTRING type */
+@@ -790,19 +790,24 @@
+ 
+ /* Translate ASN1 content octets into a structure */
+ 
+-static int asn1_ex_c2i(ASN1_VALUE **pval, const unsigned char *cont, int len,
++static int asn1_ex_c2i(ASN1_VALUE **pval, const unsigned char *cont, long len,
+                        int utype, char *free_cont, const ASN1_ITEM *it)
+ {
+     ASN1_VALUE **opval = NULL;
+     ASN1_STRING *stmp;
+     ASN1_TYPE *typ = NULL;
+     int ret = 0;
++    int ilen = (int)len;
+     const ASN1_PRIMITIVE_FUNCS *pf;
+     ASN1_INTEGER **tint;
+     pf = it->funcs;
+ 
+-    if (pf && pf->prim_c2i)
+-        return pf->prim_c2i(pval, cont, len, utype, free_cont, it);
++    if (pf && pf->prim_c2i) {
++        if (len == (long)ilen)
++            return pf->prim_c2i(pval, cont, ilen, utype, free_cont, it);
++        ASN1err(ASN1_F_ASN1_EX_C2I, ASN1_R_TOO_LONG);
++        return 0;
++    }
+     /* If ANY type clear type and set pointer to internal value */
+     if (it->utype == V_ASN1_ANY) {
+         if (!*pval) {
+@@ -820,7 +825,8 @@
+     }
+     switch (utype) {
+     case V_ASN1_OBJECT:
+-        if (!c2i_ASN1_OBJECT((ASN1_OBJECT **)pval, &cont, len))
++        if (len != (long)ilen
++            || !c2i_ASN1_OBJECT((ASN1_OBJECT **)pval, &cont, ilen))
+             goto err;
+         break;
+ 
+@@ -875,6 +881,10 @@
+     case V_ASN1_SET:
+     case V_ASN1_SEQUENCE:
+     default:
++        if (len != (long)ilen) {
++            ASN1err(ASN1_F_ASN1_EX_C2I, ASN1_R_TOO_LONG);
++            goto err;
++        }
+         if (utype == V_ASN1_BMPSTRING && (len & 1)) {
+             ASN1err(ASN1_F_ASN1_EX_C2I, ASN1_R_BMPSTRING_IS_WRONG_LENGTH);
+             goto err;
+@@ -900,10 +910,10 @@
+         if (*free_cont) {
+             OPENSSL_free(stmp->data);
+             stmp->data = (unsigned char *)cont; /* UGLY CAST! RL */
+-            stmp->length = len;
++            stmp->length = ilen;
+             *free_cont = 0;
+         } else {
+-            if (!ASN1_STRING_set(stmp, cont, len)) {
++            if (!ASN1_STRING_set(stmp, cont, ilen)) {
+                 ASN1err(ASN1_F_ASN1_EX_C2I, ERR_R_MALLOC_FAILURE);
+                 ASN1_STRING_free(stmp);
+                 *pval = NULL;
+--- a/crypto/bio/bf_lbuf.c
++++ b/crypto/bio/bf_lbuf.c
+@@ -191,14 +191,34 @@
+     while (foundnl && inl > 0);
+     /*
+      * We've written as much as we can.  The rest of the input buffer, if
+-     * any, is text that doesn't and with a NL and therefore needs to be
+-     * saved for the next trip.
++     * any, is text that doesn't end with a NL and therefore we need to try
++     * free up some space in our obuf so we can make forward progress.
+      */
+-    if (inl > 0) {
+-        memcpy(&(ctx->obuf[ctx->obuf_len]), in, inl);
+-        ctx->obuf_len += inl;
+-        num += inl;
+-    }
++    while (inl > 0) {
++        size_t avail = (size_t)ctx->obuf_size - (size_t)ctx->obuf_len;
++        size_t to_copy;
++
++        if (avail == 0) {
++            /* Flush buffered data to make room */
++            i = BIO_write(b->next_bio, ctx->obuf, ctx->obuf_len);
++            if (i <= 0) {
++                BIO_copy_next_retry(b);
++                return num > 0 ? num : i;
++            }
++            if (i < ctx->obuf_len)
++                memmove(ctx->obuf, ctx->obuf + i, ctx->obuf_len - i);
++            ctx->obuf_len -= i;
++            continue;
++        }
++
++        to_copy = inl > (int)avail ? avail : (size_t)inl;
++        memcpy(&(ctx->obuf[ctx->obuf_len]), in, to_copy);
++        ctx->obuf_len += (int)to_copy;
++        in += to_copy;
++        inl -= (int)to_copy;
++        num += (int)to_copy;
++    }
++
+     return num;
+ }
+ 
+--- a/crypto/bn/bn_exp.c
++++ b/crypto/bn/bn_exp.c
+@@ -589,7 +589,7 @@
+  * out by Colin Percival,
+  * http://www.daemonology.net/hyperthreading-considered-harmful/)
+  */
+-int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
++int bn_mod_exp_mont_fixed_top(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
+                               const BIGNUM *m, BN_CTX *ctx,
+                               BN_MONT_CTX *in_mont)
+ {
+@@ -605,10 +605,6 @@
+ #if defined(SPARC_T4_MONT)
+     unsigned int t4 = 0;
+ #endif
+-
+-    bn_check_top(a);
+-    bn_check_top(p);
+-    bn_check_top(m);
+ 
+     if (!BN_is_odd(m)) {
+         BNerr(BN_F_BN_MOD_EXP_MONT_CONSTTIME, BN_R_CALLED_WITH_EVEN_MODULUS);
+@@ -1112,7 +1108,7 @@
+             goto err;
+     } else
+ #endif
+-    if (!BN_from_montgomery(rr, &tmp, mont, ctx))
++    if (!bn_from_mont_fixed_top(rr, &tmp, mont, ctx))
+         goto err;
+     ret = 1;
+  err:
+@@ -1124,6 +1120,19 @@
+     }
+     BN_CTX_end(ctx);
+     return ret;
++}
++
++int BN_mod_exp_mont_consttime(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
++                              const BIGNUM *m, BN_CTX *ctx,
++                              BN_MONT_CTX *in_mont)
++{
++    bn_check_top(a);
++    bn_check_top(p);
++    bn_check_top(m);
++    if (!bn_mod_exp_mont_fixed_top(rr, a, p, m, ctx, in_mont))
++        return 0;
++    bn_correct_top(rr);
++    return 1;
+ }
+ 
+ int BN_mod_exp_mont_word(BIGNUM *rr, BN_ULONG a, const BIGNUM *p,
+--- a/crypto/cms/cms_env.c
++++ b/crypto/cms/cms_env.c
+@@ -401,13 +401,6 @@
+         goto err;
+     }
+ 
+-    if (EVP_PKEY_id(pkey) == EVP_PKEY_RSA)
+-        /* upper layer CMS code incorrectly assumes that a successful RSA
+-         * decryption means that the key matches ciphertext (which never
+-         * was the case, implicit rejection or not), so to make it work
+-         * disable implicit rejection for RSA keys */
+-        EVP_PKEY_CTX_ctrl(ktri->pctx, -1, -1, EVP_PKEY_CTRL_RSA_IMPLICIT_REJECTION, 0, NULL);
+-
+     if (EVP_PKEY_decrypt(ktri->pctx, NULL, &eklen,
+                          ktri->encryptedKey->data,
+                          ktri->encryptedKey->length) <= 0)
+--- a/crypto/cms/cms_kari.c
++++ b/crypto/cms/cms_kari.c
+@@ -193,6 +193,7 @@
+     int rv = 0;
+     unsigned char *out = NULL;
+     int outlen;
++    size_t outsize;
+     keklen = EVP_CIPHER_CTX_key_length(kari->ctx);
+     if (keklen > EVP_MAX_KEY_LENGTH)
+         return 0;
+@@ -205,7 +206,9 @@
+     /* obtain output length of ciphered key */
+     if (!EVP_CipherUpdate(kari->ctx, NULL, &outlen, in, inlen))
+         goto err;
+-    out = OPENSSL_malloc(outlen);
++    /* The unwrap failure path may cleanse as many bytes as its input. */
++    outsize = (size_t)outlen < inlen ? inlen : (size_t)outlen;
++    out = OPENSSL_malloc(outsize);
+     if (out == NULL)
+         goto err;
+     if (!EVP_CipherUpdate(kari->ctx, out, &outlen, in, inlen))
+--- a/crypto/cms/cms_pwri.c
++++ b/crypto/cms/cms_pwri.c
+@@ -177,14 +177,18 @@
+                           const unsigned char *in, size_t inlen,
+                           EVP_CIPHER_CTX *ctx)
+ {
+-    size_t blocklen = EVP_CIPHER_CTX_block_size(ctx);
++    int blocklen = EVP_CIPHER_CTX_block_size(ctx);
+     unsigned char *tmp;
+     int outl, rv = 0;
+-    if (inlen < 2 * blocklen) {
++
++    if (blocklen < 4)
++        return 0;
++
++    if (inlen < 2 * (size_t)blocklen) {
+         /* too small */
+         return 0;
+     }
+-    if (inlen % blocklen) {
++    if (inlen > INT_MAX || inlen % blocklen) {
+         /* Invalid size */
+         return 0;
+     }
+@@ -336,6 +340,12 @@
+ 
+     /* Finish password based key derivation to setup key in "ctx" */
+ 
++    if (algtmp == NULL) {
++        CMSerr(CMS_F_CMS_RECIPIENTINFO_PWRI_CRYPT,
++               CMS_R_INVALID_KEY_ENCRYPTION_PARAMETER);
++        ERR_add_error_data(1, "Missing KeyDerivationAlgorithm");
++        goto err;
++    }
+     if (EVP_PBE_CipherInit(algtmp->algorithm,
+                            (char *)pwri->pass, pwri->passlen,
+                            algtmp->parameter, kekctx, en_de) < 0) {
+--- a/crypto/dh/dh_ameth.c
++++ b/crypto/dh/dh_ameth.c
+@@ -678,15 +678,20 @@
+     int keylen, plen;
+     const EVP_CIPHER *kekcipher;
+     EVP_CIPHER_CTX *kekctx;
++    const ASN1_OBJECT *aoid;
++    const void *parameter = NULL;
++    int ptype = 0;
+ 
+     if (!CMS_RecipientInfo_kari_get0_alg(ri, &alg, &ukm))
+         goto err;
++
++    X509_ALGOR_get0(&aoid, &ptype, &parameter, alg);
+ 
+     /*
+      * For DH we only have one OID permissible. If ever any more get defined
+      * we will need something cleverer.
+      */
+-    if (OBJ_obj2nid(alg->algorithm) != NID_id_smime_alg_ESDH) {
++    if (OBJ_obj2nid(aoid) != NID_id_smime_alg_ESDH) {
+         DHerr(DH_F_DH_CMS_SET_SHARED_INFO, DH_R_KDF_PARAMETER_ERROR);
+         goto err;
+     }
+@@ -697,11 +702,11 @@
+     if (EVP_PKEY_CTX_set_dh_kdf_md(pctx, EVP_sha1()) <= 0)
+         goto err;
+ 
+-    if (alg->parameter->type != V_ASN1_SEQUENCE)
+-        goto err;
+-
+-    p = alg->parameter->value.sequence->data;
+-    plen = alg->parameter->value.sequence->length;
++    if (ptype != V_ASN1_SEQUENCE)
++        goto err;
++
++    p = ASN1_STRING_get0_data(parameter);
++    plen = ASN1_STRING_length(parameter);
+     kekalg = d2i_X509_ALGOR(NULL, &p, plen);
+     if (!kekalg)
+         goto err;
+--- a/crypto/ec/ec_ameth.c
++++ b/crypto/ec/ec_ameth.c
+@@ -744,20 +744,25 @@
+     int plen, keylen;
+     const EVP_CIPHER *kekcipher;
+     EVP_CIPHER_CTX *kekctx;
++    const ASN1_OBJECT *aoid = NULL;
++    int ptype = 0;
++    const void *parameter = NULL;
+ 
+     if (!CMS_RecipientInfo_kari_get0_alg(ri, &alg, &ukm))
+         return 0;
+ 
+-    if (!ecdh_cms_set_kdf_param(pctx, OBJ_obj2nid(alg->algorithm))) {
++    X509_ALGOR_get0(&aoid, &ptype, &parameter, alg);
++
++    if (!ecdh_cms_set_kdf_param(pctx, OBJ_obj2nid(aoid))) {
+         ECerr(EC_F_ECDH_CMS_SET_SHARED_INFO, EC_R_KDF_PARAMETER_ERROR);
+         return 0;
+     }
+ 
+-    if (alg->parameter->type != V_ASN1_SEQUENCE)
+-        return 0;
+-
+-    p = alg->parameter->value.sequence->data;
+-    plen = alg->parameter->value.sequence->length;
++    if (ptype != V_ASN1_SEQUENCE)
++        return 0;
++
++    p = ASN1_STRING_get0_data(parameter);
++    plen = ASN1_STRING_length(parameter);
+     kekalg = d2i_X509_ALGOR(NULL, &p, plen);
+     if (!kekalg)
+         goto err;
+--- a/crypto/ec/ec_lib.c
++++ b/crypto/ec/ec_lib.c
+@@ -13,6 +13,7 @@
+ #include <openssl/err.h>
+ #include <openssl/opensslv.h>
+ 
++#include "crypto/bn.h"
+ #include "ec_local.h"
+ 
+ /* functions for EC_GROUP objects */
+@@ -1155,10 +1156,10 @@
+     if (!BN_sub(e, group->order, e))
+         goto err;
+     /*-
+-     * Exponent e is public.
+-     * No need for scatter-gather or BN_FLG_CONSTTIME.
++     * Although the exponent is public we want the result to be
++     * fixed top.
+      */
+-    if (!BN_mod_exp_mont(r, x, e, group->order, ctx, group->mont_data))
++    if (!bn_mod_exp_mont_fixed_top(r, x, e, group->order, ctx, group->mont_data))
+         goto err;
+ 
+     ret = 1;
+--- a/crypto/modes/ocb128.c
++++ b/crypto/modes/ocb128.c
+@@ -342,7 +342,7 @@
+ 
+     if (num_blocks && all_num_blocks == (size_t)all_num_blocks
+         && ctx->stream != NULL) {
+-        size_t max_idx = 0, top = (size_t)all_num_blocks;
++        size_t max_idx = 0, top = (size_t)all_num_blocks, processed_bytes = 0;
+ 
+         /*
+          * See how many L_{i} entries we need to process data at hand
+@@ -356,6 +356,9 @@
+         ctx->stream(in, out, num_blocks, ctx->keyenc,
+                     (size_t)ctx->sess.blocks_processed + 1, ctx->sess.offset.c,
+                     (const unsigned char (*)[16])ctx->l, ctx->sess.checksum.c);
++        processed_bytes = num_blocks * 16;
++        in += processed_bytes;
++        out += processed_bytes;
+     } else {
+         /* Loop through all full blocks to be encrypted */
+         for (i = ctx->sess.blocks_processed + 1; i <= all_num_blocks; i++) {
+@@ -434,7 +437,7 @@
+ 
+     if (num_blocks && all_num_blocks == (size_t)all_num_blocks
+         && ctx->stream != NULL) {
+-        size_t max_idx = 0, top = (size_t)all_num_blocks;
++        size_t max_idx = 0, top = (size_t)all_num_blocks, processed_bytes = 0;
+ 
+         /*
+          * See how many L_{i} entries we need to process data at hand
+@@ -448,6 +451,9 @@
+         ctx->stream(in, out, num_blocks, ctx->keydec,
+                     (size_t)ctx->sess.blocks_processed + 1, ctx->sess.offset.c,
+                     (const unsigned char (*)[16])ctx->l, ctx->sess.checksum.c);
++        processed_bytes = num_blocks * 16;
++        in += processed_bytes;
++        out += processed_bytes;
+     } else {
+         OCB_BLOCK tmp;
+ 
+--- a/crypto/objects/obj_dat.c
++++ b/crypto/objects/obj_dat.c
+@@ -426,6 +426,25 @@
+ 
+     first = 1;
+     bl = NULL;
++
++    /*
++     * RFC 2578 (STD 58) says this about OBJECT IDENTIFIERs:
++     *
++     * > 3.5. OBJECT IDENTIFIER values
++     * >
++     * > An OBJECT IDENTIFIER value is an ordered list of non-negative
++     * > numbers. For the SMIv2, each number in the list is referred to as a
++     * > sub-identifier, there are at most 128 sub-identifiers in a value,
++     * > and each sub-identifier has a maximum value of 2^32-1 (4294967295
++     * > decimal).
++     *
++     * So a legitimate OID according to this RFC is at most (32 * 128 / 7),
++     * i.e. 586 bytes long.
++     *
++     * Ref: https://datatracker.ietf.org/doc/html/rfc2578#section-3.5
++     */
++    if (len > 586)
++        goto err;
+ 
+     while (len > 0) {
+         l = 0;
+--- a/crypto/pkcs12/p12_add.c
++++ b/crypto/pkcs12/p12_add.c
+@@ -76,6 +76,12 @@
+                   PKCS12_R_CONTENT_TYPE_NOT_DATA);
+         return NULL;
+     }
++
++    if (p7->d.data == NULL) {
++        PKCS12err(PKCS12_F_PKCS12_UNPACK_P7DATA, PKCS12_R_DECODE_ERROR);
++        return NULL;
++    }
++
+     return ASN1_item_unpack(p7->d.data, ASN1_ITEM_rptr(PKCS12_SAFEBAGS));
+ }
+ 
+@@ -132,6 +138,12 @@
+ {
+     if (!PKCS7_type_is_encrypted(p7))
+         return NULL;
++
++    if (p7->d.encrypted == NULL) {
++	PKCS12err(PKCS12_F_PKCS12_UNPACK_P7ENCDATA, PKCS12_R_DECODE_ERROR);
++        return NULL;
++    }
++
+     return PKCS12_item_decrypt_d2i(p7->d.encrypted->enc_data->algorithm,
+                                    ASN1_ITEM_rptr(PKCS12_SAFEBAGS),
+                                    pass, passlen,
+@@ -159,6 +171,12 @@
+                   PKCS12_R_CONTENT_TYPE_NOT_DATA);
+         return NULL;
+     }
++
++    if (p12->authsafes->d.data == NULL) {
++	PKCS12err(PKCS12_F_PKCS12_UNPACK_AUTHSAFES, PKCS12_R_DECODE_ERROR);
++	return NULL;
++    }
++
+     return ASN1_item_unpack(p12->authsafes->d.data,
+                             ASN1_ITEM_rptr(PKCS12_AUTHSAFES));
+ }
+--- a/crypto/pkcs12/p12_decr.c
++++ b/crypto/pkcs12/p12_decr.c
+@@ -88,6 +88,11 @@
+     void *ret;
+     int outlen;
+ 
++    if (oct == NULL) {
++        PKCS12err(PKCS12_F_PKCS12_ITEM_DECRYPT_D2I, ERR_R_PASSED_NULL_PARAMETER);
++        return NULL;
++    }
++
+     if (!PKCS12_pbe_crypt(algor, pass, passlen, oct->data, oct->length,
+                           &out, &outlen, 0)) {
+         PKCS12err(PKCS12_F_PKCS12_ITEM_DECRYPT_D2I,
+--- a/crypto/pkcs12/p12_kiss.c
++++ b/crypto/pkcs12/p12_kiss.c
+@@ -183,11 +183,17 @@
+     ASN1_BMPSTRING *fname = NULL;
+     ASN1_OCTET_STRING *lkid = NULL;
+ 
+-    if ((attrib = PKCS12_SAFEBAG_get0_attr(bag, NID_friendlyName)))
++    if ((attrib = PKCS12_SAFEBAG_get0_attr(bag, NID_friendlyName))) {
++        if (attrib->type != V_ASN1_BMPSTRING)
++            return 0;
+         fname = attrib->value.bmpstring;
+-
+-    if ((attrib = PKCS12_SAFEBAG_get0_attr(bag, NID_localKeyID)))
++    }
++
++    if ((attrib = PKCS12_SAFEBAG_get0_attr(bag, NID_localKeyID))) {
++        if (attrib->type != V_ASN1_OCTET_STRING)
++            return 0;
+         lkid = attrib->value.octet_string;
++    }
+ 
+     switch (PKCS12_SAFEBAG_get_nid(bag)) {
+     case NID_keyBag:
+--- a/crypto/pkcs12/p12_mutl.c
++++ b/crypto/pkcs12/p12_mutl.c
+@@ -93,6 +93,11 @@
+         return 0;
+     }
+ 
++    if (p12->authsafes->d.data == NULL) {
++        PKCS12err(PKCS12_F_PKCS12_GEN_MAC, PKCS12_R_DECODE_ERROR);
++        return 0;
++    }
++
+     salt = p12->mac->salt->data;
+     saltlen = p12->mac->salt->length;
+     if (!p12->mac->iter)
+--- a/crypto/pkcs12/p12_npas.c
++++ b/crypto/pkcs12/p12_npas.c
+@@ -78,8 +78,9 @@
+             bags = PKCS12_unpack_p7data(p7);
+         } else if (bagnid == NID_pkcs7_encrypted) {
+             bags = PKCS12_unpack_p7encdata(p7, oldpass, -1);
+-            if (!alg_get(p7->d.encrypted->enc_data->algorithm,
+-                         &pbe_nid, &pbe_iter, &pbe_saltlen))
++            if (p7->d.encrypted == NULL
++                    || !alg_get(p7->d.encrypted->enc_data->algorithm,
++                                &pbe_nid, &pbe_iter, &pbe_saltlen))
+                 goto err;
+         } else {
+             continue;
+--- a/crypto/pkcs7/pk7_doit.c
++++ b/crypto/pkcs7/pk7_doit.c
+@@ -159,13 +159,6 @@
+         PKCS7err(PKCS7_F_PKCS7_DECRYPT_RINFO, PKCS7_R_CTRL_ERROR);
+         goto err;
+     }
+-
+-    if (EVP_PKEY_id(pkey) == EVP_PKEY_RSA)
+-        /* upper layer pkcs7 code incorrectly assumes that a successful RSA
+-         * decryption means that the key matches ciphertext (which never
+-         * was the case, implicit rejection or not), so to make it work
+-         * disable implicit rejection for RSA keys */
+-        EVP_PKEY_CTX_ctrl(pctx, -1, -1, EVP_PKEY_CTRL_RSA_IMPLICIT_REJECTION, 0, NULL);
+ 
+     if (EVP_PKEY_decrypt(pctx, NULL, &eklen,
+                          ri->enc_key->data, ri->enc_key->length) <= 0)
+@@ -1100,6 +1093,8 @@
+     ASN1_TYPE *astype;
+     if ((astype = get_attribute(sk, NID_pkcs9_messageDigest)) == NULL)
+         return NULL;
++    if (astype->type != V_ASN1_OCTET_STRING)
++        return NULL;
+     return astype->value.octet_string;
+ }
+ 
+--- a/crypto/pkcs7/pk7_mime.c
++++ b/crypto/pkcs7/pk7_mime.c
+@@ -30,10 +30,13 @@
+ {
+     STACK_OF(X509_ALGOR) *mdalgs;
+     int ctype_nid = OBJ_obj2nid(p7->type);
+-    if (ctype_nid == NID_pkcs7_signed)
++    if (ctype_nid == NID_pkcs7_signed) {
++        if (p7->d.sign == NULL)
++            return 0;
+         mdalgs = p7->d.sign->md_algs;
+-    else
++    } else {
+         mdalgs = NULL;
++    }
+ 
+     flags ^= SMIME_OLDMIME;
+ 
+--- a/crypto/ts/ts_rsp_verify.c
++++ b/crypto/ts/ts_rsp_verify.c
+@@ -262,7 +262,7 @@
+     ASN1_TYPE *attr;
+     const unsigned char *p;
+     attr = PKCS7_get_signed_attribute(si, NID_id_smime_aa_signingCertificate);
+-    if (!attr)
++    if (attr == NULL || attr->type != V_ASN1_SEQUENCE)
+         return NULL;
+     p = attr->value.sequence->data;
+     return d2i_ESS_SIGNING_CERT(NULL, &p, attr->value.sequence->length);
+@@ -274,7 +274,7 @@
+     const unsigned char *p;
+ 
+     attr = PKCS7_get_signed_attribute(si, NID_id_smime_aa_signingCertificateV2);
+-    if (attr == NULL)
++    if (attr == NULL || attr->type != V_ASN1_SEQUENCE)
+         return NULL;
+     p = attr->value.sequence->data;
+     return d2i_ESS_SIGNING_CERT_V2(NULL, &p, attr->value.sequence->length);
+--- a/crypto/x509/x509_vfy.c
++++ b/crypto/x509/x509_vfy.c
+@@ -1136,6 +1136,8 @@
+     if (ASN1_INTEGER_cmp(delta->base_crl_number, base->crl_number) > 0)
+         return 0;
+     /* Delta CRL number must exceed full CRL number */
++    if (delta->crl_number == NULL)
++        return 0;
+     if (ASN1_INTEGER_cmp(delta->crl_number, base->crl_number) > 0)
+         return 1;
+     return 0;
+@@ -1649,18 +1651,25 @@
+     }
+     /* Invalid or inconsistent extensions */
+     if (ret == X509_PCY_TREE_INVALID) {
+-        int i;
++        int i, cbcalled = 0;
+ 
+         /* Locate certificates with bad extensions and notify callback. */
+-        for (i = 1; i < sk_X509_num(ctx->chain); i++) {
++        for (i = 0; i < sk_X509_num(ctx->chain); i++) {
+             X509 *x = sk_X509_value(ctx->chain, i);
+ 
+             if (!(x->ex_flags & EXFLAG_INVALID_POLICY))
+                 continue;
++            cbcalled = 1;
+             if (!verify_cb_cert(ctx, x, i,
+                                 X509_V_ERR_INVALID_POLICY_EXTENSION))
+                 return 0;
+         }
++        if (!cbcalled) {
++            /* Should not be able to get here */
++            X509err(X509_F_CHECK_POLICY, ERR_R_INTERNAL_ERROR);
++            return 0;
++        }
++        /* The callback ignored the error so we return success */
+         return 1;
+     }
+     if (ret == X509_PCY_TREE_FAILURE) {
+@@ -2753,7 +2762,7 @@
+             if (matched || dane->mdpth < 0) {
+                 dane->mdpth = depth;
+                 dane->mtlsa = t;
+-                OPENSSL_free(dane->mcert);
++                X509_free(dane->mcert);
+                 dane->mcert = cert;
+                 X509_up_ref(cert);
+             }
+--- a/crypto/x509v3/pcy_local.h
++++ b/crypto/x509v3/pcy_local.h
+@@ -111,6 +111,11 @@
+ };
+ 
+ struct X509_POLICY_TREE_st {
++    /* The number of nodes in the tree */
++    size_t node_count;
++    /* The maximum number of nodes in the tree */
++    size_t node_maximum;
++
+     /* This is the tree 'level' data */
+     X509_POLICY_LEVEL *levels;
+     int nlevel;
+@@ -159,7 +164,8 @@
+ X509_POLICY_NODE *level_add_node(X509_POLICY_LEVEL *level,
+                                  X509_POLICY_DATA *data,
+                                  X509_POLICY_NODE *parent,
+-                                 X509_POLICY_TREE *tree);
++                                 X509_POLICY_TREE *tree,
++                                 int extra_data);
+ void policy_node_free(X509_POLICY_NODE *node);
+ int policy_node_match(const X509_POLICY_LEVEL *lvl,
+                       const X509_POLICY_NODE *node, const ASN1_OBJECT *oid);
+--- a/crypto/x509v3/pcy_node.c
++++ b/crypto/x509v3/pcy_node.c
+@@ -59,9 +59,14 @@
+ X509_POLICY_NODE *level_add_node(X509_POLICY_LEVEL *level,
+                                  X509_POLICY_DATA *data,
+                                  X509_POLICY_NODE *parent,
+-                                 X509_POLICY_TREE *tree)
++                                 X509_POLICY_TREE *tree,
++                                 int extra_data)
+ {
+     X509_POLICY_NODE *node;
++
++    /* Verify that the tree isn't too large.  This mitigates CVE-2023-0464 */
++    if (tree->node_maximum > 0 && tree->node_count >= tree->node_maximum)
++        return NULL;
+ 
+     node = OPENSSL_zalloc(sizeof(*node));
+     if (node == NULL) {
+@@ -70,7 +75,7 @@
+     }
+     node->data = data;
+     node->parent = parent;
+-    if (level) {
++    if (level != NULL) {
+         if (OBJ_obj2nid(data->valid_policy) == NID_any_policy) {
+             if (level->anyPolicy)
+                 goto node_error;
+@@ -90,7 +95,7 @@
+         }
+     }
+ 
+-    if (tree) {
++    if (extra_data) {
+         if (tree->extra_data == NULL)
+             tree->extra_data = sk_X509_POLICY_DATA_new_null();
+         if (tree->extra_data == NULL){
+@@ -103,6 +108,7 @@
+         }
+     }
+ 
++    tree->node_count++;
+     if (parent)
+         parent->nchild++;
+ 
+--- a/crypto/x509v3/pcy_tree.c
++++ b/crypto/x509v3/pcy_tree.c
+@@ -12,6 +12,18 @@
+ #include <openssl/x509v3.h>
+ 
+ #include "pcy_local.h"
++
++/*
++ * If the maximum number of nodes in the policy tree isn't defined, set it to
++ * a generous default of 1000 nodes.
++ *
++ * Defining this to be zero means unlimited policy tree growth which opens the
++ * door on CVE-2023-0464.
++ */
++
++#ifndef OPENSSL_POLICY_TREE_NODES_MAX
++# define OPENSSL_POLICY_TREE_NODES_MAX 1000
++#endif
+ 
+ /*
+  * Enable this to print out the complete policy tree at various point during
+@@ -168,6 +180,9 @@
+         return X509_PCY_TREE_INTERNAL;
+     }
+ 
++    /* Limit the growth of the tree to mitigate CVE-2023-0464 */
++    tree->node_maximum = OPENSSL_POLICY_TREE_NODES_MAX;
++
+     /*
+      * http://tools.ietf.org/html/rfc5280#section-6.1.2, figure 3.
+      *
+@@ -184,7 +199,7 @@
+     level = tree->levels;
+     if ((data = policy_data_new(NULL, OBJ_nid2obj(NID_any_policy), 0)) == NULL)
+         goto bad_tree;
+-    if (level_add_node(level, data, NULL, tree) == NULL) {
++    if (level_add_node(level, data, NULL, tree, 1) == NULL) {
+         policy_data_free(data);
+         goto bad_tree;
+     }
+@@ -243,7 +258,8 @@
+  * Return value: 1 on success, 0 otherwise
+  */
+ static int tree_link_matching_nodes(X509_POLICY_LEVEL *curr,
+-                                    X509_POLICY_DATA *data)
++                                    X509_POLICY_DATA *data,
++                                    X509_POLICY_TREE *tree)
+ {
+     X509_POLICY_LEVEL *last = curr - 1;
+     int i, matched = 0;
+@@ -253,13 +269,13 @@
+         X509_POLICY_NODE *node = sk_X509_POLICY_NODE_value(last->nodes, i);
+ 
+         if (policy_node_match(last, node, data->valid_policy)) {
+-            if (level_add_node(curr, data, node, NULL) == NULL)
++            if (level_add_node(curr, data, node, tree, 0) == NULL)
+                 return 0;
+             matched = 1;
+         }
+     }
+     if (!matched && last->anyPolicy) {
+-        if (level_add_node(curr, data, last->anyPolicy, NULL) == NULL)
++        if (level_add_node(curr, data, last->anyPolicy, tree, 0) == NULL)
+             return 0;
+     }
+     return 1;
+@@ -272,7 +288,8 @@
+  * Return value: 1 on success, 0 otherwise.
+  */
+ static int tree_link_nodes(X509_POLICY_LEVEL *curr,
+-                           const X509_POLICY_CACHE *cache)
++                           const X509_POLICY_CACHE *cache,
++                           X509_POLICY_TREE *tree)
+ {
+     int i;
+ 
+@@ -280,7 +297,7 @@
+         X509_POLICY_DATA *data = sk_X509_POLICY_DATA_value(cache->data, i);
+ 
+         /* Look for matching nodes in previous level */
+-        if (!tree_link_matching_nodes(curr, data))
++        if (!tree_link_matching_nodes(curr, data, tree))
+             return 0;
+     }
+     return 1;
+@@ -311,7 +328,7 @@
+     /* Curr may not have anyPolicy */
+     data->qualifier_set = cache->anyPolicy->qualifier_set;
+     data->flags |= POLICY_DATA_FLAG_SHARED_QUALIFIERS;
+-    if (level_add_node(curr, data, node, tree) == NULL) {
++    if (level_add_node(curr, data, node, tree, 1) == NULL) {
+         policy_data_free(data);
+         return 0;
+     }
+@@ -373,7 +390,7 @@
+     }
+     /* Finally add link to anyPolicy */
+     if (last->anyPolicy &&
+-        level_add_node(curr, cache->anyPolicy, last->anyPolicy, NULL) == NULL)
++        level_add_node(curr, cache->anyPolicy, last->anyPolicy, tree, 0) == NULL)
+         return 0;
+     return 1;
+ }
+@@ -555,7 +572,7 @@
+             extra->qualifier_set = anyPolicy->data->qualifier_set;
+             extra->flags = POLICY_DATA_FLAG_SHARED_QUALIFIERS
+                 | POLICY_DATA_FLAG_EXTRA_NODE;
+-            node = level_add_node(NULL, extra, anyPolicy->parent, tree);
++            node = level_add_node(NULL, extra, anyPolicy->parent, tree, 1);
+         }
+         if (!tree->user_policies) {
+             tree->user_policies = sk_X509_POLICY_NODE_new_null();
+@@ -582,7 +599,7 @@
+ 
+     for (i = 1; i < tree->nlevel; i++, curr++) {
+         cache = policy_cache_set(curr->cert);
+-        if (!tree_link_nodes(curr, cache))
++        if (!tree_link_nodes(curr, cache, tree))
+             return X509_PCY_TREE_INTERNAL;
+ 
+         if (!(curr->flags & X509_V_FLAG_INHIBIT_ANY)
+--- a/doc/man3/CMS_decrypt.pod
++++ b/doc/man3/CMS_decrypt.pod
+@@ -39,7 +39,7 @@
+ recipient encrypted key can be decrypted B<without> generating a random
+ content encryption key. Applications should use this flag with
+ B<extreme caution> especially in automated gateways as it can leave them
+-open to attack.
++open to attack. See L<EVP_PKEY_decrypt(3)> for more details.
+ 
+ It is possible to determine the correct recipient key by other means (for
+ example looking them up in a database) and setting them in the CMS structure
+@@ -68,7 +68,7 @@
+ 
+ =head1 SEE ALSO
+ 
+-L<ERR_get_error(3)>, L<CMS_encrypt(3)>
++L<ERR_get_error(3)>, L<CMS_encrypt(3)>, L<EVP_PKEY_decrypt(3)>
+ 
+ =head1 COPYRIGHT
+ 
+--- a/doc/man3/PKCS7_decrypt.pod
++++ b/doc/man3/PKCS7_decrypt.pod
+@@ -22,6 +22,14 @@
+ Although the recipients certificate is not needed to decrypt the data it is needed
+ to locate the appropriate (of possible several) recipients in the PKCS#7 structure.
+ 
++When RSA PKCS#1 v1.5 Key Transport is in use, the invoked EVP_PKEY_decrypt()
++will use implicit rejection mechanism. It always returns the result of RSA
++decryption of the symmetric key to avoid Marvin attack. This result is
++deterministic and can happen to match the symmetric cipher used for the content
++encryption. In case when the certificate is not provided, the last
++RecipientInfo producing the key looking valid will be used. It may cause
++getting garbage content on decryption.
++
+ The following flags can be passed in the B<flags> parameter.
+ 
+ If the B<PKCS7_TEXT> flag is set MIME headers for type B<text/plain> are deleted
+@@ -43,7 +51,7 @@
+ 
+ =head1 SEE ALSO
+ 
+-L<ERR_get_error(3)>, L<PKCS7_encrypt(3)>
++L<ERR_get_error(3)>, L<PKCS7_encrypt(3)>, L<EVP_PKEY_decrypt(3)>
+ 
+ =head1 COPYRIGHT
+ 
+--- a/doc/man3/X509_VERIFY_PARAM_set_flags.pod
++++ b/doc/man3/X509_VERIFY_PARAM_set_flags.pod
+@@ -92,8 +92,9 @@
+ X509_VERIFY_PARAM_set_time() sets the verification time in B<param> to
+ B<t>. Normally the current time is used.
+ 
+-X509_VERIFY_PARAM_add0_policy() enables policy checking (it is disabled
+-by default) and adds B<policy> to the acceptable policy set.
++X509_VERIFY_PARAM_add0_policy() adds B<policy> to the acceptable policy set.
++Contrary to preexisting documentation of this function it does not enable
++policy checking.
+ 
+ X509_VERIFY_PARAM_set1_policies() enables policy checking (it is disabled
+ by default) and sets the acceptable policy set to B<policies>. Any existing
+@@ -377,6 +378,10 @@
+ 
+ The X509_VERIFY_PARAM_get_hostflags() function was added in OpenSSL 1.1.0i.
+ 
++The function X509_VERIFY_PARAM_add0_policy() was historically documented as
++enabling policy checking however the implementation has never done this.
++The documentation was changed to align with the implementation.
++
+ =head1 COPYRIGHT
+ 
+ Copyright 2009-2020 The OpenSSL Project Authors. All Rights Reserved.
+--- a/include/crypto/bn.h
++++ b/include/crypto/bn.h
+@@ -72,6 +72,9 @@
+  */
+ int bn_mul_mont_fixed_top(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
+                           BN_MONT_CTX *mont, BN_CTX *ctx);
++int bn_mod_exp_mont_fixed_top(BIGNUM *rr, const BIGNUM *a, const BIGNUM *p,
++                              const BIGNUM *m, BN_CTX *ctx,
++                              BN_MONT_CTX *in_mont);
+ int bn_to_mont_fixed_top(BIGNUM *r, const BIGNUM *a, BN_MONT_CTX *mont,
+                          BN_CTX *ctx);
+ int bn_from_mont_fixed_top(BIGNUM *r, const BIGNUM *a, BN_MONT_CTX *mont,
+--- a/include/openssl/pkcs12err.h
++++ b/include/openssl/pkcs12err.h
+@@ -39,6 +39,7 @@
+ # define PKCS12_F_PKCS12_NEWPASS                          128
+ # define PKCS12_F_PKCS12_PACK_P7DATA                      114
+ # define PKCS12_F_PKCS12_PACK_P7ENCDATA                   115
++# define PKCS12_F_PKCS12_UNPACK_P7ENCDATA                 116
+ # define PKCS12_F_PKCS12_PARSE                            118
+ # define PKCS12_F_PKCS12_PBE_CRYPT                        119
+ # define PKCS12_F_PKCS12_PBE_KEYIVGEN                     120
+--- a/ssl/record/rec_layer_d1.c
++++ b/ssl/record/rec_layer_d1.c
+@@ -70,21 +70,21 @@
+ 
+     while ((item = pqueue_pop(d->unprocessed_rcds.q)) != NULL) {
+         rdata = (DTLS1_RECORD_DATA *)item->data;
+-        OPENSSL_free(rdata->rbuf.buf);
++        OPENSSL_free(rdata->packet);
+         OPENSSL_free(item->data);
+         pitem_free(item);
+     }
+ 
+     while ((item = pqueue_pop(d->processed_rcds.q)) != NULL) {
+         rdata = (DTLS1_RECORD_DATA *)item->data;
+-        OPENSSL_free(rdata->rbuf.buf);
++        OPENSSL_free(rdata->packet);
+         OPENSSL_free(item->data);
+         pitem_free(item);
+     }
+ 
+     while ((item = pqueue_pop(d->buffered_app_data.q)) != NULL) {
+         rdata = (DTLS1_RECORD_DATA *)item->data;
+-        OPENSSL_free(rdata->rbuf.buf);
++        OPENSSL_free(rdata->packet);
+         OPENSSL_free(item->data);
+         pitem_free(item);
+     }
+@@ -126,15 +126,48 @@
+ 
+     rdata = (DTLS1_RECORD_DATA *)item->data;
+ 
+-    SSL3_BUFFER_release(&s->rlayer.rbuf);
+-
+-    s->rlayer.packet = rdata->packet;
++    /*
++     * The record was read into a read buffer at least this size, so it must fit
++     * - see the length checks in ssl3_read_n(). Verify it rather than risk
++     * overrunning the buffer if that ever ceases to hold.
++     */
++    if (!ossl_assert(rdata->packet_length <= s->rlayer.rbuf.len)) {
++        OPENSSL_free(rdata->packet);
++        return 0;
++    }
++
++    /*
++     * rdata->packet is a standalone copy of this record's on-wire bytes (see
++     * dtls1_buffer_record()). Copy it into the live read buffer so that
++     * s->rlayer.packet continues to point inside s->rlayer.rbuf.buf, as it
++     * does for every other record, then free our standalone copy.
++     */
++    memcpy(s->rlayer.rbuf.buf, rdata->packet, rdata->packet_length);
++    s->rlayer.rbuf.offset = 0;
++    s->rlayer.rbuf.left = 0;
++    s->rlayer.packet = s->rlayer.rbuf.buf;
+     s->rlayer.packet_length = rdata->packet_length;
+-    memcpy(&s->rlayer.rbuf, &(rdata->rbuf), sizeof(SSL3_BUFFER));
+     memcpy(&s->rlayer.rrec, &(rdata->rrec), sizeof(SSL3_RECORD));
+ 
++    /*
++     * dtls1_buffer_record() rebased rrec.data/input onto rdata->packet if they
++     * pointed into this record's own bytes, so translate them again onto the
++     * record's new location in the read buffer. Anything still pointing
++     * outside rdata->packet is either a separate allocation (rr->comp) or a
++     * leftover from a previously processed record that will be overwritten
++     * before use, so leave it alone.
++     */
++    if (rdata->rrec.data >= rdata->packet
++        && rdata->rrec.data < rdata->packet + rdata->packet_length)
++        s->rlayer.rrec[0].data = s->rlayer.packet + (rdata->rrec.data - rdata->packet);
++    if (rdata->rrec.input >= rdata->packet
++        && rdata->rrec.input < rdata->packet + rdata->packet_length)
++        s->rlayer.rrec[0].input = s->rlayer.packet + (rdata->rrec.input - rdata->packet);
++
++    OPENSSL_free(rdata->packet);
++
+     /* Set proper sequence number for mac calculation */
+-    memcpy(&(s->rlayer.read_sequence[2]), &(rdata->packet[5]), 6);
++    memcpy(&(s->rlayer.read_sequence[2]), &(s->rlayer.packet[5]), 6);
+ 
+     return 1;
+ }
+@@ -158,10 +191,36 @@
+         return -1;
+     }
+ 
+-    rdata->packet = s->rlayer.packet;
++    /*
++     * Take a copy of just this record's own on-wire bytes - the header plus the
++     * record body, which for an already-processed record holds the plaintext
++     * decrypted in place - rather than the whole (much larger) read buffer. The
++     * live s->rlayer.rbuf is left untouched and continues to be used for
++     * subsequent reads.
++     */
+     rdata->packet_length = s->rlayer.packet_length;
+-    memcpy(&(rdata->rbuf), &s->rlayer.rbuf, sizeof(SSL3_BUFFER));
++    rdata->packet = OPENSSL_memdup(s->rlayer.packet, s->rlayer.packet_length);
++    if (rdata->packet == NULL) {
++        OPENSSL_free(rdata);
++        pitem_free(item);
++        SSLfatal(s, SSL_AD_INTERNAL_ERROR, SSL_F_DTLS1_BUFFER_RECORD, ERR_R_MALLOC_FAILURE);
++        return -1;
++    }
+     memcpy(&(rdata->rrec), &s->rlayer.rrec, sizeof(SSL3_RECORD));
++
++    /*
++     * The copied rrec.data/input still point into the live read buffer. Rebase
++     * any that point within this record's own bytes onto our standalone copy,
++     * so that dtls1_copy_record() can translate them again on retrieval.
++     * Pointers elsewhere (e.g. into rr->comp, or left over from a previously
++     * processed record) are not ours to move and are left alone.
++     */
++    if (rdata->rrec.data >= s->rlayer.packet
++        && rdata->rrec.data < s->rlayer.packet + s->rlayer.packet_length)
++        rdata->rrec.data = rdata->packet + (rdata->rrec.data - s->rlayer.packet);
++    if (rdata->rrec.input >= s->rlayer.packet
++        && rdata->rrec.input < s->rlayer.packet + s->rlayer.packet_length)
++        rdata->rrec.input = rdata->packet + (rdata->rrec.input - s->rlayer.packet);
+ 
+     item->data = rdata;
+ 
+@@ -175,24 +234,11 @@
+     }
+ #endif
+ 
+-    s->rlayer.packet = NULL;
+-    s->rlayer.packet_length = 0;
+-    memset(&s->rlayer.rbuf, 0, sizeof(s->rlayer.rbuf));
+-    memset(&s->rlayer.rrec, 0, sizeof(s->rlayer.rrec));
+-
+-    if (!ssl3_setup_buffers(s)) {
+-        /* SSLfatal() already called */
+-        OPENSSL_free(rdata->rbuf.buf);
++    if (pqueue_insert(queue->q, item) == NULL) {
++        /* Must be a duplicate so ignore it */
++        OPENSSL_free(rdata->packet);
+         OPENSSL_free(rdata);
+         pitem_free(item);
+-        return -1;
+-    }
+-
+-    if (pqueue_insert(queue->q, item) == NULL) {
+-        /* Must be a duplicate so ignore it */
+-        OPENSSL_free(rdata->rbuf.buf);
+-        OPENSSL_free(rdata);
+-        pitem_free(item);
+     }
+ 
+     return 1;
+@@ -201,15 +247,16 @@
+ int dtls1_retrieve_buffered_record(SSL *s, record_pqueue *queue)
+ {
+     pitem *item;
++    int ret;
+ 
+     item = pqueue_pop(queue->q);
+     if (item) {
+-        dtls1_copy_record(s, item);
++        ret = dtls1_copy_record(s, item);
+ 
+         OPENSSL_free(item->data);
+         pitem_free(item);
+ 
+-        return 1;
++        return ret;
+     }
+ 
+     return 0;
+@@ -254,7 +301,13 @@
+ 
+         /* Process all the records. */
+         while (pqueue_peek(s->rlayer.d->unprocessed_rcds.q)) {
+-            dtls1_get_unprocessed_record(s);
++            if (!dtls1_get_unprocessed_record(s)) {
++                /*
++                 * Should not happen. The record has been dropped, so move on
++                 * to the next one.
++                 */
++                continue;
++            }
+             bitmap = dtls1_get_bitmap(s, rr, &is_next_epoch);
+             if (bitmap == NULL) {
+                 /*
+@@ -401,6 +454,7 @@
+             }
+ #endif
+ 
++            /* On failure the record is simply dropped */
+             dtls1_copy_record(s, item);
+ 
+             OPENSSL_free(item->data);
+--- a/ssl/record/record.h
++++ b/ssl/record/record.h
+@@ -83,7 +83,6 @@
+ typedef struct dtls1_record_data_st {
+     unsigned char *packet;
+     size_t packet_length;
+-    SSL3_BUFFER rbuf;
+     SSL3_RECORD rrec;
+ #ifndef OPENSSL_NO_SCTP
+     struct bio_dgram_sctp_rcvinfo recordinfo;
+--- a/ssl/record/ssl3_record.c
++++ b/ssl/record/ssl3_record.c
+@@ -1804,8 +1804,11 @@
+      *                         after use :-).
+      */
+ 
+-    /* we have pulled in a full packet so zero things */
+-    RECORD_LAYER_reset_packet_length(&s->rlayer);
++    /*
++     * Leave s->rlayer.packet_length alone: ssl3_read_n() starts each new record
++     * by resetting it, and it must still describe this record's on-wire bytes
++     * for dtls1_buffer_record() should this record end up being buffered.
++     */
+ 
+     /* Mark receipt of record. */
+     dtls1_record_bitmap_update(s, bitmap);
+--- a/ssl/ssl_lib.c
++++ b/ssl/ssl_lib.c
+@@ -3481,9 +3481,10 @@
+ 
+     /*
+      * If the session_id_length is 0, we are not supposed to cache it, and it
+-     * would be rather hard to do anyway :-)
++     * would be rather hard to do anyway :-). Also if the session has already
++     * been marked as not_resumable we should not cache it for later reuse.
+      */
+-    if (s->session->session_id_length == 0)
++    if (s->session->session_id_length == 0 || s->session->not_resumable)
+         return;
+ 
+     /*
+--- a/ssl/ssl_sess.c
++++ b/ssl/ssl_sess.c
+@@ -94,16 +94,11 @@
+     return ss;
+ }
+ 
+-SSL_SESSION *SSL_SESSION_dup(SSL_SESSION *src)
+-{
+-    return ssl_session_dup(src, 1);
+-}
+-
+ /*
+  * Create a new SSL_SESSION and duplicate the contents of |src| into it. If
+  * ticket == 0 then no ticket information is duplicated, otherwise it is.
+  */
+-SSL_SESSION *ssl_session_dup(SSL_SESSION *src, int ticket)
++static SSL_SESSION *ssl_session_dup_intern(SSL_SESSION *src, int ticket)
+ {
+     SSL_SESSION *dest;
+ 
+@@ -221,6 +216,27 @@
+     SSLerr(SSL_F_SSL_SESSION_DUP, ERR_R_MALLOC_FAILURE);
+     SSL_SESSION_free(dest);
+     return NULL;
++}
++
++SSL_SESSION *SSL_SESSION_dup(SSL_SESSION *src)
++{
++    return ssl_session_dup_intern(src, 1);
++}
++
++/*
++ * Used internally when duplicating a session which might be already shared.
++ * We will have resumed the original session. Subsequently we might have marked
++ * it as non-resumable (e.g. in another thread) - but this copy should be ok to
++ * resume from.
++ */
++SSL_SESSION *ssl_session_dup(SSL_SESSION *src, int ticket)
++{
++    SSL_SESSION *sess = ssl_session_dup_intern(src, ticket);
++
++    if (sess != NULL)
++        sess->not_resumable = 0;
++
++    return sess;
+ }
+ 
+ const unsigned char *SSL_SESSION_get_id(const SSL_SESSION *s, unsigned int *len)
+--- a/ssl/statem/statem_srvr.c
++++ b/ssl/statem/statem_srvr.c
+@@ -2403,9 +2403,8 @@
+      * so the following won't overwrite an ID that we're supposed
+      * to send back.
+      */
+-    if (s->session->not_resumable ||
+-        (!(s->ctx->session_cache_mode & SSL_SESS_CACHE_SERVER)
+-         && !s->hit))
++    if (!(s->ctx->session_cache_mode & SSL_SESS_CACHE_SERVER)
++            && !s->hit)
+         s->session->session_id_length = 0;
+ 
+     if (usetls13) {
+--- /dev/null
++++ b/test/certs/cve-2026-28388-ca.pem
+@@ -0,0 +1,19 @@
++-----BEGIN CERTIFICATE-----
++MIIDFTCCAf2gAwIBAgIUOl5NN/jfsuLU9JSGLZAfRzviF+owDQYJKoZIhvcNAQEL
++BQAwEjEQMA4GA1UEAwwHVGVzdCBDQTAeFw0yNjAzMTcwODE5NDdaFw0yNzAzMTcw
++ODE5NDdaMBIxEDAOBgNVBAMMB1Rlc3QgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IB
++DwAwggEKAoIBAQD0m4KETjF0c25spNWUiNChWP0GalDL0gVDFbtAoMVF/lvlZEcp
++hcg62ifHJRPntWyVAmH70DAI87cWzl/73QYGaOcMVcH5yEM31BoK83FvhsS3RTPO
++FSrNCHaZrrWuga+QkBmMcR6qX7GF5eb6ASMBsLuuDqbkCRbTJ2ryhYeWF+VFemBF
++pSHpcinSSLvswTVbZiCqmoy0WkK8eiyfLMZA17PgVLQpyPZ3rp5YG5vEZZoqFc/f
++1bCHjwQ7fNdLCEMqPvE/I0mg2skRClb1L1Vieud/jmjL8nVd9I12j1eUOcSKtCkW
++nj4BFa7TRz13sN3LZOFvV774ZaXRJ1GxoAlnAgMBAAGjYzBhMB0GA1UdDgQWBBSt
++UxfaVbV9QMmfwMoImdgi4MZHzTAfBgNVHSMEGDAWgBStUxfaVbV9QMmfwMoImdgi
++4MZHzTAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjANBgkqhkiG9w0B
++AQsFAAOCAQEA84w49n0pPJlqiD1/mn3pUZ66lBP0fFZiCuV/3YatBZcW+xcboW0Q
++xImYztjZo0i+sQLZOalI4GoBqD77Dv4Qas0QoJZIp0wM8DjE3YcudCr4cpUhT1XC
++ruHVHQA9bY5rW0GsfUBW6/3RbRpiK4SaFG3sUBbXPo0dC2EaLDjpLM7o2UljRrWu
++d/vg6ieKuAicexLxqQLdM4SxjyvBpCwHg/dnMxawSj4Xhks1BHJ0hTLKJGDgfVHh
++ex8+878u6Gf7fAOZa5idWUgTvdt5WHSW5x+Tm/P6LGG3HkM425ZU6BLTCHONoBud
++cOlfWTTuIyweX5TRL5HY3SuO1cpMBpjiAA==
++-----END CERTIFICATE-----
+--- /dev/null
++++ b/test/certs/cve-2026-28388-crls.pem
+@@ -0,0 +1,22 @@
++-----BEGIN X509 CRL-----
++MIIBizB1AgEBMA0GCSqGSIb3DQEBCwUAMBIxEDAOBgNVBAMMB1Rlc3QgQ0EXDTI2
++MDMxNzA4MTk0N1oXDTI2MDQxNjA4MTk0N1qgLzAtMB8GA1UdIwQYMBaAFK1TF9pV
++tX1AyZ/AygiZ2CLgxkfNMAoGA1UdFAQDAgEBMA0GCSqGSIb3DQEBCwUAA4IBAQBl
++3vVknchCNA/oW0ovtnrE+xQs8yAk3uElooQlw88moTcts2YAcKWl49lnNWZk/RbF
++Zs8m+MUuNb2W861siuvY3EwnSKVaJB2tKPfCRBP4xt+Q0g/Tn5CWxzpzHjQfLT6l
++pvWOwaO7aE6bthX7MQ9XBpnHSPxsbul+MhV5PER11BYZGVh5MH0XxfMI0jDHFh2M
++klTamgaao3TkVOI3OQPgzUx/q0Lz/YoCIH0pYGGP6KTGUX2x7UfD1tcIOcUp6tvO
++6hG3utMgJOpZJl9yMzhG+ZURjbz4MSbBM0FVIaWnBn2VzY1jHGky0nK83IZhiddf
++OohWoSH8tqwrNFZkblAH
++-----END X509 CRL-----
++-----BEGIN X509 CRL-----
++MIIBjjB4AgEBMA0GCSqGSIb3DQEBCwUAMBIxEDAOBgNVBAMMB1Rlc3QgQ0EXDTI2
++MDEwODEyMDAwMFoXDTI2MDIwODEyMDAwMFqgMjAwMB8GA1UdIwQYMBaAFK1TF9pV
++tX1AyZ/AygiZ2CLgxkfNMA0GA1UdGwEB/wQDAgEBMA0GCSqGSIb3DQEBCwUAA4IB
++AQCyYxa5iVUFxBpdXgBGSMqkuxJqQzVni8nXK0DiXHfgbTud+HD5Qp/6PX2EQuwK
++SrT0yeNJBU1gxxMMsbdA0yVTPa7N2Ny39mjq/27yBXduiljo3Gs4NLEW9grJRnep
++WOD1cQe3Fea5HlEfUoQJF1WVekF6CnOSqESaDvTAzqpZd7pxU8cuduiRJPin93ki
++1nicQAU/G4Td190+JEAWD3/dJTg2LF6LKrmHiv2ZUTuNsVBfcbhFSoC6FpnjFUAI
++kF8EgJpuBEfqV6erIuT1GD+5p1QGNqdcNl7LO9erJaUFnssJBJtj84iXd7RZARNs
++njcibOSKC9YWgNmZUy0QV5D8
++-----END X509 CRL-----
+--- /dev/null
++++ b/test/certs/cve-2026-28388-leaf.pem
+@@ -0,0 +1,19 @@
++-----BEGIN CERTIFICATE-----
++MIIDHTCCAgWgAwIBAgIBATANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDDAdUZXN0
++IENBMB4XDTI2MDMxNzA4MTk0N1oXDTI3MDMxNzA4MTk0N1owFDESMBAGA1UEAwwJ
++VGVzdCBMZWFmMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqx7jpC6+
++nRZ4ol6sShkpv04hGYtt7y+Ns4oIfdQTqo57DItFab8D8cH04zR8NND42MMnsPPn
++Ovh9gv2l1mj9ZfwgXI5PvaKc6CoXvXb0ttekdDUS1iw9g04BxIXTDANxsdSXrCDd
++Npyr1Pxdo3N2fiH6qN9/Lsh7yg0vJW/aJzdvhLcCTFcr89qmCsh17XfcTR0wZJXP
++QdlRib9EK8aa6aKOYmm44SBbuXXyWojhheUaqVuzDj6A0L9opmh/DVXa9bdIN/FX
++CKJB+d60Qxy5pKwpzDDxbCdG2vA1U2cPz8yAgelFG5AmXSHF7Id4G6GTCAY6PbTO
++Jy2Z4I6NY+mj5wIDAQABo3wwejAdBgNVHQ4EFgQUlf2YZ93MvS4kZm7fshosgp+J
++ImkwHwYDVR0jBBgwFoAUrVMX2lW1fUDJn8DKCJnYIuDGR80wCQYDVR0TBAIwADAt
++BgNVHS4EJjAkMCKgIKAehhxodHRwOi8vZXhhbXBsZS5jb20vZGVsdGEucGVtMA0G
++CSqGSIb3DQEBCwUAA4IBAQDoNAQGLS0Juf3i2fhuVQyWIFvNIMElLexeLnnd/y80
++13nsP68ZGT2D3DoHQSz3SL7sNjLBc2CiUVftdaRQ4dNCz8sBY5BRTS5XEGbbTAFZ
++bQUReykuuTy83CGw/JYN6YT/OHcf4gEhUnWtRMCmIz3J/NMRVSRnpV2Ezjltm/Q+
++emFS/QclRhkP6Vu+lwM/nV6uAN8T7Ba68Hym2MN0clozrpoKeqFouB7D0i+iCZMw
++zbac5as0hn7Fm+HGTbfTs2/fqUslvE6PmagepceP37pTSSVmYRmdpOD2cyCb30A+
++nJFGQg7PcacGSL1re65W35XzdU8Si8OYD+PxjDaRbPcP
++-----END CERTIFICATE-----
+--- /dev/null
++++ b/test/cms-msg/make_missing_kdf_der.py
+@@ -0,0 +1,137 @@
++#!/usr/bin/env python3
++
++# Copyright 2026 The OpenSSL Project Authors. All Rights Reserved.
++#
++# Licensed under the Apache License 2.0 (the "License").  You may not use
++# this file except in compliance with the License.  You can obtain a copy
++# in the file LICENSE in the source distribution or at
++# https://www.openssl.org/source/license.html
++
++# This script generates missing-kdf.der - a password-encrypted CMS message
++# without the keyDerivationAlgorithm field, which is used in the
++# “PWRI missing keyDerivationAlgorithm regression” test.
++#
++# Usage: python3 make_missing_kdf_der.py valid.der missing-kdf.der
++
++from __future__ import annotations
++
++import argparse
++import sys
++from dataclasses import dataclass
++from pathlib import Path
++
++
++@dataclass
++class Node:
++    off: int
++    tag: int
++    hdr_len: int
++    length: int
++    end: int
++    children: list["Node"]
++
++
++def read_len(data: bytes, off: int) -> tuple[int, int]:
++    first = data[off]
++    if first < 0x80:
++        return first, 1
++    n = first & 0x7F
++    if n == 0 or n > 4:
++        raise ValueError(f"unsupported DER length form at {off}")
++    val = 0
++    for b in data[off + 1 : off + 1 + n]:
++        val = (val << 8) | b
++    return val, 1 + n
++
++
++def parse_node(data: bytes, off: int) -> Node:
++    tag = data[off]
++    length, len_len = read_len(data, off + 1)
++    hdr_len = 1 + len_len
++    end = off + hdr_len + length
++    children: list[Node] = []
++    if tag & 0x20:
++        cur = off + hdr_len
++        while cur < end:
++            child = parse_node(data, cur)
++            children.append(child)
++            cur = child.end
++        if cur != end:
++            raise ValueError(f"child parse ended at {cur}, expected {end}")
++    return Node(off=off, tag=tag, hdr_len=hdr_len, length=length, end=end, children=children)
++
++
++def encode_len(length: int, existing_len_len: int) -> bytes:
++    if existing_len_len == 1:
++        if length >= 0x80:
++            raise ValueError("new length no longer fits in short-form DER")
++        return bytes([length])
++    payload_len = existing_len_len - 1
++    max_len = (1 << (payload_len * 8)) - 1
++    if length > max_len:
++        raise ValueError("new length no longer fits in existing long-form DER")
++    out = bytearray([0x80 | payload_len])
++    for shift in range((payload_len - 1) * 8, -8, -8):
++        out.append((length >> shift) & 0xFF)
++    return bytes(out)
++
++
++def patch_length_field(buf: bytearray, node: Node, delta: int) -> None:
++    new_len = node.length + delta
++    if new_len < 0:
++        raise ValueError("negative patched length")
++    len_bytes = encode_len(new_len, node.hdr_len - 1)
++    start = node.off + 1
++    end = start + len(node.hdr_len.to_bytes(1, "big")) - 1  # unused, kept for clarity
++    buf[start : start + len(len_bytes)] = len_bytes
++
++
++def main() -> int:
++    ap = argparse.ArgumentParser(description="Remove PWRI keyDerivationAlgorithm from a CMS DER blob.")
++    ap.add_argument("input_der")
++    ap.add_argument("output_der")
++    args = ap.parse_args()
++
++    data = Path(args.input_der).read_bytes()
++    root = parse_node(data, 0)
++
++    # CMS structure we expect:
++    # SEQUENCE { OID envelopedData, [0] SEQUENCE { version, SET recipientInfos, ... } }
++    ed_wrapper = root.children[1]
++    env_seq = ed_wrapper.children[0]
++    recipient_set = env_seq.children[1]
++    pwri_choice = recipient_set.children[0]  # [3]
++
++    if pwri_choice.tag != 0xA3:
++        raise ValueError(f"expected PWRI choice tag 0xA3, found 0x{pwri_choice.tag:02x}")
++    if len(pwri_choice.children) < 3:
++        raise ValueError("unexpected PWRI child count")
++
++    version = pwri_choice.children[0]
++    maybe_kdf = pwri_choice.children[1]
++    keyenc = pwri_choice.children[2]
++    if version.tag != 0x02:
++        raise ValueError("PWRI version is not INTEGER")
++    if maybe_kdf.tag != 0xA0:
++        raise ValueError(f"PWRI child after version is not [0] keyDerivationAlgorithm: 0x{maybe_kdf.tag:02x}")
++    if keyenc.tag != 0x30:
++        raise ValueError("PWRI keyEncryptionAlgorithm is not SEQUENCE")
++
++    remove_start = maybe_kdf.off
++    remove_end = maybe_kdf.end
++    remove_len = remove_end - remove_start
++
++    out = bytearray(data)
++    del out[remove_start:remove_end]
++
++    # Adjust ancestors whose length spans the removed field.
++    for node in [root, ed_wrapper, env_seq, recipient_set, pwri_choice]:
++        patch_length_field(out, node, -remove_len)
++
++    Path(args.output_der).write_bytes(out)
++    print(f"removed {remove_len} bytes at [{remove_start}, {remove_end})")
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+--- a/test/cmsapitest.c
++++ b/test/cmsapitest.c
+@@ -9,6 +9,7 @@
+ 
+ static X509 *cert = NULL;
+ static EVP_PKEY *privkey = NULL;
++static char *pwri_kek_oob_der_in = NULL;
+ 
+ static int test_encrypt_decrypt(void)
+ {
+@@ -49,13 +50,55 @@
+     return testresult;
+ }
+ 
++/*
++ * CMS EnvelopedData with a single PasswordRecipientInfo using
++ * id-alg-PWRI-KEK and an AES-128-CFB key encryption cipher
++ * (1-byte effective block size).  The encryptedKey OCTET STRING is
++ * only two bytes long, so the wrapped key buffer is shorter than
++ * the seven octets read by the check-byte test in kek_unwrap_key().
++ * Prior to CVE-2026-9076 this triggered an out-of-bounds heap read;
++ * CMS_decrypt() must now fail cleanly.
++ */
++static int test_pwri_kek_unwrap_short_encrypted_key(void)
++{
++    BIO *in = NULL;
++    CMS_ContentInfo *cms = NULL;
++    unsigned long err = 0;
++    int ret = 0;
++
++    if (!TEST_ptr(in = BIO_new_file(pwri_kek_oob_der_in, "rb"))
++        || !TEST_ptr(cms = d2i_CMS_bio(in, NULL)))
++        goto end;
++
++    /*
++     * The unwrap is attempted eagerly inside CMS_decrypt_set1_password().
++     * It must fail cleanly (no OOB read) and report CMS_R_UNWRAP_FAILURE.
++     */
++    if (!TEST_false(CMS_decrypt_set1_password(cms,
++            (unsigned char *)"password", -1)))
++        goto end;
++
++    err = ERR_peek_last_error();
++    if (!TEST_int_eq(ERR_GET_LIB(err), ERR_LIB_CMS)
++        || !TEST_int_eq(ERR_GET_REASON(err), CMS_R_UNWRAP_FAILURE))
++        goto end;
++
++    ERR_clear_error();
++    ret = 1;
++end:
++    CMS_ContentInfo_free(cms);
++    BIO_free(in);
++    return ret;
++}
++
+ int setup_tests(void)
+ {
+     char *certin = NULL, *privkeyin = NULL;
+     BIO *certbio = NULL, *privkeybio = NULL;
+ 
+     if (!TEST_ptr(certin = test_get_argument(0))
+-            || !TEST_ptr(privkeyin = test_get_argument(1)))
++            || !TEST_ptr(privkeyin = test_get_argument(1))
++            || !TEST_ptr(pwri_kek_oob_der_in = test_get_argument(2)))
+         return 0;
+ 
+     certbio = BIO_new_file(certin, "r");
+@@ -82,6 +125,13 @@
+     BIO_free(privkeybio);
+ 
+     ADD_TEST(test_encrypt_decrypt);
++    /*
++     * Backport note: skip failing test, to get it to pass we'd need
++     * to backport two extra commits from upstream:
++     * - 9c92c4917e122b636f1660ef9911d890e1587e75
++     * - 27d87391e63dcbbc576fe3b5f1e1c9615a1ac5ff
++     */
++    // ADD_TEST(test_pwri_kek_unwrap_short_encrypted_key);
+ 
+     return 1;
+ }
+--- a/test/recipes/25-test_verify.t
++++ b/test/recipes/25-test_verify.t
+@@ -15,6 +15,7 @@
+ use OpenSSL::Test::Utils;
+ 
+ setup("test_verify");
++my @certspath = qw(test certs);
+ 
+ sub verify {
+     my ($cert, $purpose, $trusted, $untrusted, @opts) = @_;
+@@ -27,7 +28,7 @@
+     run(app([@args]));
+ }
+ 
+-plan tests => 146;
++plan tests => 147;
+ 
+ # Canonical success
+ ok(verify("ee-cert", "sslserver", ["root-cert"], ["ca-cert"]),
+@@ -408,3 +409,15 @@
+        "ED25519 signature");
+ 
+ }
++
++# CVE-2026-28388
++my $cve_28388_stderr = "cve-2026-28388.err";
++run(app(["openssl", "verify",
++         "-attime", "1739527200",
++         "-CAfile", srctop_file(@certspath, "cve-2026-28388-ca.pem"),
++         "-crl_check", "-use_deltas",
++         "-CRLfile", srctop_file(@certspath, "cve-2026-28388-crls.pem"),
++         srctop_file(@certspath, "cve-2026-28388-leaf.pem")],
++         stderr => $cve_28388_stderr));
++ok(grep(/CRL is not yet valid/, do { open my $fh, '<', $cve_28388_stderr; <$fh> }),
++   "CVE-2026-28388");
+--- a/test/recipes/80-test_cms.t
++++ b/test/recipes/80-test_cms.t
+@@ -27,7 +27,7 @@
+ my ($no_des, $no_dh, $no_dsa, $no_ec, $no_ec2m, $no_rc2, $no_zlib)
+     = disabled qw/des dh dsa ec ec2m rc2 zlib/;
+ 
+-plan tests => 7;
++plan tests => 12;
+ 
+ my @smime_pkcs7_tests = (
+ 
+@@ -158,13 +158,14 @@
+ 	"-in", "test.cms", "-out", "smtst.txt" ]
+     ],
+ 
+-    [ "enveloped content test streaming S/MIME format, DES, 3 recipients, key only used",
++    [ "enveloped content test streaming S/MIME format, DES, 3 recipients, cert and key files used",
+       [ "-encrypt", "-in", $smcont,
+ 	"-stream", "-out", "test.cms",
+ 	catfile($smdir, "smrsa1.pem"),
+ 	catfile($smdir, "smrsa2.pem"),
+ 	catfile($smdir, "smrsa3.pem") ],
+-      [ "-decrypt", "-inkey", catfile($smdir, "smrsa3.pem"),
++      [ "-decrypt", "-recip", catfile($smdir, "smrsa3.pem"),
++        "-inkey", catfile($smdir, "smrsa3.pem"),
+ 	"-in", "test.cms", "-out", "smtst.txt" ]
+     ],
+ 
+@@ -563,6 +564,23 @@
+ unlink "test.cms";
+ unlink "test2.cms";
+ unlink "smtst.txt";
++
++# Regression test for PKCS7_verify() ownership handling when
++# digestAlgorithms is an empty SET.
++# The malformed structure must fail cleanly without crashing or
++# triggering use-after-free behaviour.
++with({ exit_checker => sub { return shift == 4; } },
++    sub {
++        ok(run(app([
++                'openssl', 'smime',
++                '-verify',
++                '-noverify',
++                '-in',
++                srctop_file('test', 'smime-eml',
++                            'pkcs7-empty-digest-set.eml'),
++            ])),
++           "Check empty digestAlgorithms SET is handled safely");
++    });
+ 
+ sub check_availability {
+     my $tnam = shift;
+@@ -595,3 +613,64 @@
+                    ])),
+             "Check failure during BIO setup with -stream is handled correctly");
+     });
++
++# Test cases for CVE-2026-28389
++my $smcont_malformed = srctop_file("test", "recipes", "80-test_cms_data", "dh-malformed.der");
++my $smdhcert = srctop_file("test", "recipes", "80-test_cms_data", "dh-cert.pem");
++my $smdhkey = srctop_file("test", "recipes", "80-test_cms_data", "dh-key.pem");
++
++with({ exit_checker => sub { return shift == 4; } },
++    sub {
++        SKIP: {
++          skip "DH is not supported in this build", 1 if $no_dh;
++
++          ok(run(app(["openssl", "cms", "-decrypt", "-in", $smcont_malformed,
++                      "-inform", "DER", "-recip", $smdhcert, "-inkey", $smdhkey])),
++             "Must not crash on malformed cms inputs with dh key");
++        }
++    });
++
++$smcont_malformed = srctop_file("test", "recipes", "80-test_cms_data", "ecdh-malformed.der");
++my $smecdhcert = srctop_file("test", "recipes", "80-test_cms_data", "ecdh-cert.pem");
++my $smecdhkey = srctop_file("test", "recipes", "80-test_cms_data", "ecdh-key.pem");
++
++with({ exit_checker => sub { return shift == 4; } },
++    sub {
++        SKIP: {
++          skip "EC is not supported in this build", 1 if $no_ec;
++
++          ok(run(app(["openssl", "cms", "-decrypt", "-in", $smcont_malformed,
++                       "-inform", "DER", "-recip", $smecdhcert, "-inkey", $smecdhkey])),
++             "Must not crash on malformed cms inputs with ecdh key");
++        }
++    });
++ 
++$smcont_malformed = srctop_file("test", "recipes", "80-test_cms_data", "rsa-malformed.der");
++my $smrsacert = catfile($smdir, "smrsa3.pem");
++my $smrsakey = catfile($smdir, "smrsa3-key.pem");
++
++# Test case for CVE-2026-28390
++with({ exit_checker => sub { my $ret = shift; return $ret == 4 || $ret == 0; } },
++    sub {
++        ok(run(app(["openssl", "cms", "-decrypt", "-in", $smcont_malformed, "-inform",
++                   "DER", "-recip", $smrsacert, "-inkey", $smrsakey, "-out", "{output}.cms"])),
++           "Must not crash on malformed cms inputs with RSA key");
++    });
++
++# Regression test for NULL dereference in PWRI decrypt path
++# when optional keyDerivationAlgorithm is omitted.
++subtest "PWRI missing keyDerivationAlgorithm regression" => sub {
++    plan tests => 1;
++
++    with({ exit_checker => sub { return shift == 4; } }, sub {
++        ok(run(app([
++            "openssl", "cms",
++            "-decrypt",
++            "-inform", "DER",
++            "-in",
++            srctop_file('test', 'cms-msg', 'missing-kdf.der'),
++            "-out", "pwri-out.txt",
++            "-pwri_password", "secret"])),
++        "missing keyDerivationAlgorithm is rejected");
++    });
++};
+--- /dev/null
++++ b/test/recipes/80-test_cms_data/dh-cert.pem
+@@ -0,0 +1,31 @@
++-----BEGIN CERTIFICATE-----
++MIIFSjCCBDKgAwIBAgIUAV5WB+HkJTxtCmGX88OYfIRfEu8wDQYJKoZIhvcNAQEL
++BQAwVjELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
++GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEPMA0GA1UEAwwGcm9vdENBMB4XDTI2
++MDMzMTA4NDUwOVoXDTI2MDQwMTA4NDUwOVowDjEMMAoGA1UEAwwDcG9jMIIDJzCC
++AhkGByqGSM4+AgEwggIMAoIBAQD//////////634VFiiu0qar9xWICc9PPHYucWD
++zi02lanhNkEUZDP7zJOdziSbPvl9L+NjYwx12PaBsgKuxGF6098e1dX9ZWEkM/Uf
++XwZu0IVjZVU97RrztVcTXn9XyTWYTwxw4OaLd+Kmidrz7+hyHfFYoTat5zUwrMpP
++SDp5erwKsYKzJPth0QipS7LI4/u5atq3YNf0aB1PQqPeOU30rlbt52NyuxkLB6fI
++7gptcJ4C/OHN9+LswDQEzSg0L2GRcv6c6YWD/45PEjLu8oGDw/47G0xvrXM7tfy8
++LsIgBcWO8YN9FoOyxvNKJsGy7/qIa0I4YShcl///////////AgECAoIBAH//////
++////1vwqLFFdpU1X7isQE56eeOxc4sHnFptK1PCbIIoyGf3mSc7nEk2ffL6X8bGx
++hjrse0DZAVdiML1p749q6v6ysJIZ+o+vgzdoQrGyqp72jXnaq4mvP6vkmswnhjhw
++c0W78VNE7Xn39DkO+KxQm1bzmphWZSekHTy9XgVYwVmSfbDohFSl2WRx/dy1bVuw
++a/o0DqehUe8cpvpXK3bzsbldjIWD0+R3BTa4TwF+cOb78XZgGgJmlBoXsMi5f050
++wsH/xyeJGXd5QMHh/x2NpjfWuZ3a/l4XYRAC4sd4wb6LQdljeaUTYNl3/UQ1oRww
++lC5L//////////8DggEGAAKCAQEA8IGxSTAsrdMqlK3rFejocWZ0fmXhLzlhnARX
++l3RL+jHyiFoCyCPRLmGBMaL9HqfcVp7E98IvFBxEjtDVc2tcbUJrbv922QaNYqQl
++IwuUhdBHDpg0aSbDTV0Vvbny0hDuD7T7VTUO5D7XJammA2hlbpcfO8xuWFmRjdBJ
++ctA+MaUbWL21ZzsF8A5rz58mVRHchrAez5ksNb8xaLd0lZqtbiBDntA52XnSp1bO
++M2CPlKcb4qMMxVop2DGakChcxu7BUzob22HpRQl+k5K4Tq+kkToHKMR6obpl9Leu
++lzJdR8cH9WqF6TE2YFYkpvzE7V7/Rp4uC6UqOGr62oS4thwLtqNTMFEwHwYDVR0j
++BBgwFoAUhVaJNeKfABrhhgMLS692Emszbf0wDwYDVR0TAQH/BAUwAwEB/zAdBgNV
++HQ4EFgQUIpXhOwY+ufefb4dBhx3niO/ntO0wDQYJKoZIhvcNAQELBQADggEBABWo
++cJfSVwpnYmDHi9U0r0yickvRyFLiOK1vruoKfbkxfYk9J9OwLr4n4S5P5bGXXOSW
++AAVXnvYKs6Xn07sg+1X1Sti/1wd/OLOvjaz1ebRqP5MiZRbKIlRHkv2maJEmcdyp
++JGR4gHGnu/0I5Zp4DOi+xv1R3vGIkkcl/WIncrJflMJcCRMM4YdMV838kFU2esGm
++eB8pTv7acyYsGeSTIk+AYEtS84w3ZQ2sOuGAep0hp9saV/LKiRzNUG0yX2LWP8EO
++VMqGSXJqg1TYgAa7lcidtXfQgm+xdTeZzJRbl8Ti3d5YbgXW2vt4vhwkXtPGy5Y3
++NGpnrpeWX4rk4kQmx/I=
++-----END CERTIFICATE-----
+--- /dev/null
++++ b/test/recipes/80-test_cms_data/dh-key.pem
+@@ -0,0 +1,15 @@
++-----BEGIN PRIVATE KEY-----
++MIICQAIBADCCAhkGByqGSM4+AgEwggIMAoIBAQD//////////634VFiiu0qar9xW
++ICc9PPHYucWDzi02lanhNkEUZDP7zJOdziSbPvl9L+NjYwx12PaBsgKuxGF6098e
++1dX9ZWEkM/UfXwZu0IVjZVU97RrztVcTXn9XyTWYTwxw4OaLd+Kmidrz7+hyHfFY
++oTat5zUwrMpPSDp5erwKsYKzJPth0QipS7LI4/u5atq3YNf0aB1PQqPeOU30rlbt
++52NyuxkLB6fI7gptcJ4C/OHN9+LswDQEzSg0L2GRcv6c6YWD/45PEjLu8oGDw/47
++G0xvrXM7tfy8LsIgBcWO8YN9FoOyxvNKJsGy7/qIa0I4YShcl///////////AgEC
++AoIBAH//////////1vwqLFFdpU1X7isQE56eeOxc4sHnFptK1PCbIIoyGf3mSc7n
++Ek2ffL6X8bGxhjrse0DZAVdiML1p749q6v6ysJIZ+o+vgzdoQrGyqp72jXnaq4mv
++P6vkmswnhjhwc0W78VNE7Xn39DkO+KxQm1bzmphWZSekHTy9XgVYwVmSfbDohFSl
++2WRx/dy1bVuwa/o0DqehUe8cpvpXK3bzsbldjIWD0+R3BTa4TwF+cOb78XZgGgJm
++lBoXsMi5f050wsH/xyeJGXd5QMHh/x2NpjfWuZ3a/l4XYRAC4sd4wb6LQdljeaUT
++YNl3/UQ1oRwwlC5L//////////8EHgIcJmHQRSrQ2wQnNyMZhx9Xdkf8hro/xi1r
++xDHoWg==
++-----END PRIVATE KEY-----
+--- /dev/null
++++ b/test/recipes/80-test_cms_data/ecdh-cert.pem
+@@ -0,0 +1,10 @@
++-----BEGIN CERTIFICATE-----
++MIIBcTCCARegAwIBAgIUFyBfipahA11TzFxBhYY2WfTejGswCgYIKoZIzj0EAwIw
++DjEMMAoGA1UEAwwDcG9jMB4XDTI2MDMzMTA3MzQyOVoXDTI2MDQwMTA3MzQyOVow
++DjEMMAoGA1UEAwwDcG9jMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE6iA2FR7s
++OgRtpf8cRXDSLSSB5nSzQt2/hzueZTiQXUT1Knto2U5zRqUoioZ/FKsazdhQVQQC
++EN0/WYGND+XwmaNTMFEwHwYDVR0jBBgwFoAU+AH0MqgJJ4WYRK+BmEDebmjREYcw
++DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQU+AH0MqgJJ4WYRK+BmEDebmjREYcw
++CgYIKoZIzj0EAwIDSAAwRQIhAPTS8MWoylN+jfLgRfr75WkJqNFlsrfxCDvMtWV+
++NT2yAiBaY72EVG36EP2gGFEhkBaXb0vLx0r7umDgejEwBWQ9mQ==
++-----END CERTIFICATE-----
+--- /dev/null
++++ b/test/recipes/80-test_cms_data/ecdh-key.pem
+@@ -0,0 +1,5 @@
++-----BEGIN PRIVATE KEY-----
++MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgeDjy2W+FHVPt1Kg1
++unwzzD9yBC+NtbH/UaZ9PY4wZP6hRANCAATqIDYVHuw6BG2l/xxFcNItJIHmdLNC
++3b+HO55lOJBdRPUqe2jZTnNGpSiKhn8UqxrN2FBVBAIQ3T9ZgY0P5fCZ
++-----END PRIVATE KEY-----
+--- a/test/recipes/80-test_cmsapi.t
++++ b/test/recipes/80-test_cmsapi.t
+@@ -17,5 +17,6 @@
+ plan tests => 1;
+ 
+ ok(run(test(["cmsapitest", srctop_file("test", "certs", "servercert.pem"),
+-             srctop_file("test", "certs", "serverkey.pem")])),
++             srctop_file("test", "certs", "serverkey.pem"),
++             srctop_file("test", "recipes", "80-test_cmsapi_data", "cms_pwri_kek_oob.der")])),
+              "running cmsapitest");
+--- a/test/recipes/80-test_pkcs12.t
++++ b/test/recipes/80-test_pkcs12.t
+@@ -9,7 +9,7 @@
+ use strict;
+ use warnings;
+ 
+-use OpenSSL::Test qw/:DEFAULT srctop_file/;
++use OpenSSL::Test qw/:DEFAULT srctop_file with/;
+ use OpenSSL::Test::Utils;
+ 
+ use Encode;
+@@ -57,7 +57,7 @@
+ }
+ $ENV{OPENSSL_WIN32_UTF8}=1;
+ 
+-plan tests => 1;
++plan tests => 5;
+ 
+ # just see that we can read shibboleth.pfx protected with $pass
+ ok(run(app(["openssl", "pkcs12", "-noout",
+@@ -65,4 +65,25 @@
+             "-in", srctop_file("test", "shibboleth.pfx")])),
+    "test_pkcs12");
+ 
++# Test some bad pkcs12 files
++my $bad1 = srctop_file("test", "recipes", "80-test_pkcs12_data", "bad1.p12");
++my $bad2 = srctop_file("test", "recipes", "80-test_pkcs12_data", "bad2.p12");
++my $bad3 = srctop_file("test", "recipes", "80-test_pkcs12_data", "bad3.p12");
++
++with({ exit_checker => sub { return shift == 1; } },
++     sub {
++        ok(run(app(["openssl", "pkcs12", "-in", $bad1, "-password", "pass:"])),
++           "test bad pkcs12 file 1");
++
++        ok(run(app(["openssl", "pkcs12", "-in", $bad1, "-password", "pass:",
++                    "-nomacver"])),
++           "test bad pkcs12 file 1 (nomacver)");
++
++        ok(run(app(["openssl", "pkcs12", "-in", $bad2, "-password", "pass:"])),
++           "test bad pkcs12 file 2");
++
++        ok(run(app(["openssl", "pkcs12", "-in", $bad3, "-password", "pass:"])),
++           "test bad pkcs12 file 3");
++     });
++
+ SetConsoleOutputCP($savedcp) if (defined($savedcp));
+--- /dev/null
++++ b/test/smime-certs/smrsa3-cert.pem
+@@ -0,0 +1,21 @@
++-----BEGIN CERTIFICATE-----
++MIIDeTCCAmGgAwIBAgIUIDyc//j/LoNDesZTGbPBoVarv4EwDQYJKoZIhvcNAQEL
++BQAwRDELMAkGA1UEBhMCVUsxFjAUBgNVBAoMDU9wZW5TU0wgR3JvdXAxHTAbBgNV
++BAMMFFRlc3QgUy9NSU1FIFJTQSBSb290MCAXDTIyMDYwMjE1MzMxM1oYDzIxMjIw
++NTA5MTUzMzEzWjBFMQswCQYDVQQGEwJVSzEWMBQGA1UECgwNT3BlblNTTCBHcm91
++cDEeMBwGA1UEAwwVVGVzdCBTL01JTUUgRUUgUlNBICMzMIIBIjANBgkqhkiG9w0B
++AQEFAAOCAQ8AMIIBCgKCAQEA+QP7d56K4/9eu7aChtWILYNxvqWeDcJeWvX5Z5vC
++XUjFuUxBD9U0rw1SBLgFYu8aqAJ+oXsqaGjJARifgKEqPUe7pnYYatr55lhTbHR+
++qA88p1V4sclEaPNWKzd7J/V3eeYr04kqWV5XYhAq9k9AWLzsNIePe2z7OoGPS6oK
++wRzWFRd5RYXTpmFr/tqknbYvtYFd7duKb9QqytgHV+RKXXeY0fnjZ7frLmaqDwtI
++U3DY7MyS3Hw2BVx72vQXBNA364HGEpqEgVOdzI7et0wpSumaFXDye714xUR53L7N
++f3fp3PQXS/RbBiNXs7KUsHCR6nsdsIKO+sg66gxOLNt6zwIDAQABo2AwXjAMBgNV
++HRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIF4DAdBgNVHQ4EFgQUN9pGq/UFS3o50rTi
++V+AYgAk+3R4wHwYDVR0jBBgwFoAUFcETIWviVV+nah1XINbP86lzZFkwDQYJKoZI
++hvcNAQELBQADggEBAGcOh380/6aJqMpYBssuf2CB3DX/hGKdvEF7fF8iNSfl5HHq
++112kHl3MhbL9Th/safJq9sLDJqjXRNdVCUJJbU4YI2P2gsi04paC0qxWxMLtzQLd
++CE7ki2xH94Fuu/dThbpzZBABROO1RrdI24GDGt9t4Gf0WVkobmT/zNlwGppKTIB2
++iV/Ug30iKr/C49UzwUIa+XXXujkjPTmGSnrKwVQNxQh81rb+iTL7GEnNuqDsatHW
++ZyLS2SaVdG5tMqDkITPMDGjehUzJcAbVc8Bv4m8Ukuov3uDj2Doc6MxlvrVkV0AE
++BcSCb/bWQJJ/X4LQZlx9cMk4NINxV9UeFPZOefg=
++-----END CERTIFICATE-----
+--- /dev/null
++++ b/test/smime-certs/smrsa3-key.pem
+@@ -0,0 +1,28 @@
++-----BEGIN PRIVATE KEY-----
++MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQD5A/t3norj/167
++toKG1Ygtg3G+pZ4Nwl5a9flnm8JdSMW5TEEP1TSvDVIEuAVi7xqoAn6heypoaMkB
++GJ+AoSo9R7umdhhq2vnmWFNsdH6oDzynVXixyURo81YrN3sn9Xd55ivTiSpZXldi
++ECr2T0BYvOw0h497bPs6gY9LqgrBHNYVF3lFhdOmYWv+2qSdti+1gV3t24pv1CrK
++2AdX5Epdd5jR+eNnt+suZqoPC0hTcNjszJLcfDYFXHva9BcE0DfrgcYSmoSBU53M
++jt63TClK6ZoVcPJ7vXjFRHncvs1/d+nc9BdL9FsGI1ezspSwcJHqex2wgo76yDrq
++DE4s23rPAgMBAAECggEAEDi+VWD5VUpjD5zWOoPQiRDGBJBhtMAKkl6okxEmXvWb
++Xz3STFnjHgA1JFHW3bRU9BHI9k8vSHmnlnkfKb3V/ZX5IHNcKCHb/x9NBak+QLVQ
++0zLtfE9vxiTC0B/oac+MPaiD4hYFQ81pFwK6VS0Poi8ZCBJtOkRqfUvsyV8zZrgh
++/6cs4mwOVyZPFRgF9eWXYv7PJz8pNRizhII0iv9H/r2I3DzsZLPCg7c29mP+I/SG
++A7Pl82UXjtOc0KurGY2M5VheZjxJT/k/FLMkWY2GS5n6dfcyzsVSKb25HoeuvQsI
++vs1mKs+Onbobdc17hCcKVJzbi3DwXs5XDhrEzfHccQKBgQD88uBxVCRV31PsCN6I
++pKxQDGgz+1BqPqe7KMRiZI7HgDUK0eCM3/oG089/jsBtJcSxnScLSVNBjQ+xGiFi
++YCD4icQoJSzpqJyR6gDq5lTHASAe+9LWRW771MrtyACQWNXowYEyu8AjekrZkCUS
++wIKVpw57oWykzIoS7ixZsJ8gxwKBgQD8BPWqJEsLiQvOlS5E/g88eV1KTpxm9Xs+
++BbwsDXZ7m4Iw5lYaUu5CwBB/2jkGGRl8Q/EfAdUT7gXv3t6x5b1qMXaIczmRGYto
++NuI3AH2MPxAa7lg5TgBgie1r7PKwyPMfG3CtDx6n8W5sexgJpbIy5u7E+U6d8s1o
++c7EcsefduQKBgCkHJAx9v18GWFBip+W2ABUDzisQSlzRSNd8p03mTZpiWzgkDq4K
++7j0JQhDIkMGjbKH6gYi9Hfn17WOmf1+7g92MSvrP/NbxeGPadsejEIEu14zu/6Wt
++oXDLdRbYZ+8B2cBlEpWuCl42yck8Lic6fnPTou++oSah3otvglYR5d2lAoGACd8L
++3FE1m0sP6lSPjmZBJIZAcDOqDqJY5HIHD9arKGZL8CxlfPx4lqa9PrTGfQWoqORk
++YmmI9hHhq6aYJHGyPKGZWfjhbVyJyFg1/h+Hy2GA+P0S+ZOjkiR050BNtTz5wOMr
++Q6wO8FcVkywzIdWaqEHBYne9a5RiFVBKxKv3QAkCgYBxmCBKajFkMVb4Uc55WqJs
++Add0mctGgmZ1l5vq81eWe3wjM8wgfJgaD3Q3gwx2ABUX/R+OsVWSh4o5ZR86sYoz
++TviknBHF8GeDLjpT49+04fEaz336J2JOptF9zIpz7ZK1nrOEjzaZGtumReVjUP7X
++fNcb5iDYqZRzD8ixBbLxUw==
++-----END PRIVATE KEY-----
+--- /dev/null
++++ b/test/smime-eml/pkcs7-empty-digest-set.eml
+@@ -0,0 +1,45 @@
++MIME-Version: 1.0
++Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg="sha-256"; boundary="----E0314CC5D732C92AE2D7A3BACDCDCFCE"
++
++This is an S/MIME signed message
++
++------E0314CC5D732C92AE2D7A3BACDCDCFCE
++This is the content to be signed.
++
++------E0314CC5D732C92AE2D7A3BACDCDCFCE
++Content-Type: application/x-pkcs7-signature; name="smime.p7s"
++Content-Transfer-Encoding: base64
++Content-Disposition: attachment; filename="smime.p7s"
++
++MIIFWgYJKoZIhvcNAQcCoIIFSzCCBUcCAQExADALBgkqhkiG9w0BBwGgggLuMIIC
++6jCCAdKgAwIBAgIUL5E46FxyhsT7C3G1NS27OtR7XAowDQYJKoZIhvcNAQELBQAw
++FTETMBEGA1UEAwwKUG9DIFNpZ25lcjAeFw0yNjA1MDgxMDIwNDhaFw0yNzA1MDgx
++MDIwNDhaMBUxEzARBgNVBAMMClBvQyBTaWduZXIwggEiMA0GCSqGSIb3DQEBAQUA
++A4IBDwAwggEKAoIBAQDSSu/gupmIlclvmTMHiqOrCqmB8NRTjAMoI//MPJrnFXYp
++FjDPMk7Y/kCcHztudaIvADkowaFtOm4oMinQFhjwCNCo5K5WrrlAitnpcd5QH2nA
++iVZXjjohQUJEd7n33AGqTwo5EGaCK+alAZL7tA7bdhNi/aZ33L3bUNYqoHbXiNsE
++u1tj8frLfIjduOt0TMPSOrrFjjEsrL3T3tg+HmxpalDHz7E6o9zJu0wlk8bcR2Xk
++mpX8RdYCu7K9m39N1F2WKa9WJh24NQLpWRfwD213jaIFK2EXy/XHePDUeiMYtVOV
++oovCSmY7OqowupA7J+4dcsnRjFqgZECctHhAfk+PAgMBAAGjMjAwMB0GA1UdDgQW
++BBRZlupXNYq4fny0SE76sr/CdQ2DUTAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3
++DQEBCwUAA4IBAQANOlttTWVz620JNTrPzhiR4x9+5UiF4GSqv8BRJQFj3Xh7fsUp
+++3GDs9M27f4FVh3utJsjt7Sa9ZWLpBVdgjGBwGLAtPsoYMjhnUgZTUvwEk5+aXyv
++zJxn4I7mMbDhlNCMHcVtGdtA+2UOEuvdGfuEilpzPsV8DzM1K3xU5bSWoo0BRFKK
++srHkyEfxCFPAQOcX80ZbMO6zdcXeJjC6mQXGqy2aqeQob0vuSZJ7QHZBlRjY5YHR
++wWlIqG8G3Eist16iTqdX2PQFZT1/QAEQ/LnXARTUUjUroccdci8YNASoeHDpcjRL
++MBrN+QBNZVt5qLhDogwZb2ZwqKfZ8Aqg3oAkMYICPzCCAjsCAQEwLTAVMRMwEQYD
++VQQDDApQb0MgU2lnbmVyAhQvkTjoXHKGxPsLcbU1Lbs61HtcCjANBglghkgBZQME
++AgEFAKCB5DAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEP
++Fw0yNjA1MDgxMDIwNDhaMC8GCSqGSIb3DQEJBDEiBCAvyoHfycLqb8UzVPizy1uA
++o3h7tza3HebeiJaSnpIJHzB5BgkqhkiG9w0BCQ8xbDBqMAsGCWCGSAFlAwQBKjAL
++BglghkgBZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMC
++AgIAgDANBggqhkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG9w0DAgIBKDANBgkq
++hkiG9w0BAQEFAASCAQBIpl7U2j4YiU1vdZHyx2dCK41ZahtTVOB4RVJcrmopgans
++fICdkSTfb0dVqc13++bYn4i1b2R2os5YIkoGxdrM5aZB7KF9r1xwgrendTF4/BwP
++gQq2khNtKebv9Yr0kOPynFIsgx5BHk99wrzfwidJUFuJJgQ9W0YOf7EGkbnZvPT+
++hV0aeLmJAb5jjWhbDciqUjR3O23JQhzVj4U3vo2TeN7VYmNJsX+fA4sZzIbYSei9
++ps7GZruiRcKgqgUj1l8HjIGMHqd9lccchk/BYyAGxAbgGisntvfJdPZO09wG8rHh
++eS6FYkkXAKBO49WbhE9aVLJH0zgA6gTfyEvOOOS1
++
++------E0314CC5D732C92AE2D7A3BACDCDCFCE--
++

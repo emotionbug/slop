@@ -8,6 +8,15 @@ spec=importlib.util.spec_from_file_location('report',Path(__file__).with_name('r
 report=importlib.util.module_from_spec(spec);spec.loader.exec_module(report)
 
 class VendorReviewTests(unittest.TestCase):
+    def test_kernel_on_disk_is_not_assumed_running(self):
+        snapshot = {'running_kernel': '4.18.0-old.x86_64', 'kernel_images': [
+            {'kernel_release': '7.2.7-linuxoss+', 'owner': {'name': 'kernel', 'version': '7.2.7_linuxoss+', 'release': '3.el8', 'arch': 'x86_64', 'epochnum': '0'}}]}
+        self.assertEqual(report.kernel_execution_state('kernel', '7.2.7_linuxoss+-3.el8', snapshot), 'installed-other-kernel-files')
+        snapshot['running_kernel'] = '7.2.7-linuxoss+'
+        self.assertEqual(report.kernel_execution_state('kernel', '0:7.2.7_linuxoss+-3.el8.x86_64', snapshot), 'running-kernel-files')
+        self.assertEqual(report.kernel_execution_state('kernel', '7.2.7_linuxoss+-2.el8', snapshot), 'kernel-image-or-running-version-unidentified')
+        self.assertEqual(report.kernel_execution_state('kernel-headers', '7.2.7_linuxoss+-3.el8', snapshot), 'kernel-development-or-userspace')
+
     def test_upstream_kernel_version_marker_is_included(self):
         kernel = dict(Name='kernel', Version='7.2.7_linuxoss+', Release='2.el8', Maintainer='The Linux Community')
         self.assertTrue(report.custom_package(kernel))

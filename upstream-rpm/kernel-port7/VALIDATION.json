@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "target": "Linux 7.2.7",
+  "kernel_release": "7.2.7-linuxoss-portlab1",
+  "source": {
+    "file": "linux-7.2.7.tar.xz",
+    "sha256": "4ac34c47db2540ffb2713943f8d891ff1702e0ba6934525a493b7d1cad43145a",
+    "upstream_signature_verified": true
+  },
+  "build": {
+    "compiler": "gcc-15 15.2.0",
+    "image_sha256": "28cfea255f66c0a6f102a5a5db625d2bd949236b593de29ac553eaa73c953661",
+    "symvers_sha256": "736d6a54df5678ac037b6e08ec827f9b7da168170c0d1cad40fbdac4706dddcf",
+    "config_sha256": "964abea1cca98fc0933e3f55b53acc8f53b334a8df84836de9538bc11ba52e89"
+  },
+  "qemu": {
+    "log_sha256": "b4e89f5bf49bc094b820b8a16896499dff2c29fe1cb41cad57af338b1530ed7d",
+    "disk_attached": false,
+    "network_attached": false,
+    "passed": [
+      "PORTLAB7_LEGACY_STRING_SELFTEST_PASSED",
+      "PORTLAB7_NATIVE_NETWORK_PASSED",
+      "PORTLAB7_NFQUEUE_LIFECYCLE_PASSED",
+      "PORTLAB7_FIXTURE_PASSED"
+    ],
+    "expected_rejections": [
+      "dsa_filter_hook",
+      "dsa_filter",
+      "gc_enforcement"
+    ]
+  },
+  "module_import_comparison": {
+    "input_sha256": "7d1cb0cc196e1bb83ebcaadc8d32a995748b0298a41f97851580b9cc5db62b57",
+    "trend_filter": {"imports": 136, "matches": 100, "mismatches": 36, "missing": 0},
+    "trend_hook": {"imports": 43, "matches": 27, "mismatches": 16, "missing": 0},
+    "guardicore": {"imports": 161, "matches": 0, "mismatches": 134, "missing": 27},
+    "runtime_compatible": false
+  },
+  "cve_crosswalk": {
+    "baseline_unique": 4195,
+    "fixed_in_7_2_7": 3985,
+    "unaffected_by_cna_default": 62,
+    "missing_cna_record": 125,
+    "needs_review": 23,
+    "running_server_remediated": false
+  },
+  "smb_boundary_test": {
+    "cve": "CVE-2026-89632",
+    "result_sha256": "82304bbdc9524d6a2afb807085a70c24f2c1053e5e42a62284f8b74963212f5c",
+    "fixed_source_boundaries_passed": true,
+    "vulnerable_control_fault_confirmed": true,
+    "whole_kernel_smb_tested": false
+  },
+  "deployment_ready": false,
+  "rpm_produced": false,
+  "commercial_binaries_published": false
+}

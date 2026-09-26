@@ -22,6 +22,22 @@ def write(path, obj):
     path.write_text(json.dumps(obj, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
 
 
+def review_for(item, cross):
+    if item['status'] not in ('fixed-in-candidate-release', 'unaffected-by-cna-default'):
+        return None
+    path = item['record_path'].split(':', 1)[1]
+    advisory = ('https://git.kernel.org/pub/scm/linux/security/vulns.git/tree/' + path
+                + '?id=' + cross['linux_cna_commit'])
+    fixed = item['status'] == 'fixed-in-candidate-release'
+    scope = ('Linux CNA explicitly lists upstream 7.2.7 in a fixed release range.' if fixed else
+             'Linux CNA explicitly marks fully comparable versions outside its listed affected ranges as unaffected; upstream 7.2.7 falls outside all those ranges. Non-applicability, not a newly applied security fix.')
+    return {'cve': item['cve'], 'status': 'fixed' if fixed else 'not_affected',
+            'scope': scope + ' Exact release-3 RPM files only; running-kernel state and security-agent compatibility are not established.',
+            'advisory': advisory, 'evidence': advisory,
+            'verification': 'CNA record SHA256 ' + item['record_sha256'] + '; upstream source SHA256 ' + cross['source_sha256'],
+            'cna_release_ranges': item['matching_ranges']}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ('crosswalk', 'catalog', 'evidence', 'provenance', 'source-archive', 'rpms'):
@@ -49,18 +65,8 @@ def main():
             raise ValueError('Binary RPM mismatch: ' + filename)
         if a['components'] != [{'project': 'kernel', 'version': '7.2.7'}]:
             raise ValueError('Unexpected upstream component binding')
-    reviews = []
-    for item in cross['items']:
-        if item['status'] != 'fixed-in-candidate-release':
-            continue
-        path = item['record_path'].split(':', 1)[1]
-        advisory = ('https://git.kernel.org/pub/scm/linux/security/vulns.git/tree/' + path
-                    + '?id=' + cross['linux_cna_commit'])
-        reviews.append({'cve': item['cve'], 'status': 'fixed',
-                        'scope': 'Linux CNA explicitly lists upstream 7.2.7 in a fixed release range. Exact release-3 RPM files only; running-kernel state and security-agent compatibility are not established.',
-                        'advisory': advisory, 'evidence': advisory,
-                        'verification': 'CNA record SHA256 ' + item['record_sha256'] + '; upstream source SHA256 ' + provenance['sha256'],
-                        'cna_release_ranges': item['matching_ranges']})
+    cross['source_sha256'] = provenance['sha256']
+    reviews = [review for item in cross['items'] if (review := review_for(item, cross))]
     for a in selected:
         existing = evidence['artifacts'].setdefault(a['rpm_sha256'], [])
         indexed = {r['cve']: r for r in existing}

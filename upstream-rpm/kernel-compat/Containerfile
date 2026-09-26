@@ -1,9 +1,9 @@
 FROM docker.io/library/ubuntu:26.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc-15 g++-15 make binutils flex bison bc pkg-config \
+    gcc-15 g++-15 make binutils flex bison bc gawk pkg-config \
     libelf-dev libdw-dev zlib1g-dev libssl-dev dwarves \
-    python3 git file kmod xz-utils ca-certificates patch cpio \
+    python3 git file kmod xz-utils zstd ca-certificates patch cpio \
     qemu-system-x86 busybox-static iproute2 nftables libnetfilter-queue-dev \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m -u 1001 builder

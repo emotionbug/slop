@@ -1,0 +1,9 @@
+# Apply to the reviewed Ubuntu-based comparison config with scripts/config.
+# This is a laboratory fragment, not a complete RHEL/VMware production config.
+CONFIG_GENDWARFKSYMS=y
+CONFIG_EXTENDED_MODVERSIONS=y
+CONFIG_UBSAN=y
+CONFIG_UBSAN_BOUNDS=y
+CONFIG_UBSAN_SHIFT=y
+CONFIG_KMALLOC_PARTITION_CACHES=y
+CONFIG_KMALLOC_PARTITION_RANDOM=y

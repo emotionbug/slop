@@ -1,0 +1,1 @@
+obj-y := legacy-string-abi-probe.o

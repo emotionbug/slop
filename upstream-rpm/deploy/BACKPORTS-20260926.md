@@ -38,6 +38,10 @@ OpenSSL의 다중 수신자 RSA CMS/PKCS7 복호화는 보안 수정에 따라 �
 
 ## 커널 파일 추가 설치
 
+**이 절은 EL8 `.168` 실험 묶음입니다. 현재 요청한 커널 목표는 7.2.7이며,
+아래 명령은 그 전환에 필요하지 않습니다.** [7.2.7 상태](../kernel-deploy/TARGET-7.2.7.md)를
+기준으로 진행합니다. 위 OpenSSL/glibc 사용자 공간 묶음과는 별개입니다.
+
 ```bash
 wget -e use_proxy=yes -e https_proxy=http://192.168.32.104:9080 \
   -O download-kernel-compat.sh \

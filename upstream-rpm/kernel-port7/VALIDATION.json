@@ -44,6 +44,18 @@
     "needs_review": 23,
     "running_server_remediated": false
   },
+  "cve_source_review": {
+    "result_file": "CVE-SOURCE-REVIEW.json",
+    "result_sha256": "0904b952a80aee299e883602be0e3c3a42b9563d2c35d239e8bfdf22c8526123",
+    "input_needs_review": 23,
+    "fix_present_exact_reverse_apply": 10,
+    "fix_present_in_v7_2_ancestry": 12,
+    "not_affected_code_removed_in_v7_2": 1,
+    "remaining_needs_review": 0,
+    "aggregate_fixed_in_source": 4007,
+    "aggregate_not_affected": 63,
+    "missing_linux_cna_record": 125
+  },
   "smb_boundary_test": {
     "cve": "CVE-2026-89632",
     "result_sha256": "82304bbdc9524d6a2afb807085a70c24f2c1053e5e42a62284f8b74963212f5c",

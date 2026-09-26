@@ -50,11 +50,19 @@ splice_eof/bind입니다. accept callback 인자도 바뀌었습니다. 바이�
 - upstream 7.2.7 fixed 범위: 3,985
 - CNA 기본 범위상 비해당: 62
 - CNA record 없음: 125
-- 추가 검토 필요: 23
+- 버전 범위만으로 추가 검토 필요: 23
 
 `fixed`와 `not_affected`는 분리합니다. 새 시험 빌드는 기존 Release 3 RPM과
 해시가 다르므로 기존 Trivy 증거를 자동 승계하지 않습니다. 운영 RPM을 만들 때
 정확한 SRPM/RPM 해시에 CNA 근거를 다시 결합해야 합니다.
+
+위 23건에는 Linux CNA가 지목한 공식 수정 패치 97개를 다시 대조했습니다.
+10건은 패치가 7.2.7 소스에서 정확히 역적용됐고, 12건은 stable 패치가 지목한
+mainline 원본 수정 커밋이 `v7.2` 태그의 조상임을 확인했습니다.
+`CVE-2026-68086`은 해당 stable 패치가 설명한 취약 코드 제거 커밋이 `v7.2`의
+조상임을 확인해 비해당으로 분리했습니다. 따라서 소스 검토까지 합치면 4,007건은
+수정 포함, 63건은 비해당이며 추가 검토 23건은 모두 해소됐습니다. Linux CNA
+record 자체가 없는 125건은 이 근거만으로 해결됐다고 표시하지 않습니다.
 
 추가로 CVE-2026-89632의 7.2.7 실제 `reparse_buf_ptr()` 소스에서 헤더 길이 검사
 후 필드를 읽는 순서를 확인하고 경계 시험을 통과했습니다. 검사 순서를 제거한
@@ -66,6 +74,9 @@ splice_eof/bind입니다. accept callback 인자도 바뀌었습니다. 바이�
 - `legacy-string-abi-probe.S`, `Makefile.abi-probe`: Ubuntu 7.0의 DWARF CRC를
   재현할 때 사용한 compile-only 선언 비교 자료
 - `compare-imports.py`: 버전 심볼을 읽는 정적 비교기
+- `export-cna-review-manifest.py`, `verify-cna-patches.py`,
+  `verify-mainline-ancestry.py`: 고정 CNA 기록, 공식 패치 역적용과 mainline 계보 검사
+- `CVE-SOURCE-REVIEW.json`: 23건의 공개 URL·패치 해시·판정 근거
 - `lab-init.sh`: 디스크·외부 네트워크 없는 QEMU 시험 시나리오
 - `test-smb-reparse.py`: 실제 7.2.7 SMB 함수 추출 및 경계/대조군 시험
 - `VALIDATION.json`: 해시와 통과 범위

@@ -120,6 +120,12 @@ sudo reboot
 
 ## 설치 전 호환성 확인
 
+`gc_enforcement`, `dsa_filter`, `dsa_filter_hook` 때문에 중단되면
+[보안 에이전트 조사 및 읽기 전용 수집 방법](SECURITY-MODULES.md)을 먼저 확인하세요.
+`rebuild` 오류 문구는 실제 빌드 실패를 뜻하지 않으며, 업체 지원 모듈 또는 소스와
+호환성 근거가 필요하다는 의미입니다. `modinfo`가 모듈 이름을 찾지 못해도
+`/opt/ds_agent` 등의 별도 경로에서 이미 로드됐을 수 있습니다.
+
 설치기는 RHEL 8 x86_64, UEFI/BLS, Secure Boot 비활성 상태를 확인합니다.
 새 커널에 실제 PCI 장치 드라이버가 있는지, XFS 형식과 initramfs, 현재 machine-id와 BLS 항목의 일치, 기존 부팅
 이미지 및 공간을 확인합니다. FIPS, XFS V4/ASCII-CI, 활성 VDO, 로드된 외부

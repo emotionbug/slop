@@ -1,87 +1,119 @@
-# EL8 보안 모듈 호환 커널 후보 — 2026-09-26
+# EL8 Trend·Guardicore 호환 보안 커널 — 2026-09-27
 
-> **작업 목표 정정:** 최종 목표는 Linux **7.2.7**입니다. 이 문서의 EL8 `.168`
-> 결과는 별도 비교 실험이며, 7.2.7 전환의 필수 설치 단계가 아닙니다.
-> [7.2.7 작업 상태](../kernel-deploy/TARGET-7.2.7.md)를 기준으로 진행합니다.
+배포 후보는 `4.18.0-553.168.1.linuxoss1.el8_10.x86_64`입니다. RHEL 8.10
+`.168.1` 소스에 검증된 Linux stable 수정과 NFQUEUE kABI 보완을 적용해
+`kernel-linuxoss-el8-compat`라는 별도 install-only RPM으로 만들었습니다. 기존
+`.166` 커널과 기본 부팅 항목은 설치 단계에서 유지합니다.
 
-`4.18.0-553.168.1.linuxoss1.el8_10.x86_64`는 EL8 .168 소스에 NFQUEUE 구조체
-호환 패치를 적용한 병렬 설치 후보입니다. **7.2.7이 아니며, 기존 커널 CVE 전체를
-해결하지 않습니다.** 현재 실행 중인 .166 커널과 기존 부팅 기본값을 유지합니다.
+7.2.7은 사용하지 않습니다. 서버에서 수집한 Guardicore와 Trend 바이너리는 7.2.7에서
+kernel import 320개 중 다수가 없거나 CRC가 다르고, Guardicore가 직접 접근하는
+`struct proto` callback 위치도 달랐습니다. 반면 이 `.168.1` 빌드에서는 세 모듈의
+kernel import 328개가 모두 일치했습니다.
 
-## 실제 수정 범위
+## 실제 모듈 시험
 
-Rocky의 공식 서명이 검증된 `kernel-4.18.0-553.168.1.el8_10.src.rpm`의 소스와
-설정을 기반으로 빌드했습니다. Red Hat의 다음 두 보안 공지에 해당하는 수정이
-.166 대비 포함됩니다.
+서버에서 수집한 다음 파일의 SHA-256을 고정했습니다. 파일 자체는 공개 저장소나
+릴리스에 포함하지 않습니다.
 
-- [RHSA-2026:71213](https://access.redhat.com/errata/RHSA-2026:71213):
-  CVE-2026-43370, 63831, 64564, 72261, 80844, 81000, 89846.
-- [RHSA-2026:71329](https://access.redhat.com/errata/RHSA-2026:71329):
-  CVE-2026-31566, 52912, 68121, 80714, 89480.
+- Guardicore `gc_enforcement`:
+  `e5895f7a3148497dd809408a4acb2600df900d8eb95d61e8a4ad72ead1147dad`
+- Trend hook:
+  `198bb5c9c11c294f7122c85a48883d7e92ad255dc997ece83064c8316cb8e45c`
+- Trend filter 12.6.0.8491:
+  `abf6aea64fb58678d80387c2c000f5f9437e730f2a41843082c9f0130807d3b2`
 
-이것은 자체 빌드 RPM이며 Red Hat 서명·지원 또는 FIPS 인증을 뜻하지 않습니다.
+최종 CVE 백포트 소스로 커널 전체와 모듈 2,804개를 다시 빌드했습니다. 그 커널을
+격리 QEMU에서 실제로 부팅해 세 바이너리를 동시에 로드한 뒤 ICMP 3/3,
+namespace 간 TCP/UDP echo, namespace 제거, 역순 모듈 해제를 통과했습니다.
+vermagic·modversion 강제 옵션은 사용하지 않았고 Oops, BUG, KASAN, GPF 및
+커널 WARNING은 없었습니다. 상세 해시는
+[SERVER-MODULE-VALIDATION.json](SERVER-MODULE-VALIDATION.json)에 있습니다.
 
-## 호환성 보완
+이 시험은 전체 `ds_agent`/`gc-guest-agent` 사용자 공간, 관리 서버 연결, 정책
+allow/deny 및 실제 VMware 부팅을 대신하지 않습니다.
 
-CVE-2026-52912의 saved-device 참조 보존을 제거하지 않고, 추가 포인터를 공개
-`nf_queue_entry` 구조체에서 할당 영역 끝의 정렬된 private storage로 이동했습니다.
-복제 시에도 함께 복사하며, 장치 해제·NETDEV_DOWN 경로는 같은 getter를 사용합니다.
-vermagic이나 심볼 CRC를 조작하거나 모듈 강제 로드를 사용하지 않았습니다.
+## CVE 판정
 
-대상 서버가 제공한 심볼 목록과 비교한 결과:
+입력은 기존 Trivy CSV의 커널 고유 CVE 4,195개입니다. Linux CNA
+`b5f074657ecf643c43102c5dbb151606efd6690d`, CVE List V5
+`60251ab81d62f05055745b1b9222d5244ba8073f`, Red Hat CSAF VEX
+`csaf_vex_2026-09-20.tar.zst`와 2026-09-27 증분을 고정했습니다.
 
-| 대상 | 일치 | CRC 불일치 |
-|---|---:|---:|
-| gc_enforcement kernel imports | 161 | 0 |
-| dsa_filter kernel imports | 120 | 0 |
-| dsa_filter_hook kernel imports | 39 | 0 |
-| dsa_filter → dsa_filter_hook imports | 8 | 0 |
+| 최종 상태 | CVE 수 |
+|---|---:|
+| `fixed` | 1,355 |
+| `not_affected` | 2,053 |
+| `under_investigation` | 787 |
+| 합계 | 4,195 |
 
-심볼 일치는 전체 에이전트 기능 검증과 다릅니다. 이후 서버의 실제 바이너리를
-받아 Guardicore와 Trend 8491의 동시 로드·ICMP/TCP/UDP·해제를 격리 QEMU에서
-통과했습니다. [추가 분석과 모듈 준비 방법](SERVER-MODULES-20260926.md)을
-확인하세요. 전체 에이전트와 운영 정책 집행은 아직 시험하지 못했습니다.
+`fixed`는 exact reverse apply, zero-fuzz hunk 일치 또는 대상 EVR 이하의 Red Hat
+fixed 근거만 인정합니다. `not_affected`는 CNA 범위 밖, 명시적 unaffected 또는
+정확한 빌드 설정에서 소스가 포함되지 않은 경우입니다. 의미가 비슷해 보이는 줄만
+있는 경우는 해결로 올리지 않습니다.
 
-## 완료한 검증
+남은 787개 중 786개는 최신 Red Hat VEX도 RHEL 8 커널을 `known_affected`로
+표시하고, 한 건은 RHEL 8 일반 커널 진술이 없습니다. 따라서 이 빌드는 모든
+4,195개 CVE를 해결했다고 주장하지 않습니다. 그 상태를 숨기지 않고 OpenVEX의
+`under_investigation`으로 유지합니다. 정확한 목록과 근거는 배포 키트의
+`el8-168-final-cve-accounting-kabi-final.json`에 있습니다.
 
-- GCC 8.5 / EL8 binutils 2.30로 커널·전체 모듈 빌드.
-- 격리 QEMU에서 실제 커널 부팅.
-- NFQUEUE에서 패킷을 보류한 채 bridge/veth를 삭제하고 늦은 verdict를 처리하는
-  회귀 시나리오 통과. Oops/BUG 없음.
-- 공식 Trend Micro EL8 KSP의 `dsa_filter 12.6.0.8527`와 hook 모듈을
-  강제 옵션 없이 로드하고 해제하는 시험 통과.
-- EL8 컨테이너에서 두 RPM 실제 설치·재설치·`rpm -V` 통과.
-- devel RPM으로 외부 시험 모듈 빌드 통과.
+## RPM
 
-최종 포장에서는 devel의 불필요한 `perl` 전체 묶음 의존성을 `/usr/bin/perl`로
-바로잡았습니다. 원래 부팅 시험한 커널·모듈·개발 파일의 해시, 권한, 소유자,
-심볼릭 링크는 유지했습니다. RPM 자동 생성 디렉터리의 artifact 표시만 차이가 있습니다.
-이 최종 RPM으로 OpenSSL/glibc 동시 업그레이드 환경에서 DNF 설치, `rpm -V`,
-외부 모듈 빌드도 통과했습니다.
+- `kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss2.el8_10.x86_64.rpm`
+- `kernel-linuxoss-el8-compat-devel-4.18.0-553.168.1.linuxoss2.el8_10.x86_64.rpm`
+- `kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss2.el8_10.src.rpm`
 
-최초 Trend 시험은 공개 KSP 8527 기준이고, 이후 실제 서버의 8491과 Guardicore
-바이너리로 추가 시험했습니다. 전체 ds_agent/Guardicore 사용자 공간 프로그램,
-관리 서버 연결, 보호 정책을 검증한 것은 아닙니다.
-Secure Boot 및 대상 VMware 부팅도 아직 검증하지 않았습니다.
+RPM 두 개의 오프라인 DNF transaction check/test/install, `rpm -V`, depmod,
+modinfo를 격리 EL8 컨테이너에서 통과했습니다. SRPM에는 원본 소스, 설정, spec,
+NFQUEUE kABI 패치와 전체 CVE 백포트 패치가 포함됩니다. 이 RPM은 Red Hat
+서명·지원이나 FIPS 인증을 뜻하지 않습니다.
 
-## 배포 동작
+## SSH 전용 설치와 1회 부팅
 
-RPM 이름은 `kernel-linuxoss-el8-compat` 및 `kernel-linuxoss-el8-compat-devel`입니다.
-기존 `kernel`, `kernel-core`, `kernel-modules`, `kernel-headers`를 교체하지 않습니다.
-RPM 설치는 파일 배치와 depmod만 수행합니다. initramfs 생성, GRUB 변경,
-기본 커널 변경, 재부팅을 하지 않습니다. 따라서 설치만으로 실행 중 커널의
-취약점이 수정되지는 않습니다.
+키트 안에서 다음 한 번으로 RPM 설치, 현재 로드된 정확한 Trend·Guardicore
+바이너리 복사, initramfs 생성 및 **다음 부팅 한 번만** 새 커널 선택까지
+준비합니다.
 
-SSH만 가능한 서버에서 부팅 전 멈춤까지 자동 복구한다고 보장할 수 없습니다.
-7.2.7의 활성 외부 모듈 검사도 그대로 유지합니다. ABI가 다른 모듈에
-`--force-vermagic`, `--force-modversion`을 적용하지 마세요.
+```bash
+sudo bash install-kernel-compat.sh
+```
 
-## 재현과 스캔
+이 명령은 재부팅하지 않습니다. 현재 기본 커널도 바꾸지 않습니다. 준비가 끝난 뒤
+사용자가 `sudo reboot`를 실행하면 GRUB `next_entry`로 한 번만 새 커널을
+시도합니다. 새 커널에서 12분 안에 SSH, 기본 route와 세 보안 모듈의 정확한
+version/srcversion이 확인되지 않으면 boot guard가 원래 기본 커널을 복원하고
+재부팅합니다. 정상인 경우에도 영구 기본값은 자동 변경하지 않습니다.
 
-SRPM에 전체 소스, 설정, 패치와 spec이 포함됩니다. `rpmbuild --rebuild`는
-전체 커널 빌드를 수행합니다. 배포 spec의 `linuxoss_prebuilt`는 검증된 기존
-빌드 트리를 재포장하기 위한 내부 옵션입니다.
+SSH로 접속한 뒤 Java daemon과 Tomcat까지 확인해 영구 기본값으로 승격합니다.
 
-Trivy에는 정확한 RPM/SRPM 및 변경 불가 파일 해시를 연결합니다. 위 12건 외의
-기존 커널 CVE는 별도 근거 없이 해결 처리하지 않습니다. 실행 중인 커널과
-설치만 된 다른 커널의 결과도 분리합니다.
+```bash
+sudo bash confirm-kernel.sh
+```
+
+프로세스 식별 규칙이 다른 경우 `LINUXOSS_JAVA_PATTERN`과
+`LINUXOSS_TOMCAT_PATTERN` 환경변수로 `pgrep -af` 정규식을 지정할 수 있습니다.
+되돌리기만 하려면 `sudo bash rollback-kernel-boot.sh`를 실행합니다.
+
+`panic=60`, `nmi_watchdog=1`, `softlockup_panic=1`, `hung_task_panic=1`을 새
+부팅 항목에만 넣습니다. 커널이 systemd까지 올라오지 못한 채 완전히 정지하고
+VMware watchdog도 없는 경우에는 SSH만으로 재부팅시킬 방법이 없습니다. 1회 부팅
+설정 덕분에 다음 물리적/가상 재시작은 원래 기본 커널로 돌아가지만, 정지한 VM을
+원격에서 재시작하는 기능 자체를 만들 수는 없습니다.
+
+## Trivy 연계
+
+키트의 `scan-kernel-vex.sh`는 Trivy 0.74.0의 기존 오프라인 DB와 최종 OpenVEX를
+사용해 rootfs를 검사하고, 원본 Trivy JSON·suppressed 항목·실행 커널·RPM 목록과
+독립적인 4,195개 소스 판정 보고서를 같은 출력 디렉터리에 보존합니다.
+
+```bash
+sudo bash scan-kernel-vex.sh \
+  /root/trivy/trivy \
+  /root/trivy/trivy-proxy-work/cache \
+  /root/trivy/kernel-report-20260927
+```
+
+OpenVEX는 기존 Trivy finding의 상태를 연결할 뿐 새 CVE를 만들지 않습니다.
+자체 RPM이 Trivy vendor DB에 없어서 결과에서 사라진 것을 해결로 세지 말고,
+`el8-168-final-cve-accounting-kabi-final.json`의 787개
+`under_investigation`을 함께 확인해야 합니다.

@@ -6,14 +6,16 @@
 
 Name: kernel-linuxoss-el8-compat
 Version: 4.18.0
-Release: 553.168.1.linuxoss1.el8_10
-Summary: EL8 .168 kernel with NFQUEUE ABI preservation (evaluation)
+Release: 553.168.1.linuxoss2.el8_10
+Summary: EL8 .168 security kernel with third-party module ABI preservation
 License: GPLv2
 URL: https://github.com/emotionbug/slop/tree/main/upstream-rpm/kernel-compat
 Vendor: Linux OSS local build
 Source0: linux-4.18.0-553.168.1.el8_10.tar.xz
 Source1: kernel-compat.config
 Patch0: el8-168-nfqueue-kabi.patch
+Patch1: el8-168-cve-backports.patch
+Patch2: el8-backport-prerequisites.patch
 BuildRequires: gcc, make, binutils >= 2.30, binutils < 2.31, bc, bison, flex, elfutils-libelf-devel
 BuildRequires: openssl-devel, perl, dwarves, python3, cpio, xz
 Requires: kmod
@@ -22,8 +24,9 @@ Provides: installonlypkg(kernel)
 ExclusiveArch: x86_64
 
 %description
-Parallel, locally built EL8 kernel. Keeps the old NFQUEUE public structure
-layout while retaining the saved-device reference fix in private tail storage.
+Parallel, locally built EL8 security kernel. Keeps the old NFQUEUE public
+structure layout while retaining the saved-device reference fix in private
+tail storage, and applies the source-reviewed CVE backport set.
 Installation stages kernel files only. It does not generate an initramfs,
 select a boot entry, reboot, or certify third-party security agents.
 
@@ -41,12 +44,14 @@ this exact kernel. This does not replace the system kernel-headers package.
 test -s %{linuxoss_payload_tar}
 %else
 %if 0%{?linuxoss_prebuilt}
-test -f %{linuxoss_tree}/vmlinux
+test -f %{linuxoss_tree}/arch/x86/boot/bzImage
 test -f %{linuxoss_tree}/Module.symvers
 cmp %{SOURCE1} %{linuxoss_tree}/.config
 %else
 %setup -q -n %{source_dir}
 %patch0 -p1
+%patch2 -p1
+%patch1 -p1
 cp %{SOURCE1} .config
 %endif
 %endif

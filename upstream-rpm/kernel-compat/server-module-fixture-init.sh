@@ -4,7 +4,9 @@ mount -t proc proc /proc
 grep -q 'linuxoss.server_module_fixture=1' /proc/cmdline || exit 2
 mount -t sysfs sysfs /sys
 mount -t devtmpfs devtmpfs /dev
-mkdir -p /run/netns /tmp
+mkdir -p /run/netns /var /tmp
+test -e /var/run || ln -s ../run /var/run
+mkdir -p /var/run/netns
 fail() { echo SERVER_MODULE_FIXTURE_FAILED; dmesg | tail -n 100; sync; poweroff -f; }
 trap fail EXIT
 set -ex

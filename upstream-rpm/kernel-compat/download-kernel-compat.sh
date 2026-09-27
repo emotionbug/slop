@@ -10,11 +10,15 @@ work=$(mktemp -d "${PWD}/linuxoss-download-XXXXXXXX")
 echo "Download directory: $work"
 cd -- "$work"
 wget -e use_proxy=yes -e "https_proxy=$proxy" -e "http_proxy=$proxy" \
-  --timeout=60 --tries=3 -O linuxoss-kernel-compat-20260926-1.tar.gz \
-  https://github.com/emotionbug/slop/releases/download/linuxoss-backports-20260926-1/linuxoss-kernel-compat-20260926-1.tar.gz
-printf '%s  %s\n' '3063ad6eaf628f23910563db2b5281212864645fdb29102a4abc9e9c4e170425' 'linuxoss-kernel-compat-20260926-1.tar.gz' | sha256sum -c -
-tar --no-same-owner -xzf linuxoss-kernel-compat-20260926-1.tar.gz
-kit="$work/linuxoss-kernel-compat-20260926-1"
+  --timeout=60 --tries=3 -O linuxoss-kernel-compat-20260927-2.tar.gz \
+  https://github.com/emotionbug/slop/releases/download/linuxoss-kernel-compat-20260927-2/linuxoss-kernel-compat-20260927-2.tar.gz
+printf '%s  %s\n' '8d4e2efbbdf7af1ea567f22d772174087d756ed6cea2e86ea52fa8f7fac9df29' 'linuxoss-kernel-compat-20260927-2.tar.gz' | sha256sum -c -
+tar --no-same-owner -xzf linuxoss-kernel-compat-20260927-2.tar.gz
+kit="$work/linuxoss-kernel-compat-20260927-2"
 echo "Kit retained at: $kit"
-bash "$kit/stage-kernel.sh" "$mode" "$@"
+if [[ $mode == apply ]]; then
+  bash "$kit/install-kernel-compat.sh" "$@"
+else
+  bash "$kit/stage-kernel.sh" check "$@"
+fi
 echo "Kit retained at: $kit"

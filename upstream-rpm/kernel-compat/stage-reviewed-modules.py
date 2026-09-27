@@ -15,8 +15,8 @@ import tempfile
 
 TARGET = '4.18.0-553.168.1.linuxoss1.el8_10.x86_64'
 SOURCE = '4.18.0-553.166.1.el8_10.x86_64'
-IMAGE_SHA = '199d5c598ba44d38277f54bf9b464cab16fe7963ea706e0b75e31a762a5b0c8c'
-SYMVERS_SHA = '3aaee36520381aa761e133814ae75bf667231a625b89b1c3ad15a7ed2eee7c8e'
+IMAGE_SHA = '8cd714ffe2ba48b9f87a9d9ae557a3153cb9c937813da0eb77f3de53101b60ae'
+SYMVERS_SHA = '7a64c7eac31ac8d0082134e4c0bbf1ea2593dd96a891269804dff0bc90fed47f'
 PROFILE = (
     ('gc_enforcement', 'gc-enforcement.ko',
      '/lib/modules/' + SOURCE + '/extra/gc-enforcement.ko',
@@ -95,7 +95,7 @@ def main():
         symvers = Path('/usr/src/kernels') / TARGET / 'Module.symvers'
         require_hash(symvers, SYMVERS_SHA)
         for package in ('kernel-linuxoss-el8-compat', 'kernel-linuxoss-el8-compat-devel'):
-            run(['rpm', '-V', package + '-4.18.0-553.168.1.linuxoss1.el8_10.x86_64'])
+            run(['rpm', '-V', package + '-4.18.0-553.168.1.linuxoss2.el8_10.x86_64'])
         before = run(['grubby', '--default-kernel'])
         destination = Path('/lib/modules') / TARGET / 'extra/linuxoss-reviewed'
         if destination.is_symlink():

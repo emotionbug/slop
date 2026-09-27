@@ -1,10 +1,10 @@
 # 실제 보안 모듈 분석과 EL8 호환 시험
 
-> **최종 목표는 7.2.7입니다.** 아래 `.168` 시험과 모듈 준비 명령은 별도 실험
-> 기록입니다. 7.2.7 전환을 위해 이 명령을 실행할 필요는 없습니다.
-> 7.2.7의 진행 상태는 [별도 기록](../kernel-deploy/TARGET-7.2.7.md)을 확인하세요.
+배포 대상은 `4.18.0-553.168.1.linuxoss1.el8_10.x86_64`입니다. Trend Micro의
+공개 지원표에도 공식 `4.18.0-553.168.1.el8_10.x86_64`가 포함됩니다.
 
-서버에서 추출한 모듈을 변경하지 않고 EL8 `.168` 호환 커널에서 시험했습니다.
+서버에서 추출한 모듈을 변경하지 않고 최종 CVE 백포트가 들어간 EL8 `.168`
+호환 커널에서 시험했습니다.
 Guardicore와 Trend 세 모듈의 동시 로드, namespace 간 ICMP/TCP/UDP 통신,
 namespace 제거 및 세 모듈 해제가 통과했습니다. 강제 로드, vermagic/CRC 수정은
 사용하지 않았습니다. **에이전트 사용자 공간 프로그램과 운영 보호 정책은 미검증**입니다.
@@ -22,7 +22,7 @@ Guardicore는 `extra`와 `weak-updates`에 서로 다른 바이너리가 있습�
 [검증 결과](SERVER-MODULE-VALIDATION.json)와 준비 스크립트에 고정했습니다.
 수집기도 `/sys/module`의 실제 로드된 version/srcversion을 별도로 기록합니다.
 
-## 7.2.7에서 필요한 변경
+## 7.2.7을 배포 대상으로 사용하지 않는 이유
 
 정확한 7.2.7 Release 3 Module.symvers와 비교했습니다.
 
@@ -79,8 +79,12 @@ GRUB 변경 및 재부팅은 하지 않습니다. **아직 이 단계만으로 �
 
 ## 검증 범위
 
-- QEMU: 세 실제 바이너리 동시 로드, ICMP 3/3, TCP/UDP echo, namespace 정리,
-  모듈 해제 통과. Oops/BUG/WARNING 없음. Secure Boot 강제 검증은 하지 않았습니다.
+- QEMU: 최종 커널 이미지 SHA-256
+  `8cd714ffe2ba48b9f87a9d9ae557a3153cb9c937813da0eb77f3de53101b60ae`로
+  세 실제 바이너리 동시 로드, ICMP 3/3, TCP/UDP echo, namespace 정리,
+  모듈 해제 통과. Oops/BUG/KASAN/GPF/커널 WARNING 없음. 최종 로그 SHA-256은
+  `cc066487e322808d60699ca936b1f2f9fa67b4e261859f74975d88d3391add13`입니다.
+  Secure Boot 강제 검증은 하지 않았습니다.
 - 최초 두 네트워크 시도는 BusyBox shell이 내부 ip applet을 선택해 실패했습니다.
   `/usr/sbin/ip`를 명시한 최종 시험에서 모두 통과했고 초기 로그도 보존했습니다.
 - 준비 스크립트: 변조 원본·기존 파일 충돌·symlink·로드된 식별자 불일치 차단 테스트 통과.

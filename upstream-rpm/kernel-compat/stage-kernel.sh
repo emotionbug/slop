@@ -40,9 +40,9 @@ for file in "${files[@]}"; do
   fi
 done
 if [[ ${#pending[@]} -gt 0 ]]; then
-  rpm --test -ivh "${pending[@]}"
+  rpm --test -Uvh "${pending[@]}"
   if [[ $mode == apply ]]; then
-    rpm -ivh "${pending[@]}"
+    rpm -Uvh "${pending[@]}"
     for file in "${pending[@]}"; do
       nevra=$(rpm -qp --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}' "$file")
       rpm -V "$nevra"

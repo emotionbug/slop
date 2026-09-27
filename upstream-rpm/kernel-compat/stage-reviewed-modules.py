@@ -50,6 +50,43 @@ def require_hash(path, expected):
         raise RuntimeError('Unreviewed or changed file: ' + str(path))
 
 
+def choose_exact_source(candidates, expected):
+    """Return the first existing candidate with the reviewed digest."""
+    seen = set()
+    existing = []
+    for candidate in candidates:
+        path = Path(candidate)
+        key = str(path)
+        if key in seen:
+            continue
+        seen.add(key)
+        if not path.is_file():
+            continue
+        existing.append(key)
+        if digest(path) == expected:
+            return path
+    raise RuntimeError(
+        'No exact reviewed module found; existing candidates: ' +
+        (', '.join(existing) if existing else 'none'))
+
+
+def source_candidates(module, filename, preferred):
+    candidates = []
+    try:
+        selected = run(['modinfo', '-k', SOURCE, '-n', module])
+        if selected and selected != '(builtin)':
+            candidates.append(selected)
+    except subprocess.CalledProcessError:
+        pass
+    candidates.extend((
+        preferred,
+        '/lib/modules/' + SOURCE + '/weak-updates/' + filename,
+        '/lib/modules/' + SOURCE + '/extra/' + filename,
+        '/opt/ds_agent/' + SOURCE + '/' + filename,
+    ))
+    return candidates
+
+
 def copy_new_exact(source, target, expected):
     """Create one new file atomically; never overwrite a different file/symlink."""
     require_hash(source, expected)
@@ -104,17 +141,18 @@ def main():
         if actual_root not in destination.resolve().parents:
             raise RuntimeError('Destination escaped the target kernel tree')
         plan = []
-        for name, filename, source, expected, field, identity in PROFILE:
+        for name, filename, preferred, expected, field, identity in PROFILE:
             check_live_identity(Path('/sys/module'), name, field, identity)
-            require_hash(source, expected)
+            source = choose_exact_source(
+                source_candidates(name, filename, preferred), expected)
             if run(['modinfo', '-F', 'name', source]) != name:
-                raise RuntimeError('Module name mismatch: ' + source)
+                raise RuntimeError('Module name mismatch: ' + str(source))
             target = destination / filename
             if target.is_symlink():
                 raise RuntimeError('Destination module must not be a symlink')
             if target.exists():
                 require_hash(target, expected)
-            plan.append({'module':name,'source':source,'destination':str(target),'sha256':expected})
+            plan.append({'module':name,'source':str(source),'destination':str(target),'sha256':expected})
         print(json.dumps({'mode':args.mode,'target_kernel':TARGET,'files':plan}, indent=2))
         if args.mode == 'check':
             print('CHECK_COMPLETED_NO_CHANGES')

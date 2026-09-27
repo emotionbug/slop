@@ -10,6 +10,24 @@ spec.loader.exec_module(stage)
 
 
 class StageSafety(unittest.TestCase):
+    def test_exact_source_can_follow_weak_updates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            wrong = base/'extra.ko'; exact = base/'vendor.ko'; weak = base/'weak-updates.ko'
+            wrong.write_bytes(b'wrong module')
+            exact.write_bytes(b'exact reviewed module')
+            weak.symlink_to(exact)
+            selected = stage.choose_exact_source(
+                (base/'missing.ko', wrong, weak), stage.digest(exact))
+            self.assertEqual(selected, weak)
+
+    def test_exact_source_refuses_only_changed_candidates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            changed = Path(tmp)/'changed.ko'
+            changed.write_bytes(b'unreviewed module')
+            with self.assertRaises(RuntimeError):
+                stage.choose_exact_source((changed,), '0'*64)
+
     def test_exact_copy_retry_and_conflict(self):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp); source = base/'source'; dest = base/'modules/test.ko'

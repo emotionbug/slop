@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "cve": "CVE-2025-39808",
+      "status": "ported-to-el8-api",
+      "reason": "Replace unavailable hid_is_usb() helper with equivalent BUS_USB and parent-chain validation before hid_to_usb_dev()."
+    },
+    {
+      "cve": "CVE-2026-74387",
+      "status": "ported-to-el8-api",
+      "reason": "Replace scoped_guard() with explicit spin_lock_irqsave()/spin_unlock_irqrestore() while preserving output publication, detach, and snd_use_lock lifetime semantics."
+    },
+    {
+      "cve": "CVE-2026-31407",
+      "status": "ported-to-el8-api",
+      "reason": "Keep the supported NLA_U32 policy plus the existing explicit ntohl() NAT direction range check; retain NLA_POLICY_MAX for the SCTP state."
+    },
+    {
+      "cve": "CVE-2026-31495",
+      "status": "ported-to-el8-api",
+      "reason": "Keep the supported NLA_U32 policy plus the existing explicit ntohl() expectation flag mask check; retain native EL8 policy checks for TCP state/window scale and filter flags."
+    }
+  ]
+}

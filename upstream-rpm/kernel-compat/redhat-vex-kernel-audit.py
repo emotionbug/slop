@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Combine Linux CNA source evidence with Red Hat VEX for one EL8 kernel.
 
-The output intentionally keeps unresolved entries as ``under_investigation``.
-Only exact source evidence, an excluded build input, or an applicable Red Hat
-RHEL 8.10 statement can produce a resolved OpenVEX statement.
+Every input CVE receives a terminal disposition. Exact source evidence,
+validated reviewed backports, an excluded build input, or an applicable Red
+Hat RHEL 8.10 statement can produce ``fixed`` or ``not_affected``. Everything
+else is conservatively reported as ``affected`` instead of being left under
+investigation.
 """
 import argparse
 from collections import Counter
@@ -94,7 +96,7 @@ def redhat_status(vex_root, cve, base_evr):
                 'tracking', {}).get('id')}
 
 
-def decide(item, build, patch, hunk, semantic, redhat):
+def decide(item, build, patch, hunk, semantic, redhat, reviewed):
     crosswalk = item['status']
     if crosswalk == 'not-introduced-in-candidate':
         return ('not_affected', 'vulnerable_code_not_present',
@@ -111,6 +113,12 @@ def decide(item, build, patch, hunk, semantic, redhat):
     if hunk == 'already-present-by-hunks':
         return ('fixed', None,
                 'Every official Linux stable fix hunk is present with zero fuzz')
+    if reviewed == 'applied':
+        return ('fixed', None,
+                'Reviewed Linux stable fix was backported and passed the full kernel build and QEMU validation')
+    if reviewed == 'already-effective-threeway':
+        return ('fixed', None,
+                'Reviewed Linux stable fix is already effective in the exact source by three-way source comparison')
     # Distinctive lines are useful review hints, but can also occur in partial
     # or unrelated downstream edits.  Keep them in the report without using
     # them as resolved OpenVEX evidence.
@@ -120,8 +128,8 @@ def decide(item, build, patch, hunk, semantic, redhat):
     if redhat['status'] == 'redhat-known-not-affected':
         return ('not_affected', 'vulnerable_code_not_present',
                 'Red Hat VEX marks the RHEL 8.10 kernel product not affected')
-    return ('under_investigation', None,
-            'No conclusive fixed or not-affected evidence for this exact build')
+    return ('affected', None,
+            'No validated fixed or not-affected evidence exists for this exact build; conservatively treated as affected')
 
 
 def main():
@@ -133,6 +141,8 @@ def main():
     parser.add_argument('--hunk-evidence', type=Path, action='append', default=[],
                         help='Zero-fuzz hunk check JSON; may be repeated')
     parser.add_argument('--semantic', type=Path, required=True)
+    parser.add_argument('--validated-backports', type=Path, action='append', default=[],
+                        help='Reviewed backport evidence JSON; may be repeated')
     parser.add_argument('--redhat-vex-root', type=Path, required=True)
     parser.add_argument('--redhat-vex-manifest', type=Path, action='append', default=[],
                         help='Hash manifest or archive metadata used to build the VEX root')
@@ -166,6 +176,17 @@ def main():
                 hunk[evidence['cve']] = evidence['status']
     semantic = {item['cve']: item['semantic_status']
                 for item in semantic_doc['items']}
+    reviewed = {}
+    for path in args.validated_backports:
+        document = load(path)
+        for evidence in document['items']:
+            status = evidence['status']
+            if status not in {'applied', 'already-effective-threeway'}:
+                raise ValueError('unsupported reviewed backport status: ' + status)
+            previous = reviewed.get(evidence['cve'])
+            if previous and previous != status:
+                raise ValueError('conflicting reviewed backport status: ' + evidence['cve'])
+            reviewed[evidence['cve']] = status
     results = []
     counts = Counter()
     evidence_counts = Counter()
@@ -175,7 +196,7 @@ def main():
         redhat = redhat_status(args.redhat_vex_root, cve, base_evr)
         final_status, justification, reason = decide(
             item, build.get(cve), patch.get(cve), hunk.get(cve),
-            semantic.get(cve), redhat)
+            semantic.get(cve), redhat, reviewed.get(cve))
         result = {
             'cve': cve,
             'title': item.get('title', ''),
@@ -184,6 +205,7 @@ def main():
             'patch_status': patch.get(cve, 'not-evaluated'),
             'hunk_status': hunk.get(cve, 'not-evaluated'),
             'semantic_status': semantic.get(cve, 'not-evaluated'),
+            'reviewed_backport_status': reviewed.get(cve, 'not-evaluated'),
             'redhat': redhat,
             'final_status': final_status,
             'justification': justification,
@@ -204,12 +226,12 @@ def main():
 
     input_paths = ([args.crosswalk, args.build_reachability, args.semantic] +
                    args.post_backport + args.hunk_evidence +
-                   args.redhat_vex_manifest)
+                   args.validated_backports + args.redhat_vex_manifest)
     inputs = {str(path): digest(path) for path in input_paths}
     report = {
         'schema_version': 1,
-        'scope': ('CVE accounting for the exact custom EL8 kernel source and '
-                  'configuration. under_investigation entries are not suppressed.'),
+        'scope': ('Terminal CVE accounting for the exact custom EL8 kernel source '
+                  'and configuration. Unresolved risk is reported as affected.'),
         'base_evr': args.base_evr,
         'linux_cna_commit': crosswalk.get('linux_cna_commit'),
         'redhat_vex_archive': args.redhat_vex_root.parent.name,

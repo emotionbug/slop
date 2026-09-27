@@ -4,7 +4,7 @@ set -Eeuo pipefail
 umask 077
 
 TARGET='4.18.0-553.168.1.linuxoss1.el8_10.x86_64'
-IMAGE_SHA='8cd714ffe2ba48b9f87a9d9ae557a3153cb9c937813da0eb77f3de53101b60ae'
+IMAGE_SHA='47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100'
 here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 mode=${1:-check}
 [[ $# -le 1 && ( $mode == check || $mode == apply ) ]] || {

@@ -80,10 +80,10 @@ GRUB 변경 및 재부팅은 하지 않습니다. **아직 이 단계만으로 �
 ## 검증 범위
 
 - QEMU: 최종 커널 이미지 SHA-256
-  `8cd714ffe2ba48b9f87a9d9ae557a3153cb9c937813da0eb77f3de53101b60ae`로
+  `47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100`로
   세 실제 바이너리 동시 로드, ICMP 3/3, TCP/UDP echo, namespace 정리,
   모듈 해제 통과. Oops/BUG/KASAN/GPF/커널 WARNING 없음. 최종 로그 SHA-256은
-  `cc066487e322808d60699ca936b1f2f9fa67b4e261859f74975d88d3391add13`입니다.
+  `ec61abf0c71c7b4ef3ab71d154c149c0fa09e4acdbbcb317813689d21989a862`입니다.
   Secure Boot 강제 검증은 하지 않았습니다.
 - 최초 두 네트워크 시도는 BusyBox shell이 내부 ip applet을 선택해 실패했습니다.
   `/usr/sbin/ip`를 명시한 최종 시험에서 모두 통과했고 초기 로그도 보존했습니다.

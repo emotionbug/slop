@@ -2,7 +2,7 @@
   "date": "2026-09-27",
   "scope": "Exact server module binaries; static kABI and isolated QEMU runtime validation",
   "kernel_release": "4.18.0-553.168.1.linuxoss1.el8_10.x86_64",
-  "kernel_image_sha256": "8cd714ffe2ba48b9f87a9d9ae557a3153cb9c937813da0eb77f3de53101b60ae",
+  "kernel_image_sha256": "47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100",
   "module_symvers_sha256": "7a64c7eac31ac8d0082134e4c0bbf1ea2593dd96a891269804dff0bc90fed47f",
   "cve_backport_patch_sha256": "3eea8c56ccd34c8c3de946b887f17cd84d565127a5a5867073f2261816e6f31e",
   "modules": [
@@ -29,7 +29,7 @@
     "matched": 328,
     "crc_mismatch": 0,
     "missing": 0,
-    "report_sha256": "96c56e4154be264df6918fa74b8995def541701fd333f8593481989fbebfbf06"
+    "report_sha256": "0065ad2219cdfbeacdba302c56c310d5183d51f2e80a6e07dc24492fd11831ef"
   },
   "qemu_runtime": {
     "simultaneous_load": "PASS",
@@ -39,7 +39,7 @@
     "reverse_module_unload": "PASS",
     "force_vermagic_or_modversion": false,
     "oops_bug_kasan_gpf_kernel_warning": false,
-    "log_sha256": "cc066487e322808d60699ca936b1f2f9fa67b4e261859f74975d88d3391add13"
+    "log_sha256": "ec61abf0c71c7b4ef3ab71d154c149c0fa09e4acdbbcb317813689d21989a862"
   },
   "not_tested": [
     "Full userspace agent policy enforcement",
@@ -51,5 +51,6 @@
     "Third-party kernel modules",
     "QEMU initramfs containing third-party modules",
     "Binary disassembly"
-  ]
+  ],
+  "reviewed_backport_patch_sha256": "1d65d16a8f0d1695e7833c8682d319c6f4af3345c78626fc62556c0997573355"
 }

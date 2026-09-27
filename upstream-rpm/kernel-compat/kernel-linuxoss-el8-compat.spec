@@ -6,7 +6,7 @@
 
 Name: kernel-linuxoss-el8-compat
 Version: 4.18.0
-Release: 553.168.1.linuxoss2.el8_10
+Release: 553.168.1.linuxoss3.el8_10
 Summary: EL8 .168 security kernel with third-party module ABI preservation
 License: GPLv2
 URL: https://github.com/emotionbug/slop/tree/main/upstream-rpm/kernel-compat
@@ -16,6 +16,7 @@ Source1: kernel-compat.config
 Patch0: el8-168-nfqueue-kabi.patch
 Patch1: el8-168-cve-backports.patch
 Patch2: el8-backport-prerequisites.patch
+Patch3: el8-168-reviewed-backports.patch
 BuildRequires: gcc, make, binutils >= 2.30, binutils < 2.31, bc, bison, flex, elfutils-libelf-devel
 BuildRequires: openssl-devel, perl, dwarves, python3, cpio, xz
 Requires: kmod
@@ -52,6 +53,7 @@ cmp %{SOURCE1} %{linuxoss_tree}/.config
 %patch0 -p1
 %patch2 -p1
 %patch1 -p1
+%patch3 -p1
 cp %{SOURCE1} .config
 %endif
 %endif
@@ -62,7 +64,8 @@ cd %{linuxoss_tree}
 test "$(make -s kernelrelease)" = '%{krel}'
 %if !0%{?linuxoss_prebuilt}
 make olddefconfig
-make %{?_smp_mflags} KCFLAGS=-gz=zlib-gnu bzImage modules
+make %{?_smp_mflags} KCFLAGS=-gz=zlib-gnu bzImage
+make %{?_smp_mflags} KCFLAGS=-gz=zlib-gnu modules
 %endif
 %endif
 

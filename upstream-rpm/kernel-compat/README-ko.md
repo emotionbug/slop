@@ -22,7 +22,9 @@ kernel import 328개가 모두 일치했습니다.
 - Trend filter 12.6.0.8491:
   `abf6aea64fb58678d80387c2c000f5f9437e730f2a41843082c9f0130807d3b2`
 
-최종 CVE 백포트 소스로 커널 전체와 모듈 2,804개를 다시 빌드했습니다. 그 커널을
+최종 CVE 백포트 소스로 커널 전체와 모듈 2,804개를 다시 빌드했습니다. 추가로
+검토한 CVE 90건 중 19건은 EL8 API에 맞게 백포트했고 71건은 정확한 소스 비교로
+이미 효과가 있음을 확인했습니다. 그 커널을
 격리 QEMU에서 실제로 부팅해 세 바이너리를 동시에 로드한 뒤 ICMP 3/3,
 namespace 간 TCP/UDP echo, namespace 제거, 역순 모듈 해제를 통과했습니다.
 vermagic·modversion 강제 옵션은 사용하지 않았고 Oops, BUG, KASAN, GPF 및
@@ -41,9 +43,9 @@ allow/deny 및 실제 VMware 부팅을 대신하지 않습니다.
 
 | 최종 상태 | CVE 수 |
 |---|---:|
-| `fixed` | 1,355 |
+| `fixed` | 1,445 |
 | `not_affected` | 2,053 |
-| `under_investigation` | 787 |
+| `affected` | 697 |
 | 합계 | 4,195 |
 
 `fixed`는 exact reverse apply, zero-fuzz hunk 일치 또는 대상 EVR 이하의 Red Hat
@@ -51,17 +53,18 @@ fixed 근거만 인정합니다. `not_affected`는 CNA 범위 밖, 명시적 una
 정확한 빌드 설정에서 소스가 포함되지 않은 경우입니다. 의미가 비슷해 보이는 줄만
 있는 경우는 해결로 올리지 않습니다.
 
-남은 787개 중 786개는 최신 Red Hat VEX도 RHEL 8 커널을 `known_affected`로
+남은 697개 중 696개는 최신 Red Hat VEX도 RHEL 8 커널을 `known_affected`로
 표시하고, 한 건은 RHEL 8 일반 커널 진술이 없습니다. 따라서 이 빌드는 모든
-4,195개 CVE를 해결했다고 주장하지 않습니다. 그 상태를 숨기지 않고 OpenVEX의
-`under_investigation`으로 유지합니다. 정확한 목록과 근거는 배포 키트의
+4,195개 CVE를 해결했다고 주장하지 않습니다. 추가 조사가 필요한 상태는 0건이며,
+고정 또는 비영향 증거가 없는 항목은 OpenVEX의 `affected`로 확정했습니다. 정확한
+목록과 근거는 배포 키트의
 `el8-168-final-cve-accounting-kabi-final.json`에 있습니다.
 
 ## RPM
 
-- `kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss2.el8_10.x86_64.rpm`
-- `kernel-linuxoss-el8-compat-devel-4.18.0-553.168.1.linuxoss2.el8_10.x86_64.rpm`
-- `kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss2.el8_10.src.rpm`
+- `kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss3.el8_10.x86_64.rpm`
+- `kernel-linuxoss-el8-compat-devel-4.18.0-553.168.1.linuxoss3.el8_10.x86_64.rpm`
+- `kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss3.el8_10.src.rpm`
 
 RPM 두 개의 오프라인 DNF transaction check/test/install, `rpm -V`, depmod,
 modinfo를 격리 EL8 컨테이너에서 통과했습니다. SRPM에는 원본 소스, 설정, spec,
@@ -115,5 +118,5 @@ sudo bash scan-kernel-vex.sh \
 
 OpenVEX는 기존 Trivy finding의 상태를 연결할 뿐 새 CVE를 만들지 않습니다.
 자체 RPM이 Trivy vendor DB에 없어서 결과에서 사라진 것을 해결로 세지 말고,
-`el8-168-final-cve-accounting-kabi-final.json`의 787개
-`under_investigation`을 함께 확인해야 합니다.
+`el8-168-final-cve-accounting-kabi-final.json`의 697개 `affected`를 함께
+확인해야 합니다. 이 보고서에는 `under_investigation` 항목이 없습니다.

@@ -1,0 +1,458 @@
+{
+  "counts": {
+    "already-effective-threeway": 71,
+    "applied": 19
+  },
+  "items": [
+    {
+      "cve": "CVE-2019-15217",
+      "commit": "5d2e73a5f80a5b5aff3caf1ec6d39b5b3f54b26e",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2019-19082",
+      "commit": "104c307147ad379617472dd91a5bcb368d72bd6d",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2020-14416",
+      "commit": "0ace17d56824165c7f4c68785d6b58971db954dd",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2021-4159",
+      "commit": "294f2fc6da27620a506e6c050241655459ccd6bd",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2021-47162",
+      "commit": "b2c8d28c34b3070407cb1741f9ba3f15d0284b8b",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2021-47259",
+      "commit": "c7eab9e2d7b4e983ce280276fb920af649955897",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2021-47276",
+      "commit": "0bc62e398bbd9e600959e610def5109957437b28",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2021-47248",
+      "commit": "e3c36c773aed0fef8b1d3d555b43393ec564400f",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2021-34693",
+      "commit": "5e87ddbe3942e27e939bdc02deb8579b0cbd8ecc",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2021-47238",
+      "commit": "0dc13e75507faa17ac9f7562b4ef7bf8fcd78422",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2021-47431",
+      "commit": "83d857d6b0967b6709cd38750c3ce2ed8ced1a95",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-48931",
+      "commit": "40805099af11f68c5ca7dbcfacf455da8f99f622",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-49100",
+      "commit": "93e3d88321d2274fa4e26b006e19cc10fec331c2",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-49413",
+      "commit": "da9f3025d595956410ceaab2bea01980d7775948",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-49385",
+      "commit": "5d709f58c743166fe1c6914b9de0ae8868600d9b",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-49987",
+      "commit": "1678ca35b80a94d474fdc31e2497ce5d7ed52512",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-49766",
+      "commit": "aff4eb16f589c3af322a2582044bca365381fcd6",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-48651",
+      "commit": "e2b46cd5796f083e452fbc624f65b80328b0c1a4",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-48953",
+      "commit": "0bcfccb48696aba475f046c2021f0733659ce0ef",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2023-53800",
+      "commit": "bf9875aa7f7d624a8c084425b14bf7e5907ebc30",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2022-48969",
+      "commit": "99859947517e446058ad7243ee81d2f9801fa3dd",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2023-53005",
+      "commit": "d2d1ada58e7cc100b8d7d6b082d19321ba4a700a",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2023-7324",
+      "commit": "af5114d824f3511a69d68beff49ca9a7c32d44e0",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2023-53587",
+      "commit": "372c5ee537b8366b64b691ba29e9335525e1655e",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2023-53850",
+      "commit": "6d9d01689b82ff5cb8f8d2a82717d7997bc0bfff",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2024-42063",
+      "commit": "b30f3197a6cd080052d5d4973f9a6b479fd9fff5",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2024-46715",
+      "commit": "2b961d5786b4b31c367c719a2f918569b444c007",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2024-46713",
+      "commit": "7882923f1cb88dc1a17f2bf0c81b1fc80d44db82",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2024-47745",
+      "commit": "0f910dbf2f2a4a7820ba4bac7b280f7108aa05b1",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2024-49975",
+      "commit": "f31f92107e5a8ecc8902705122c594e979a351fe",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2024-50036",
+      "commit": "547087307bc19417b4f2bc85ba9664a3e8db5a6a",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2024-50282",
+      "commit": "673bdb4200c092692f83b5f7ba3df57021d52d29",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2024-56629",
+      "commit": "d031eef3cc2e3bf524509e38fb898e5335c85c96",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-21690",
+      "commit": "81d4dd05c412ba04f9f6b85b718e6da833be290c",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2025-21814",
+      "commit": "fdc1e72487781dd7705bcbe30878bee7d5d1f3e8",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-38323",
+      "commit": "e91274cc7ed88ab5bdc62d426067c82b0b118a0b",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-38375",
+      "commit": "773e95c268b5d859f51f7547559734fd2a57660c",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2025-38494",
+      "commit": "dd8e8314f2ce225dade5248dcfb9e2ac0edda624",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-40215",
+      "commit": "1b28a7fae0128fa140a7dccd995182ff6cd1c67b",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-39677",
+      "commit": "a225f44d84b8900d679c5f5a9ea46fe9c0cc7802",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-39808",
+      "commit": "22ddb5eca4af5e69dffe2b54551d2487424448f1",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2025-68367",
+      "commit": "d5f1d40fd342b589420de7508b4c748fcf28122e",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-40190",
+      "commit": "ea39e712c2f5ae148ee5515798ae03523673e002",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-40153",
+      "commit": "30498c44c2a0b20f6833ed7d8fc3df901507f760",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-31788",
+      "commit": "4eb245ff0d33b618e097a2c23de5df56d4ad6969",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-40331",
+      "commit": "b106a68df0650b694b254427cd9250c04500edd3",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-40283",
+      "commit": "297dbf87989e09af98f81f2bcb938041785557e8",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2025-68245",
+      "commit": "8e6a50edad11e3e1426e4c29e7aa6201f3468ac2",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-43187",
+      "commit": "f3c0d1fc1eadbb4adbee5ab7757d41d35f48325b",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-23258",
+      "commit": "be109646cdaecab262f6276303b1763468c94378",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-43167",
+      "commit": "166801e49a5b5fc127b8c9e2f110f303cfddfbc3",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-53064",
+      "commit": "01264a6a3a3ad7ac1d73443299cd5a9568002454",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-43156",
+      "commit": "a3e64e950a3981a8199de9798f6d21261b959171",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-23307",
+      "commit": "aed172a2e2330131f0977d2acd3ec8883f413ec1",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-23462",
+      "commit": "d955ccbf91ab74d76fe9e4eab2846a7d8a173075",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-43048",
+      "commit": "8f71034649738fdeb6859b8d6cddf132024fac06",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-31407",
+      "commit": "e7b5766693477c52424cc6c79dd30a7a9c7db52c",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-23457",
+      "commit": "ed81b6a7012485acdb9c6c80735a0b7d8e5e1873",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-31495",
+      "commit": "435b576cd2faa75154777868f8cbb73bf71644d3",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-31416",
+      "commit": "4ec216410fac9de83c99177a160ebb8d42fad075",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-31773",
+      "commit": "9a38659a3d06080715691bd3139f9c4b61f688e3",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-31677",
+      "commit": "9bf3e6ccfdcfe56ae3190d1ae987dacf1cfef4f9",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-31628",
+      "commit": "ed7a3a246309ccc807238f1b4f159ee6d37ff9c4",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-45843",
+      "commit": "6268f01ae989013671b526c883e92655342c6f6f",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-23374",
+      "commit": "aaba6ee63ba65b026401c94e2dd16b9f6e895934",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-52955",
+      "commit": "6e70ef53e818c53eab28d7b0026b7fd03dddaba5",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-31700",
+      "commit": "0f4c9754956b86de158a4af5278c5cf5bda9439e",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-23468",
+      "commit": "c833d6c7199c5b5fca9ec95593acd539ec9c171c",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-46028",
+      "commit": "08ea39a556ecd39b33c2b4888861001c6706a62e",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-63914",
+      "commit": "bafc7d0774b9bf52909c70ed990bc5ccf7ec4bad",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-63958",
+      "commit": "cea949203faef9cb783adc7b978cce056271e057",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-74387",
+      "commit": "f5d470b808bc01f70978e22e595c6f7768313406",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-63916",
+      "commit": "2add311d99646c9d235b2c44f9c169ba30f5db3a",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-68155",
+      "commit": "caf082ef8609a6ac26159ce115f55ab7d00231a3",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-68154",
+      "commit": "952ca5dc99913d169263f59fd689f586729a13c1",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-89540",
+      "commit": "159a4fab7170badd6c4a553aef81cac079d6f4ee",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-89697",
+      "commit": "3eec9d791968c177a4a8cda9af5c04f79dae09cb",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-89722",
+      "commit": "e892f05f1f790d5721cd8e3c561ed76da7e08bae",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-80580",
+      "commit": "873a1aa15c313263f2e18b38cf525623cc4fabf6",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-64411",
+      "commit": "4c046ca4e35a83ea32f6e748f54139f5fe2a1d01",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-74460",
+      "commit": "bb3cc8da8a2967c0f8e83d148fc6870b19fa32c6",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-43216",
+      "commit": "4839cbda8f13e99ce2bb3b593f5cc3288415684b",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-80726",
+      "commit": "9b7984692c18b22d6d61af3f53887fca7fddb0f1",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-68142",
+      "commit": "a5522963c57f12df5f9db804ebfc472b58eef0ae",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-64371",
+      "commit": "ae1e630bcaac739f625822078edbaea98366930d",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-64333",
+      "commit": "5d9dc88bdf8897788b0eed57113e9eca7fd42ea9",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-74505",
+      "commit": "d41bfea14ee6e063a953f6e72046088737c4e66c",
+      "status": "already-effective-threeway"
+    },
+    {
+      "cve": "CVE-2026-72096",
+      "commit": "b8eddcb1bf72199451950aff9087bd76da80635d",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-68146",
+      "commit": "a29bc20ea5f0cb79c6287f2c6182c5eeb8e6c01f",
+      "status": "applied"
+    },
+    {
+      "cve": "CVE-2026-80987",
+      "commit": "4890152a3069f5cb58cc24b08cfd5fe95e568fa1",
+      "status": "applied"
+    }
+  ]
+}

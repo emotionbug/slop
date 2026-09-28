@@ -19,14 +19,15 @@ modprobe nfnetlink_queue
 modprobe nf_conntrack
 /usr/sbin/ip link set lo up
 # Exact unmodified server payloads. No force-vermagic or force-modversion.
-insmod /private-modules/dsa_filter_hook.ko
-insmod /private-modules/dsa_filter.ko
-insmod /private-modules/gc-enforcement.ko
+test -f /private-modules/module-order.txt
+loaded=''
+while read -r file module; do
+    case "$file:$module" in *[!A-Za-z0-9_.:-]*) exit 2;; esac
+    insmod "/private-modules/$file"
+    grep -q "^$module " /proc/modules
+    loaded="$module $loaded"
+done < /private-modules/module-order.txt
 lsmod
-grep -q '^gc_enforcement ' /proc/modules
-grep -q '^dsa_filter ' /proc/modules
-grep -q '^dsa_filter_hook ' /proc/modules
-cat /sys/module/gc_enforcement/srcversion
 echo SERVER_MODULES_SIMULTANEOUS_LOAD_PASSED
 # Packet and device lifecycle smoke while both vendors' modules are resident.
 /usr/sbin/ip -details link show
@@ -42,9 +43,7 @@ echo SERVER_MODULES_SIMULTANEOUS_LOAD_PASSED
 /usr/bin/security-net-smoke
 /usr/sbin/ip netns del sender
 /usr/sbin/ip link del lxprobe0 2>/dev/null || :
-rmmod gc_enforcement
-rmmod dsa_filter
-rmmod dsa_filter_hook
+for module in $loaded; do rmmod "$module"; done
 if dmesg | grep -E 'BUG:|Oops:|KASAN:|general protection fault|kernel BUG|WARNING: CPU'; then exit 1; fi
 echo SERVER_MODULE_LOAD_NETWORK_UNLOAD_PASSED
 trap - EXIT

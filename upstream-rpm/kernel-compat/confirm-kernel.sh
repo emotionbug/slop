@@ -1,30 +1,23 @@
 #!/usr/bin/env bash
-# Promote the trial kernel only after SSH, agents, Java and Tomcat are healthy.
+# Confirm the trial kernel after signed module, SSH, network, Java and Tomcat checks.
 set -Eeuo pipefail
 
-TARGET='4.18.0-553.168.1.linuxoss1.el8_10.x86_64'
-STATE=/var/lib/linuxoss-kernel-compat
+here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
+manifest=$here/server-profile-module-manifest-final.json
+target=$(/usr/libexec/platform-python -c \
+  'import json,sys; print(json.load(open(sys.argv[1]))["release"])' "$manifest")
 [[ $EUID == 0 ]] || { echo 'Run with sudo.' >&2; exit 2; }
-[[ $(uname -r) == "$TARGET" ]] || { echo "Not running $TARGET" >&2; exit 2; }
+[[ $(uname -r) == "$target" ]] || { echo "Not running $target" >&2; exit 2; }
 systemctl is-active --quiet sshd.service
+systemctl is-active --quiet network-online.target
 ip route show default | grep -q .
-
-check_module() {
-  local module=$1 field=$2 expected=$3
-  [[ -r /sys/module/$module/$field ]]
-  [[ $(<"/sys/module/$module/$field") == "$expected" ]]
-}
-check_module gc_enforcement srcversion 1E3CF09EA0054B840FB024B
-check_module dsa_filter_hook srcversion 533BB7E5866E52F63B9ACCB
-check_module dsa_filter version '12.6.0.8491 (HUA)'
+/usr/libexec/platform-python "$here/stage-reviewed-modules.py" check >/dev/null
 
 java_pattern=${LINUXOSS_JAVA_PATTERN:-'[j]ava'}
 tomcat_pattern=${LINUXOSS_TOMCAT_PATTERN:-'[o]rg.apache.catalina.startup.Bootstrap|[c]atalina'}
 pgrep -af -- "$java_pattern" >/dev/null
 pgrep -af -- "$tomcat_pattern" >/dev/null
 
-grubby --set-default "/boot/vmlinuz-$TARGET"
-install -d -m 0700 "$STATE"
-touch "$STATE/confirmed-$TARGET"
-systemctl disable --now linuxoss-boot-guard.timer >/dev/null 2>&1 || true
-echo "CONFIRMED_DEFAULT_KERNEL=$TARGET"
+install -d -m 0755 /run/linuxoss-kernel-compat
+printf 'healthy\n' > /run/linuxoss-kernel-compat/agent-health.ok
+bash "$here/server-profile-ssh-deploy.sh" --commit

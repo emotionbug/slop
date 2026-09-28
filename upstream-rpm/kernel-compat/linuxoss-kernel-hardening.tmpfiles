@@ -1,0 +1,3 @@
+# KSM is not used on the target VMware guest. Disable page merging at boot;
+# this removes the cross-process page-deduplication attack path.
+w /sys/kernel/mm/ksm/run - - - - 0

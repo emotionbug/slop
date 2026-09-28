@@ -14,7 +14,9 @@ def main():
     p.add_argument('--kernel-release', required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--security-module-dir', type=Path,
-                   help='Optional local-only official Trend Micro pair; never redistributed')
+                   help='Optional local-only module directory; files are copied in sorted order')
+    p.add_argument('--security-module', type=Path, action='append', default=[],
+                   help='Optional local-only module file; repeat in required load order')
     args = p.parse_args()
     if not Path('/run/.containerenv').exists():
         raise SystemExit('Run in the dedicated build container')
@@ -51,10 +53,26 @@ def main():
     binary('/usr/sbin/nft')
     binary('/usr/sbin/modprobe')
     binary('/lab/results/nfqueue-bridge-test', '/usr/bin/nfqueue-bridge-test')
+    security_modules = list(args.security_module)
     if args.security_module_dir:
+        security_modules.extend(sorted(args.security_module_dir.glob('*.ko')))
+    if security_modules:
         (root / 'security-modules').mkdir()
-        for name in ('dsa_filter_hook.ko', 'dsa_filter.ko'):
-            shutil.copy2(args.security_module_dir / name, root / 'security-modules' / name)
+        order = []
+        seen = set()
+        for source in security_modules:
+            source = source.resolve()
+            if not source.is_file() or source.suffix != '.ko':
+                raise SystemExit('Security module inputs must be existing .ko files')
+            name = subprocess.run(['modinfo', '-F', 'name', str(source)], check=True,
+                                  text=True, stdout=subprocess.PIPE).stdout.strip()
+            if not name or name in seen or not re.fullmatch(r'[A-Za-z0-9_]+', name):
+                raise SystemExit('Security module identity is invalid or duplicated')
+            seen.add(name)
+            filename = f'module-{len(order) + 1}.ko'
+            shutil.copy2(source, root / 'security-modules' / filename)
+            order.append(f'{filename} {name}')
+        (root / 'security-modules' / 'module-order.txt').write_text('\n'.join(order) + '\n')
     module_dir = root / 'lib/modules' / args.kernel_release
     shutil.copytree(args.modules / args.kernel_release, module_dir, symlinks=True)
     # The fixture contains the complete stripped module set: real dependencies,

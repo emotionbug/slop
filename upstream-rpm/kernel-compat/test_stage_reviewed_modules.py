@@ -10,6 +10,14 @@ spec.loader.exec_module(stage)
 
 
 class StageSafety(unittest.TestCase):
+    def test_signed_target_and_symvers_pins(self):
+        profile = {'target_kernel_release': 'target', 'module_symvers_sha256': 'abc'}
+        stage.validate_target_pins(profile, 'target', 'abc')
+        with self.assertRaises(RuntimeError):
+            stage.validate_target_pins(profile, 'other-target', 'abc')
+        with self.assertRaises(RuntimeError):
+            stage.validate_target_pins(profile, 'target', 'other-symvers')
+
     def test_exact_source_can_follow_weak_updates(self):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
@@ -50,11 +58,11 @@ class StageSafety(unittest.TestCase):
 
     def test_loaded_identity_is_not_modinfo_alias(self):
         with tempfile.TemporaryDirectory() as tmp:
-            sysroot=Path(tmp); module=sysroot/'gc_enforcement'; module.mkdir()
+            sysroot=Path(tmp); module=sysroot/'sample_module'; module.mkdir()
             (module/'srcversion').write_text('wrong-weak-update-version\n')
-            with self.assertRaises(RuntimeError): stage.check_live_identity(sysroot,'gc_enforcement','srcversion','expected')
+            with self.assertRaises(RuntimeError): stage.check_live_identity(sysroot,'sample_module','srcversion','expected')
             (module/'srcversion').write_text('expected\n')
-            stage.check_live_identity(sysroot,'gc_enforcement','srcversion','expected')
+            stage.check_live_identity(sysroot,'sample_module','srcversion','expected')
 
 
 if __name__ == '__main__': unittest.main()

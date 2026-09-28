@@ -3,9 +3,10 @@
 set -Eeuo pipefail
 umask 077
 
-TARGET='4.18.0-553.168.1.linuxoss1.el8_10.x86_64'
-IMAGE_SHA='47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100'
 here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
+manifest=$here/server-profile-module-manifest-final.json
+TARGET=$(/usr/libexec/platform-python -c 'import json,sys; print(json.load(open(sys.argv[1]))["release"])' "$manifest")
+IMAGE_SHA=$(/usr/libexec/platform-python -c 'import json,sys; print(json.load(open(sys.argv[1]))["provenance"]["bzimage_sha256"])' "$manifest")
 mode=${1:-check}
 [[ $# -le 1 && ( $mode == check || $mode == apply ) ]] || {
   echo 'Usage: sudo bash prepare-ssh-boot.sh [check|apply]' >&2; exit 2;
@@ -16,19 +17,13 @@ mode=${1:-check}
 for command in dracut grubby grub2-reboot grub2-editenv sha256sum systemctl modinfo; do
   command -v "$command" >/dev/null
 done
+/usr/libexec/platform-python "$here/stage-reviewed-modules.py" check >/dev/null
 
 kernel=/boot/vmlinuz-$TARGET
 initramfs=/boot/initramfs-$TARGET.img
 modules=/lib/modules/$TARGET/extra/linuxoss-reviewed
 sha256sum -c <<<"$IMAGE_SHA  $kernel"
-for name in gc-enforcement.ko dsa_filter_hook.ko dsa_filter.ko; do
-  [[ -s $modules/$name && ! -L $modules/$name ]] || {
-    echo "Missing reviewed module: $modules/$name" >&2; exit 2;
-  }
-done
-[[ $(modinfo -k "$TARGET" -F name gc_enforcement) == gc_enforcement ]]
-[[ $(modinfo -k "$TARGET" -F name dsa_filter_hook) == dsa_filter_hook ]]
-[[ $(modinfo -k "$TARGET" -F name dsa_filter) == dsa_filter ]]
+[[ -d $modules && ! -L $modules ]] || { echo 'Reviewed module staging directory is absent.' >&2; exit 2; }
 
 default_before=$(grubby --default-kernel)
 printf 'Current default: %s\nTarget: %s\n' "$default_before" "$kernel"
@@ -46,7 +41,13 @@ fi
 dracut --force "$initramfs" "$TARGET"
 [[ -s $initramfs ]]
 
-args='panic=60 nmi_watchdog=1 softlockup_panic=1 hung_task_panic=1'
+watchdog=unavailable
+if [[ -e /dev/watchdog || -e /sys/class/watchdog/watchdog0 ]]; then
+  watchdog=available
+fi
+echo "Hardware watchdog: $watchdog (panic/oops fallback remains enabled)"
+printf '%s\n' "$watchdog" > "$state/watchdog-at-arm"
+args='panic=30 oops=panic nmi_watchdog=1 softlockup_panic=1 hung_task_panic=1'
 if grubby --info="$kernel" >/dev/null 2>&1; then
   existing_info=$(grubby --info="$kernel")
   grep -Fq "$initramfs" <<<"$existing_info" || {
@@ -63,16 +64,35 @@ grep -Fq "$initramfs" <<<"$info"
 entry=$(sed -n 's/^id="\(.*\)"$/\1/p' <<<"$info" | head -n 1)
 [[ -n $entry ]] || { echo 'No BLS/GRUB entry id found.' >&2; exit 2; }
 
+install -d -m 0755 /usr/local/libexec/linuxoss-kernel-compat
+install -m 0755 "$here/stage-reviewed-modules.py" /usr/local/libexec/linuxoss-kernel-compat/stage-reviewed-modules.py
 install -m 0755 "$here/linuxoss-boot-health.sh" /usr/local/sbin/linuxoss-boot-health
+install -m 0755 "$here/linuxoss-boot-rollback.sh" /usr/local/sbin/linuxoss-boot-rollback
+install -d -m 0755 /usr/share/linuxoss-kernel-compat /etc/linuxoss-kernel-compat
+install -m 0644 "$manifest" /usr/share/linuxoss-kernel-compat/server-profile-module-manifest-final.json
+install -m 0644 "$here/module-profile-signing-public.pem" /usr/share/linuxoss-kernel-compat/module-profile-signing-public.pem
+if [[ ! -e /etc/linuxoss-kernel-compat/health-services ]]; then
+  install -m 0600 /dev/null /etc/linuxoss-kernel-compat/health-services
+fi
 cat > /etc/systemd/system/linuxoss-boot-guard.service <<'UNIT'
 [Unit]
 Description=Rollback an unhealthy Linux OSS trial kernel
 After=network-online.target sshd.service
 Wants=network-online.target
+OnFailure=linuxoss-boot-rollback.service
 
 [Service]
 Type=oneshot
 ExecStart=/usr/local/sbin/linuxoss-boot-health
+TimeoutStartSec=5min
+UNIT
+cat > /etc/systemd/system/linuxoss-boot-rollback.service <<'UNIT'
+[Unit]
+Description=Restore previous kernel after failed Linux OSS boot guard
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/linuxoss-boot-rollback
 UNIT
 cat > /etc/systemd/system/linuxoss-boot-guard.timer <<'UNIT'
 [Unit]

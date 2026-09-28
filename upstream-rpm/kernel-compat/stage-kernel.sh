@@ -40,14 +40,21 @@ for file in "${files[@]}"; do
   fi
 done
 if [[ ${#pending[@]} -gt 0 ]]; then
-  rpm --test -Uvh "${pending[@]}"
+    rpm --test -ivh "${pending[@]}"
   if [[ $mode == apply ]]; then
-    rpm -Uvh "${pending[@]}"
+    rpm -ivh "${pending[@]}"
     for file in "${pending[@]}"; do
       nevra=$(rpm -qp --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}' "$file")
       rpm -V "$nevra"
     done
   fi
+fi
+if [[ $mode == apply ]]; then
+  install -d -m 0755 /usr/share/linuxoss-kernel-compat
+  install -m 0644 "$here/server-profile-module-manifest-final.json" \
+    /usr/share/linuxoss-kernel-compat/server-profile-module-manifest-final.json
+  install -m 0644 "$here/module-profile-signing-public.pem" \
+    /usr/share/linuxoss-kernel-compat/module-profile-signing-public.pem
 fi
 grubby --default-kernel > "$report/default-after.txt"
 cmp "$report/default-before.txt" "$report/default-after.txt"

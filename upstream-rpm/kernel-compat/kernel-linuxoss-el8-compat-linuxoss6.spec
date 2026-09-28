@@ -1,18 +1,18 @@
 %define debug_package %{nil}
 %define __spec_install_post %{nil}
-%global krel 4.18.0-553.168.1.linuxoss1.el8_10.x86_64
+%global krel 4.18.0-553.168.1.linuxoss2.el8_10.x86_64
 %global source_dir linux-4.18.0-553.168.1.el8_10
 %{!?linuxoss_tree:%global linuxoss_tree %{_builddir}/%{source_dir}}
 
 Name: kernel-linuxoss-el8-compat
 Version: 4.18.0
-Release: 553.168.1.linuxoss5.el8_10
+Release: 553.168.1.linuxoss6.el8_10
 Summary: EL8 .168 security kernel with third-party module ABI preservation
 License: GPLv2
 URL: https://github.com/emotionbug/slop/tree/main/upstream-rpm/kernel-compat
 Vendor: Linux OSS local build
 Source0: linux-4.18.0-553.168.1.el8_10.tar.xz
-Source1: kernel-compat.config
+Source1: kernel-compat-linuxoss2.config
 Source2: server-profile-modules.txt
 Source3: prune-server-profile-modules.py
 Source4: 99-linuxoss-kernel-hardening.conf
@@ -21,7 +21,7 @@ Patch0: el8-168-nfqueue-kabi.patch
 Patch1: el8-168-cve-backports.patch
 Patch2: el8-backport-prerequisites.patch
 Patch3: el8-168-reviewed-backports.patch
-Patch4: linuxoss5-krel-linuxoss1-combined.patch
+Patch4: linuxoss6-krel-linuxoss2-combined.patch
 BuildRequires: gcc, make, binutils >= 2.30, binutils < 2.31, bc, bison, flex, elfutils-libelf-devel
 BuildRequires: openssl-devel, perl, dwarves, python3, cpio, xz
 Requires: kmod
@@ -98,7 +98,12 @@ install -m 0644 %{SOURCE4} %{buildroot}/usr/lib/sysctl.d/99-linuxoss-kernel-hard
 install -m 0644 %{SOURCE5} %{buildroot}/usr/lib/tmpfiles.d/linuxoss-kernel-hardening.conf
 devel=%{buildroot}/usr/src/kernels/%{krel}
 mkdir -p "$devel"
-tar cf - Makefile Makefile.rhelver Kconfig .config Module.symvers System.map include scripts arch/x86/include arch/x86/Makefile arch/x86/Makefile_32.cpu arch/x86/Kbuild arch/x86/Kconfig arch/x86/Kconfig.cpu tools/objtool/objtool tools/bpf/resolve_btfids/resolve_btfids | tar xf - -C "$devel"
+src=%{linuxoss_tree}/source
+test -d "$src/include" -a -d "$src/scripts"
+tar cf - -C "$src" Makefile Makefile.rhelver Kconfig include scripts arch/x86/include arch/x86/Makefile arch/x86/Makefile_32.cpu arch/x86/Kbuild arch/x86/Kconfig arch/x86/Kconfig.cpu | tar xf - -C "$devel"
+tar cf - -C %{linuxoss_tree} .config Module.symvers System.map include/generated include/config arch/x86/include/generated scripts | tar xf - -C "$devel"
+install -D -m 0755 %{linuxoss_tree}/tools/objtool/objtool "$devel/tools/objtool/objtool"
+install -D -m 0755 %{linuxoss_tree}/tools/bpf/resolve_btfids/resolve_btfids "$devel/tools/bpf/resolve_btfids/resolve_btfids"
 rm -f %{buildroot}/lib/modules/%{krel}/build %{buildroot}/lib/modules/%{krel}/source
 ln -s /usr/src/kernels/%{krel} %{buildroot}/lib/modules/%{krel}/build
 ln -s /usr/src/kernels/%{krel} %{buildroot}/lib/modules/%{krel}/source

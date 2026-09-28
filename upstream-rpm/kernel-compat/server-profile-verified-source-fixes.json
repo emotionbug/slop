@@ -1,0 +1,572 @@
+{
+  "fixes": {
+    "CVE-2018-15594": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "paravirt call patching already emits a direct CALL with __text_gen_insn and has no clobber rejection path; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2020-28097": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2020-28097-973c096f6a85e5b5f2a295126ba6928d9a6afd45.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-4543": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "per-CPU entry-area offsets are randomized when KASLR is enabled, mitigating EntryBleed; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2022-48910": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-48910-9a8736b2da28b24f01707f592ff059b9f90a058c.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-49442": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-49442-39642b0feddb9c39faa6de469a94bfeb4dc0d3a9.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-49468": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-49468-18530bedd221160823f63ccc20dd55c7a03edbcf.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-49497": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-49497-312c43e98ed190bd8fd7a71a0addf9539d5b8ab1.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-49580": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-49580-6727f39e99e0f545d815edebb6c94228485427ec.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-49597": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-49597-30b73edc1d2459ba2c71cb58fbf84a1a6e640fbf.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-49604": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-49604-eb15262128b793e4b1d1c4514d3e6d19c3959764.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2022-49630": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "EL8-compatible ICMP socket reader synchronization port; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2022-49632": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "EL8-compatible TCP socket reader synchronization port; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2022-50751": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "configfs double reference release fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2022-50849": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2022-50849-1579bed1613802a323a1e14567faa95c149e105e.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2023-1077": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2023-1077-7c4a5b89a0b5a57a64b601775b296abf77a9fe97.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2023-3640": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "Red Hat states the existing CVE-2023-0597 per-CPU entry-area randomization prevents this attack vector; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2023-52935": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2023-52935-352fbf61ce776fef18dca6a68680a6cd943dac95.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2023-53259": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "VMCI null notify-page validation fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2023-53596": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2023-53596-83e2ec36a92432e9445e853c12becbbae353b511.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2023-53799": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2023-53799-625bf86bf53eb7a8ee60fb9dc45b272b77e5ce1c.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2023-54045": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "audit backlog rescheduling fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2023-54119": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2023-54119-8fb33166aed888769ea63d6af49515893f8a1f14.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2023-54218": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "timestamp API lifetime fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2024-35875": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "confidential-computing RNG initialization fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2024-39494": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-39494-480afcbeb7aaaa22677d3dd48ec590b441eaac1a.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-43893": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-43893-3bbd90fca824e6fd61fb20f6dd2b0fa5f8b14bba.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-46787": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "userfaultfd page-table synchronization fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2024-47660": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-47660-3f3ef1d9f66b93913ce2171120d9226b55acd41d.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-49925": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-49925-2d97b85eb5a86766ad0f8ea3d121e6ae144e3ed8.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-49927": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-49927-e479cb835feeb2abff97f25766e23b96a6eabe28.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-50039": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-50039-2acbb9539bc2284e30d2aeb789c3d96287014264.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-50272": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-50272-6cc52df69e8464811f9f6fc12f7aaa78451eb0b8.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-53114": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "AMD Zen4 topology placement fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2024-53124": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-53124-695fb0b9aecfd5dd5b2946ba8897ac2c1eef654d.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-56611": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-56611-a13b2b9b0b0b04612c7d81e3b3dfb485c5f7abc3.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-57924": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-57924-73697928c806fe4689939722184a86fc1c1957b4.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2024-57977": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2024-57977-72f2c0b7c152c2983ed51d48c3272cab4f34d965.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-21634": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-21634-11cb1d643a74665a4e14749414f48f82cbc15c64.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-21648": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-21648-a965f7f0ea3ae61b9165bed619d5d6da02c75f80.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-21831": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-21831-8852e056e297df1d8635ee7504e780d3184e45d0.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-21881": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-21881-c4cb2bfa99513311886c1eb5c1c2ac26f3338a6e.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-37834": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "EL8-compatible HWPoison reclaim fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2025-37980": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "block-layer request lifetime fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2025-37992": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-37992-ea1132ccb112f51ba749c56a912f67970c2cd542.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-38215": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-38215-908c5bb64f9c4319902b8ca1aa3fef8f83302520.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-39965": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-39965-0baf92d0b1590b903c1f4ead75e61715e50e8146.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-68173": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "ftrace rescheduling safety fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2025-68206": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-68206-83273af0b60c093ba0085c205864d8542e1b1653.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-68296": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-68296-711ebd961190def4c69ea24b2f0be75e995af24a.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2025-68321": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "page-pool allocation warning hardening; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2025-68780": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2025-68780-9019e399684e3cc68c4a3f050e268f74d69c1317.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-23060": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-23060-df22c9a65e9a9daa368a72fed596af9d7d5876bb.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-23069": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "vsock signed credit arithmetic fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2026-23304": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-23304-d542e2ac7f9e288d49735be0775611547ca4e0ee.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-31664": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-31664-a5127501c8d30b5728791b1e340284ca5c9cc4bd.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-43036": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-43036-f7a6cd508e9e825a2c69fa9e13d41ee156852f25.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-43456": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-43456-5d0fb9806ab6cf2c3cfba0e1b8c701da65e25af8.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-45905": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-45905-9a95ec9144eeff1fc6fbcc21b677e322c6f1430b.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-46021": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-46021-a172fa18bc370b776ac1510abb0dcb50a7a35fac.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-46033": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-46033-77f59fb2d3aa33e90ec6cbbf45dcfb20ab82b1a9.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-46174": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-46174-1e23b30a80b14e5764657401ee2cca030525ae8e.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-53134": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-53134-6744e49fe51bfba26522acc2d0e9703cb41d8e50.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-53236": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "TCP socket-filter attachment fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2026-53349": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-53349-fbfde85308b99938a6092c48753214d190ece48d.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-53388": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-53388-7c18691e0cfda29672f79bafde8abdb7710674f6.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-63826": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-63826-5267eab88fa4c684459504b8be577ad64953b9a6.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-63829": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-63829-19275943d8fe903eb7b9aa53e380e41efd042ada.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-64009": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-64009-8014f70c4e6e5ab101ae3860a614e65e988372e3.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-64378": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-64378-087d5b8b501c570f84bf655164e6698c3ce146e0.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-64422": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "TCP bounds validation fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2026-72242": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-72242-e4f3b8db1b0c5e9f6374b8996d9e1888d1042b55.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-72436": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-72436-c107233d2ff4fd7cef5d02f9124b99194957a710.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-74359": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-74359-3e83b2203aa59bd279e4f677ec793d49dc9d019e.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-74391": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "trace sequence bounds fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2026-74424": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "fbcon bounds fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2026-74550": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-74550-c0adf8b4247bcc5a145a25c1929006eb392580bb.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-74601": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-74601-26662bc8fced1d668fa1aa146eda085bfc67bd0b.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-74663": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-74663-08dc49df1527b09d9ea225a7265bbf6c237097bf.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-74668": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "AF_PACKET hard-header length consistency fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2026-74673": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-74673-d2e3839419ac4047835762c4d7712bda1101b57e.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-74676": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-74676-9f8cbaf4b774694dcc292e60509762483ebfd9ae.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-74748": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-74748-97a01de0c6321b7210d30d0a4d60f10f561097c7.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-80989": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-80989-e0d4a17afde5aa0045dc3e1d66c6bb80927bad8c.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-89580": {
+      "evidence": "el8_manual_port_full_build_verified",
+      "patches": [],
+      "reason": "BPF callchain preemption fix; the EL8-compatible source port is present and the complete kernel/module build passed"
+    },
+    "CVE-2026-89719": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-89719-6d52c1f43ff39ea1ebf8f016e847677f0b60cf2b.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    },
+    "CVE-2026-89756": {
+      "evidence": "official_patch_reverse_apply_verified",
+      "patches": [
+        "CVE-2026-89756-8c6d63d434ebb85c6cf3dac1e70a171b183c6614.patch"
+      ],
+      "reason": "The published upstream fix is already present in the final EL8 source tree; reverse application was verified and the complete kernel/module build passed"
+    }
+  },
+  "schema_version": 1,
+  "target_kernel": "4.18.0-553.168.1.linuxoss5.el8_10.x86_64",
+  "verification": {
+    "built_modules": 2804,
+    "external_module_imports": {
+      "crc_mismatch": 0,
+      "imports": 328,
+      "matched": 328,
+      "missing": 0
+    },
+    "full_build": "SERVER_PROFILE_FIXES_BUILD_PASSED"
+  }
+}

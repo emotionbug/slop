@@ -1,62 +1,56 @@
 {
-  "schema_version": 3,
-  "date": "2026-09-27",
+  "schema_version": 4,
+  "date": "2026-09-28",
   "project": "kernel-linuxoss-el8-compat",
-  "scope": "Terminal CVE accounting, local build, isolated RPM install and QEMU validation; target-server boot remains required.",
-  "kernel_release": "4.18.0-553.168.1.linuxoss1.el8_10.x86_64",
+  "scope": "Final source/CVE accounting, full build, pruned server profile, actual EL8 RPM installation, private-module ABI/QEMU smoke and SSH deployment control-flow validation",
+  "kernel_release": "4.18.0-553.168.1.linuxoss2.el8_10.x86_64",
+  "rpm_release": "4.18.0-553.168.1.linuxoss6.el8_10",
   "artifacts": [
     {
-      "name": "kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss3.el8_10.x86_64.rpm",
-      "sha256": "f1842d38f7325b35bc440d4c8e8b27b915141df621fd39d0b36ae7c7f2d368aa",
-      "size": 59014764
+      "name": "kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss6.el8_10.x86_64.rpm",
+      "sha256": "7ea9ae19869563e74d5334a88815545a131194076845638bca1add244299f2ad",
+      "size": 13340552
     },
     {
-      "name": "kernel-linuxoss-el8-compat-devel-4.18.0-553.168.1.linuxoss3.el8_10.x86_64.rpm",
-      "sha256": "12558d5912a7b69d0c3e92f1ff2e1797d972412b69445cf5d2026aa9a1699300",
-      "size": 12074540
-    },
-    {
-      "name": "kernel-linuxoss-el8-compat-4.18.0-553.168.1.linuxoss3.el8_10.src.rpm",
-      "sha256": "2b666223b349c6b7ca29aff2134bd38e0430baaef8c1e4f1a2fb711238c9a39e",
-      "size": 125104658
+      "name": "kernel-linuxoss-el8-compat-devel-4.18.0-553.168.1.linuxoss6.el8_10.x86_64.rpm",
+      "sha256": "648404cbfd454be0d5dc24ea8d66ea9a8a6639e1d2e0b40dae2ae8b934c20524",
+      "size": 12076652
     }
   ],
   "payload": {
-    "kernel_image_sha256": "47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100",
-    "module_symvers_sha256": "7a64c7eac31ac8d0082134e4c0bbf1ea2593dd96a891269804dff0bc90fed47f",
-    "module_count": 2804,
-    "source_patch_files": 1013,
-    "source_patch_bytes": 999392,
-    "source_patch_sha256": "3eea8c56ccd34c8c3de946b887f17cd84d565127a5a5867073f2261816e6f31e",
-    "reviewed_backport_patch_files": 20,
-    "reviewed_backport_patch_bytes": 23415,
-    "reviewed_backport_patch_sha256": "1d65d16a8f0d1695e7833c8682d319c6f4af3345c78626fc62556c0997573355"
+    "kernel_image_sha256": "ce43fdc4cdad804fa19590eaa87b5c9461379beb602e8612f4f10e683cd9fc6f",
+    "module_symvers_sha256": "c9697522f40118189728ad87d7064c847faac3e565cc774e5ca965474b45acb0",
+    "module_files_built": 2804,
+    "requested_server_modules": 67,
+    "retained_server_modules": 69,
+    "missing_allowlist_modules": 0
   },
   "tests": {
     "full_kernel_and_modules_build": "PASS",
-    "patch_zero_fuzz_replay": "PASS",
-    "isolated_offline_dnf_transaction_install_rpm_verify": "PASS",
-    "rpm_payload_matches_built_image_config_system_map_symvers": "PASS",
-    "server_module_static_imports": "328/328; 0 CRC mismatch; 0 missing",
-    "exact_server_modules_qemu_load_network_unload": "PASS",
-    "reviewed_backports": "90 fixed: 19 applied, 71 already effective",
-    "rejected_minimal_profile": "91 modules; rejected due to 114 external-module CRC mismatches"
+    "pruned_server_profile": "PASS: 69 retained, 0 requested missing",
+    "rpm_payload_hashes": "PASS: 5/5",
+    "actual_el8_rpm_install_with_kmod_and_depmod": "PASS",
+    "baseline_kernel_coinstallation": "PASS",
+    "private_module_static_imports": "PASS: 328/328; 0 CRC mismatch; 0 missing",
+    "private_modules_qemu_load_network_unload_reload": "PASS: 4/4 markers",
+    "signed_overlay_positive_and_negative_cases": "PASS",
+    "ssh_dispatcher_status_rollback_commit_and_fail_closed": "PASS: no reboot invoked"
   },
   "cve_accounting": {
     "input_unique_cves": 4195,
-    "fixed": 1445,
-    "not_affected": 2053,
-    "affected": 697,
+    "fixed": 1583,
+    "not_affected": 2612,
+    "affected": 0,
     "under_investigation": 0,
-    "all_cves_fixed": false,
-    "report_sha256": "67f3fc40a4708de025568ebc812dc023d2cdb4563dd5bafb77923fb784ef97c0",
-    "openvex_sha256": "35cc38533f5461dfdbc87e863dbfd8c7e84ff2febd74b5f0eee2d4aa0a4d6229"
+    "report_sha256": "9275290d90fddd8752f8860ae212da00cc51a873e786d9820a523817b8aed4aa",
+    "csv_sha256": "6cc50bad0cd85e879ad3373ec4fb234aba7195855823d2b85d96f928334e3289",
+    "openvex_sha256": "5edc6a7932b78470c38c0dc6cb0222269e079218c3d3db9287df265abe15cbbf"
   },
   "not_tested": [
-    "Target VMware boot",
+    "Actual target VMware boot",
     "Secure Boot",
-    "Full Trend and Guardicore userspace policy enforcement",
-    "Production Java and Tomcat services"
+    "Full userspace agent policy enforcement and management-server connectivity",
+    "Actual Java daemon and Tomcat business behavior"
   ],
   "additional_validation": "SERVER-MODULE-VALIDATION.json"
 }

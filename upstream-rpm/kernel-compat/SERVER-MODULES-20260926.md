@@ -1,94 +1,50 @@
-# 실제 보안 모듈 분석과 EL8 호환 시험
+# 비공개 보안 모듈과 EL8 최종 호환성
 
-배포 대상은 `4.18.0-553.168.1.linuxoss1.el8_10.x86_64`입니다. Trend Micro의
-공개 지원표에도 공식 `4.18.0-553.168.1.el8_10.x86_64`가 포함됩니다.
+배포 대상은 `4.18.0-553.168.1.linuxoss2.el8_10.x86_64`입니다. 비공개 보안
+모듈 3개는 공개 저장소와 공개 릴리스에 포함하지 않습니다. 선택된 원본 파일은
+old-known-good 및 최종 커널에서 같은 328개 import가 전부 일치했고 missing과 CRC
+mismatch가 각각 0개였습니다.
 
-서버에서 추출한 모듈을 변경하지 않고 최종 CVE 백포트가 들어간 EL8 `.168`
-호환 커널에서 시험했습니다.
-Guardicore와 Trend 세 모듈의 동시 로드, namespace 간 ICMP/TCP/UDP 통신,
-namespace 제거 및 세 모듈 해제가 통과했습니다. 강제 로드, vermagic/CRC 수정은
-사용하지 않았습니다. **에이전트 사용자 공간 프로그램과 운영 보호 정책은 미검증**입니다.
+최종 커널의 격리 QEMU 검증은 세 모듈의 동시 로드, namespace 간 TCP/UDP 통신,
+해제와 재로드를 통과했습니다. `--force-vermagic`, modversion 수정 또는 바이너리
+패치는 사용하지 않았습니다. module format 오류, unknown symbol, 커널 fault와
+warning도 검출되지 않았습니다.
 
-## 확인한 모듈 선택 문제
+## 서명 overlay
 
-Guardicore는 `extra`와 `weak-updates`에 서로 다른 바이너리가 있습니다.
-이전 서버 검사에서 로드된 srcversion은 `1E3CF09EA0054B840FB024B`이고,
-`modinfo gc_enforcement`가 따라간 weak-updates 파일은
-`5FB131940DB04FFB88BDF3B`였습니다. 따라서 modinfo 경로만 복사하면 현재
-실행 중인 모듈과 다른 파일을 선택할 수 있습니다.
+비공개 전달물은 다음 5개 regular file만 가진 gzip tar입니다.
 
-시험한 파일은 Guardicore `extra`의 정확한 바이너리, Trend filter
-`12.6.0.8491 (HUA)`, 해당 hook입니다. SHA-256은
-[검증 결과](SERVER-MODULE-VALIDATION.json)와 준비 스크립트에 고정했습니다.
-수집기도 `/sys/module`의 실제 로드된 version/srcversion을 별도로 기록합니다.
+- 서명된 `module-profile.json`
+- `module-profile.json.sig`
+- 프로필에 지정된 모듈 payload 3개
 
-## 7.2.7을 배포 대상으로 사용하지 않는 이유
+프로필에는 실행 원본 커널, 최종 대상 커널, 최종 `Module.symvers` 해시, 파일 해시,
+vermagic, identity, import/export 집합이 고정됩니다. 공개 번들의
+`module-profile-signing-public.pem`과 `install-private-module-overlay.py`가 서명,
+파일 수, 안전한 경로 및 payload 해시를 검사합니다. 변조된 서명과 payload는 설치
+전에 거부됩니다.
 
-정확한 7.2.7 Release 3 Module.symvers와 비교했습니다.
+`stage-reviewed-modules.py`는 다음 조건을 모두 확인한 뒤 대상 커널의 별도 디렉터리에
+동일 파일만 복사합니다.
 
-| 모듈 | 커널 import 수 | 일치 | CRC 변경 | 커널 export 없음 |
-|---|---:|---:|---:|---:|
-| Guardicore | 161 | 38 | 96 | 27 |
-| Trend filter | 120 | 30 | 67 | 23 |
-| Trend hook | 39 | 11 | 21 | 7 |
+- 현재 커널과 프로필의 source release 일치
+- 최종 kernel/devel RPM 및 커널 이미지 해시 일치
+- 최종 `Module.symvers` 해시와 target release pin 일치
+- 로드된 모듈 identity와 선택 파일의 identity/vermagic 일치
+- kernel 및 peer export를 포함한 import 328개 전부 일치
+- 기존 파일 충돌, symlink 및 대상 경로 이탈 없음
 
-Trend filter의 별도 8개 peer import는 hook의 export와 CRC가 일치합니다.
-이 8개를 커널에서 빠진 API로 계산하지 않았습니다.
-
-또한 Guardicore는 `tcp_prot`/`udp_prot`의 callback을 고정 offset에 직접
-덮어씁니다. 실제 바이너리의 sendmsg 슬롯은 120, recvmsg 슬롯은 128 byte입니다.
-7.2.7 SDK로 만든 layout probe에서 그 위치는 각각 `splice_eof`, `bind`이고,
-7.2.7의 sendmsg/recvmsg는 104/112 byte입니다. `accept` callback도 EL8의
-4개 인자에서 7.2.7의 `proto_accept_arg *` 방식으로 바뀝니다.
-
-따라서 버전·CRC 변경만으로 정상화할 수 없습니다. wrapper를 만들어 누락된
-함수 이름을 채우더라도 직접 구조체 접근과 callback 인자 해석은 별도로
-포팅해야 합니다. 이 결과는 7.2.7 호환 패치를 완성했다는 의미가 아닙니다.
-[Linux 커널의 binary API 설명](https://kernel.org/doc/html/next/process/stable-api-nonsense.html)
-
-layout probe는 정확한 배포 SDK와 autoconf를 사용한 GCC 15의 **컴파일 전용**
-객체입니다. Ubuntu에 EL8 objtool의 libopcodes가 없어 해당 객체의 objtool 후처리만
-생략했습니다. 로드용 모듈이나 커널을 이 방식으로 빌드·검증하지 않았습니다.
-
-## 검증된 EL8 커널에 모듈 파일 준비
-
-먼저 [기존 커널 파일 설치](../deploy/BACKPORTS-20260926.md)의
-`download-kernel-compat.sh apply`로 `.168` 커널과 devel RPM을 추가합니다.
-그 다음 아래를 실행합니다.
-
-```bash
-wget -e use_proxy=yes -e https_proxy=http://192.168.32.104:9080 \
-  -O stage-reviewed-modules.py \
-  https://raw.githubusercontent.com/emotionbug/slop/main/upstream-rpm/kernel-compat/stage-reviewed-modules.py
-sudo /usr/libexec/platform-python stage-reviewed-modules.py apply
-```
-
-`check`를 사용하면 파일 복사 없이 조건과 예정 작업만 확인합니다.
-검사 내용은 현재 커널 `.166`, 실제 로드된 세 모듈의 식별자, 원본 모듈의
-정확한 SHA-256, 대상 커널 이미지/Module.symvers 해시와 RPM 검증입니다.
-다르면 중단하며 자동으로 다른 모듈을 선택하지 않습니다.
-
-스크립트는 서버에 있는 모듈을 새 커널의 `extra/linuxoss-reviewed`에 복사하고
-depmod가 해당 파일을 선택하는지 확인합니다. 다른 내용의 기존 파일을 덮어쓰지
-않고, 같은 파일에 대한 재실행은 허용합니다. 모듈 로드/해제, initramfs 생성,
-GRUB 변경 및 재부팅은 하지 않습니다. **아직 이 단계만으로 새 커널로 부팅할
-준비가 완료되거나 실행 커널의 CVE가 해결된 것은 아닙니다.**
-
-공개 GitHub에는 검사 도구·자체 시험 코드·요약 근거만 올립니다. 수집한 상용
-모듈과 디스어셈블리, 운영 설정은 공개 배포하지 않습니다.
+스크립트는 임의의 대체 파일을 고르거나 모듈을 로드·해제하지 않습니다.
 
 ## 검증 범위
 
-- QEMU: 최종 커널 이미지 SHA-256
-  `47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100`로
-  세 실제 바이너리 동시 로드, ICMP 3/3, TCP/UDP echo, namespace 정리,
-  모듈 해제 통과. Oops/BUG/KASAN/GPF/커널 WARNING 없음. 최종 로그 SHA-256은
-  `ec61abf0c71c7b4ef3ab71d154c149c0fa09e4acdbbcb317813689d21989a862`입니다.
-  Secure Boot 강제 검증은 하지 않았습니다.
-- 최초 두 네트워크 시도는 BusyBox shell이 내부 ip applet을 선택해 실패했습니다.
-  `/usr/sbin/ip`를 명시한 최종 시험에서 모두 통과했고 초기 로그도 보존했습니다.
-- 준비 스크립트: 변조 원본·기존 파일 충돌·symlink·로드된 식별자 불일치 차단 테스트 통과.
-- 별도 EL8 컨테이너: 실제 RPM 검증·파일 복사·depmod·modinfo 경로 검증·재실행 통과.
-  이 컨테이너 시험의 실행 커널 식별자와 GRUB 조회는 fixture로 대체했으므로
-  실제 서버의 실행 상태/부팅 설정 검증을 대신하지 않습니다.
-- 관리 서버 연결, 정책 allow/deny 집행, 실제 Java/Tomcat 및 VMware 부팅은 미검증입니다.
+- 전체 커널 빌드: PASS, 모듈 2,804개
+- 최종 서버 프로필: 요청 67개, 보존 69개, 누락 0개
+- 정적 외부 모듈 ABI: 3개/328 imports, 328 matched, 0 missing, 0 mismatch
+- QEMU: 4/4 marker, 동시 로드·network·해제·재로드 PASS
+- 실제 EL8 RPM 설치 및 외부 모듈 smoke: PASS
+- 서명/변조/CRC/release/symvers/missing-peer 음성 시험: 모두 예상대로 거부
+- SSH dispatcher 정상 commit과 SSH/network fail-closed: PASS, reboot 호출 0개
+
+실제 VMware 부팅, 전체 사용자 공간 에이전트 정책, 관리 서버 연결, Java daemon과
+Tomcat 업무 기능은 대상 서버에서 최종 확인해야 합니다.

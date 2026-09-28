@@ -1,56 +1,103 @@
 {
-  "date": "2026-09-27",
-  "scope": "Exact server module binaries; static kABI and isolated QEMU runtime validation",
-  "kernel_release": "4.18.0-553.168.1.linuxoss1.el8_10.x86_64",
-  "kernel_image_sha256": "47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100",
-  "module_symvers_sha256": "7a64c7eac31ac8d0082134e4c0bbf1ea2593dd96a891269804dff0bc90fed47f",
-  "cve_backport_patch_sha256": "3eea8c56ccd34c8c3de946b887f17cd84d565127a5a5867073f2261816e6f31e",
-  "modules": [
-    {
-      "name": "dsa_filter_hook.ko",
-      "sha256": "198bb5c9c11c294f7122c85a48883d7e92ad255dc997ece83064c8316cb8e45c",
-      "version": "1.0",
-      "srcversion": "533BB7E5866E52F63B9ACCB"
+  "schema_version": 2,
+  "date": "2026-09-28",
+  "scope": "Aggregate public evidence for the exact private module set; no private names, paths, hashes or binaries",
+  "kernel_release": "4.18.0-553.168.1.linuxoss2.el8_10.x86_64",
+  "rpm_release": "4.18.0-553.168.1.linuxoss6.el8_10",
+  "build": {
+    "result": "PASS",
+    "debug_info_btf": "enabled",
+    "pahole": "1.22",
+    "module_files_built": 2804,
+    "requested_server_modules": 67,
+    "retained_server_modules": 69,
+    "missing_allowlist_modules": 0,
+    "kernel_image_sha256": "ce43fdc4cdad804fa19590eaa87b5c9461379beb602e8612f4f10e683cd9fc6f",
+    "module_symvers_sha256": "c9697522f40118189728ad87d7064c847faac3e565cc774e5ca965474b45acb0"
+  },
+  "external_module_abi": {
+    "module_count": 3,
+    "old_known_good": {
+      "imports": 328,
+      "matched": 328,
+      "missing": 0,
+      "crc_mismatch": 0
     },
-    {
-      "name": "dsa_filter.ko",
-      "sha256": "abf6aea64fb58678d80387c2c000f5f9437e730f2a41843082c9f0130807d3b2",
-      "version": "12.6.0.8491 (HUA)"
-    },
-    {
-      "name": "gc-enforcement.ko",
-      "sha256": "e5895f7a3148497dd809408a4acb2600df900d8eb95d61e8a4ad72ead1147dad",
-      "version": "5.0",
-      "srcversion": "1E3CF09EA0054B840FB024B"
+    "final_kernel": {
+      "imports": 328,
+      "matched": 328,
+      "missing": 0,
+      "crc_mismatch": 0
     }
-  ],
-  "static_import_validation": {
-    "total": 328,
-    "matched": 328,
-    "crc_mismatch": 0,
-    "missing": 0,
-    "report_sha256": "0065ad2219cdfbeacdba302c56c310d5183d51f2e80a6e07dc24492fd11831ef"
   },
   "qemu_runtime": {
-    "simultaneous_load": "PASS",
-    "icmp_packets": "3/3",
-    "tcp_udp_cross_namespace_echo": "PASS",
-    "namespace_teardown": "PASS",
-    "reverse_module_unload": "PASS",
-    "force_vermagic_or_modversion": false,
-    "oops_bug_kasan_gpf_kernel_warning": false,
-    "log_sha256": "ec61abf0c71c7b4ef3ab71d154c149c0fa09e4acdbbcb317813689d21989a862"
+    "result": "PASS",
+    "passed_markers": 4,
+    "expected_markers": 4,
+    "simultaneous_module_load": true,
+    "cross_namespace_tcp_udp_smoke": true,
+    "unload_and_reload": true,
+    "unknown_symbol_vermagic_or_module_format_errors": 0,
+    "kernel_bug_oops_kasan_panic_or_cpu_warning": 0,
+    "kernel_warning_count": 0,
+    "sanitized_log_sha256": "999d4e6317180ba7acfe30b096216f996377c3ea4102c0d4631ce35087224179"
+  },
+  "rpm_acceptance": {
+    "result": "PASS",
+    "kernel_and_devel_packages": 2,
+    "module_payload_count": 69,
+    "artifact_hash_matches": "5/5",
+    "transaction_test": true,
+    "actual_el8_install": true,
+    "baseline_kernel_coinstalled": true,
+    "kmod_dependency_installed": true,
+    "used_nodeps": false,
+    "scriptlet_depmod": true,
+    "external_module_smoke": true
+  },
+  "signed_private_overlay": {
+    "result": "PASS",
+    "regular_files": 5,
+    "target_release_pinned": true,
+    "module_symvers_pinned": true,
+    "signature_verified": true,
+    "private_key_retained": false,
+    "negative_tests": [
+      "bad signature rejected",
+      "altered payload rejected",
+      "missing peer export rejected",
+      "CRC mismatch rejected",
+      "altered profile rejected",
+      "wrong release rejected",
+      "wrong Module.symvers rejected"
+    ]
+  },
+  "ssh_dispatcher": {
+    "isolated_copy_test": "PASS",
+    "status": "PASS",
+    "saved_default_rollback": "PASS",
+    "healthy_commit": "PASS",
+    "ssh_failure_fail_closed": "PASS",
+    "network_failure_fail_closed": "PASS",
+    "reboot_command_invocations": 0
+  },
+  "vulnerability_accounting": {
+    "unique_cves": 4195,
+    "fixed": 1583,
+    "not_affected": 2612,
+    "affected": 0
   },
   "not_tested": [
-    "Full userspace agent policy enforcement",
-    "Target VMware boot",
+    "Actual target VMware boot",
+    "Full userspace agent policy enforcement and management-server connectivity",
     "Secure Boot",
-    "Actual Java and Tomcat service behavior"
+    "Actual Java daemon and Tomcat business behavior"
   ],
   "private_artifacts_not_redistributed": [
-    "Third-party kernel modules",
+    "Third-party module binaries",
+    "Signed private module profile and signature",
+    "Private module names, hashes, identities and source paths",
     "QEMU initramfs containing third-party modules",
     "Binary disassembly"
-  ],
-  "reviewed_backport_patch_sha256": "1d65d16a8f0d1695e7833c8682d319c6f4af3345c78626fc62556c0997573355"
+  ]
 }

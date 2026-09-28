@@ -33,14 +33,16 @@ nft add rule bridge linuxoss input ether type ip queue num 0
 timeout 30 /usr/bin/nfqueue-bridge-test
 if dmesg | grep -E 'BUG:|Oops:|KASAN:|general protection fault|kernel BUG'; then exit 1; fi
 echo NFQUEUE_FIXTURE_PASSED
-if [ -f /security-modules/dsa_filter_hook.ko ]; then
-    insmod /security-modules/dsa_filter_hook.ko
-    insmod /security-modules/dsa_filter.ko
+if [ -f /security-modules/module-order.txt ]; then
+    loaded=''
+    while read -r file module; do
+        case "$file:$module" in *[!A-Za-z0-9_.:-]*) exit 2;; esac
+        insmod "/security-modules/$file"
+        grep -q "^$module " /proc/modules
+        loaded="$module $loaded"
+    done < /security-modules/module-order.txt
     lsmod
-    grep -q '^dsa_filter ' /proc/modules
-    grep -q '^dsa_filter_hook ' /proc/modules
-    rmmod dsa_filter
-    rmmod dsa_filter_hook
+    for module in $loaded; do rmmod "$module"; done
     if dmesg | grep -E 'BUG:|Oops:|KASAN:|general protection fault|kernel BUG'; then exit 1; fi
     echo TREND_MICRO_PAIR_LOAD_UNLOAD_PASSED
 fi

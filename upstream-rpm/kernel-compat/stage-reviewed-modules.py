@@ -13,24 +13,17 @@ from pathlib import Path
 import subprocess
 import tempfile
 
-TARGET = '4.18.0-553.168.1.linuxoss1.el8_10.x86_64'
-SOURCE = '4.18.0-553.166.1.el8_10.x86_64'
-IMAGE_SHA = '47ced1f0d45b1b9a0381b39d3ff892be67f71fc29d2449424120a6c0f16c9100'
-SYMVERS_SHA = '7a64c7eac31ac8d0082134e4c0bbf1ea2593dd96a891269804dff0bc90fed47f'
-PROFILE = (
-    ('gc_enforcement', 'gc-enforcement.ko',
-     '/lib/modules/' + SOURCE + '/extra/gc-enforcement.ko',
-     'e5895f7a3148497dd809408a4acb2600df900d8eb95d61e8a4ad72ead1147dad',
-     'srcversion', '1E3CF09EA0054B840FB024B'),
-    ('dsa_filter_hook', 'dsa_filter_hook.ko',
-     '/opt/ds_agent/' + SOURCE + '/dsa_filter_hook.ko',
-     '198bb5c9c11c294f7122c85a48883d7e92ad255dc997ece83064c8316cb8e45c',
-     'srcversion', '533BB7E5866E52F63B9ACCB'),
-    ('dsa_filter', 'dsa_filter.ko',
-     '/opt/ds_agent/' + SOURCE + '/dsa_filter.ko',
-     'abf6aea64fb58678d80387c2c000f5f9437e730f2a41843082c9f0130807d3b2',
-     'version', '12.6.0.8491 (HUA)'),
-)
+MANIFEST = Path('/usr/share/linuxoss-kernel-compat/server-profile-module-manifest-final.json')
+PROFILE_CONFIG = Path('/etc/linuxoss-kernel-compat/module-profile.json')
+PROFILE_SIGNATURE = Path('/etc/linuxoss-kernel-compat/module-profile.json.sig')
+PROFILE_PUBLIC_KEY = Path('/usr/share/linuxoss-kernel-compat/module-profile-signing-public.pem')
+SOURCE = ''
+TARGET = ''
+IMAGE_SHA = ''
+SYMVERS_SHA = ''
+RPM_RELEASE = ''
+EXPECTED_IMPORTS = 0
+PROFILE = []
 
 
 def run(args):
@@ -50,10 +43,84 @@ def require_hash(path, expected):
         raise RuntimeError('Unreviewed or changed file: ' + str(path))
 
 
+def validate_target_pins(profile_data, target_release, symvers_sha):
+    if profile_data.get('target_kernel_release') != target_release:
+        raise RuntimeError('Signed module profile target release does not match the final manifest.')
+    if profile_data.get('module_symvers_sha256') != symvers_sha:
+        raise RuntimeError('Signed module profile Module.symvers hash does not match the final manifest.')
+
+
+def check_crc_preflight(plan, symvers_path):
+    providers = {}
+    for line in Path(symvers_path).read_text().splitlines():
+        fields = line.split()
+        if len(fields) >= 3:
+            providers[fields[1]] = int(fields[0], 16)
+    imports = matched = missing = mismatched = 0
+    exported = {}
+    for item in plan:
+        output = run(['modprobe', '--dump-modversions', item['source']])
+        import_pairs = []
+        for line in output.splitlines():
+            fields = line.split()
+            if len(fields) != 2 or not fields[0].startswith('0x'):
+                continue
+            imports += 1
+            expected = int(fields[0], 16)
+            import_pairs.append((fields[1], expected))
+        import_digest = hashlib.sha256(('\n'.join('%s %08x' % p for p in sorted(import_pairs)) + '\n').encode()).hexdigest()
+        if len(import_pairs) != item['profile']['import_count'] or import_digest != item['profile']['imports_sha256']:
+            raise RuntimeError('A signed module import profile did not match.')
+        nm_output = run(['nm', '-a', item['source']])
+        crc_values = {}
+        ksymtab = set()
+        for line in nm_output.splitlines():
+            fields = line.split()
+            if len(fields) < 2:
+                continue
+            symbol = fields[-1]
+            if symbol.startswith('__crc_'):
+                try:
+                    crc_values[symbol[6:]] = int(fields[0], 16) & 0xffffffff
+                except ValueError:
+                    continue
+            elif symbol.startswith('__ksymtab_'):
+                ksymtab.add(symbol[len('__ksymtab_'):])
+        module_exports = {name: crc_values[name] for name in ksymtab if name in crc_values}
+        export_pairs = sorted(module_exports.items())
+        export_digest = hashlib.sha256(('\n'.join('%s %08x' % p for p in export_pairs) + '\n').encode()).hexdigest()
+        if len(export_pairs) != item['profile']['export_count'] or export_digest != item['profile']['exports_sha256']:
+            raise RuntimeError('A signed module export profile did not match.')
+        exported.update(module_exports)
+    for name, crc in exported.items():
+        if name not in providers:
+            providers[name] = crc
+        elif providers[name] != crc:
+            mismatched += 1
+    # Count all imports again against the completed kernel + peer export set.
+    matched = missing = 0
+    for item in plan:
+        output = run(['modprobe', '--dump-modversions', item['source']])
+        for line in output.splitlines():
+            fields = line.split()
+            if len(fields) != 2 or not fields[0].startswith('0x'):
+                continue
+            actual = providers.get(fields[1])
+            if actual is None:
+                missing += 1
+            elif actual == int(fields[0], 16):
+                matched += 1
+            else:
+                mismatched += 1
+    if imports != EXPECTED_IMPORTS or matched != imports or missing or mismatched:
+        raise RuntimeError('Module CRC preflight failed: modules={} imports={} matched={} missing={} mismatch={}'.format(
+            len(plan), imports, matched, missing, mismatched))
+    return imports, matched
+
+
 def choose_exact_source(candidates, expected):
     """Return the first existing candidate with the reviewed digest."""
     seen = set()
-    existing = []
     for candidate in candidates:
         path = Path(candidate)
         key = str(path)
@@ -62,12 +129,9 @@ def choose_exact_source(candidates, expected):
         seen.add(key)
         if not path.is_file():
             continue
-        existing.append(key)
         if digest(path) == expected:
             return path
-    raise RuntimeError(
-        'No exact reviewed module found; existing candidates: ' +
-        (', '.join(existing) if existing else 'none'))
+    raise RuntimeError('No exact reviewed module matched the root-owned profile.')
 
 
 def source_candidates(module, filename, preferred):
@@ -79,11 +143,12 @@ def source_candidates(module, filename, preferred):
     except subprocess.CalledProcessError:
         pass
     candidates.extend((
-        preferred,
+        '/etc/linuxoss-kernel-compat/modules/' + filename,
         '/lib/modules/' + SOURCE + '/weak-updates/' + filename,
         '/lib/modules/' + SOURCE + '/extra/' + filename,
-        '/opt/ds_agent/' + SOURCE + '/' + filename,
     ))
+    if preferred:
+        candidates.insert(0, preferred)
     return candidates
 
 
@@ -115,24 +180,65 @@ def copy_new_exact(source, target, expected):
 def check_live_identity(sysroot, module, field, expected):
     path = sysroot / module / field
     if not path.is_file() or path.read_text().strip() != expected:
-        raise RuntimeError('Loaded module differs from the tested profile: ' + module)
+        raise RuntimeError('A loaded module differs from the tested local profile.')
 
 
 def main():
+    global SOURCE, TARGET, IMAGE_SHA, SYMVERS_SHA, RPM_RELEASE, EXPECTED_IMPORTS, PROFILE
+    manifest = json.loads(MANIFEST.read_text(encoding='utf-8'))
+    cfg_stat = PROFILE_CONFIG.stat()
+    if cfg_stat.st_uid != 0 or cfg_stat.st_mode & 0o077:
+        raise RuntimeError('Module profile must be root-owned and mode 0600 or stricter.')
+    sig_stat = PROFILE_SIGNATURE.stat()
+    if sig_stat.st_uid != 0 or sig_stat.st_mode & 0o077:
+        raise RuntimeError('Module profile signature must be root-owned and mode 0600 or stricter.')
+    if subprocess.run(['openssl', 'dgst', '-sha256', '-verify', str(PROFILE_PUBLIC_KEY),
+                       '-signature', str(PROFILE_SIGNATURE), str(PROFILE_CONFIG)],
+                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != 0:
+        raise RuntimeError('Module profile signature verification failed.')
+    profile_data = json.loads(PROFILE_CONFIG.read_text(encoding='utf-8'))
+    SOURCE = profile_data.get('source_kernel_release', '')
+    PROFILE = profile_data.get('modules', [])
+    if not SOURCE or len(PROFILE) != 3:
+        raise RuntimeError('Module profile must specify the tested source release and exactly three modules.')
+    required = {'name', 'filename', 'sha256', 'identity_field', 'identity',
+                'vermagic', 'import_count', 'imports_sha256',
+                'export_count', 'exports_sha256'}
+    names = [item.get('name') for item in PROFILE]
+    if len(set(names)) != 3 or any(not isinstance(name, str) or not name for name in names):
+        raise RuntimeError('Module profile names must be unique and non-empty.')
+    if any(not required.issubset(item) for item in PROFILE):
+        raise RuntimeError('Module profile entry is incomplete.')
+    profile_source = SOURCE
+    for item in PROFILE:
+        item['preferred'] = item.get('source_hint', '')
+    SOURCE = manifest['evidence']['rpm']['tested_source_kernel_release']
+    if profile_source != SOURCE:
+        raise RuntimeError('Signed module profile source release does not match build evidence.')
+    TARGET = manifest['release']
+    IMAGE_SHA = manifest['provenance']['bzimage_sha256']
+    SYMVERS_SHA = manifest['provenance']['module_symvers_sha256']
+    validate_target_pins(profile_data, TARGET, SYMVERS_SHA)
+    RPM_RELEASE = manifest['evidence']['rpm']['package_release'] + '.' + TARGET.rsplit('.', 1)[-1]
+    EXPECTED_IMPORTS = manifest['evidence']['external_module_abi']['final_kernel']['imports']
+    if profile_data.get('expected_imports') != EXPECTED_IMPORTS:
+        raise RuntimeError('Signed module profile import total does not match build evidence.')
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('mode', choices=('check', 'apply'), nargs='?', default='check')
     args = p.parse_args()
     if os.geteuid() != 0:
         raise RuntimeError('Run with sudo /usr/libexec/platform-python.')
-    if os.uname().release != SOURCE:
-        raise RuntimeError('This profile requires the unchanged source kernel: ' + SOURCE)
+    if os.uname().release not in (SOURCE, TARGET):
+        raise RuntimeError('Running kernel is outside the signed profile source/target pair.')
+    if args.mode == 'apply' and os.uname().release != SOURCE:
+        raise RuntimeError('Module staging is only permitted from the validated source kernel.')
     with open('/run/linuxoss-install.lock', 'a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         require_hash('/boot/vmlinuz-' + TARGET, IMAGE_SHA)
         symvers = Path('/usr/src/kernels') / TARGET / 'Module.symvers'
         require_hash(symvers, SYMVERS_SHA)
         for package in ('kernel-linuxoss-el8-compat', 'kernel-linuxoss-el8-compat-devel'):
-            run(['rpm', '-V', package + '-4.18.0-553.168.1.linuxoss3.el8_10.x86_64'])
+            run(['rpm', '-V', package + '-' + RPM_RELEASE])
         before = run(['grubby', '--default-kernel'])
         destination = Path('/lib/modules') / TARGET / 'extra/linuxoss-reviewed'
         if destination.is_symlink():
@@ -141,19 +247,28 @@ def main():
         if actual_root not in destination.resolve().parents:
             raise RuntimeError('Destination escaped the target kernel tree')
         plan = []
-        for name, filename, preferred, expected, field, identity in PROFILE:
-            check_live_identity(Path('/sys/module'), name, field, identity)
+        for item in PROFILE:
+            name = item['name']
+            filename = item['filename']
+            expected = item['sha256']
+            check_live_identity(Path('/sys/module'), name, item['identity_field'], item['identity'])
             source = choose_exact_source(
-                source_candidates(name, filename, preferred), expected)
-            if run(['modinfo', '-F', 'name', source]) != name:
-                raise RuntimeError('Module name mismatch: ' + str(source))
+                source_candidates(name, filename, item['preferred']), expected)
+            if (run(['modinfo', '-F', 'name', source]) != name or
+                    run(['modinfo', '-F', 'vermagic', source]) != item['vermagic'] or
+                    run(['modinfo', '-F', item['identity_field'], source]) != item['identity']):
+                raise RuntimeError('A reviewed module identity mismatch was detected.')
             target = destination / filename
             if target.is_symlink():
                 raise RuntimeError('Destination module must not be a symlink')
+            if args.mode == 'check' and not target.is_file():
+                raise RuntimeError('Reviewed module has not been staged into the target kernel tree.')
             if target.exists():
                 require_hash(target, expected)
-            plan.append({'module':name,'source':str(source),'destination':str(target),'sha256':expected})
-        print(json.dumps({'mode':args.mode,'target_kernel':TARGET,'files':plan}, indent=2))
+            plan.append({'module':name,'source':str(source),'destination':str(target),'sha256':expected,'profile':item})
+        imports, matched = check_crc_preflight(plan, symvers)
+        print('mode={} target_kernel={} reviewed_modules={} imports={} matched={} missing=0 mismatch=0'.format(
+            args.mode, TARGET, len(plan), imports, matched))
         if args.mode == 'check':
             print('CHECK_COMPLETED_NO_CHANGES')
             return
@@ -174,5 +289,5 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except (OSError, RuntimeError, subprocess.CalledProcessError) as error:
-        raise SystemExit('ERROR: ' + str(error))
+    except (OSError, RuntimeError, subprocess.CalledProcessError):
+        raise SystemExit('ERROR: reviewed module preflight or staging failed; inspect root-only log.')

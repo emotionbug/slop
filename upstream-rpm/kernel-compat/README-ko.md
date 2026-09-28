@@ -40,6 +40,32 @@ Red Hat VEX 및 Linux 수정 근거와 대조했습니다.
 않습니다. 공개 배포 번들의 `TRIVY-ACCOUNTING.md`, `vulnerability-summary.csv`,
 `openvex.json`에 두 관점을 함께 보존합니다.
 
+### Trivy OpenVEX 적용
+
+`openvex.json`은 검토된 의미 판정의 원본입니다. 스캔 스크립트는 먼저 VEX 없이
+`trivy-raw.json`을 만들고, 그 보고서에 실제로 기록된
+`kernel-linuxoss-el8-compat`의 이름·버전·PURL을 읽어
+`openvex.exact.json`을 생성합니다. 따라서 RHEL namespace와 distro qualifier를
+추측하지 않습니다. 기존 `kernel`, `kernel-core`, `kernel-headers`, 롤백 커널,
+이전 linuxoss 빌드는 VEX 대상에 자동으로 추가하지 않습니다.
+
+```bash
+sudo bash scan-kernel-vex.sh /path/to/trivy /path/to/cache /var/log/linuxoss-trivy/run-001 both
+```
+
+마지막 인자는 다음 중 하나입니다.
+
+- `final`: VEX 적용 후 남은 finding만 `trivy-final.json`에 기록
+- `audit`: 억제 항목을 `ExperimentalModifiedFindings`로 포함한
+  `trivy-audit.json` 기록
+- `both`: 두 결과를 모두 생성하는 기본값
+
+모든 모드에서 변경하지 않은 `trivy-raw.json`, 실제 PURL로 묶은
+`openvex.exact.json`, `openvex-binding-summary.json`을 함께 남깁니다. 정확한
+커스텀 런타임 RPM이 스캔 결과에 없거나 버전이 다르면 스크립트는 VEX를 만들지 않고
+종료합니다. 원시 결과의 기존 커널 finding을 커스텀 커널의 판정으로 숨기지 않기
+위한 fail-closed 동작입니다.
+
 ## RPM
 
 현재 릴리스 파일은 다음 두 개입니다.

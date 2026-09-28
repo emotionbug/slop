@@ -14,7 +14,9 @@ mode=${1:-check}
 }
 for command in rpm sha256sum grubby flock; do command -v "$command" >/dev/null; done
 exec 9>/run/linuxoss-install.lock
-flock -n 9 || { echo 'Another linuxoss installation is running.' >&2; exit 2; }
+if [[ ${LINUXOSS_LOCK_HELD:-0} != 1 ]]; then
+  flock -n 9 || { echo 'Another linuxoss installation is running.' >&2; exit 2; }
+fi
 cd -- "$here"
 sha256sum --quiet -c SHA256SUMS
 mkdir -p /var/log/linuxoss-kernel-compat

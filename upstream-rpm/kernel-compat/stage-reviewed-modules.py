@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import sys
 
 MANIFEST = Path('/usr/share/linuxoss-kernel-compat/server-profile-module-manifest-final.json')
 PROFILE_CONFIG = Path('/etc/linuxoss-kernel-compat/module-profile.json')
@@ -233,7 +234,8 @@ def main():
     if args.mode == 'apply' and os.uname().release != SOURCE:
         raise RuntimeError('Module staging is only permitted from the validated source kernel.')
     with open('/run/linuxoss-install.lock', 'a') as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        if os.environ.get('LINUXOSS_LOCK_HELD') != '1':
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         require_hash('/boot/vmlinuz-' + TARGET, IMAGE_SHA)
         symvers = Path('/usr/src/kernels') / TARGET / 'Module.symvers'
         require_hash(symvers, SYMVERS_SHA)
@@ -287,6 +289,9 @@ def main():
 
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] in ('--local-running', '--local-profile-check'):
+        helper = Path(__file__).with_name('stage-local-running-modules.py')
+        os.execv('/usr/libexec/platform-python', ['/usr/libexec/platform-python', str(helper)] + sys.argv[1:])
     try:
         main()
     except (OSError, RuntimeError, subprocess.CalledProcessError):

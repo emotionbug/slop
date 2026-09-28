@@ -11,7 +11,11 @@ target=$(/usr/libexec/platform-python -c \
 systemctl is-active --quiet sshd.service
 systemctl is-active --quiet network-online.target
 ip route show default | grep -q .
-/usr/libexec/platform-python "$here/stage-reviewed-modules.py" check >/dev/null
+if [[ -s /var/lib/linuxoss-kernel-compat/local-module-profile.json ]]; then
+  /usr/libexec/platform-python "$here/stage-reviewed-modules.py" --local-profile-check >/dev/null
+else
+  /usr/libexec/platform-python "$here/stage-reviewed-modules.py" check >/dev/null
+fi
 
 java_pattern=${LINUXOSS_JAVA_PATTERN:-'[j]ava'}
 tomcat_pattern=${LINUXOSS_TOMCAT_PATTERN:-'[o]rg.apache.catalina.startup.Bootstrap|[c]atalina'}

@@ -105,6 +105,33 @@ sudo bash server-profile-ssh-deploy.sh --rollback
 Tomcat 업무 기능은 대상 서버에서 최종 확인해야 합니다. VMware가 완전히 정지했고
 watchdog과 콘솔이 모두 없으면 SSH만으로 전원을 다시 넣을 수는 없습니다.
 
+### 현재 실행 중인 로컬 모듈을 대상으로 사용
+
+서명 overlay를 별도로 반입할 수 없는 경우에는, 현재 커널에서 이미 로드된 모듈
+세 개를 대상으로 사전검사 후 대상 커널의 별도 `extra` 디렉터리에 복사할 수 있습니다.
+아래 이름은 예시이며 실제 이름으로 바꿉니다. 공개 번들에는 운영 모듈 이름이나
+바이너리 정보가 포함되지 않습니다.
+
+```bash
+sudo bash server-profile-ssh-deploy.sh --install-from-running MODULE_A MODULE_B MODULE_C
+sudo bash server-profile-ssh-deploy.sh --arm-next-boot
+```
+
+`--install-from-running`은 target RPM이 아직 설치되지 않았다면 먼저 manifest와
+체크섬이 맞는 RPM을 병렬 설치합니다. 이어 현재 로드 상태와 `modinfo` identity,
+target RPM·boot image·`Module.symvers` manifest pin, 328개 import CRC 및 세 모듈 간
+export CRC를 확인한 뒤 원본을 변경하지 않고 대상 커널 전용 디렉터리에 원자적으로
+복사하고 `depmod`를 실행합니다. 모듈 검사에 실패해도 RPM은 staged 상태로 남으며
+부팅 설정과 현재 커널은 변경하지 않습니다. target RPM이 이미 설치된 경우 먼저
+다음 read-only 검사를 실행할 수 있습니다.
+
+```bash
+sudo bash server-profile-ssh-deploy.sh --check-from-running MODULE_A MODULE_B MODULE_C
+```
+
+같은 바이트의 재실행은 허용하고 다른 파일이 이미 있으면 덮어쓰지 않습니다. 커널을
+arm한 뒤에는 기존처럼 사용자가 직접 재부팅하고 boot guard 결과를 확인해야 합니다.
+
 ## 파일 역할
 
 - `kernel-linuxoss-el8-compat-linuxoss6.spec`: 최종 linuxoss6 재현용 spec
@@ -114,3 +141,4 @@ watchdog과 콘솔이 모두 없으면 SSH만으로 전원을 다시 넣을 수�
 - `server-profile-ssh-deploy.sh`: 설치, one-shot 부팅, commit, rollback dispatcher
 - `install-private-module-overlay.py`: 별도 서명 overlay 검증 및 설치
 - `stage-reviewed-modules.py`: 실행/대상 커널과 import/export CRC 사전검사
+- `stage-local-running-modules.py`: 현재 로드된 로컬 모듈의 target kABI 검사 및 이관

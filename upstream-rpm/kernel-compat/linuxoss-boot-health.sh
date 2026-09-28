@@ -19,10 +19,15 @@ systemctl is-active --quiet sshd.service || failed+=(sshd)
 systemctl is-active --quiet network-online.target || failed+=(network-online)
 ip route show default | grep -q . || failed+=(default-route)
 
-# Signed local profile check verifies module hashes, vermagic and exact
-# identity fields, plus 328 CRC imports against kernel and peer exports.
-/usr/libexec/platform-python /usr/local/libexec/linuxoss-kernel-compat/stage-reviewed-modules.py check \
-  >/dev/null 2>&1 || failed+=(signed-agent-profile)
+# Select the root-owned local running-module profile when it was staged;
+# otherwise retain the signed-overlay verification path.
+if [[ -s $STATE/local-module-profile.json ]]; then
+  /usr/libexec/platform-python /usr/local/libexec/linuxoss-kernel-compat/stage-reviewed-modules.py \
+    --local-profile-check >/dev/null 2>&1 || failed+=(local-module-profile)
+else
+  /usr/libexec/platform-python /usr/local/libexec/linuxoss-kernel-compat/stage-reviewed-modules.py \
+    check >/dev/null 2>&1 || failed+=(signed-agent-profile)
+fi
 
 services=/etc/linuxoss-kernel-compat/health-services
 if [[ -r $services ]]; then

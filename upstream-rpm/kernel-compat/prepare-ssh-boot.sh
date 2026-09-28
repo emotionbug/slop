@@ -17,11 +17,17 @@ mode=${1:-check}
 for command in dracut grubby grub2-reboot grub2-editenv sha256sum systemctl modinfo; do
   command -v "$command" >/dev/null
 done
-/usr/libexec/platform-python "$here/stage-reviewed-modules.py" check >/dev/null
+local_profile=/var/lib/linuxoss-kernel-compat/local-module-profile.json
+if [[ -s $local_profile ]]; then
+  /usr/libexec/platform-python "$here/stage-reviewed-modules.py" --local-profile-check >/dev/null
+  modules=/lib/modules/$TARGET/extra/linuxoss-local-migration
+else
+  /usr/libexec/platform-python "$here/stage-reviewed-modules.py" check >/dev/null
+  modules=/lib/modules/$TARGET/extra/linuxoss-reviewed
+fi
 
 kernel=/boot/vmlinuz-$TARGET
 initramfs=/boot/initramfs-$TARGET.img
-modules=/lib/modules/$TARGET/extra/linuxoss-reviewed
 sha256sum -c <<<"$IMAGE_SHA  $kernel"
 [[ -d $modules && ! -L $modules ]] || { echo 'Reviewed module staging directory is absent.' >&2; exit 2; }
 
@@ -66,6 +72,7 @@ entry=$(sed -n 's/^id="\(.*\)"$/\1/p' <<<"$info" | head -n 1)
 
 install -d -m 0755 /usr/local/libexec/linuxoss-kernel-compat
 install -m 0755 "$here/stage-reviewed-modules.py" /usr/local/libexec/linuxoss-kernel-compat/stage-reviewed-modules.py
+install -m 0755 "$here/stage-local-running-modules.py" /usr/local/libexec/linuxoss-kernel-compat/stage-local-running-modules.py
 install -m 0755 "$here/linuxoss-boot-health.sh" /usr/local/sbin/linuxoss-boot-health
 install -m 0755 "$here/linuxoss-boot-rollback.sh" /usr/local/sbin/linuxoss-boot-rollback
 install -d -m 0755 /usr/share/linuxoss-kernel-compat /etc/linuxoss-kernel-compat
